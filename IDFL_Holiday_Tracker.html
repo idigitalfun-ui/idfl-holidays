@@ -22,7 +22,7 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--tx);min-he
 ::-webkit-scrollbar{width:6px;height:6px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:var(--bd2);border-radius:3px}
 
 /* â”€â”€ HEADER â”€â”€ */
-header{background:var(--sf);border-bottom:1px solid var(--bd);padding:11px 20px;display:flex;align-items:center;gap:12px;flex-shrink:0;box-shadow:var(--shadow);z-index:20;flex-wrap:wrap}
+header{background:var(--sf);border-bottom:1px solid var(--bd);padding:11px 20px;display:flex;align-items:center;gap:10px;flex-shrink:0;box-shadow:var(--shadow);z-index:20;flex-wrap:wrap}
 .logo{font-weight:900;font-size:1.15rem;letter-spacing:-.5px;display:flex;align-items:center;gap:8px;flex-shrink:0;cursor:pointer}
 .logo-mark{width:30px;height:30px;background:linear-gradient(135deg,var(--ac),#8ab0ff);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:.74rem;color:#fff;font-weight:900;flex-shrink:0}
 .logo em{color:var(--ac);font-style:normal}
@@ -31,13 +31,13 @@ header{background:var(--sf);border-bottom:1px solid var(--bd);padding:11px 20px;
 .year-tab{font-family:'Outfit',sans-serif;font-size:.78rem;font-weight:700;padding:6px 16px;border-radius:7px;border:none;background:none;color:var(--tx3);cursor:pointer;transition:all .15s}
 .year-tab:hover{color:var(--tx)}
 .year-tab.active{background:var(--ac);color:#fff}
-.hdr-search{flex:1;max-width:220px;position:relative}
+.hdr-search{flex:1;max-width:200px;position:relative}
 .hdr-search input{width:100%;padding:8px 12px 8px 32px;border:1px solid var(--bd);border-radius:9px;background:var(--sf2);color:var(--tx);font-family:'Outfit',sans-serif;font-size:.79rem;outline:none;transition:border-color .15s}
 .hdr-search input:focus{border-color:var(--ac)}
 .hdr-search svg{position:absolute;left:10px;top:50%;transform:translateY(-50%);opacity:.4;pointer-events:none}
-.hdr-stats{display:flex;gap:18px;font-size:.72rem;color:var(--tx3)}
+.hdr-stats{display:flex;gap:14px;font-size:.72rem;color:var(--tx3)}
 .hdr-stats strong{color:var(--tx);font-weight:800}
-.btn{font-family:'Outfit',sans-serif;font-size:.74rem;font-weight:700;padding:7px 14px;border-radius:8px;border:none;cursor:pointer;transition:all .15s;display:inline-flex;align-items:center;gap:6px}
+.btn{font-family:'Outfit',sans-serif;font-size:.74rem;font-weight:700;padding:7px 13px;border-radius:8px;border:none;cursor:pointer;transition:all .15s;display:inline-flex;align-items:center;gap:6px}
 .btn-ac{background:var(--ac);color:#fff}.btn-ac:hover{filter:brightness(1.12)}
 .btn-rd{background:var(--rd2);color:var(--rd);border:1px solid var(--rd)}.btn-rd:hover{background:var(--rd);color:#fff}
 .btn-am{background:var(--am2);color:var(--am);border:1px solid var(--am)}.btn-am:hover{background:var(--am);color:#000}
@@ -230,6 +230,7 @@ table.batch-table input:focus{border-color:var(--ac)}
     <button class="btn btn-ghost" id="adminToggleBtn" style="display:none">&#9881; Manager View</button>
     <button class="btn btn-gr" id="batchWeekBtn">&#128197; Add New Week (All Staff)</button>
     <button class="btn btn-am" id="bulkHolBtn">&#43; Holiday For All</button>
+    <button class="btn btn-pu" id="syncModalBtn" title="Sync and backup all company data">&#128260; Sync &amp; Backup</button>
   </div>
 </header>
 
@@ -288,6 +289,30 @@ table.batch-table input:focus{border-color:var(--ac)}
   </div>
 </div>
 
+<!-- ðŸŒŸ SYNC & BACKUP MODAL ðŸŒŸ -->
+<div class="modal-bg hidden" id="syncModal">
+  <div class="modal">
+    <div class="modal-hd">
+      <h2>&#128260; Sync &amp; Backup Company Data</h2>
+      <button class="modal-close" id="syncClose">&times;</button>
+    </div>
+    <div class="modal-body">
+      <p style="font-size:.8rem;color:var(--tx2);margin-bottom:16px;line-height:1.5">All your edits are automatically saved on this device. You can download a backup copy or restore anytime:</p>
+      
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <button class="btn btn-ac" id="exportBtn" style="justify-content:center;padding:12px">&#128190; Download Complete Database (JSON)</button>
+        <button class="btn btn-ghost" id="copyJsonBtn" style="justify-content:center;padding:12px">&#128203; Copy Database to Clipboard (For Chat / Sync)</button>
+        <div style="border-top:1px solid var(--bd);margin:8px 0"></div>
+        <button class="btn btn-pu" id="restoreBtn" style="justify-content:center;padding:12px">&#128229; Restore from Backup File (.json)</button>
+        <input type="file" id="restoreFileInput" accept=".json" style="display:none">
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" id="syncCloseBtn">Close</button>
+    </div>
+  </div>
+</div>
+
 <!-- Bulk Holiday Modal -->
 <div class="modal-bg hidden" id="bulkModal">
   <div class="modal">
@@ -339,7 +364,7 @@ table.batch-table input:focus{border-color:var(--ac)}
 </script>
 <script>
 const SICK_ALLOWANCE_HRS = 35;
-const LS_KEY = 'idfl_tracker_v7';
+const LS_KEY = 'idfl_tracker_db';
 const BASE = JSON.parse(document.getElementById('holiday-data').textContent);
 
 function loadOv(){ try{ return JSON.parse(localStorage.getItem(LS_KEY)||'{}'); }catch(e){ return {}; } }
@@ -871,9 +896,8 @@ window.saveEditSick=function(id){
 window.delHol=function(id){delHolEntry(activeSid,id);toast('Entry removed');renderAll();};
 window.delSick=function(id){delSickEntry(activeSid,id);toast('Entry removed');renderAll();};
 
-// â”€â”€â”€ ðŸŒŸ BATCH WEEK ENTRY MODAL (FAST TIMESHEET ENTRY FOR ALL STAFF) ðŸŒŸ â”€â”€â”€
+// â”€â”€â”€ BATCH WEEK ENTRY MODAL â”€â”€â”€
 function openBatchModal(){
-  // Determine next week label & date
   let maxWks = 0;
   BASE.staff.forEach(function(s){
     const w = getStaffWeeks(s.id, activeYear);
@@ -881,7 +905,6 @@ function openBatchModal(){
   });
   const nextWkNum = maxWks + 1;
   
-  // Format default dates
   const today = new Date();
   const dateStr = today.toISOString().split('T')[0];
   document.getElementById('batchWkLabel').value = 'Week ' + nextWkNum + ' (' + activeYear + ')';
@@ -956,18 +979,13 @@ document.getElementById('batchSaveAllBtn').addEventListener('click', function(){
     const sick = sickInp ? parseFloat(sickInp.value) : NaN;
     const note = noteInp ? noteInp.value.trim() : '';
     
-    // Add week hours if entered
     if(!isNaN(hrs)){
       addWeek(s.id, activeYear, label, hrs, dateVal);
       savedCount++;
     }
-    
-    // Log holiday if entered
     if(!isNaN(hol) && hol > 0){
       addHolEntry(s.id, activeYear, dateVal || label, hol, note || 'Holiday');
     }
-    
-    // Log sick if entered
     if(!isNaN(sick) && sick > 0){
       addSickEntry(s.id, activeYear, dateVal || label, sick, note || 'Sick');
     }
@@ -976,6 +994,79 @@ document.getElementById('batchSaveAllBtn').addEventListener('click', function(){
   document.getElementById('batchModal').classList.add('hidden');
   toast('Successfully saved week for ' + savedCount + ' staff members!');
   renderAll();
+});
+
+// â”€â”€â”€ ðŸŒŸ SYNC & BACKUP ACTIONS â”€â”€â”€
+function buildCurrentDatabaseState(){
+  const exportData = JSON.parse(JSON.stringify(BASE));
+  years.forEach(function(y){
+    if(ov[y]){
+      Object.keys(ov[y]).forEach(function(sid){
+        if(!exportData.years[y][sid]) exportData.years[y][sid] = {};
+        if(ov[y][sid].weeks) exportData.years[y][sid].weeks = ov[y][sid].weeks;
+        if(ov[y][sid].opening !== undefined) exportData.years[y][sid].opening = ov[y][sid].opening;
+      });
+    }
+  });
+  BASE.staff.forEach(function(s){
+    exportData.baseHolLogs[s.id] = getStaffHolidayLogs(s.id, '2024').concat(getStaffHolidayLogs(s.id, '2025')).concat(getStaffHolidayLogs(s.id, '2026'));
+    exportData.baseSickLogs[s.id] = getStaffSickLogs(s.id, '2024').concat(getStaffSickLogs(s.id, '2025')).concat(getStaffSickLogs(s.id, '2026'));
+  });
+  return exportData;
+}
+
+document.getElementById('syncModalBtn').addEventListener('click', function(){
+  document.getElementById('syncModal').classList.remove('hidden');
+});
+document.getElementById('syncClose').addEventListener('click', function(){ document.getElementById('syncModal').classList.add('hidden'); });
+document.getElementById('syncCloseBtn').addEventListener('click', function(){ document.getElementById('syncModal').classList.add('hidden'); });
+
+document.getElementById('exportBtn').addEventListener('click', function(){
+  const exportData = buildCurrentDatabaseState();
+  const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'idfl_holidays_backup_' + new Date().toISOString().split('T')[0] + '.json';
+  a.click();
+  toast('Backup JSON downloaded successfully!');
+});
+
+document.getElementById('copyJsonBtn').addEventListener('click', function(){
+  const exportData = buildCurrentDatabaseState();
+  const jsonStr = JSON.stringify(exportData);
+  if(navigator.clipboard){
+    navigator.clipboard.writeText(jsonStr).then(function(){
+      toast('Copied full database JSON to clipboard!');
+    });
+  } else {
+    fallbackCopy(jsonStr);
+  }
+});
+
+document.getElementById('restoreBtn').addEventListener('click', function(){
+  document.getElementById('restoreFileInput').click();
+});
+
+document.getElementById('restoreFileInput').addEventListener('change', function(e){
+  const file = e.target.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = function(evt){
+    try {
+      const imported = JSON.parse(evt.target.result);
+      if(imported.staff && imported.years){
+        // Save imported state
+        localStorage.setItem(LS_KEY, JSON.stringify(imported));
+        toast('Backup restored! Reloading...');
+        setTimeout(function(){ location.reload(); }, 800);
+      } else {
+        toast('Invalid backup file format', 'var(--rd)');
+      }
+    } catch(err){
+      toast('Error reading backup file', 'var(--rd)');
+    }
+  };
+  reader.readAsText(file);
 });
 
 // â”€â”€â”€ Share Modal with Personal Link & WhatsApp Share â”€â”€â”€
@@ -1069,6 +1160,7 @@ document.getElementById('bulkSaveBtn').addEventListener('click',function(){
 document.getElementById('bulkModal').addEventListener('click',function(e){if(e.target===document.getElementById('bulkModal'))document.getElementById('bulkModal').classList.add('hidden');});
 document.getElementById('shareModal').addEventListener('click',function(e){if(e.target===document.getElementById('shareModal'))document.getElementById('shareModal').classList.add('hidden');});
 document.getElementById('batchModal').addEventListener('click',function(e){if(e.target===document.getElementById('batchModal'))document.getElementById('batchModal').classList.add('hidden');});
+document.getElementById('syncModal').addEventListener('click',function(e){if(e.target===document.getElementById('syncModal'))document.getElementById('syncModal').classList.add('hidden');});
 document.getElementById('searchBox').addEventListener('input',function(){renderSidebar();});
 document.getElementById('menuBtn').addEventListener('click',function(){document.getElementById('sidebar').classList.toggle('open');});
 
@@ -1079,6 +1171,7 @@ document.getElementById('adminToggleBtn').addEventListener('click',function(){
   document.getElementById('hdrSearchWrap').style.display = 'block';
   document.getElementById('batchWeekBtn').style.display = 'inline-flex';
   document.getElementById('bulkHolBtn').style.display = 'inline-flex';
+  document.getElementById('syncModalBtn').style.display = 'inline-flex';
   document.getElementById('adminToggleBtn').style.display = 'none';
   renderAll();
 });
@@ -1089,6 +1182,7 @@ document.getElementById('logoBtn').addEventListener('click',function(){
   document.getElementById('hdrSearchWrap').style.display = 'block';
   document.getElementById('batchWeekBtn').style.display = 'inline-flex';
   document.getElementById('bulkHolBtn').style.display = 'inline-flex';
+  document.getElementById('syncModalBtn').style.display = 'inline-flex';
   document.getElementById('adminToggleBtn').style.display = 'none';
   renderAll();
 });
@@ -1122,6 +1216,7 @@ function checkUrlParams(){
       document.getElementById('hdrSearchWrap').style.display = 'none';
       document.getElementById('batchWeekBtn').style.display = 'none';
       document.getElementById('bulkHolBtn').style.display = 'none';
+      document.getElementById('syncModalBtn').style.display = 'none';
       document.getElementById('adminToggleBtn').style.display = 'inline-flex';
     }
   }
@@ -1129,7 +1224,7 @@ function checkUrlParams(){
 
 applyStartDates();
 checkUrlParams();
-if(!activeSid) activeSid = 's22'; // Default select Awais Sageer (Tralee)
+if(!activeSid) activeSid = 's8';
 renderAll();
 </script>
 </body>
