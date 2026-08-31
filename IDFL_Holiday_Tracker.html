@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>IDFL Staff Holidays & Hours Portal</title>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 <style>
 :root{
   --bg:#090b13;--sf:#111524;--sf2:#171c30;--sf3:#1f2640;--bd:#262d4a;--bd2:#3b4673;
@@ -32,7 +33,7 @@ header{background:var(--sf);border-bottom:1px solid var(--bd);padding:11px 20px;
 .year-tab{font-family:'Outfit',sans-serif;font-size:.78rem;font-weight:700;padding:6px 16px;border-radius:7px;border:none;background:none;color:var(--tx3);cursor:pointer;transition:all .15s}
 .year-tab:hover{color:var(--tx)}
 .year-tab.active{background:var(--ac);color:#fff}
-.hdr-search{flex:1;max-width:200px;position:relative}
+.hdr-search{flex:1;max-width:170px;position:relative}
 .hdr-search input{width:100%;padding:8px 12px 8px 32px;border:1px solid var(--bd);border-radius:9px;background:var(--sf2);color:var(--tx);font-family:'Outfit',sans-serif;font-size:.79rem;outline:none;transition:border-color .15s}
 .hdr-search input:focus{border-color:var(--ac)}
 .hdr-search svg{position:absolute;left:10px;top:50%;transform:translateY(-50%);opacity:.4;pointer-events:none}
@@ -176,8 +177,8 @@ table.weeks td.act{text-align:right;width:46px}
 .modal-close:hover{color:var(--tx);background:var(--sf2)}
 .modal-body{padding:22px}
 .modal-body label{display:block;font-size:.76rem;color:var(--tx2);margin-bottom:6px;font-weight:700}
-.modal-body input,.modal-body textarea{width:100%;background:var(--sf2);border:1px solid var(--bd);border-radius:9px;color:var(--tx);font-family:'Outfit',sans-serif;font-size:.82rem;padding:9px 12px;outline:none;margin-bottom:14px}
-.modal-body input:focus,.modal-body textarea:focus{border-color:var(--ac)}
+.modal-body input,.modal-body textarea,.modal-body select{width:100%;background:var(--sf2);border:1px solid var(--bd);border-radius:9px;color:var(--tx);font-family:'Outfit',sans-serif;font-size:.82rem;padding:9px 12px;outline:none;margin-bottom:14px}
+.modal-body input:focus,.modal-body textarea:focus,.modal-body select:focus{border-color:var(--ac)}
 .modal-footer{padding:14px 22px;border-top:1px solid var(--bd);display:flex;justify-content:flex-end;gap:10px;flex-wrap:wrap}
 
 /* â”€â”€ BATCH WEEK TABLE â”€â”€ */
@@ -225,10 +226,11 @@ table.batch-table input:focus{border-color:var(--ac)}
   <div class="year-tabs" id="yearTabs"></div>
   <div class="hdr-search" id="hdrSearchWrap">
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-    <input type="text" id="searchBox" placeholder="Search staff or shop&hellip;">
+    <input type="text" id="searchBox" placeholder="Search staff&hellip;">
   </div>
   <div class="hdr-stats" id="hdrStats"></div>
   <div style="margin-left:auto;display:flex;gap:8px;align-items:center">
+    <button class="btn btn-pk" id="pdfExportModalBtn" title="Export reports as PDF">&#128196; Export PDF</button>
     <button class="btn btn-gr" id="batchWeekBtn">&#128197; Add New Week (All Staff)</button>
     <button class="btn btn-am" id="bulkHolBtn">&#43; Holiday For All</button>
     <button class="btn btn-pu" id="syncModalBtn" title="Sync and backup all company data">&#128260; Sync &amp; Backup</button>
@@ -238,6 +240,73 @@ table.batch-table input:focus{border-color:var(--ac)}
 <div class="body">
   <div class="sidebar" id="sidebar"></div>
   <div class="main" id="main"></div>
+</div>
+
+<!-- ðŸŒŸ PDF EXPORT MODAL ðŸŒŸ -->
+<div class="modal-bg hidden" id="pdfModal">
+  <div class="modal modal-large">
+    <div class="modal-hd">
+      <h2>&#128196; Export Official PDF Report</h2>
+      <button class="modal-close" id="pdfClose">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:12px">
+        <!-- Option 1: Individual Staff PDF -->
+        <div style="background:var(--sf2);border:1px solid var(--bd2);border-radius:14px;padding:16px;display:flex;flex-direction:column;justify-content:space-between">
+          <div>
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+              <span style="font-size:1.2rem">&#128100;</span>
+              <h3 style="font-size:.95rem;color:var(--tx);font-weight:800">Single Employee Statement</h3>
+            </div>
+            <p style="font-size:.75rem;color:var(--tx2);margin-bottom:12px;line-height:1.45">Detailed official statement for one staff member showing opening hours, weekly hours worked breakdown, holiday dates, and sick leave.</p>
+            
+            <label style="font-size:.72rem">Select Staff Member</label>
+            <select id="pdfStaffSelect"></select>
+            
+            <label style="font-size:.72rem">Select Period / Year</label>
+            <select id="pdfStaffYear">
+              <option value="2026">Year 2026 (Current)</option>
+              <option value="2025">Year 2025</option>
+              <option value="2024">Year 2024</option>
+              <option value="ALL">All Years Full History (2024-2026)</option>
+            </select>
+          </div>
+          <div style="display:flex;gap:8px">
+            <button class="btn btn-pk" id="downloadSinglePdfBtn" style="flex:1;justify-content:center">&#128229; Download PDF</button>
+            <button class="btn btn-ghost" id="printSinglePdfBtn" style="flex:1;justify-content:center">&#128438; Print / Preview</button>
+          </div>
+        </div>
+
+        <!-- Option 2: Company Summary PDF -->
+        <div style="background:var(--sf2);border:1px solid var(--bd2);border-radius:14px;padding:16px;display:flex;flex-direction:column;justify-content:space-between">
+          <div>
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+              <span style="font-size:1.2rem">&#127970;</span>
+              <h3 style="font-size:.95rem;color:var(--tx);font-weight:800">All Staff Company Report</h3>
+            </div>
+            <p style="font-size:.75rem;color:var(--tx2);margin-bottom:12px;line-height:1.45">Company-wide executive summary table grouped by Shop across all 30 staff members with total hours worked, accruals, holidays taken, and balances.</p>
+            
+            <label style="font-size:.72rem">Select Year</label>
+            <select id="pdfCompanyYear">
+              <option value="2026">Year 2026 Company Summary</option>
+              <option value="2025">Year 2025 Company Summary</option>
+              <option value="2024">Year 2024 Company Summary</option>
+            </select>
+          </div>
+          <div style="display:flex;gap:8px;margin-top:14px">
+            <button class="btn btn-gr" id="downloadCompanyPdfBtn" style="flex:1;justify-content:center">&#128229; Download PDF</button>
+            <button class="btn btn-ghost" id="printCompanyPdfBtn" style="flex:1;justify-content:center">&#128438; Print / Preview</button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Hidden Print/Render Container -->
+      <div id="pdfRenderContainer" style="display:none"></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" id="pdfCloseBtn">Close</button>
+    </div>
+  </div>
 </div>
 
 <!-- ðŸŒŸ FAST BATCH WEEK ENTRY MODAL (ALL 30 STAFF AT ONCE) ðŸŒŸ -->
@@ -21229,7 +21298,8 @@ function renderMain(){
     +'</div>'
     +'</div>'
     +'</div>'
-    +'<div class="profile-actions">'
+    +'<div class="profile-actions" style="display:flex;gap:8px;flex-wrap:wrap">'
+    +'<button class="btn btn-pk" id="staffPdfBtn" title="Export Official PDF Statement">&#128196; PDF Statement</button>'
     +(!isPortalMode ? '<button class="btn btn-pu" id="shareBtn">&#128279; Share / Link</button>' : '')
     +(isPortalMode ? '<button class="btn btn-ghost" id="bookmarkBtn">&#128241; Save to Phone</button>' : '')
     +'</div>'
@@ -21429,6 +21499,10 @@ function renderMain(){
   if(sBtn){
     sBtn.addEventListener('click',function(){openShareModal(activeSid);});
   }
+
+  document.getElementById('staffPdfBtn').addEventListener('click',function(){
+    openPdfModal(activeSid);
+  });
 }
 
 // â”€â”€â”€ Edit week inline â”€â”€â”€
@@ -21824,6 +21898,330 @@ document.getElementById('shareCopyTextBtn').addEventListener('click',function(){
 });
 function fallbackCopy(txt){const ta=document.createElement('textarea');ta.value=txt;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();document.execCommand('copy');ta.remove();toast('Copied');}
 
+// â”€â”€â”€ ðŸŒŸ PDF EXPORT SYSTEM (INDIVIDUAL & ALL STAFF) â”€â”€â”€
+function populatePdfStaffDropdown(){
+  const sel = document.getElementById('pdfStaffSelect');
+  sel.innerHTML = '';
+  
+  const shopOrder = ['Maynooth', 'Newbridge', 'Portlaoise', 'Tullamore', 'Mullingar', 'Kilkenny', 'Thurles', 'Arklow', 'Limerick', 'Tralee', 'Killarney', 'Letterkenny'];
+  shopOrder.forEach(function(sh){
+    const members = BASE.staff.filter(function(s){ return (s.shop||s.location) === sh; });
+    if(members.length){
+      const grp = document.createElement('optgroup');
+      grp.label = sh;
+      members.forEach(function(m){
+        const opt = document.createElement('option');
+        opt.value = m.id;
+        opt.textContent = m.name + ' (' + sh + ')';
+        if(m.id === activeSid) opt.selected = true;
+        grp.appendChild(opt);
+      });
+      sel.appendChild(grp);
+    }
+  });
+}
+
+function openPdfModal(selectedSid){
+  populatePdfStaffDropdown();
+  if(selectedSid) document.getElementById('pdfStaffSelect').value = selectedSid;
+  document.getElementById('pdfStaffYear').value = activeYear;
+  document.getElementById('pdfCompanyYear').value = activeYear;
+  document.getElementById('pdfModal').classList.remove('hidden');
+}
+
+document.getElementById('pdfExportModalBtn').addEventListener('click', function(){ openPdfModal(activeSid); });
+document.getElementById('pdfClose').addEventListener('click', function(){ document.getElementById('pdfModal').classList.add('hidden'); });
+document.getElementById('pdfCloseBtn').addEventListener('click', function(){ document.getElementById('pdfModal').classList.add('hidden'); });
+
+function generateSingleStaffPdfHtml(sid, yearChoice){
+  const staff = BASE.staff.find(function(s){ return s.id === sid; });
+  if(!staff) return '';
+  const allStats = getFullConnectedStats(sid);
+  const shopName = staff.shop || staff.location || 'IDFL';
+  
+  const targetYears = yearChoice === 'ALL' ? ['2024', '2025', '2026'] : [yearChoice];
+  
+  let html = '<div style="font-family:\'Outfit\',sans-serif;color:#0f172a;background:#fff;padding:28px 32px;box-sizing:border-box;max-width:850px;margin:0 auto">';
+  
+  // Header Banner
+  html += '<div style="display:flex;justify-content:space-between;align-items:center;border-bottom:2px solid #2563eb;padding-bottom:14px;margin-bottom:16px">';
+  html += '<div>';
+  html += '<div style="font-size:22px;font-weight:900;color:#1e3a8a;letter-spacing:-0.5px;display:flex;align-items:center;gap:8px"><span style="background:#2563eb;color:#fff;padding:2px 8px;border-radius:6px;font-size:14px">IDFL</span> IDFL GADGETS &amp; REPAIRS</div>';
+  html += '<div style="font-size:12px;font-weight:700;color:#64748b;margin-top:3px;text-transform:uppercase;letter-spacing:0.5px">Official Staff Holiday &amp; Leave Statement</div>';
+  html += '</div>';
+  html += '<div style="text-align:right;font-size:11px;color:#64748b;line-height:1.4">';
+  html += '<div><strong>Date:</strong> ' + new Date().toLocaleDateString('en-GB') + '</div>';
+  html += '<div><strong>Ref:</strong> IDFL-' + staff.id.toUpperCase() + '</div>';
+  html += '</div>';
+  html += '</div>';
+  
+  // Employee Info Strip
+  html += '<div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:12px 18px;margin-bottom:20px;display:grid;grid-template-columns:repeat(4,1fr);gap:12px;font-size:12px">';
+  html += '<div><span style="color:#64748b;display:block;font-size:10px;font-weight:800;text-transform:uppercase">Staff Member</span><strong style="font-size:14px;color:#0f172a">' + staff.name + '</strong></div>';
+  html += '<div><span style="color:#64748b;display:block;font-size:10px;font-weight:800;text-transform:uppercase">Branch Shop</span><strong style="font-size:14px;color:#2563eb">' + shopName + '</strong></div>';
+  html += '<div><span style="color:#64748b;display:block;font-size:10px;font-weight:800;text-transform:uppercase">Starting Date</span><strong style="font-size:13px;color:#0f172a">' + (staff.startDate || 'On Record') + '</strong></div>';
+  html += '<div><span style="color:#64748b;display:block;font-size:10px;font-weight:800;text-transform:uppercase">Report Scope</span><strong style="font-size:13px;color:#0f172a">' + (yearChoice === 'ALL' ? '2024 - 2026' : 'Year ' + yearChoice) + '</strong></div>';
+  html += '</div>';
+  
+  targetYears.forEach(function(y){
+    const st = allStats[y];
+    const balCol = st.balance >= 14 ? '#16a34a' : (st.balance >= 0 ? '#d97706' : '#dc2626');
+    
+    html += '<div style="margin-bottom:24px;page-break-inside:avoid">';
+    html += '<div style="background:#1e293b;color:#fff;padding:8px 14px;border-radius:8px 8px 0 0;font-weight:800;font-size:13px;display:flex;justify-content:space-between;align-items:center">';
+    html += '<span>&#128197; YEAR ' + y + ' SUMMARY</span>';
+    html += '<span>Available Balance: <strong style="color:#4ade80">' + fmt1(st.balance) + ' hrs (' + fmt1(st.days) + ' days)</strong></span>';
+    html += '</div>';
+    
+    // KPI Cards
+    html += '<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;background:#f1f5f9;padding:12px;border:1px solid #cbd5e1;border-top:none;margin-bottom:12px">';
+    html += '<div style="background:#fff;padding:8px 10px;border-radius:6px;border:1px solid #e2e8f0;text-align:center"><div style="font-size:10px;color:#64748b;font-weight:700">OPENING CARRY</div><div style="font-size:15px;font-weight:800;color:#0f172a">' + fmt1(st.opening) + ' hrs</div></div>';
+    html += '<div style="background:#fff;padding:8px 10px;border-radius:6px;border:1px solid #e2e8f0;text-align:center"><div style="font-size:10px;color:#64748b;font-weight:700">WORKED &amp; EARNED</div><div style="font-size:15px;font-weight:800;color:#2563eb">' + fmt1(st.totalWorked) + 'h <span style="font-size:11px;color:#16a34a">(+' + fmt1(st.earned) + 'h)</span></div></div>';
+    html += '<div style="background:#fff;padding:8px 10px;border-radius:6px;border:1px solid #e2e8f0;text-align:center"><div style="font-size:10px;color:#64748b;font-weight:700">HOLIDAYS TAKEN</div><div style="font-size:15px;font-weight:800;color:#d97706">-' + fmt1(st.holTaken) + ' hrs</div></div>';
+    html += '<div style="background:#fff;padding:8px 10px;border-radius:6px;border:1px solid #e2e8f0;text-align:center"><div style="font-size:10px;color:#64748b;font-weight:700">SICK USED / REMAIN</div><div style="font-size:15px;font-weight:800;color:#db2777">' + fmt1(st.sickUsed) + 'h / ' + fmt1(st.sickRemaining) + 'h</div></div>';
+    html += '</div>';
+    
+    // 2 Sub Tables: Weeks Breakdown & Holiday Logs
+    html += '<div style="display:grid;grid-template-columns:1.2fr 1fr;gap:14px;align-items:start">';
+    
+    // Weeks Table
+    html += '<div style="border:1px solid #e2e8f0;border-radius:8px;overflow:hidden">';
+    html += '<div style="background:#e2e8f0;padding:6px 10px;font-size:11px;font-weight:800;color:#334155">WORKED PERIODS (' + st.weeks.length + ' WEEKS)</div>';
+    html += '<table style="width:100%;border-collapse:collapse;font-size:11px">';
+    html += '<thead><tr style="background:#f8fafc;border-bottom:1px solid #cbd5e1"><th style="padding:4px 8px;text-align:left">Period</th><th style="padding:4px 8px;text-align:right">Hours</th></tr></thead>';
+    html += '<tbody>';
+    if(st.weeks.length){
+      st.weeks.forEach(function(w){
+        html += '<tr style="border-bottom:1px solid #f1f5f9"><td style="padding:3px 8px">' + w.label + '</td><td style="padding:3px 8px;text-align:right;font-weight:700;color:#2563eb">' + fmt1(w.hours) + '</td></tr>';
+      });
+    } else {
+      html += '<tr><td colspan="2" style="padding:10px;text-align:center;color:#94a3b8">No recorded weeks</td></tr>';
+    }
+    html += '</tbody></table></div>';
+    
+    // Right Side: Holiday Logs & Sick Logs
+    html += '<div>';
+    // Holiday Log Table
+    html += '<div style="border:1px solid #e2e8f0;border-radius:8px;overflow:hidden;margin-bottom:10px">';
+    html += '<div style="background:#fef3c7;padding:6px 10px;font-size:11px;font-weight:800;color:#92400e">HOLIDAYS TAKEN (' + st.holLogs.length + ' DATES)</div>';
+    html += '<table style="width:100%;border-collapse:collapse;font-size:11px">';
+    html += '<thead><tr style="background:#fffbeb;border-bottom:1px solid #fde68a"><th style="padding:4px 8px;text-align:left">Date</th><th style="padding:4px 8px;text-align:left">Reason / Note</th><th style="padding:4px 8px;text-align:right">Paid</th></tr></thead>';
+    html += '<tbody>';
+    if(st.holLogs.length){
+      st.holLogs.forEach(function(h){
+        html += '<tr style="border-bottom:1px solid #fef3c7"><td style="padding:3px 8px;font-weight:700">' + (h.date||'') + '</td><td style="padding:3px 8px;color:#475569">' + (h.note||'Holiday') + '</td><td style="padding:3px 8px;text-align:right;font-weight:800;color:#d97706">-' + fmt1(h.hours) + 'h</td></tr>';
+      });
+    } else {
+      html += '<tr><td colspan="3" style="padding:10px;text-align:center;color:#94a3b8">0 holidays taken in ' + y + '</td></tr>';
+    }
+    html += '</tbody></table></div>';
+    
+    // Sick Log Table
+    html += '<div style="border:1px solid #e2e8f0;border-radius:8px;overflow:hidden">';
+    html += '<div style="background:#fce7f3;padding:6px 10px;font-size:11px;font-weight:800;color:#9d174d">SICK DAYS (' + st.sickLogs.length + ' DATES)</div>';
+    html += '<table style="width:100%;border-collapse:collapse;font-size:11px">';
+    html += '<thead><tr style="background:#fdf2f8;border-bottom:1px solid #fbcfe8"><th style="padding:4px 8px;text-align:left">Date</th><th style="padding:4px 8px;text-align:left">Note</th><th style="padding:4px 8px;text-align:right">Hours</th></tr></thead>';
+    html += '<tbody>';
+    if(st.sickLogs.length){
+      st.sickLogs.forEach(function(k){
+        html += '<tr style="border-bottom:1px solid #fce7f3"><td style="padding:3px 8px;font-weight:700">' + (k.date||'') + '</td><td style="padding:3px 8px;color:#475569">' + (k.note||'Sick') + '</td><td style="padding:3px 8px;text-align:right;font-weight:800;color:#db2777">' + fmt1(k.hours) + 'h</td></tr>';
+      });
+    } else {
+      html += '<tr><td colspan="3" style="padding:10px;text-align:center;color:#94a3b8">0 sick days logged in ' + y + '</td></tr>';
+    }
+    html += '</tbody></table></div>';
+    
+    html += '</div>'; // End right column
+    html += '</div>'; // End 2-col
+    html += '</div>'; // End year block
+  });
+  
+  // Footer Sign-off
+  html += '<div style="border-top:1px solid #cbd5e1;padding-top:12px;margin-top:20px;display:flex;justify-content:space-between;font-size:11px;color:#64748b">';
+  html += '<div>IDFL Company System &bull; Holiday accrual calculated at standard statutory 8% rate.</div>';
+  html += '<div>Page 1 of 1</div>';
+  html += '</div>';
+  
+  html += '</div>';
+  return html;
+}
+
+function generateCompanyPdfHtml(year){
+  let html = '<div style="font-family:\'Outfit\',sans-serif;color:#0f172a;background:#fff;padding:24px 28px;box-sizing:border-box;max-width:1050px;margin:0 auto">';
+  
+  // Header Banner
+  html += '<div style="display:flex;justify-content:space-between;align-items:center;border-bottom:2px solid #2563eb;padding-bottom:12px;margin-bottom:16px">';
+  html += '<div>';
+  html += '<div style="font-size:22px;font-weight:900;color:#1e3a8a;display:flex;align-items:center;gap:8px"><span style="background:#2563eb;color:#fff;padding:2px 8px;border-radius:6px;font-size:13px">IDFL</span> IDFL GADGETS &amp; REPAIRS</div>';
+  html += '<div style="font-size:12px;font-weight:700;color:#64748b;margin-top:2px;text-transform:uppercase;letter-spacing:0.5px">Company-Wide Staff Holiday &amp; Hours Report &bull; Year ' + year + '</div>';
+  html += '</div>';
+  html += '<div style="text-align:right;font-size:11px;color:#64748b">';
+  html += '<div><strong>Generated:</strong> ' + new Date().toLocaleDateString('en-GB') + ' ' + new Date().toLocaleTimeString() + '</div>';
+  html += '<div><strong>Active Staff:</strong> ' + BASE.staff.length + ' Employees across 12 Branches</div>';
+  html += '</div>';
+  html += '</div>';
+  
+  const shopOrder = ['Maynooth', 'Newbridge', 'Portlaoise', 'Tullamore', 'Mullingar', 'Kilkenny', 'Thurles', 'Arklow', 'Limerick', 'Tralee', 'Killarney', 'Letterkenny'];
+  
+  let grandWorked = 0, grandEarned = 0, grandTaken = 0, grandBal = 0, grandSick = 0;
+  
+  shopOrder.forEach(function(sh){
+    const members = BASE.staff.filter(function(s){ return (s.shop||s.location) === sh; });
+    if(!members.length) return;
+    
+    let shopWorked = 0, shopEarned = 0, shopTaken = 0, shopBal = 0;
+    
+    html += '<div style="margin-bottom:18px;page-break-inside:avoid">';
+    html += '<div style="background:#2563eb;color:#fff;font-weight:800;font-size:12px;padding:6px 12px;border-radius:6px 6px 0 0;display:flex;justify-content:space-between">';
+    html += '<span>&#127970; ' + sh.toUpperCase() + ' SHOP (' + members.length + ' Staff)</span>';
+    html += '<span>Year ' + year + '</span>';
+    html += '</div>';
+    
+    html += '<table style="width:100%;border-collapse:collapse;font-size:11px;border:1px solid #cbd5e1;border-top:none">';
+    html += '<thead><tr style="background:#f1f5f9;color:#334155;border-bottom:1px solid #cbd5e1">';
+    html += '<th style="padding:6px 8px;text-align:left">Staff Name</th>';
+    html += '<th style="padding:6px 8px;text-align:center">Start Date</th>';
+    html += '<th style="padding:6px 8px;text-align:right">Opening</th>';
+    html += '<th style="padding:6px 8px;text-align:right">Worked Hrs</th>';
+    html += '<th style="padding:6px 8px;text-align:right">Earned (8%)</th>';
+    html += '<th style="padding:6px 8px;text-align:right">Taken</th>';
+    html += '<th style="padding:6px 8px;text-align:right;background:#e0e7ff;color:#1e3a8a">Available Balance</th>';
+    html += '<th style="padding:6px 8px;text-align:right">Sick Taken</th>';
+    html += '</tr></thead>';
+    html += '<tbody>';
+    
+    members.forEach(function(s){
+      const st = getFullConnectedStats(s.id)[year];
+      shopWorked += st.totalWorked;
+      shopEarned += st.earned;
+      shopTaken += st.holTaken;
+      shopBal += st.balance;
+      grandSick += st.sickUsed;
+      
+      const balColor = st.balance >= 14 ? '#16a34a' : (st.balance >= 0 ? '#d97706' : '#dc2626');
+      
+      html += '<tr style="border-bottom:1px solid #e2e8f0">';
+      html += '<td style="padding:5px 8px;font-weight:700;color:#0f172a">' + s.name + '</td>';
+      html += '<td style="padding:5px 8px;text-align:center;color:#64748b">' + (s.startDate || '-') + '</td>';
+      html += '<td style="padding:5px 8px;text-align:right;color:#475569">' + fmt1(st.opening) + '</td>';
+      html += '<td style="padding:5px 8px;text-align:right;font-weight:700;color:#2563eb">' + fmt1(st.totalWorked) + '</td>';
+      html += '<td style="padding:5px 8px;text-align:right;color:#16a34a">+' + fmt1(st.earned) + '</td>';
+      html += '<td style="padding:5px 8px;text-align:right;color:#d97706">-' + fmt1(st.holTaken) + '</td>';
+      html += '<td style="padding:5px 8px;text-align:right;font-weight:800;color:' + balColor + ';background:#eef2ff">' + fmt1(st.balance) + 'h (' + fmt1(st.days) + 'd)</td>';
+      html += '<td style="padding:5px 8px;text-align:right;color:#db2777">' + fmt1(st.sickUsed) + 'h</td>';
+      html += '</tr>';
+    });
+    
+    grandWorked += shopWorked;
+    grandEarned += shopEarned;
+    grandTaken += shopTaken;
+    grandBal += shopBal;
+    
+    // Shop Subtotal
+    html += '<tr style="background:#f8fafc;font-weight:800;border-top:2px solid #cbd5e1">';
+    html += '<td colspan="3" style="padding:5px 8px;color:#334155">' + sh + ' Subtotal:</td>';
+    html += '<td style="padding:5px 8px;text-align:right;color:#2563eb">' + fmt1(shopWorked) + 'h</td>';
+    html += '<td style="padding:5px 8px;text-align:right;color:#16a34a">+' + fmt1(shopEarned) + 'h</td>';
+    html += '<td style="padding:5px 8px;text-align:right;color:#d97706">-' + fmt1(shopTaken) + 'h</td>';
+    html += '<td style="padding:5px 8px;text-align:right;color:#1e3a8a;background:#e0e7ff">' + fmt1(shopBal) + 'h</td>';
+    html += '<td></td>';
+    html += '</tr>';
+    
+    html += '</tbody></table></div>';
+  });
+  
+  // Grand Company Total
+  html += '<div style="background:#1e293b;color:#fff;border-radius:8px;padding:12px 18px;margin-top:20px;display:flex;justify-content:space-between;align-items:center;font-size:13px;font-weight:800">';
+  html += '<span>COMPANY GRAND TOTAL (' + BASE.staff.length + ' STAFF)</span>';
+  html += '<span>Total Worked: <span style="color:#60a5fa">' + fmt1(grandWorked) + 'h</span> &bull; Accrued: <span style="color:#4ade80">+' + fmt1(grandEarned) + 'h</span> &bull; Taken: <span style="color:#fbbf24">-' + fmt1(grandTaken) + 'h</span> &bull; Net Balance: <span style="color:#38bdf8">' + fmt1(grandBal) + 'h (' + fmt1(grandBal/7) + ' days)</span></span>';
+  html += '</div>';
+  
+  html += '</div>';
+  return html;
+}
+
+function printHtmlContent(contentHtml, title){
+  const printWin = window.open('', '_blank');
+  printWin.document.write('<!DOCTYPE html><html><head><title>' + title + '</title><style>@page{size:auto;margin:10mm}body{margin:0;padding:0;font-family:sans-serif}</style></head><body>' + contentHtml + '</body></html>');
+  printWin.document.close();
+  printWin.focus();
+  setTimeout(function(){
+    printWin.print();
+  }, 400);
+}
+
+document.getElementById('downloadSinglePdfBtn').addEventListener('click', function(){
+  const sid = document.getElementById('pdfStaffSelect').value;
+  const y = document.getElementById('pdfStaffYear').value;
+  const staff = BASE.staff.find(function(s){ return s.id === sid; });
+  const fileName = 'IDFL_Holiday_Statement_' + (staff ? staff.name.replace(/\s+/g, '_') : 'Staff') + '_' + y + '.pdf';
+  
+  const content = generateSingleStaffPdfHtml(sid, y);
+  const container = document.getElementById('pdfRenderContainer');
+  container.innerHTML = content;
+  container.style.display = 'block';
+  
+  toast('Generating PDF document...');
+  const opt = {
+    margin: 8,
+    filename: fileName,
+    image: { type: 'jpeg', quality: 0.98 },
+    html2canvas: { scale: 2, useCORS: true },
+    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+  };
+  
+  html2pdf().set(opt).from(container).save().then(function(){
+    container.style.display = 'none';
+    toast('PDF downloaded successfully!');
+  }).catch(function(err){
+    console.error(err);
+    printHtmlContent(content, fileName);
+  });
+});
+
+document.getElementById('printSinglePdfBtn').addEventListener('click', function(){
+  const sid = document.getElementById('pdfStaffSelect').value;
+  const y = document.getElementById('pdfStaffYear').value;
+  const staff = BASE.staff.find(function(s){ return s.id === sid; });
+  const title = 'IDFL Holiday Statement - ' + (staff ? staff.name : 'Staff') + ' (' + y + ')';
+  const content = generateSingleStaffPdfHtml(sid, y);
+  printHtmlContent(content, title);
+});
+
+document.getElementById('downloadCompanyPdfBtn').addEventListener('click', function(){
+  const y = document.getElementById('pdfCompanyYear').value;
+  const fileName = 'IDFL_Company_Staff_Holiday_Report_' + y + '.pdf';
+  
+  const content = generateCompanyPdfHtml(y);
+  const container = document.getElementById('pdfRenderContainer');
+  container.innerHTML = content;
+  container.style.display = 'block';
+  
+  toast('Generating Company Report PDF...');
+  const opt = {
+    margin: 8,
+    filename: fileName,
+    image: { type: 'jpeg', quality: 0.98 },
+    html2canvas: { scale: 2, useCORS: true },
+    jsPDF: { unit: 'mm', format: 'a4', orientation: 'landscape' }
+  };
+  
+  html2pdf().set(opt).from(container).save().then(function(){
+    container.style.display = 'none';
+    toast('Company Report PDF downloaded!');
+  }).catch(function(err){
+    console.error(err);
+    printHtmlContent(content, fileName);
+  });
+});
+
+document.getElementById('printCompanyPdfBtn').addEventListener('click', function(){
+  const y = document.getElementById('pdfCompanyYear').value;
+  const title = 'IDFL Company Staff Holiday Report (' + y + ')';
+  const content = generateCompanyPdfHtml(y);
+  printHtmlContent(content, title);
+});
+
 // â”€â”€â”€ Bulk Holiday â”€â”€â”€
 document.getElementById('bulkHolBtn').addEventListener('click',function(){ if(isPortalMode) return; document.getElementById('bulkModal').classList.remove('hidden');});
 document.getElementById('bulkClose').addEventListener('click',function(){document.getElementById('bulkModal').classList.add('hidden');});
@@ -21845,6 +22243,7 @@ document.getElementById('bulkModal').addEventListener('click',function(e){if(e.t
 document.getElementById('shareModal').addEventListener('click',function(e){if(e.target===document.getElementById('shareModal'))document.getElementById('shareModal').classList.add('hidden');});
 document.getElementById('batchModal').addEventListener('click',function(e){if(e.target===document.getElementById('batchModal'))document.getElementById('batchModal').classList.add('hidden');});
 document.getElementById('syncModal').addEventListener('click',function(e){if(e.target===document.getElementById('syncModal'))document.getElementById('syncModal').classList.add('hidden');});
+document.getElementById('pdfModal').addEventListener('click',function(e){if(e.target===document.getElementById('pdfModal'))document.getElementById('pdfModal').classList.add('hidden');});
 document.getElementById('searchBox').addEventListener('input',function(){renderSidebar();});
 document.getElementById('menuBtn').addEventListener('click',function(){
   if(isPortalMode) return;
@@ -21892,6 +22291,7 @@ function checkUrlParams(){
       document.getElementById('portalBadge').style.display = 'inline-block';
       document.getElementById('cloudBadge').style.display = 'none';
       document.getElementById('hdrSearchWrap').style.display = 'none';
+      document.getElementById('pdfExportModalBtn').style.display = 'none';
       document.getElementById('batchWeekBtn').style.display = 'none';
       document.getElementById('bulkHolBtn').style.display = 'none';
       document.getElementById('syncModalBtn').style.display = 'none';
