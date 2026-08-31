@@ -2,28 +2,31 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>IDFL Staff Holidays</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>IDFL Staff Holidays & Hours Portal</title>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#0c0e17;--sf:#141726;--sf2:#1b1f33;--sf3:#222740;--bd:#2d334d;--bd2:#464f7a;
-  --tx:#edf0ff;--tx2:#a1adcf;--tx3:#636c91;
-  --ac:#5b8ef5;--ac2:rgba(91,142,245,.14);--acg:rgba(91,142,245,.22);
-  --gr:#4ade80;--gr2:rgba(74,222,128,.11);
+  --bg:#090b13;--sf:#111524;--sf2:#171c30;--sf3:#1f2640;--bd:#262d4a;--bd2:#3b4673;
+  --tx:#edf0ff;--tx2:#a4b1d6;--tx3:#636e94;
+  --ac:#5b8ef5;--ac2:rgba(91,142,245,.14);--acg:rgba(91,142,245,.25);
+  --gr:#4ade80;--gr2:rgba(74,222,128,.12);--grg:rgba(74,222,128,.22);
   --rd:#f87171;--rd2:rgba(248,113,113,.12);
-  --am:#fbbf24;--am2:rgba(251,191,36,.11);
-  --pu:#a78bfa;--pu2:rgba(167,139,250,.11);
-  --pk:#f472b6;--pk2:rgba(244,114,182,.12);
+  --am:#fbbf24;--am2:rgba(251,191,36,.12);
+  --pu:#a78bfa;--pu2:rgba(167,139,250,.12);
+  --pk:#f472b6;--pk2:rgba(244,114,182,.14);
   --shadow:0 4px 24px rgba(0,0,0,.45);--shadowL:0 20px 60px rgba(0,0,0,.7);
 }
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--tx);height:100vh;overflow:hidden;display:flex;flex-direction:column;font-size:14px}
+body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--tx);min-height:100vh;display:flex;flex-direction:column;font-size:14px;overflow-x:hidden}
 ::-webkit-scrollbar{width:6px;height:6px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:var(--bd2);border-radius:3px}
+
+/* â”€â”€ HEADER â”€â”€ */
 header{background:var(--sf);border-bottom:1px solid var(--bd);padding:11px 20px;display:flex;align-items:center;gap:12px;flex-shrink:0;box-shadow:var(--shadow);z-index:20;flex-wrap:wrap}
-.logo{font-weight:900;font-size:1.15rem;letter-spacing:-.5px;display:flex;align-items:center;gap:8px;flex-shrink:0}
-.logo-mark{width:28px;height:28px;background:linear-gradient(135deg,var(--ac),#8ab0ff);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:.72rem;color:#fff;font-weight:900;flex-shrink:0}
+.logo{font-weight:900;font-size:1.15rem;letter-spacing:-.5px;display:flex;align-items:center;gap:8px;flex-shrink:0;cursor:pointer}
+.logo-mark{width:30px;height:30px;background:linear-gradient(135deg,var(--ac),#8ab0ff);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:.74rem;color:#fff;font-weight:900;flex-shrink:0}
 .logo em{color:var(--ac);font-style:normal}
+.portal-badge{background:var(--pu2);color:var(--pu);border:1px solid var(--pu);font-size:.65rem;font-weight:800;padding:2px 8px;border-radius:12px;text-transform:uppercase;letter-spacing:.5px}
 .year-tabs{display:flex;background:var(--sf2);border:1px solid var(--bd);border-radius:10px;padding:3px;gap:2px}
 .year-tab{font-family:'Outfit',sans-serif;font-size:.78rem;font-weight:700;padding:6px 16px;border-radius:7px;border:none;background:none;color:var(--tx3);cursor:pointer;transition:all .15s}
 .year-tab:hover{color:var(--tx)}
@@ -34,7 +37,7 @@ header{background:var(--sf);border-bottom:1px solid var(--bd);padding:11px 20px;
 .hdr-search svg{position:absolute;left:10px;top:50%;transform:translateY(-50%);opacity:.4;pointer-events:none}
 .hdr-stats{display:flex;gap:18px;font-size:.72rem;color:var(--tx3)}
 .hdr-stats strong{color:var(--tx);font-weight:800}
-.btn{font-family:'Outfit',sans-serif;font-size:.73rem;font-weight:700;padding:6px 12px;border-radius:7px;border:none;cursor:pointer;transition:all .15s}
+.btn{font-family:'Outfit',sans-serif;font-size:.74rem;font-weight:700;padding:7px 14px;border-radius:8px;border:none;cursor:pointer;transition:all .15s;display:inline-flex;align-items:center;gap:6px}
 .btn-ac{background:var(--ac);color:#fff}.btn-ac:hover{filter:brightness(1.12)}
 .btn-rd{background:var(--rd2);color:var(--rd);border:1px solid var(--rd)}.btn-rd:hover{background:var(--rd);color:#fff}
 .btn-am{background:var(--am2);color:var(--am);border:1px solid var(--am)}.btn-am:hover{background:var(--am);color:#000}
@@ -42,7 +45,9 @@ header{background:var(--sf);border-bottom:1px solid var(--bd);padding:11px 20px;
 .btn-ghost{background:var(--sf2);color:var(--tx2);border:1px solid var(--bd)}.btn-ghost:hover{border-color:var(--bd2);color:var(--tx)}
 .btn-pk{background:var(--pk2);color:var(--pk);border:1px solid var(--pk)}.btn-pk:hover{background:var(--pk);color:#fff}
 .btn-pu{background:var(--pu2);color:var(--pu);border:1px solid var(--pu)}.btn-pu:hover{background:var(--pu);color:#fff}
-.body{flex:1;display:flex;min-height:0}
+
+/* â”€â”€ LAYOUT â”€â”€ */
+.body{flex:1;display:flex;min-height:0;position:relative}
 .sidebar{width:275px;flex-shrink:0;background:var(--sf);border-right:1px solid var(--bd);overflow-y:auto;padding:10px 0}
 .grp-hd{font-size:.63rem;font-weight:800;text-transform:uppercase;letter-spacing:.6px;color:var(--tx3);padding:12px 16px 6px}
 .grp-hd:first-child{padding-top:4px}
@@ -59,98 +64,118 @@ header{background:var(--sf);border-bottom:1px solid var(--bd);padding:11px 20px;
 .si-badge.neg{background:var(--rd2);color:var(--rd)}
 .si-badge.zero{background:var(--sf3);color:var(--tx3)}
 .main{flex:1;min-width:0;overflow-y:auto;padding:20px 24px}
-.empty-state{height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--tx3);gap:8px;text-align:center}
-.empty-state .es-icon{font-size:2.4rem;opacity:.5;margin-bottom:6px}
-.empty-state .es-title{font-size:1rem;font-weight:700;color:var(--tx2)}
-.profile-hd{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:18px;flex-wrap:wrap}
-.profile-name{font-size:1.4rem;font-weight:800;letter-spacing:-.3px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-.grp-tag{font-size:.63rem;font-weight:800;padding:3px 10px;border-radius:20px;border:1px solid;vertical-align:middle}
-.g1-tag{background:var(--ac2);color:var(--ac);border-color:var(--ac)}
-.g2-tag{background:var(--am2);color:var(--am);border-color:var(--am)}
-.g3-tag{background:var(--pu2);color:var(--pu);border-color:var(--pu)}
-.start-row{display:flex;align-items:center;gap:8px;margin-top:6px;font-size:.78rem;color:var(--tx2);flex-wrap:wrap}
-.start-edit-btn{font-size:.68rem;color:var(--ac);cursor:pointer;background:none;border:none;font-family:'Outfit',sans-serif;font-weight:700;padding:2px 6px;border-radius:5px;transition:background .12s}
-.start-edit-btn:hover{background:var(--ac2)}
-.start-input{background:var(--sf2);border:1px solid var(--ac);border-radius:6px;color:var(--tx);font-family:'Outfit',sans-serif;font-size:.78rem;padding:3px 7px;outline:none}
-.profile-actions{display:flex;gap:8px;flex-wrap:wrap}
-.grid3{display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:16px;align-items:start}
-@media(max-width:1100px){.grid3{grid-template-columns:1fr 1fr}}
-@media(max-width:800px){.grid3{grid-template-columns:1fr}}
-.card{background:var(--sf);border:1px solid var(--bd);border-radius:14px;box-shadow:var(--shadow);overflow:hidden}
-.card-hd{padding:12px 16px;border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between;gap:10px}
-.card-hd h3{font-size:.84rem;font-weight:800}
-.card-sub{font-size:.68rem;color:var(--tx3)}
-.weeks-wrap{max-height:460px;overflow-y:auto}
-table.weeks{width:100%;border-collapse:collapse;font-size:.76rem}
-table.weeks thead th{position:sticky;top:0;background:var(--sf2);color:var(--tx2);font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.4px;padding:7px 14px;text-align:left;border-bottom:1px solid var(--bd);z-index:2}
+
+/* â”€â”€ STAFF PORTAL (WINDOW VIEW) â”€â”€ */
+.portal-container{max-width:1080px;margin:0 auto;padding:16px;width:100%}
+.portal-header{background:linear-gradient(135deg,var(--sf2),var(--sf));border:1px solid var(--bd2);border-radius:18px;padding:22px 24px;margin-bottom:20px;box-shadow:var(--shadow);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
+.portal-profile{display:flex;align-items:center;gap:16px}
+.portal-avatar{width:56px;height:56px;border-radius:50%;font-size:1.3rem;font-weight:900;display:flex;align-items:center;justify-content:center;color:#090b13;box-shadow:0 0 20px rgba(0,0,0,.4)}
+.portal-name{font-size:1.5rem;font-weight:900;letter-spacing:-.4px;color:var(--tx)}
+.portal-sub{font-size:.82rem;color:var(--tx2);margin-top:3px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.portal-branch{background:var(--sf3);border:1px solid var(--bd);padding:2px 10px;border-radius:20px;font-size:.72rem;font-weight:700;color:var(--ac)}
+
+/* â”€â”€ STAT HERO CARDS (3-COLUMN) â”€â”€ */
+.hero-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:20px}
+@media(max-width:900px){.hero-grid{grid-template-columns:1fr}}
+.hero-card{background:var(--sf);border:1px solid var(--bd);border-radius:16px;padding:20px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+.hero-card.highlight{border-color:var(--bd2);background:linear-gradient(180deg,var(--sf),var(--sf2))}
+.hero-title{font-size:.75rem;font-weight:800;text-transform:uppercase;letter-spacing:.6px;color:var(--tx3);display:flex;align-items:center;gap:6px;margin-bottom:12px}
+.hero-val{font-size:2.4rem;font-weight:900;line-height:1;letter-spacing:-1px}
+.hero-sub{font-size:.85rem;font-weight:700;margin-top:6px;opacity:.8}
+.hero-desc{font-size:.72rem;color:var(--tx3);margin-top:4px}
+.hero-breakdown{margin-top:16px;border-top:1px solid var(--bd);padding-top:12px;display:flex;flex-direction:column;gap:7px;font-size:.76rem}
+.hero-breakdown-row{display:flex;justify-content:space-between;color:var(--tx2)}
+.hero-breakdown-row strong{font-family:'JetBrains Mono',monospace;color:var(--tx)}
+
+/* â”€â”€ PROGRESS BARS â”€â”€ */
+.progress-wrap{margin-top:14px}
+.progress-track{background:var(--sf3);border-radius:6px;height:8px;overflow:hidden;margin-top:6px}
+.progress-fill{height:100%;border-radius:6px;transition:width .4s ease}
+.progress-fill.pk{background:var(--pk)}
+.progress-fill.rd{background:var(--rd)}
+.progress-fill.gr{background:var(--gr)}
+.progress-labels{display:flex;justify-content:space-between;font-size:.7rem;color:var(--tx3);font-family:'JetBrains Mono',monospace}
+
+/* â”€â”€ CONTENT GRID (2-COLUMN) â”€â”€ */
+.detail-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:20px;align-items:start}
+@media(max-width:850px){.detail-grid{grid-template-columns:1fr}}
+
+.card{background:var(--sf);border:1px solid var(--bd);border-radius:16px;box-shadow:var(--shadow);overflow:hidden}
+.card-hd{padding:14px 18px;border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between;gap:10px}
+.card-hd h3{font-size:.88rem;font-weight:800;display:flex;align-items:center;gap:6px}
+.card-sub{font-size:.7rem;color:var(--tx3)}
+
+/* â”€â”€ WEEKS TABLE â”€â”€ */
+.weeks-wrap{max-height:480px;overflow-y:auto}
+table.weeks{width:100%;border-collapse:collapse;font-size:.78rem}
+table.weeks thead th{position:sticky;top:0;background:var(--sf2);color:var(--tx2);font-size:.64rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;padding:8px 16px;text-align:left;border-bottom:1px solid var(--bd);z-index:2}
 table.weeks thead th.num{text-align:right}
-table.weeks tbody td{padding:7px 14px;border-bottom:1px solid var(--bd)}
+table.weeks tbody td{padding:8px 16px;border-bottom:1px solid var(--bd)}
 table.weeks tbody tr:last-child td{border-bottom:none}
 table.weeks tbody tr:hover td{background:var(--sf2)}
 table.weeks td.num{text-align:right;font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--ac)}
-table.weeks td.act{text-align:right;width:50px}
+table.weeks td.act{text-align:right;width:46px}
 .edit-hrs-inp{width:56px;background:var(--sf2);border:1px solid var(--ac);border-radius:5px;color:var(--tx);font-family:'JetBrains Mono',monospace;font-size:.76rem;padding:2px 5px;outline:none;text-align:right}
-.icon-btn{background:none;border:none;cursor:pointer;color:var(--tx3);padding:2px 4px;border-radius:4px;font-size:.8rem;line-height:1;transition:all .12s}
+.icon-btn{background:none;border:none;cursor:pointer;color:var(--tx3);padding:3px 6px;border-radius:4px;font-size:.82rem;line-height:1;transition:all .12s}
 .icon-btn:hover{background:var(--sf3);color:var(--tx)}
 .add-week-form{display:flex;gap:6px;padding:10px 14px;border-top:1px solid var(--bd);flex-wrap:wrap;background:var(--sf2)}
-.add-week-form input{background:var(--sf);border:1px solid var(--bd);border-radius:7px;color:var(--tx);font-family:'Outfit',sans-serif;font-size:.73rem;padding:5px 8px;outline:none}
+.add-week-form input{background:var(--sf);border:1px solid var(--bd);border-radius:7px;color:var(--tx);font-family:'Outfit',sans-serif;font-size:.73rem;padding:6px 8px;outline:none}
 .add-week-form input:focus{border-color:var(--ac)}
 .add-week-form input.lbl{flex:2;min-width:140px}
 .add-week-form input.hrs{width:64px}
-.stat-block{padding:16px}
-.stat-hero{text-align:center;padding:6px 0 14px}
-.stat-hero .sh-hrs{font-size:2.5rem;font-weight:900;line-height:1;letter-spacing:-1px}
-.stat-hero .sh-days{font-size:.82rem;font-weight:700;margin-top:4px;opacity:.75}
-.stat-hero .sh-lbl{font-size:.68rem;color:var(--tx3);margin-top:3px;font-weight:600}
-.stat-rows{display:flex;flex-direction:column;border-top:1px solid var(--bd)}
-.stat-row{display:flex;justify-content:space-between;align-items:center;padding:9px 16px;border-bottom:1px solid var(--bd);font-size:.77rem}
-.stat-row:last-child{border-bottom:none}
-.stat-row .sr-lbl{color:var(--tx2)}
-.stat-row .sr-val{font-family:'JetBrains Mono',monospace;font-weight:700}
-.sr-val.am{color:var(--am)}.sr-val.gr{color:var(--gr)}.sr-val.tx{color:var(--tx)}.sr-val.ac{color:var(--ac)}.sr-val.rd{color:var(--rd)}.sr-val.pk{color:var(--pk)}
-.log-list{max-height:210px;overflow-y:auto}
-.log-item{display:flex;align-items:center;gap:8px;padding:8px 16px;border-bottom:1px solid var(--bd);font-size:.74rem}
+
+/* â”€â”€ LOGS â”€â”€ */
+.log-list{max-height:220px;overflow-y:auto}
+.log-item{display:flex;align-items:center;gap:10px;padding:10px 16px;border-bottom:1px solid var(--bd);font-size:.76rem}
 .log-item:last-child{border-bottom:none}
-.log-date{font-family:'JetBrains Mono',monospace;color:var(--tx2);min-width:78px;flex-shrink:0;font-size:.7rem}
+.log-date{font-family:'JetBrains Mono',monospace;color:var(--tx2);min-width:80px;flex-shrink:0;font-size:.72rem}
 .log-note{flex:1;color:var(--tx2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.log-hrs{font-weight:700;font-family:'JetBrains Mono',monospace;flex-shrink:0}
+.log-hrs{font-weight:800;font-family:'JetBrains Mono',monospace;flex-shrink:0}
 .log-hrs.hol{color:var(--am)}.log-hrs.sick{color:var(--pk)}
-.log-del{background:none;border:none;color:var(--tx3);cursor:pointer;font-size:.82rem;padding:2px 4px;border-radius:4px;transition:all .12s}
+.log-del{background:none;border:none;color:var(--tx3);cursor:pointer;font-size:.85rem;padding:2px 5px;border-radius:4px;transition:all .12s}
 .log-del:hover{color:var(--rd);background:var(--rd2)}
-.log-empty{padding:20px 16px;text-align:center;color:var(--tx3);font-size:.74rem}
+.log-empty{padding:24px 16px;text-align:center;color:var(--tx3);font-size:.75rem}
 .add-log-form{display:flex;gap:6px;padding:10px 14px;border-top:1px solid var(--bd);flex-wrap:wrap;background:var(--sf2)}
-.add-log-form input{background:var(--sf);border:1px solid var(--bd);border-radius:7px;color:var(--tx);font-family:'Outfit',sans-serif;font-size:.73rem;padding:5px 8px;outline:none}
+.add-log-form input{background:var(--sf);border:1px solid var(--bd);border-radius:7px;color:var(--tx);font-family:'Outfit',sans-serif;font-size:.73rem;padding:6px 8px;outline:none}
 .add-log-form input:focus{border-color:var(--ac)}
 .add-log-form input[type=date]{flex:1;min-width:110px}
 .add-log-form input[type=number]{width:60px}
 .add-log-form input[type=text]{flex:2;min-width:90px}
-.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:100;display:flex;align-items:center;justify-content:center;padding:20px}
+
+/* â”€â”€ MODALS â”€â”€ */
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:100;display:flex;align-items:center;justify-content:center;padding:16px}
 .modal-bg.hidden{display:none}
-.modal{background:var(--sf);border:1px solid var(--bd);border-radius:16px;box-shadow:var(--shadowL);width:100%;max-width:480px;max-height:80vh;overflow-y:auto}
-.modal-hd{padding:16px 20px;border-bottom:1px solid var(--bd);display:flex;justify-content:space-between;align-items:center}
-.modal-hd h2{font-size:.95rem;font-weight:800}
-.modal-close{background:none;border:none;color:var(--tx3);cursor:pointer;font-size:1.1rem;padding:2px 6px;border-radius:5px}
+.modal{background:var(--sf);border:1px solid var(--bd2);border-radius:18px;box-shadow:var(--shadowL);width:100%;max-width:520px;max-height:85vh;overflow-y:auto}
+.modal-hd{padding:18px 22px;border-bottom:1px solid var(--bd);display:flex;justify-content:space-between;align-items:center}
+.modal-hd h2{font-size:1.05rem;font-weight:900;display:flex;align-items:center;gap:8px}
+.modal-close{background:none;border:none;color:var(--tx3);cursor:pointer;font-size:1.2rem;padding:2px 6px;border-radius:6px}
 .modal-close:hover{color:var(--tx);background:var(--sf2)}
-.modal-body{padding:20px}
-.modal-body label{display:block;font-size:.74rem;color:var(--tx2);margin-bottom:5px;font-weight:700}
-.modal-body input,.modal-body textarea{width:100%;background:var(--sf2);border:1px solid var(--bd);border-radius:8px;color:var(--tx);font-family:'Outfit',sans-serif;font-size:.8rem;padding:8px 10px;outline:none;margin-bottom:14px}
+.modal-body{padding:22px}
+.modal-body label{display:block;font-size:.76rem;color:var(--tx2);margin-bottom:6px;font-weight:700}
+.modal-body input,.modal-body textarea{width:100%;background:var(--sf2);border:1px solid var(--bd);border-radius:9px;color:var(--tx);font-family:'Outfit',sans-serif;font-size:.82rem;padding:9px 12px;outline:none;margin-bottom:14px}
 .modal-body input:focus,.modal-body textarea:focus{border-color:var(--ac)}
-.modal-footer{padding:14px 20px;border-top:1px solid var(--bd);display:flex;justify-content:flex-end;gap:8px}
-.share-output{background:var(--sf2);border:1px solid var(--bd);border-radius:8px;padding:12px;font-family:'JetBrains Mono',monospace;font-size:.72rem;line-height:1.6;color:var(--tx2);white-space:pre-wrap;max-height:340px;overflow-y:auto;margin-bottom:12px}
-.toast{position:fixed;bottom:16px;right:16px;z-index:999;padding:10px 16px;border-radius:9px;font-weight:700;font-size:.75rem;background:var(--gr);color:#071a0c;box-shadow:var(--shadowL);animation:pop .2s ease}
-@keyframes pop{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
-.sick-bar-wrap{padding:12px 16px 4px;border-top:1px solid var(--bd)}
-.sick-bar-label{display:flex;justify-content:space-between;font-size:.7rem;color:var(--tx3);margin-bottom:6px}
-.sick-bar-track{background:var(--sf3);border-radius:4px;height:6px;overflow:hidden}
-.sick-bar-fill{height:100%;border-radius:4px;background:var(--pk);transition:width .3s}
-.sick-bar-fill.over{background:var(--rd)}
+.modal-footer{padding:14px 22px;border-top:1px solid var(--bd);display:flex;justify-content:flex-end;gap:10px;flex-wrap:wrap}
+
+/* â”€â”€ SHARE LINK BOX â”€â”€ */
+.share-link-box{background:var(--sf2);border:1px solid var(--bd2);border-radius:10px;padding:12px 14px;display:flex;align-items:center;gap:10px;margin-bottom:16px}
+.share-link-input{flex:1;background:none;border:none;color:var(--ac);font-family:'JetBrains Mono',monospace;font-size:.78rem;outline:none}
+.share-output{background:var(--sf2);border:1px solid var(--bd);border-radius:10px;padding:14px;font-family:'JetBrains Mono',monospace;font-size:.72rem;line-height:1.65;color:var(--tx2);white-space:pre-wrap;max-height:220px;overflow-y:auto;margin-bottom:12px}
+
+/* â”€â”€ TOAST â”€â”€ */
+.toast{position:fixed;bottom:20px;right:20px;z-index:999;padding:12px 20px;border-radius:10px;font-weight:800;font-size:.78rem;background:var(--gr);color:#071a0c;box-shadow:var(--shadowL);animation:pop .2s ease}
+@keyframes pop{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+/* â”€â”€ MOBILE ADAPTATIONS â”€â”€ */
 .menu-btn{display:none;background:var(--sf2);border:1px solid var(--bd);color:var(--tx);width:34px;height:34px;border-radius:8px;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0}
 @media(max-width:700px){
   .sidebar{position:fixed;left:0;top:57px;bottom:0;z-index:30;transform:translateX(-100%);transition:transform .2s;box-shadow:var(--shadowL)}
   .sidebar.open{transform:translateX(0)}
   .menu-btn{display:flex!important}
-  header{flex-wrap:wrap}
+  header{padding:10px 14px;gap:8px}
   .main{padding:14px}
+  .portal-header{padding:16px;border-radius:14px}
+  .portal-name{font-size:1.25rem}
+  .hero-val{font-size:2rem}
 }
 </style>
 </head>
@@ -158,14 +183,21 @@ table.weeks td.act{text-align:right;width:50px}
 
 <header>
   <button class="menu-btn" id="menuBtn">&#9776;</button>
-  <div class="logo"><div class="logo-mark">IF</div>IDFL <em>Holidays</em></div>
+  <div class="logo" id="logoBtn">
+    <div class="logo-mark">IF</div>
+    <div>IDFL <em>Holidays</em></div>
+  </div>
+  <span class="portal-badge" id="portalBadge" style="display:none">Staff Portal</span>
   <div class="year-tabs" id="yearTabs"></div>
-  <div class="hdr-search">
+  <div class="hdr-search" id="hdrSearchWrap">
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-    <input type="text" id="searchBox" placeholder="Search staff&hellip;">
+    <input type="text" id="searchBox" placeholder="Search staff or branch&hellip;">
   </div>
   <div class="hdr-stats" id="hdrStats"></div>
-  <button class="btn btn-am" id="bulkHolBtn" style="margin-left:auto">&#43; Holiday For All</button>
+  <div style="margin-left:auto;display:flex;gap:8px">
+    <button class="btn btn-ghost" id="adminToggleBtn" style="display:none">&#9881; Manager View</button>
+    <button class="btn btn-am" id="bulkHolBtn">&#43; Holiday For All</button>
+  </div>
 </header>
 
 <div class="body">
@@ -182,8 +214,8 @@ table.weeks td.act{text-align:right;width:50px}
       <input type="date" id="bulkDate">
       <label>Hours</label>
       <input type="number" id="bulkHrs" min="0" step="0.5" placeholder="e.g. 7">
-      <label>Note / Description</label>
-      <input type="text" id="bulkNote" placeholder="e.g. Bank Holiday">
+      <label>Note / Description (e.g. Bank Holiday)</label>
+      <input type="text" id="bulkNote" placeholder="Bank Holiday">
     </div>
     <div class="modal-footer">
       <button class="btn btn-ghost" id="bulkCancelBtn">Cancel</button>
@@ -192,16 +224,30 @@ table.weeks td.act{text-align:right;width:50px}
   </div>
 </div>
 
-<!-- Share Modal -->
+<!-- Share Portal Link Modal -->
 <div class="modal-bg hidden" id="shareModal">
   <div class="modal">
-    <div class="modal-hd"><h2>&#128279; Share Summary</h2><button class="modal-close" id="shareClose">&times;</button></div>
+    <div class="modal-hd"><h2>&#128279; Share Staff Portal Window</h2><button class="modal-close" id="shareClose">&times;</button></div>
     <div class="modal-body">
+      <p style="font-size:.78rem;color:var(--tx2);margin-bottom:12px">Staff can open this personal link anytime on their phone or PC to view their hours worked, holiday balance, and sick days:</p>
+      
+      <label>Personal Portal Link for Staff</label>
+      <div class="share-link-box">
+        <input type="text" class="share-link-input" id="shareLinkInput" readonly>
+        <button class="btn btn-ac" id="shareCopyLinkBtn">&#128203; Copy Link</button>
+      </div>
+      
+      <div style="display:flex;gap:8px;margin-bottom:16px">
+        <button class="btn btn-pu" id="shareOpenWindowBtn" style="flex:1">&#128065; Preview Staff Window</button>
+        <button class="btn btn-gr" id="shareWhatsAppBtn" style="flex:1">&#128241; WhatsApp Share</button>
+      </div>
+
+      <label>Text Summary Preview</label>
       <div class="share-output" id="shareOutput"></div>
     </div>
     <div class="modal-footer">
       <button class="btn btn-ghost" id="shareCloseBtn">Close</button>
-      <button class="btn btn-ac" id="shareCopyBtn">&#128203; Copy to Clipboard</button>
+      <button class="btn btn-ghost" id="shareCopyTextBtn">&#128203; Copy Text Summary</button>
     </div>
   </div>
 </div>
@@ -220,6 +266,7 @@ let ov = loadOv();
 let activeSid = null;
 let activeYear = '2026';
 const years = ['2024', '2025', '2026'];
+let isPortalMode = false;
 
 function uid(){ return Date.now().toString(36)+Math.random().toString(36).slice(2,6); }
 function fmt1(n){ return (Math.round((+n||0)*10)/10).toFixed(1); }
@@ -239,7 +286,7 @@ function toast(msg,col){
   document.body.appendChild(t);setTimeout(function(){t.remove();},2400);
 }
 
-// â”€â”€â”€ Data Access & Connected Calculation across 2024 -> 2025 -> 2026 â”€â”€â”€
+// â”€â”€â”€ Data Access & Multi-Year Connection (2024 -> 2025 -> 2026) â”€â”€â”€
 function getStaffWeeks(sid, year){
   const ovEntry = ((ov[year]||{})[sid])||{};
   if(ovEntry.weeks) return ovEntry.weeks;
@@ -309,6 +356,7 @@ function getFullConnectedStats(sid){
   return { '2024': y24, '2025': y25, '2026': y26 };
 }
 
+// â”€â”€â”€ Mutations / Save helpers â”€â”€â”€
 function ensureOvYear(year,sid){
   if(!ov[year]) ov[year]={};
   if(!ov[year][sid]) ov[year][sid]={};
@@ -364,6 +412,7 @@ function delSickEntry(sid,id){
   saveOv(ov);
 }
 
+// â”€â”€â”€ Header & Year Tabs â”€â”€â”€
 function renderYearTabs(){
   const el=document.getElementById('yearTabs');
   el.innerHTML=years.map(function(y){return '<button class="year-tab'+(y===activeYear?' active':'')+'" data-y="'+y+'">'+y+'</button>';}).join('');
@@ -372,6 +421,7 @@ function renderYearTabs(){
 
 function renderHdrStats(){
   const el=document.getElementById('hdrStats');
+  if(isPortalMode){ el.innerHTML=''; return; }
   if(!activeYear){el.innerHTML='';return;}
   let count=0, tot=0;
   BASE.staff.forEach(function(s){
@@ -384,8 +434,15 @@ function renderHdrStats(){
   el.innerHTML='<span>Active staff: <strong>'+count+'</strong></span><span>Total balance: <strong>'+fmt1(tot)+' hrs</strong></span>';
 }
 
+// â”€â”€â”€ Sidebar â”€â”€â”€
 function renderSidebar(){
   const el=document.getElementById('sidebar');
+  if(isPortalMode){
+    el.style.display = 'none';
+    return;
+  }
+  el.style.display = 'block';
+  
   const q=(document.getElementById('searchBox').value||'').toLowerCase();
   const groups={1:[],2:[],3:[]};
   
@@ -420,6 +477,7 @@ function renderSidebar(){
   });
 }
 
+// â”€â”€â”€ Main View â”€â”€â”€
 function renderMain(){
   const el=document.getElementById('main');
   if(!activeSid){
@@ -428,9 +486,6 @@ function renderMain(){
   }
   const staff=BASE.staff.find(function(s){return s.id===activeSid;});
   if(!staff){el.innerHTML='';return;}
-  
-  const gTag=['','g1-tag','g2-tag','g3-tag'][staff.group||1];
-  const gName=['','IDFL Belfast & Central','IDFL Sligo & South','IDFL Remote'][staff.group||1];
   
   const connectedStats = getFullConnectedStats(activeSid);
   const curStats = connectedStats[activeYear];
@@ -443,133 +498,202 @@ function renderMain(){
   if(balance<0) balColor='var(--rd)';
   else if(balance<14) balColor='var(--am)';
   
+  // Clean, dedicated Staff Window / Portal View
   el.innerHTML=
-    '<div class="profile-hd">'
-    +'<div><div class="profile-name">'+staff.name+' <span class="grp-tag '+gTag+'">'+(staff.location ? staff.location + ' &bull; ' : '')+gName+'</span></div>'
-    +'<div class="start-row">Started: <strong id="startDisplay">'+(staff.startDate||'<em style="color:var(--am)">Not set</em>')+'</strong>'
-    +' <button class="start-edit-btn" id="startEditBtn">Edit</button></div></div>'
-    +'<div class="profile-actions"><button class="btn btn-pu" id="shareBtn">&#128279; Share Details</button></div></div>'
-    +'<div class="grid3" style="margin-bottom:16px">'
-    // Weeks Worked Card
+    '<div class="portal-container">'
+    // Portal Header Banner
+    +'<div class="portal-header">'
+    +'<div class="portal-profile">'
+    +'<div class="portal-avatar" style="background:'+avatarColor(staff.id)+'">'
+    +initials(staff.name)
+    +'</div>'
+    +'<div>'
+    +'<div class="portal-name">'+staff.name+'</div>'
+    +'<div class="portal-sub">'
+    +'<span class="portal-branch">'+(staff.location ? staff.location : 'IDFL')+'</span>'
+    +'<span>Started: <strong id="startDisplay">'+(staff.startDate||'<em style="color:var(--am)">On Record</em>')+'</strong></span>'
+    +(!isPortalMode ? ' <button class="start-edit-btn" id="startEditBtn">Edit</button>' : '')
+    +'</div>'
+    +'</div>'
+    +'</div>'
+    +'<div class="profile-actions">'
+    +'<button class="btn btn-pu" id="shareBtn">&#128279; Share / Link</button>'
+    +(isPortalMode ? '<button class="btn btn-ghost" id="bookmarkBtn">&#128241; Save to Phone</button>' : '')
+    +'</div>'
+    +'</div>'
+    
+    // 3 Big Metric Hero Cards
+    +'<div class="hero-grid">'
+    // Card 1: Holiday Balance
+    +'<div class="hero-card highlight">'
+    +'<div class="hero-title">&#127958; Available Holiday Balance ('+activeYear+')</div>'
+    +'<div class="hero-val" style="color:'+balColor+'">'+fmt1(balance)+' hrs</div>'
+    +'<div class="hero-sub" style="color:'+balColor+'">'+fmt1(balDays)+' working days</div>'
+    +'<div class="hero-desc">Based on 7 hrs / working day</div>'
+    +'<div class="hero-breakdown">'
+    +'<div class="hero-breakdown-row"><span>'+(activeYear==='2024'?'Opening carry-over':'Carried from '+(parseInt(activeYear)-1))+'</span><strong>'+fmt1(curStats.opening)+' hrs</strong></div>'
+    +'<div class="hero-breakdown-row"><span>Earned (8% accrual)</span><strong style="color:var(--gr)">+'+fmt1(curStats.earned)+' hrs</strong></div>'
+    +'<div class="hero-breakdown-row"><span>Holidays taken ('+activeYear+')</span><strong style="color:var(--am)">-'+fmt1(curStats.holTaken)+' hrs</strong></div>'
+    +'</div>'
+    +'</div>'
+    
+    // Card 2: Sick Days Allowance
+    +'<div class="hero-card">'
+    +'<div class="hero-title">&#127973; Sick Allowance ('+activeYear+')</div>'
+    +'<div class="hero-val" style="color:'+(curStats.sickRemaining>=0?'var(--pk)':'var(--rd)')+'">'+fmt1(curStats.sickRemaining)+' hrs</div>'
+    +'<div class="hero-sub" style="color:'+(curStats.sickRemaining>=0?'var(--pk)':'var(--rd)')+'">'+fmt1(curStats.sickRemaining/7)+' days remaining</div>'
+    +'<div class="progress-wrap">'
+    +'<div class="progress-labels"><span>'+fmt1(curStats.sickUsed)+' hrs used</span><span>'+SICK_ALLOWANCE_HRS+' hrs allowance</span></div>'
+    +'<div class="progress-track"><div class="progress-fill '+(curStats.sickUsed>SICK_ALLOWANCE_HRS?'rd':'pk')+'" style="width:'+sickPct+'%"></div></div>'
+    +'</div>'
+    +'<div class="hero-breakdown">'
+    +'<div class="hero-breakdown-row"><span>Annual Company Allowance</span><strong>35.0 hrs (5 days)</strong></div>'
+    +'<div class="hero-breakdown-row"><span>Used in '+activeYear+'</span><strong style="color:var(--rd)">'+fmt1(curStats.sickUsed)+' hrs</strong></div>'
+    +'</div>'
+    +'</div>'
+    
+    // Card 3: Worked Hours Summary
+    +'<div class="hero-card">'
+    +'<div class="hero-title">&#128197; Worked Hours ('+activeYear+')</div>'
+    +'<div class="hero-val" style="color:var(--ac)">'+fmt1(curStats.totalWorked)+' hrs</div>'
+    +'<div class="hero-sub" style="color:var(--tx2)">'+curStats.weeks.length+' recorded periods</div>'
+    +'<div class="hero-desc">Generates 8% holiday entitlement</div>'
+    +'<div class="hero-breakdown">'
+    +'<div class="hero-breakdown-row"><span>Accrual Rate</span><strong>8.0% of total hours</strong></div>'
+    +'<div class="hero-breakdown-row"><span>Holiday Hours Earned</span><strong style="color:var(--gr)">+'+fmt1(curStats.earned)+' hrs</strong></div>'
+    +'</div>'
+    +'</div>'
+    +'</div>'
+    
+    // 2-Column Detailed Section
+    +'<div class="detail-grid">'
+    // Left: Weeks Worked Breakdown
     +'<div class="card">'
-    +'<div class="card-hd"><h3>&#128197; Hours Worked ('+activeYear+')</h3><span class="card-sub">'+curStats.weeks.length+' periods &bull; '+fmt1(curStats.totalWorked)+' hrs</span></div>'
-    +'<div class="weeks-wrap"><table class="weeks"><thead><tr><th>Period</th><th class="num">Hours</th><th class="act"></th></tr></thead><tbody id="weeksTbody"></tbody></table></div>'
-    +'<div class="add-week-form">'
+    +'<div class="card-hd"><h3>&#128197; Hours Worked Breakdown ('+activeYear+')</h3><span class="card-sub">'+curStats.weeks.length+' periods &bull; '+fmt1(curStats.totalWorked)+' hrs</span></div>'
+    +'<div class="weeks-wrap"><table class="weeks"><thead><tr><th>Period Date Range</th><th class="num">Hours Worked</th>'+(!isPortalMode?'<th class="act"></th>':'')+'</tr></thead><tbody id="weeksTbody"></tbody></table></div>'
+    +(!isPortalMode ? '<div class="add-week-form">'
     +'<input class="lbl" type="text" id="newWkLabel" placeholder="Period label (e.g. Week 35 31/08 - 06/09)">'
     +'<input class="hrs" type="number" id="newWkHrs" min="0" step="0.5" placeholder="Hrs">'
-    +'<button class="btn btn-ac" id="addWkBtn">Add</button></div></div>'
-    // Holiday Balance & Logs Card
-    +'<div>'
-    +'<div class="card"><div class="card-hd"><h3>&#127958; Holiday Balance ('+activeYear+')</h3></div>'
-    +'<div class="stat-block"><div class="stat-hero">'
-    +'<div class="sh-hrs" style="color:'+balColor+'">'+fmt1(balance)+' hrs</div>'
-    +'<div class="sh-days" style="color:'+balColor+'">'+fmt1(balDays)+' days</div>'
-    +'<div class="sh-lbl">Available Holiday Balance ('+activeYear+')</div></div>'
-    +'<div class="stat-rows">'
-    +'<div class="stat-row"><span class="sr-lbl">'+(activeYear==='2024'?'Opening (2023 carry-over)':'Carried from '+(parseInt(activeYear)-1))+'</span><span class="sr-val ac">'+fmt1(curStats.opening)+' hrs</span></div>'
-    +'<div class="stat-row"><span class="sr-lbl">Earned (8% of '+fmt1(curStats.totalWorked)+'h)</span><span class="sr-val gr">+'+fmt1(curStats.earned)+' hrs</span></div>'
-    +'<div class="stat-row"><span class="sr-lbl">Holidays Taken ('+activeYear+')</span><span class="sr-val am">-'+fmt1(curStats.holTaken)+' hrs</span></div>'
-    +'</div></div></div>'
-    // Holiday Log Card
-    +'<div class="card" style="margin-top:14px">'
-    +'<div class="card-hd"><h3>&#128198; Holidays Taken Log</h3><span class="card-sub">'+activeYear+' ('+curStats.holLogs.length+' entries)</span></div>'
-    +'<div class="log-list" id="holLogList"></div>'
-    +'<div class="add-log-form">'
-    +'<input type="date" id="holDate"><input type="number" id="holHrs" min="0" step="0.5" placeholder="Hrs" style="width:60px">'
-    +'<input type="text" id="holNote" placeholder="Note / Reason"><button class="btn btn-am" id="addHolBtn">Add</button></div></div>'
+    +'<button class="btn btn-ac" id="addWkBtn">Add Week</button></div>' : '')
     +'</div>'
-    // Sick Card
-    +'<div class="card"><div class="card-hd"><h3>&#127973; Sick Days ('+activeYear+')</h3><span class="card-sub">35 hrs/yr allowance</span></div>'
-    +'<div class="stat-block"><div class="stat-hero">'
-    +'<div class="sh-hrs" style="color:'+(curStats.sickRemaining>=0?'var(--pk)':'var(--rd)')+'">'+fmt1(curStats.sickRemaining)+' hrs</div>'
-    +'<div class="sh-days" style="color:'+(curStats.sickRemaining>=0?'var(--pk)':'var(--rd)')+'">'+fmt1(curStats.sickRemaining/7)+' days</div>'
-    +'<div class="sh-lbl">Sick Allowance Remaining ('+activeYear+')</div></div>'
-    +'<div class="sick-bar-wrap"><div class="sick-bar-label"><span>'+fmt1(curStats.sickUsed)+' hrs used</span><span>'+SICK_ALLOWANCE_HRS+' hrs total</span></div>'
-    +'<div class="sick-bar-track"><div class="sick-bar-fill'+(curStats.sickUsed>SICK_ALLOWANCE_HRS?' over':'')+'" style="width:'+sickPct+'%"></div></div></div>'
-    +'<div class="stat-rows">'
-    +'<div class="stat-row"><span class="sr-lbl">Allowance</span><span class="sr-val pk">'+SICK_ALLOWANCE_HRS+' hrs (5 days)</span></div>'
-    +'<div class="stat-row"><span class="sr-lbl">Used in '+activeYear+'</span><span class="sr-val rd">'+fmt1(curStats.sickUsed)+' hrs</span></div>'
-    +'</div></div>'
+    
+    // Right: Holidays & Sick Logs
+    +'<div>'
+    // Holiday Log Card
+    +'<div class="card">'
+    +'<div class="card-hd"><h3>&#128198; Holidays Taken Log ('+activeYear+')</h3><span class="card-sub">'+curStats.holLogs.length+' records &bull; -'+fmt1(curStats.holTaken)+' hrs</span></div>'
+    +'<div class="log-list" id="holLogList"></div>'
+    +(!isPortalMode ? '<div class="add-log-form">'
+    +'<input type="date" id="holDate"><input type="number" id="holHrs" min="0" step="0.5" placeholder="Hrs" style="width:60px">'
+    +'<input type="text" id="holNote" placeholder="Note / Reason"><button class="btn btn-am" id="addHolBtn">Add</button></div>' : '')
+    +'</div>'
+    
+    // Sick Log Card
+    +'<div class="card" style="margin-top:16px">'
+    +'<div class="card-hd"><h3>&#127973; Sick Days Taken ('+activeYear+')</h3><span class="card-sub">'+curStats.sickLogs.length+' records &bull; '+fmt1(curStats.sickUsed)+' hrs</span></div>'
     +'<div class="log-list" id="sickLogList"></div>'
-    +'<div class="add-log-form">'
+    +(!isPortalMode ? '<div class="add-log-form">'
     +'<input type="date" id="sickDate"><input type="number" id="sickHrs" min="0" step="0.5" placeholder="Hrs" style="width:60px">'
-    +'<input type="text" id="sickNote" placeholder="Note / Details"><button class="btn btn-pk" id="addSickBtn">Add</button></div></div>'
+    +'<input type="text" id="sickNote" placeholder="Note / Details"><button class="btn btn-pk" id="addSickBtn">Add</button></div>' : '')
+    +'</div>'
+    +'</div>'
+    +'</div>'
     +'</div>';
 
+  // Weeks Table
   const tbody=document.getElementById('weeksTbody');
   if(curStats.weeks.length){
     curStats.weeks.forEach(function(w,i){
       const tr=document.createElement('tr');
-      tr.innerHTML='<td>'+w.label+'</td><td class="num" id="wkVal'+i+'">'+fmt1(w.hours)+'</td><td class="act"><button class="icon-btn" title="Edit Hours" onclick="startEditWeek('+i+')">&#9998;</button></td>';
+      tr.innerHTML='<td>'+w.label+'</td><td class="num" id="wkVal'+i+'">'+fmt1(w.hours)+'</td>'
+        +(!isPortalMode?'<td class="act"><button class="icon-btn" title="Edit Hours" onclick="startEditWeek('+i+')">&#9998;</button></td>':'');
       tbody.appendChild(tr);
     });
   } else {
     tbody.innerHTML='<tr><td colspan="3" style="padding:24px;text-align:center;color:var(--tx3);font-size:.8rem">No entries recorded for '+activeYear+'</td></tr>';
   }
 
+  // Holiday Log
   const holListEl=document.getElementById('holLogList');
   if(curStats.holLogs.length){
     curStats.holLogs.forEach(function(e){
       const d=document.createElement('div');d.className='log-item';
-      d.innerHTML='<span class="log-date">'+(e.date||'')+'</span><span class="log-note" title="'+(e.note||'')+'">'+(e.note||'Holiday')+'</span><span class="log-hrs hol">-'+fmt1(e.hours)+' hrs</span><button class="log-del" onclick="delHol(\''+e.id+'\')">&#128465;</button>';
+      d.innerHTML='<span class="log-date">'+(e.date||'')+'</span><span class="log-note" title="'+(e.note||'')+'">'+(e.note||'Holiday')+'</span><span class="log-hrs hol">-'+fmt1(e.hours)+' hrs</span>'
+        +(!isPortalMode?'<button class="log-del" onclick="delHol(\''+e.id+'\')">&#128465;</button>':'');
       holListEl.appendChild(d);
     });
   } else { holListEl.innerHTML='<div class="log-empty">No holidays taken in '+activeYear+'</div>'; }
 
+  // Sick Log
   const sickListEl=document.getElementById('sickLogList');
   if(curStats.sickLogs.length){
     curStats.sickLogs.forEach(function(e){
       const d=document.createElement('div');d.className='log-item';
-      d.innerHTML='<span class="log-date">'+(e.date||'')+'</span><span class="log-note" title="'+(e.note||'')+'">'+(e.note||'Sick')+'</span><span class="log-hrs sick">'+fmt1(e.hours)+' hrs</span><button class="log-del" onclick="delSick(\''+e.id+'\')">&#128465;</button>';
+      d.innerHTML='<span class="log-date">'+(e.date||'')+'</span><span class="log-note" title="'+(e.note||'')+'">'+(e.note||'Sick')+'</span><span class="log-hrs sick">'+fmt1(e.hours)+' hrs</span>'
+        +(!isPortalMode?'<button class="log-del" onclick="delSick(\''+e.id+'\')">&#128465;</button>':'');
       sickListEl.appendChild(d);
     });
   } else { sickListEl.innerHTML='<div class="log-empty">No sick days logged for '+activeYear+'</div>'; }
 
-  document.getElementById('addWkBtn').addEventListener('click',function(){
-    const lbl=document.getElementById('newWkLabel').value.trim();
-    const hrs=parseFloat(document.getElementById('newWkHrs').value);
-    if(!lbl||isNaN(hrs)){toast('Enter a label and hours','var(--rd)');return;}
-    addWeek(activeSid,activeYear,lbl,hrs);
-    document.getElementById('newWkLabel').value='';document.getElementById('newWkHrs').value='';
-    toast('Week added');renderAll();
-  });
-
-  document.getElementById('addHolBtn').addEventListener('click',function(){
-    const date=document.getElementById('holDate').value;
-    const hrs=parseFloat(document.getElementById('holHrs').value);
-    const note=document.getElementById('holNote').value.trim()||'Holiday';
-    if(!date||isNaN(hrs)||hrs<=0){toast('Enter date & hours','var(--rd)');return;}
-    addHolEntry(activeSid,activeYear,date,hrs,note);
-    document.getElementById('holDate').value='';document.getElementById('holHrs').value='';document.getElementById('holNote').value='';
-    toast('Holiday logged');renderAll();
-  });
-
-  document.getElementById('addSickBtn').addEventListener('click',function(){
-    const date=document.getElementById('sickDate').value;
-    const hrs=parseFloat(document.getElementById('sickHrs').value);
-    const note=document.getElementById('sickNote').value.trim()||'Sick';
-    if(!date||isNaN(hrs)||hrs<=0){toast('Enter date & hours','var(--rd)');return;}
-    addSickEntry(activeSid,activeYear,date,hrs,note);
-    document.getElementById('sickDate').value='';document.getElementById('sickHrs').value='';document.getElementById('sickNote').value='';
-    toast('Sick day logged');renderAll();
-  });
-
-  document.getElementById('startEditBtn').addEventListener('click',function(){
-    const disp=document.getElementById('startDisplay');
-    const inp=document.createElement('input');inp.type='date';inp.className='start-input';inp.value=staff.startDate||'';
-    disp.replaceWith(inp);inp.focus();
-    inp.addEventListener('blur',function(){
-      if(!ov._starts) ov._starts={};
-      ov._starts[activeSid]=inp.value;saveOv(ov);staff.startDate=inp.value;
-      const strong=document.createElement('strong');strong.id='startDisplay';strong.textContent=inp.value||'Not set';
-      inp.replaceWith(strong);
+  if(!isPortalMode){
+    document.getElementById('addWkBtn').addEventListener('click',function(){
+      const lbl=document.getElementById('newWkLabel').value.trim();
+      const hrs=parseFloat(document.getElementById('newWkHrs').value);
+      if(!lbl||isNaN(hrs)){toast('Enter a label and hours','var(--rd)');return;}
+      addWeek(activeSid,activeYear,lbl,hrs);
+      document.getElementById('newWkLabel').value='';document.getElementById('newWkHrs').value='';
+      toast('Week added');renderAll();
     });
-  });
+
+    document.getElementById('addHolBtn').addEventListener('click',function(){
+      const date=document.getElementById('holDate').value;
+      const hrs=parseFloat(document.getElementById('holHrs').value);
+      const note=document.getElementById('holNote').value.trim()||'Holiday';
+      if(!date||isNaN(hrs)||hrs<=0){toast('Enter date & hours','var(--rd)');return;}
+      addHolEntry(activeSid,activeYear,date,hrs,note);
+      document.getElementById('holDate').value='';document.getElementById('holHrs').value='';document.getElementById('holNote').value='';
+      toast('Holiday logged');renderAll();
+    });
+
+    document.getElementById('addSickBtn').addEventListener('click',function(){
+      const date=document.getElementById('sickDate').value;
+      const hrs=parseFloat(document.getElementById('sickHrs').value);
+      const note=document.getElementById('sickNote').value.trim()||'Sick';
+      if(!date||isNaN(hrs)||hrs<=0){toast('Enter date & hours','var(--rd)');return;}
+      addSickEntry(activeSid,activeYear,date,hrs,note);
+      document.getElementById('sickDate').value='';document.getElementById('sickHrs').value='';document.getElementById('sickNote').value='';
+      toast('Sick day logged');renderAll();
+    });
+
+    const sEdit=document.getElementById('startEditBtn');
+    if(sEdit){
+      sEdit.addEventListener('click',function(){
+        const disp=document.getElementById('startDisplay');
+        const inp=document.createElement('input');inp.type='date';inp.className='start-input';inp.value=staff.startDate||'';
+        disp.replaceWith(inp);inp.focus();
+        inp.addEventListener('blur',function(){
+          if(!ov._starts) ov._starts={};
+          ov._starts[activeSid]=inp.value;saveOv(ov);staff.startDate=inp.value;
+          const strong=document.createElement('strong');strong.id='startDisplay';strong.textContent=inp.value||'Not set';
+          inp.replaceWith(strong);
+        });
+      });
+    }
+  }
+
+  const bMark = document.getElementById('bookmarkBtn');
+  if(bMark){
+    bMark.addEventListener('click',function(){
+      toast('Bookmark this page or add to Home Screen on your phone!');
+    });
+  }
 
   document.getElementById('shareBtn').addEventListener('click',function(){openShareModal(activeSid);});
 }
 
+// â”€â”€â”€ Edit week inline â”€â”€â”€
 window.startEditWeek=function(idx){
+  if(isPortalMode) return;
   const weeks=getStaffWeeks(activeSid,activeYear);
   const cell=document.getElementById('wkVal'+idx);
   if(!cell) return;
@@ -583,38 +707,37 @@ window.startEditWeek=function(idx){
 window.delHol=function(id){delHolEntry(activeSid,id);toast('Entry removed');renderAll();};
 window.delSick=function(id){delSickEntry(activeSid,id);toast('Entry removed');renderAll();};
 
+// â”€â”€â”€ Share Modal with Personal Link & WhatsApp Share â”€â”€â”€
 function openShareModal(sid){
   const staff=BASE.staff.find(function(s){return s.id===sid;});
   if(!staff) return;
   const allStats = getFullConnectedStats(sid);
   
+  // Construct direct link
+  const origin = window.location.origin + window.location.pathname;
+  const directLink = origin + '?staff=' + sid;
+  
+  document.getElementById('shareLinkInput').value = directLink;
+  
   let txt = 'IDFL HOLIDAY & SICK LEAVE SUMMARY\n';
   txt += '==================================================\n';
   txt += 'Staff Member: ' + staff.name + '\n';
   txt += 'Branch:       ' + (staff.location || 'IDFL') + '\n';
-  txt += 'Start Date:   ' + (staff.startDate || 'On record') + '\n';
+  txt += 'Portal Link:  ' + directLink + '\n';
   txt += '==================================================\n\n';
   
   ['2024', '2025', '2026'].forEach(function(y){
     const st = allStats[y];
     txt += '--- YEAR ' + y + ' ---\n';
     txt += '  Opening Carry-over: ' + fmt1(st.opening) + ' hrs\n';
-    txt += '  Worked Hours:       ' + fmt1(st.totalWorked) + ' hrs across ' + st.weeks.length + ' periods\n';
+    txt += '  Worked Hours:       ' + fmt1(st.totalWorked) + ' hrs (' + st.weeks.length + ' periods)\n';
     txt += '  Accrued (8%):       +' + fmt1(st.earned) + ' hrs\n';
-    txt += '  Holidays Taken:     -' + fmt1(st.holTaken) + ' hrs (' + st.holLogs.length + ' entries)\n';
+    txt += '  Holidays Taken:     -' + fmt1(st.holTaken) + ' hrs\n';
     txt += '  Balance Available:  ' + fmt1(st.balance) + ' hrs (' + fmt1(st.days) + ' days)\n';
-    txt += '  Sick Days Used:     ' + fmt1(st.sickUsed) + ' hrs / ' + SICK_ALLOWANCE_HRS + ' hrs allowance (Remaining: ' + fmt1(st.sickRemaining) + ' hrs)\n';
+    txt += '  Sick Days Used:     ' + fmt1(st.sickUsed) + ' hrs (Remaining: ' + fmt1(st.sickRemaining) + ' hrs)\n';
     if(st.holLogs.length > 0){
-      txt += '  Holidays Detail:\n';
-      st.holLogs.forEach(function(h){
-        txt += '    * ' + (h.date||'').padEnd(12) + (fmt1(h.hours)+'h').padEnd(8) + ' ' + (h.note||'Holiday') + '\n';
-      });
-    }
-    if(st.sickLogs.length > 0){
-      txt += '  Sick Detail:\n';
-      st.sickLogs.forEach(function(k){
-        txt += '    * ' + (k.date||'').padEnd(12) + (fmt1(k.hours)+'h').padEnd(8) + ' ' + (k.note||'Sick') + '\n';
-      });
+      txt += '  Holidays:\n';
+      st.holLogs.forEach(function(h){ txt += '    * ' + (h.date||'').padEnd(12) + (fmt1(h.hours)+'h').padEnd(8) + ' ' + (h.note||'Holiday') + '\n'; });
     }
     txt += '\n';
   });
@@ -622,21 +745,39 @@ function openShareModal(sid){
   txt += '==================================================\n';
   txt += 'CURRENT 2026 BALANCE: ' + fmt1(allStats['2026'].balance) + ' HRS (' + fmt1(allStats['2026'].days) + ' DAYS)\n';
   txt += 'CURRENT SICK REMAINING: ' + fmt1(allStats['2026'].sickRemaining) + ' HRS\n';
-  txt += 'Report Date: ' + new Date().toLocaleDateString('en-GB') + '\n';
   
   document.getElementById('shareOutput').textContent=txt;
+  
+  // WhatsApp Share button
+  document.getElementById('shareWhatsAppBtn').onclick = function(){
+    const waText = encodeURIComponent('Hi ' + staff.name + ', here is your IDFL Holiday & Hours portal link:\n' + directLink + '\n\nCurrent 2026 Holiday Balance: ' + fmt1(allStats['2026'].balance) + ' hrs (' + fmt1(allStats['2026'].days) + ' days)\nSick Allowance Remaining: ' + fmt1(allStats['2026'].sickRemaining) + ' hrs');
+    window.open('https://api.whatsapp.com/send?text=' + waText, '_blank');
+  };
+  
+  // Open Staff Window Preview button
+  document.getElementById('shareOpenWindowBtn').onclick = function(){
+    window.open(directLink, '_blank');
+  };
+  
   document.getElementById('shareModal').classList.remove('hidden');
 }
 
+document.getElementById('shareCopyLinkBtn').addEventListener('click',function(){
+  const link = document.getElementById('shareLinkInput').value;
+  if(navigator.clipboard){navigator.clipboard.writeText(link).then(function(){toast('Copied portal link to clipboard!');});}
+  else{fallbackCopy(link);}
+});
+
 document.getElementById('shareClose').addEventListener('click',function(){document.getElementById('shareModal').classList.add('hidden');});
 document.getElementById('shareCloseBtn').addEventListener('click',function(){document.getElementById('shareModal').classList.add('hidden');});
-document.getElementById('shareCopyBtn').addEventListener('click',function(){
+document.getElementById('shareCopyTextBtn').addEventListener('click',function(){
   const txt=document.getElementById('shareOutput').textContent;
   if(navigator.clipboard){navigator.clipboard.writeText(txt).then(function(){toast('Copied summary to clipboard');}).catch(function(){fallbackCopy(txt);});}
   else{fallbackCopy(txt);}
 });
 function fallbackCopy(txt){const ta=document.createElement('textarea');ta.value=txt;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();document.execCommand('copy');ta.remove();toast('Copied');}
 
+// â”€â”€â”€ Bulk Holiday â”€â”€â”€
 document.getElementById('bulkHolBtn').addEventListener('click',function(){document.getElementById('bulkModal').classList.remove('hidden');});
 document.getElementById('bulkClose').addEventListener('click',function(){document.getElementById('bulkModal').classList.add('hidden');});
 document.getElementById('bulkCancelBtn').addEventListener('click',function(){document.getElementById('bulkModal').classList.add('hidden');});
@@ -651,10 +792,30 @@ document.getElementById('bulkSaveBtn').addEventListener('click',function(){
   document.getElementById('bulkDate').value='';document.getElementById('bulkHrs').value='';document.getElementById('bulkNote').value='';
   toast('Added holiday for '+count+' staff');renderAll();
 });
+
 document.getElementById('bulkModal').addEventListener('click',function(e){if(e.target===document.getElementById('bulkModal'))document.getElementById('bulkModal').classList.add('hidden');});
 document.getElementById('shareModal').addEventListener('click',function(e){if(e.target===document.getElementById('shareModal'))document.getElementById('shareModal').classList.add('hidden');});
 document.getElementById('searchBox').addEventListener('input',function(){renderSidebar();});
 document.getElementById('menuBtn').addEventListener('click',function(){document.getElementById('sidebar').classList.toggle('open');});
+
+// Admin / Portal toggle
+document.getElementById('adminToggleBtn').addEventListener('click',function(){
+  isPortalMode = false;
+  document.getElementById('portalBadge').style.display = 'none';
+  document.getElementById('hdrSearchWrap').style.display = 'block';
+  document.getElementById('bulkHolBtn').style.display = 'inline-flex';
+  document.getElementById('adminToggleBtn').style.display = 'none';
+  renderAll();
+});
+
+document.getElementById('logoBtn').addEventListener('click',function(){
+  isPortalMode = false;
+  document.getElementById('portalBadge').style.display = 'none';
+  document.getElementById('hdrSearchWrap').style.display = 'block';
+  document.getElementById('bulkHolBtn').style.display = 'inline-flex';
+  document.getElementById('adminToggleBtn').style.display = 'none';
+  renderAll();
+});
 
 function applyStartDates(){
   if(!ov._starts) return;
@@ -671,8 +832,28 @@ function renderAll(){
   renderMain();
 }
 
+// Check URL query params for ?staff=s2 or ?staff=Rana or ?id=s2
+function checkUrlParams(){
+  const params = new URLSearchParams(window.location.search);
+  const staffParam = params.get('staff') || params.get('id') || params.get('name');
+  if(staffParam){
+    const matched = BASE.staff.find(function(s){
+      return s.id.toLowerCase() === staffParam.toLowerCase() || s.name.toLowerCase().includes(staffParam.toLowerCase());
+    });
+    if(matched){
+      activeSid = matched.id;
+      isPortalMode = true;
+      document.getElementById('portalBadge').style.display = 'inline-block';
+      document.getElementById('hdrSearchWrap').style.display = 'none';
+      document.getElementById('bulkHolBtn').style.display = 'none';
+      document.getElementById('adminToggleBtn').style.display = 'inline-flex';
+    }
+  }
+}
+
 applyStartDates();
-activeSid = 's3';
+checkUrlParams();
+if(!activeSid) activeSid = 's3'; // Default Yasir Saeed if no param
 renderAll();
 </script>
 </body>
