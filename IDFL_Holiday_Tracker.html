@@ -67,28 +67,40 @@ header{background:var(--sf);border-bottom:1px solid var(--bd);padding:11px 20px;
 
 /* â”€â”€ STAFF PORTAL (WINDOW VIEW) â”€â”€ */
 .portal-container{max-width:1080px;margin:0 auto;padding:16px;width:100%}
-.portal-header{background:linear-gradient(135deg,var(--sf2),var(--sf));border:1px solid var(--bd2);border-radius:18px;padding:22px 24px;margin-bottom:20px;box-shadow:var(--shadow);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
+.portal-header{background:linear-gradient(135deg,var(--sf2),var(--sf));border:1px solid var(--bd2);border-radius:18px;padding:20px 24px;margin-bottom:20px;box-shadow:var(--shadow);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
 .portal-profile{display:flex;align-items:center;gap:16px}
-.portal-avatar{width:56px;height:56px;border-radius:50%;font-size:1.3rem;font-weight:900;display:flex;align-items:center;justify-content:center;color:#090b13;box-shadow:0 0 20px rgba(0,0,0,.4)}
-.portal-name{font-size:1.5rem;font-weight:900;letter-spacing:-.4px;color:var(--tx)}
+.portal-avatar{width:54px;height:54px;border-radius:50%;font-size:1.25rem;font-weight:900;display:flex;align-items:center;justify-content:center;color:#090b13;box-shadow:0 0 20px rgba(0,0,0,.4)}
+.portal-name{font-size:1.45rem;font-weight:900;letter-spacing:-.4px;color:var(--tx)}
 .portal-sub{font-size:.82rem;color:var(--tx2);margin-top:3px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 .portal-branch{background:var(--sf3);border:1px solid var(--bd);padding:2px 10px;border-radius:20px;font-size:.72rem;font-weight:700;color:var(--ac)}
 
-/* â”€â”€ STAT HERO CARDS (3-COLUMN) â”€â”€ */
-.hero-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:20px}
-@media(max-width:900px){.hero-grid{grid-template-columns:1fr}}
+/* â”€â”€ HERO STATS (CENTERED BIG HOLIDAY + 2 SUB CARDS) â”€â”€ */
+.hero-center-wrap{display:flex;flex-direction:column;gap:16px;margin-bottom:24px}
 .hero-card{background:var(--sf);border:1px solid var(--bd);border-radius:16px;padding:20px;box-shadow:var(--shadow);position:relative;overflow:hidden}
-.hero-card.highlight{border-color:var(--bd2);background:linear-gradient(180deg,var(--sf),var(--sf2))}
-.hero-title{font-size:.75rem;font-weight:800;text-transform:uppercase;letter-spacing:.6px;color:var(--tx3);display:flex;align-items:center;gap:6px;margin-bottom:12px}
-.hero-val{font-size:2.4rem;font-weight:900;line-height:1;letter-spacing:-1px}
-.hero-sub{font-size:.85rem;font-weight:700;margin-top:6px;opacity:.8}
-.hero-desc{font-size:.72rem;color:var(--tx3);margin-top:4px}
-.hero-breakdown{margin-top:16px;border-top:1px solid var(--bd);padding-top:12px;display:flex;flex-direction:column;gap:7px;font-size:.76rem}
+
+.hero-primary-center{text-align:center;border-color:var(--bd2);background:radial-gradient(ellipse at top, rgba(91,142,245,0.08), var(--sf) 70%);padding:26px 24px}
+.hero-title{font-size:.75rem;font-weight:800;text-transform:uppercase;letter-spacing:.6px;color:var(--tx3);display:flex;align-items:center;justify-content:center;gap:6px;margin-bottom:10px}
+.hero-val-big{font-size:3.4rem;font-weight:900;line-height:1;letter-spacing:-1.5px;font-family:'Outfit',sans-serif}
+.hero-sub-big{font-size:1.15rem;font-weight:800;margin-top:6px;letter-spacing:-.2px}
+.hero-desc{font-size:.74rem;color:var(--tx3);margin-top:4px}
+
+.hero-breakdown-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:20px;padding-top:16px;border-top:1px solid var(--bd);max-width:720px;margin-left:auto;margin-right:auto}
+@media(max-width:650px){.hero-breakdown-grid{grid-template-columns:1fr;gap:8px}}
+.hero-b-col{background:var(--sf2);border:1px solid var(--bd);border-radius:10px;padding:10px 14px;display:flex;flex-direction:column;gap:3px;align-items:center}
+.hero-b-col span{font-size:.68rem;color:var(--tx3);font-weight:700;text-transform:uppercase}
+.hero-b-col strong{font-size:.95rem;font-family:'JetBrains Mono',monospace;font-weight:800}
+
+/* 2 Sub Hero Cards */
+.hero-sub-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:750px){.hero-sub-grid{grid-template-columns:1fr}}
+.hero-val{font-size:2.2rem;font-weight:900;line-height:1;letter-spacing:-.8px}
+.hero-sub{font-size:.84rem;font-weight:700;margin-top:6px}
+.hero-breakdown{margin-top:14px;border-top:1px solid var(--bd);padding-top:10px;display:flex;flex-direction:column;gap:6px;font-size:.76rem}
 .hero-breakdown-row{display:flex;justify-content:space-between;color:var(--tx2)}
 .hero-breakdown-row strong{font-family:'JetBrains Mono',monospace;color:var(--tx)}
 
 /* â”€â”€ PROGRESS BARS â”€â”€ */
-.progress-wrap{margin-top:14px}
+.progress-wrap{margin-top:12px}
 .progress-track{background:var(--sf3);border-radius:6px;height:8px;overflow:hidden;margin-top:6px}
 .progress-fill{height:100%;border-radius:6px;transition:width .4s ease}
 .progress-fill.pk{background:var(--pk)}
@@ -124,17 +136,26 @@ table.weeks td.act{text-align:right;width:46px}
 .add-week-form input.lbl{flex:2;min-width:140px}
 .add-week-form input.hrs{width:64px}
 
-/* â”€â”€ LOGS â”€â”€ */
-.log-list{max-height:220px;overflow-y:auto}
+/* â”€â”€ LOGS & INLINE EDITING â”€â”€ */
+.log-list{max-height:240px;overflow-y:auto}
 .log-item{display:flex;align-items:center;gap:10px;padding:10px 16px;border-bottom:1px solid var(--bd);font-size:.76rem}
 .log-item:last-child{border-bottom:none}
 .log-date{font-family:'JetBrains Mono',monospace;color:var(--tx2);min-width:80px;flex-shrink:0;font-size:.72rem}
 .log-note{flex:1;color:var(--tx2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .log-hrs{font-weight:800;font-family:'JetBrains Mono',monospace;flex-shrink:0}
 .log-hrs.hol{color:var(--am)}.log-hrs.sick{color:var(--pk)}
-.log-del{background:none;border:none;color:var(--tx3);cursor:pointer;font-size:.85rem;padding:2px 5px;border-radius:4px;transition:all .12s}
-.log-del:hover{color:var(--rd);background:var(--rd2)}
+.log-actions{display:flex;gap:4px;align-items:center;flex-shrink:0}
+.log-btn{background:none;border:none;color:var(--tx3);cursor:pointer;font-size:.82rem;padding:2px 5px;border-radius:4px;transition:all .12s}
+.log-btn:hover{color:var(--tx);background:var(--sf3)}
+.log-btn.del:hover{color:var(--rd);background:var(--rd2)}
 .log-empty{padding:24px 16px;text-align:center;color:var(--tx3);font-size:.75rem}
+
+.log-edit-row{display:flex;gap:6px;padding:8px 12px;background:var(--sf3);border-bottom:1px solid var(--bd);align-items:center;flex-wrap:wrap}
+.log-edit-row input{background:var(--sf);border:1px solid var(--ac);border-radius:6px;color:var(--tx);font-family:'Outfit',sans-serif;font-size:.73rem;padding:4px 6px;outline:none}
+.log-edit-row input[type=date]{min-width:105px}
+.log-edit-row input[type=number]{width:52px;font-family:'JetBrains Mono',monospace}
+.log-edit-row input[type=text]{flex:1;min-width:110px}
+
 .add-log-form{display:flex;gap:6px;padding:10px 14px;border-top:1px solid var(--bd);flex-wrap:wrap;background:var(--sf2)}
 .add-log-form input{background:var(--sf);border:1px solid var(--bd);border-radius:7px;color:var(--tx);font-family:'Outfit',sans-serif;font-size:.73rem;padding:6px 8px;outline:none}
 .add-log-form input:focus{border-color:var(--ac)}
@@ -175,7 +196,7 @@ table.weeks td.act{text-align:right;width:46px}
   .main{padding:14px}
   .portal-header{padding:16px;border-radius:14px}
   .portal-name{font-size:1.25rem}
-  .hero-val{font-size:2rem}
+  .hero-val-big{font-size:2.6rem}
 }
 </style>
 </head>
@@ -256,7 +277,7 @@ table.weeks td.act{text-align:right;width:46px}
 </script>
 <script>
 const SICK_ALLOWANCE_HRS = 35;
-const LS_KEY = 'idfl_tracker_v4';
+const LS_KEY = 'idfl_tracker_v5';
 const BASE = JSON.parse(document.getElementById('holiday-data').textContent);
 
 function loadOv(){ try{ return JSON.parse(localStorage.getItem(LS_KEY)||'{}'); }catch(e){ return {}; } }
@@ -267,6 +288,9 @@ let activeSid = null;
 let activeYear = '2026';
 const years = ['2024', '2025', '2026'];
 let isPortalMode = false;
+
+let editingHolId = null;
+let editingSickId = null;
 
 function uid(){ return Date.now().toString(36)+Math.random().toString(36).slice(2,6); }
 function fmt1(n){ return (Math.round((+n||0)*10)/10).toFixed(1); }
@@ -298,7 +322,12 @@ function getStaffHolidayLogs(sid, year){
   const baseLogs = ((BASE.baseHolLogs||{})[sid]||[]).filter(function(e){ return String(e.year) === String(year); });
   const ovLogs = ((ov._holLog||{})[sid]||[]).filter(function(e){ return String(e.year) === String(year); });
   const ovDel = (ov._delHol||{})[sid]||[];
-  const merged = baseLogs.filter(function(b){ return !ovDel.includes(b.id); }).concat(ovLogs);
+  const ovEdits = (ov._editHol||{});
+  
+  const merged = baseLogs
+    .filter(function(b){ return !ovDel.includes(b.id); })
+    .map(function(b){ return ovEdits[b.id] ? Object.assign({}, b, ovEdits[b.id]) : b; })
+    .concat(ovLogs.map(function(l){ return ovEdits[l.id] ? Object.assign({}, l, ovEdits[l.id]) : l; }));
   return merged;
 }
 
@@ -306,7 +335,12 @@ function getStaffSickLogs(sid, year){
   const baseLogs = ((BASE.baseSickLogs||{})[sid]||[]).filter(function(e){ return String(e.year) === String(year); });
   const ovLogs = ((ov._sickLog||{})[sid]||[]).filter(function(e){ return String(e.year) === String(year); });
   const ovDel = (ov._delSick||{})[sid]||[];
-  const merged = baseLogs.filter(function(b){ return !ovDel.includes(b.id); }).concat(ovLogs);
+  const ovEdits = (ov._editSick||{});
+  
+  const merged = baseLogs
+    .filter(function(b){ return !ovDel.includes(b.id); })
+    .map(function(b){ return ovEdits[b.id] ? Object.assign({}, b, ovEdits[b.id]) : b; })
+    .concat(ovLogs.map(function(l){ return ovEdits[l.id] ? Object.assign({}, l, ovEdits[l.id]) : l; }));
   return merged;
 }
 
@@ -384,6 +418,12 @@ function addHolEntry(sid,year,date,hours,note){
   saveOv(ov);
 }
 
+function updateHolEntry(id, date, hours, note){
+  if(!ov._editHol) ov._editHol={};
+  ov._editHol[id] = { date: date, hours: hours, note: note };
+  saveOv(ov);
+}
+
 function delHolEntry(sid,id){
   if(!ov._delHol) ov._delHol={};
   if(!ov._delHol[sid]) ov._delHol[sid]=[];
@@ -401,6 +441,12 @@ function addSickEntry(sid,year,date,hours,note){
   saveOv(ov);
 }
 
+function updateSickEntry(id, date, hours, note){
+  if(!ov._editSick) ov._editSick={};
+  ov._editSick[id] = { date: date, hours: hours, note: note };
+  saveOv(ov);
+}
+
 function delSickEntry(sid,id){
   if(!ov._delSick) ov._delSick={};
   if(!ov._delSick[sid]) ov._delSick[sid]=[];
@@ -415,7 +461,7 @@ function delSickEntry(sid,id){
 function renderYearTabs(){
   const el=document.getElementById('yearTabs');
   el.innerHTML=years.map(function(y){return '<button class="year-tab'+(y===activeYear?' active':'')+'" data-y="'+y+'">'+y+'</button>';}).join('');
-  el.querySelectorAll('.year-tab').forEach(function(b){b.addEventListener('click',function(){activeYear=b.dataset.y;renderAll();});});
+  el.querySelectorAll('.year-tab').forEach(function(b){b.addEventListener('click',function(){activeYear=b.dataset.y;editingHolId=null;editingSickId=null;renderAll();});});
 }
 
 function renderHdrStats(){
@@ -462,7 +508,7 @@ function renderSidebar(){
     div.innerHTML='<div class="si-avatar" style="background:'+avatarColor(s.id)+';color:#0c0e17">'+initials(s.name)+'</div>'
       +'<div class="si-info"><div class="si-name">'+s.name+'</div><div class="si-sub">'+(s.location||'')+'</div></div>'
       +(hasData?'<span class="si-badge '+badgeCls+'">'+badgeTxt+'</span>':'');
-    div.addEventListener('click',function(){activeSid=s.id;renderAll();});
+    div.addEventListener('click',function(){activeSid=s.id;editingHolId=null;editingSickId=null;renderAll();});
     groups[s.group||1].push(div);
   });
   
@@ -476,7 +522,7 @@ function renderSidebar(){
   });
 }
 
-// â”€â”€â”€ Main View â”€â”€â”€
+// â”€â”€â”€ Main View (Center Hero + Sub-cards + Editable Logs) â”€â”€â”€
 function renderMain(){
   const el=document.getElementById('main');
   if(!activeSid){
@@ -520,24 +566,26 @@ function renderMain(){
     +'</div>'
     +'</div>'
     
-    // 3 Big Metric Hero Cards
-    +'<div class="hero-grid">'
-    // Card 1: Holiday Balance
-    +'<div class="hero-card highlight">'
-    +'<div class="hero-title">&#127958; Available Holiday Balance ('+activeYear+')</div>'
-    +'<div class="hero-val" style="color:'+balColor+'">'+fmt1(balance)+' hrs</div>'
-    +'<div class="hero-sub" style="color:'+balColor+'">'+fmt1(balDays)+' working days</div>'
+    // ðŸŒŸ HERO STATS: AVAILABLE HOLIDAYS IN CENTER & BIG, 2 SUB CARDS UNDERNEATH ðŸŒŸ
+    +'<div class="hero-center-wrap">'
+    // Top Center Big Card: Available Holiday Balance
+    +'<div class="hero-card hero-primary-center">'
+    +'<div class="hero-title">&#127958; AVAILABLE HOLIDAY BALANCE ('+activeYear+')</div>'
+    +'<div class="hero-val-big" style="color:'+balColor+'">'+fmt1(balance)+' hrs</div>'
+    +'<div class="hero-sub-big" style="color:'+balColor+'">'+fmt1(balDays)+' working days</div>'
     +'<div class="hero-desc">Based on 7 hrs / working day</div>'
-    +'<div class="hero-breakdown">'
-    +'<div class="hero-breakdown-row"><span>Opening Carry-over</span><strong>'+fmt1(curStats.opening)+' hrs</strong></div>'
-    +'<div class="hero-breakdown-row"><span>Earned (8% of '+fmt1(curStats.totalWorked)+'h)</span><strong style="color:var(--gr)">+'+fmt1(curStats.earned)+' hrs</strong></div>'
-    +'<div class="hero-breakdown-row"><span>Holidays taken ('+activeYear+')</span><strong style="color:var(--am)">-'+fmt1(curStats.holTaken)+' hrs</strong></div>'
+    +'<div class="hero-breakdown-grid">'
+    +'<div class="hero-b-col"><span>Opening Carry-over</span><strong>'+fmt1(curStats.opening)+' hrs</strong></div>'
+    +'<div class="hero-b-col"><span>Earned (8% of '+fmt1(curStats.totalWorked)+'h)</span><strong style="color:var(--gr)">+'+fmt1(curStats.earned)+' hrs</strong></div>'
+    +'<div class="hero-b-col"><span>Holidays taken ('+activeYear+')</span><strong style="color:var(--am)">-'+fmt1(curStats.holTaken)+' hrs</strong></div>'
     +'</div>'
     +'</div>'
     
-    // Card 2: Sick Days Allowance
+    // 2 Sub Cards Underneath: Sick Allowance & Worked Hours
+    +'<div class="hero-sub-grid">'
+    // Sub Card 1: Sick Allowance
     +'<div class="hero-card">'
-    +'<div class="hero-title">&#127973; Sick Allowance ('+activeYear+')</div>'
+    +'<div class="hero-title" style="justify-content:flex-start">&#127973; SICK ALLOWANCE ('+activeYear+')</div>'
     +'<div class="hero-val" style="color:'+(curStats.sickRemaining>=0?'var(--pk)':'var(--rd)')+'">'+fmt1(curStats.sickRemaining)+' hrs</div>'
     +'<div class="hero-sub" style="color:'+(curStats.sickRemaining>=0?'var(--pk)':'var(--rd)')+'">'+fmt1(curStats.sickRemaining/7)+' days remaining</div>'
     +'<div class="progress-wrap">'
@@ -550,9 +598,9 @@ function renderMain(){
     +'</div>'
     +'</div>'
     
-    // Card 3: Worked Hours Summary
+    // Sub Card 2: Worked Hours
     +'<div class="hero-card">'
-    +'<div class="hero-title">&#128197; Worked Hours ('+activeYear+')</div>'
+    +'<div class="hero-title" style="justify-content:flex-start">&#128197; WORKED HOURS ('+activeYear+')</div>'
     +'<div class="hero-val" style="color:var(--ac)">'+fmt1(curStats.totalWorked)+' hrs</div>'
     +'<div class="hero-sub" style="color:var(--tx2)">'+curStats.weeks.length+' recorded periods</div>'
     +'<div class="hero-desc">Generates 8% holiday entitlement</div>'
@@ -562,8 +610,9 @@ function renderMain(){
     +'</div>'
     +'</div>'
     +'</div>'
+    +'</div>'
     
-    // 2-Column Detailed Section
+    // 2-Column Detailed Section (Weeks Worked Table & Editable Logs)
     +'<div class="detail-grid">'
     // Left: Weeks Worked Breakdown
     +'<div class="card">'
@@ -575,9 +624,9 @@ function renderMain(){
     +'<button class="btn btn-ac" id="addWkBtn">Add Week</button></div>' : '')
     +'</div>'
     
-    // Right: Holidays & Sick Logs
+    // Right: Editable Holidays & Sick Logs
     +'<div>'
-    // Holiday Log Card
+    // Editable Holiday Log Card
     +'<div class="card">'
     +'<div class="card-hd"><h3>&#128198; Holidays Taken Log ('+activeYear+')</h3><span class="card-sub">'+curStats.holLogs.length+' records &bull; -'+fmt1(curStats.holTaken)+' hrs</span></div>'
     +'<div class="log-list" id="holLogList"></div>'
@@ -586,7 +635,7 @@ function renderMain(){
     +'<input type="text" id="holNote" placeholder="Note / Reason"><button class="btn btn-am" id="addHolBtn">Add</button></div>' : '')
     +'</div>'
     
-    // Sick Log Card
+    // Editable Sick Log Card
     +'<div class="card" style="margin-top:16px">'
     +'<div class="card-hd"><h3>&#127973; Sick Days Taken ('+activeYear+')</h3><span class="card-sub">'+curStats.sickLogs.length+' records &bull; '+fmt1(curStats.sickUsed)+' hrs</span></div>'
     +'<div class="log-list" id="sickLogList"></div>'
@@ -611,25 +660,47 @@ function renderMain(){
     tbody.innerHTML='<tr><td colspan="3" style="padding:24px;text-align:center;color:var(--tx3);font-size:.8rem">No entries recorded for '+activeYear+'</td></tr>';
   }
 
-  // Holiday Log
+  // ðŸŒŸ Editable Holiday Log Rendering ðŸŒŸ
   const holListEl=document.getElementById('holLogList');
   if(curStats.holLogs.length){
     curStats.holLogs.forEach(function(e){
-      const d=document.createElement('div');d.className='log-item';
-      d.innerHTML='<span class="log-date">'+(e.date||'')+'</span><span class="log-note" title="'+(e.note||'')+'">'+(e.note||'Holiday')+'</span><span class="log-hrs hol">-'+fmt1(e.hours)+' hrs</span>'
-        +(!isPortalMode?'<button class="log-del" onclick="delHol(\''+e.id+'\')">&#128465;</button>':'');
-      holListEl.appendChild(d);
+      if(editingHolId === e.id && !isPortalMode){
+        // Inline Edit Mode for Holiday
+        const editDiv=document.createElement('div');editDiv.className='log-edit-row';
+        editDiv.innerHTML='<input type="text" id="editHolDate_'+e.id+'" value="'+(e.date||'')+'" style="width:90px">'
+          +'<input type="number" id="editHolHrs_'+e.id+'" value="'+e.hours+'" step="0.5" min="0">'
+          +'<input type="text" id="editHolNote_'+e.id+'" value="'+(e.note||'').replace(/"/g, '&quot;')+'">'
+          +'<button class="btn btn-gr" style="padding:4px 8px" onclick="saveEditHol(\''+e.id+'\')">&#10004;</button>'
+          +'<button class="btn btn-ghost" style="padding:4px 8px" onclick="cancelEditHol()">&#10006;</button>';
+        holListEl.appendChild(editDiv);
+      } else {
+        const d=document.createElement('div');d.className='log-item';
+        d.innerHTML='<span class="log-date">'+(e.date||'')+'</span><span class="log-note" title="'+(e.note||'')+'">'+(e.note||'Holiday')+'</span><span class="log-hrs hol">-'+fmt1(e.hours)+' hrs</span>'
+          +(!isPortalMode?'<div class="log-actions"><button class="log-btn" title="Edit Holiday" onclick="startEditHol(\''+e.id+'\')">&#9998;</button><button class="log-btn del" title="Delete" onclick="delHol(\''+e.id+'\')">&#128465;</button></div>':'');
+        holListEl.appendChild(d);
+      }
     });
   } else { holListEl.innerHTML='<div class="log-empty">No holidays taken in '+activeYear+'</div>'; }
 
-  // Sick Log
+  // ðŸŒŸ Editable Sick Log Rendering ðŸŒŸ
   const sickListEl=document.getElementById('sickLogList');
   if(curStats.sickLogs.length){
     curStats.sickLogs.forEach(function(e){
-      const d=document.createElement('div');d.className='log-item';
-      d.innerHTML='<span class="log-date">'+(e.date||'')+'</span><span class="log-note" title="'+(e.note||'')+'">'+(e.note||'Sick')+'</span><span class="log-hrs sick">'+fmt1(e.hours)+' hrs</span>'
-        +(!isPortalMode?'<button class="log-del" onclick="delSick(\''+e.id+'\')">&#128465;</button>':'');
-      sickListEl.appendChild(d);
+      if(editingSickId === e.id && !isPortalMode){
+        // Inline Edit Mode for Sick Log
+        const editDiv=document.createElement('div');editDiv.className='log-edit-row';
+        editDiv.innerHTML='<input type="text" id="editSickDate_'+e.id+'" value="'+(e.date||'')+'" style="width:90px">'
+          +'<input type="number" id="editSickHrs_'+e.id+'" value="'+e.hours+'" step="0.5" min="0">'
+          +'<input type="text" id="editSickNote_'+e.id+'" value="'+(e.note||'').replace(/"/g, '&quot;')+'">'
+          +'<button class="btn btn-gr" style="padding:4px 8px" onclick="saveEditSick(\''+e.id+'\')">&#10004;</button>'
+          +'<button class="btn btn-ghost" style="padding:4px 8px" onclick="cancelEditSick()">&#10006;</button>';
+        sickListEl.appendChild(editDiv);
+      } else {
+        const d=document.createElement('div');d.className='log-item';
+        d.innerHTML='<span class="log-date">'+(e.date||'')+'</span><span class="log-note" title="'+(e.note||'')+'">'+(e.note||'Sick')+'</span><span class="log-hrs sick">'+fmt1(e.hours)+' hrs</span>'
+          +(!isPortalMode?'<div class="log-actions"><button class="log-btn" title="Edit Sick Day" onclick="startEditSick(\''+e.id+'\')">&#9998;</button><button class="log-btn del" title="Delete" onclick="delSick(\''+e.id+'\')">&#128465;</button></div>':'');
+        sickListEl.appendChild(d);
+      }
     });
   } else { sickListEl.innerHTML='<div class="log-empty">No sick days logged for '+activeYear+'</div>'; }
 
@@ -700,6 +771,34 @@ window.startEditWeek=function(idx){
   function save(){const v=parseFloat(inp.value);if(!isNaN(v)){setWeekHours(activeSid,activeYear,idx,v);toast('Hours updated');}renderAll();}
   inp.addEventListener('blur',save);
   inp.addEventListener('keydown',function(e){if(e.key==='Enter')inp.blur();if(e.key==='Escape')renderAll();});
+};
+
+// â”€â”€â”€ Edit Holiday Logs â”€â”€â”€
+window.startEditHol=function(id){ editingHolId=id; renderAll(); };
+window.cancelEditHol=function(){ editingHolId=null; renderAll(); };
+window.saveEditHol=function(id){
+  const d=document.getElementById('editHolDate_'+id).value.trim();
+  const h=parseFloat(document.getElementById('editHolHrs_'+id).value);
+  const n=document.getElementById('editHolNote_'+id).value.trim();
+  if(isNaN(h)||h<=0){toast('Enter valid hours','var(--rd)');return;}
+  updateHolEntry(id, d, h, n);
+  editingHolId=null;
+  toast('Holiday entry updated');
+  renderAll();
+};
+
+// â”€â”€â”€ Edit Sick Logs â”€â”€â”€
+window.startEditSick=function(id){ editingSickId=id; renderAll(); };
+window.cancelEditSick=function(){ editingSickId=null; renderAll(); };
+window.saveEditSick=function(id){
+  const d=document.getElementById('editSickDate_'+id).value.trim();
+  const h=parseFloat(document.getElementById('editSickHrs_'+id).value);
+  const n=document.getElementById('editSickNote_'+id).value.trim();
+  if(isNaN(h)||h<=0){toast('Enter valid hours','var(--rd)');return;}
+  updateSickEntry(id, d, h, n);
+  editingSickId=null;
+  toast('Sick day updated');
+  renderAll();
 };
 
 window.delHol=function(id){delHolEntry(activeSid,id);toast('Entry removed');renderAll();};
@@ -851,7 +950,7 @@ function checkUrlParams(){
 
 applyStartDates();
 checkUrlParams();
-if(!activeSid) activeSid = 's4'; // Default select Kausar Rizvi
+if(!activeSid) activeSid = 's3'; // Default select Yasir Saeed
 renderAll();
 </script>
 </body>
