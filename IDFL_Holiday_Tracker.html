@@ -167,7 +167,7 @@ table.weeks td.act{text-align:right;width:46px}
 /* â”€â”€ MODALS â”€â”€ */
 .modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:100;display:flex;align-items:center;justify-content:center;padding:16px}
 .modal-bg.hidden{display:none}
-.modal{background:var(--sf);border:1px solid var(--bd2);border-radius:18px;box-shadow:var(--shadowL);width:100%;max-width:520px;max-height:85vh;overflow-y:auto}
+.modal{background:var(--sf);border:1px solid var(--bd2);border-radius:18px;box-shadow:var(--shadowL);width:100%;max-width:540px;max-height:85vh;overflow-y:auto}
 .modal-large{max-width:880px!important}
 .modal-hd{padding:18px 22px;border-bottom:1px solid var(--bd);display:flex;justify-content:space-between;align-items:center}
 .modal-hd h2{font-size:1.05rem;font-weight:900;display:flex;align-items:center;gap:8px}
@@ -289,21 +289,34 @@ table.batch-table input:focus{border-color:var(--ac)}
   </div>
 </div>
 
-<!-- ðŸŒŸ SYNC & BACKUP MODAL ðŸŒŸ -->
+<!-- ðŸŒŸ SYNC & GITHUB CLOUD MODAL ðŸŒŸ -->
 <div class="modal-bg hidden" id="syncModal">
   <div class="modal">
     <div class="modal-hd">
-      <h2>&#128260; Sync &amp; Backup Company Data</h2>
+      <h2>&#128260; Sync &amp; GitHub Cloud Storage</h2>
       <button class="modal-close" id="syncClose">&times;</button>
     </div>
     <div class="modal-body">
-      <p style="font-size:.8rem;color:var(--tx2);margin-bottom:16px;line-height:1.5">All your edits are automatically saved on this device. You can download a backup copy or restore anytime:</p>
+      <!-- Direct GitHub Push Section -->
+      <div style="background:var(--sf2);border:1px solid var(--bd2);border-radius:12px;padding:14px;margin-bottom:16px">
+        <h4 style="font-size:.88rem;color:var(--tx);margin-bottom:6px;display:flex;align-items:center;gap:6px">&#127760; Push Live to GitHub Online</h4>
+        <p style="font-size:.75rem;color:var(--tx2);margin-bottom:12px;line-height:1.45">Push your latest edits directly to GitHub repository (<code>idigitalfun-ui/idfl-holidays</code>). Cloudflare will immediately deploy the live update to all staff phones.</p>
+        
+        <label style="font-size:.72rem">GitHub Personal Access Token (PAT)</label>
+        <input type="password" id="ghTokenInput" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" style="margin-bottom:8px">
+        <div style="display:flex;gap:8px;margin-bottom:4px">
+          <button class="btn btn-gr" id="ghPushBtn" style="flex:2;justify-content:center">&#128640; Push Live to GitHub Online</button>
+          <button class="btn btn-ghost" id="ghSaveTokenBtn" style="flex:1;justify-content:center">Save Token</button>
+        </div>
+        <div id="ghStatusText" style="font-size:.72rem;color:var(--tx3);margin-top:6px"></div>
+      </div>
+
+      <p style="font-size:.76rem;color:var(--tx3);margin-bottom:12px">Local Backup Options:</p>
       
-      <div style="display:flex;flex-direction:column;gap:10px">
-        <button class="btn btn-ac" id="exportBtn" style="justify-content:center;padding:12px">&#128190; Download Complete Database (JSON)</button>
-        <button class="btn btn-ghost" id="copyJsonBtn" style="justify-content:center;padding:12px">&#128203; Copy Database to Clipboard (For Chat / Sync)</button>
-        <div style="border-top:1px solid var(--bd);margin:8px 0"></div>
-        <button class="btn btn-pu" id="restoreBtn" style="justify-content:center;padding:12px">&#128229; Restore from Backup File (.json)</button>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <button class="btn btn-ac" id="exportBtn" style="justify-content:center">&#128190; Download Complete Database (JSON)</button>
+        <button class="btn btn-ghost" id="copyJsonBtn" style="justify-content:center">&#128203; Copy Database to Clipboard (For Chat / Sync)</button>
+        <button class="btn btn-pu" id="restoreBtn" style="justify-content:center">&#128229; Restore from Backup File (.json)</button>
         <input type="file" id="restoreFileInput" accept=".json" style="display:none">
       </div>
     </div>
@@ -365,6 +378,9 @@ table.batch-table input:focus{border-color:var(--ac)}
 <script>
 const SICK_ALLOWANCE_HRS = 35;
 const LS_KEY = 'idfl_tracker_db';
+const GH_TOKEN_KEY = 'idfl_gh_token';
+const GH_REPO = 'idigitalfun-ui/idfl-holidays';
+
 const BASE = JSON.parse(document.getElementById('holiday-data').textContent);
 
 function loadOv(){ try{ return JSON.parse(localStorage.getItem(LS_KEY)||'{}'); }catch(e){ return {}; } }
@@ -394,7 +410,7 @@ function toast(msg,col){
   col=col||'var(--gr)';
   const t=document.createElement('div');t.className='toast';t.textContent=msg;
   t.style.background=col;t.style.color=(col==='var(--gr)'||col==="#4ade80")?'#071a0c':'#fff';
-  document.body.appendChild(t);setTimeout(function(){t.remove();},2400);
+  document.body.appendChild(t);setTimeout(function(){t.remove();},2600);
 }
 
 // â”€â”€â”€ Data Access â”€â”€â”€
@@ -996,7 +1012,7 @@ document.getElementById('batchSaveAllBtn').addEventListener('click', function(){
   renderAll();
 });
 
-// â”€â”€â”€ ðŸŒŸ SYNC & BACKUP ACTIONS â”€â”€â”€
+// â”€â”€â”€ ðŸŒŸ SYNC & GITHUB CLOUD ACTIONS â”€â”€â”€
 function buildCurrentDatabaseState(){
   const exportData = JSON.parse(JSON.stringify(BASE));
   years.forEach(function(y){
@@ -1015,9 +1031,110 @@ function buildCurrentDatabaseState(){
   return exportData;
 }
 
+function utf8ToBase64(str){
+  return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g, function(match, p1) {
+    return String.fromCharCode('0x' + p1);
+  }));
+}
+
 document.getElementById('syncModalBtn').addEventListener('click', function(){
+  const savedTok = localStorage.getItem(GH_TOKEN_KEY) || '';
+  document.getElementById('ghTokenInput').value = savedTok;
+  if(savedTok){
+    document.getElementById('ghStatusText').innerHTML = '<span style="color:var(--gr)">&#10004; Token configured for ' + GH_REPO + '</span>';
+  } else {
+    document.getElementById('ghStatusText').innerHTML = '<span>Enter your GitHub token once to enable 1-click cloud sync.</span>';
+  }
   document.getElementById('syncModal').classList.remove('hidden');
 });
+
+document.getElementById('ghSaveTokenBtn').addEventListener('click', function(){
+  const tok = document.getElementById('ghTokenInput').value.trim();
+  if(tok){
+    localStorage.setItem(GH_TOKEN_KEY, tok);
+    toast('GitHub token saved!');
+    document.getElementById('ghStatusText').innerHTML = '<span style="color:var(--gr)">&#10004; Token configured for ' + GH_REPO + '</span>';
+  } else {
+    localStorage.removeItem(GH_TOKEN_KEY);
+    toast('GitHub token cleared');
+    document.getElementById('ghStatusText').innerHTML = '<span>Token removed.</span>';
+  }
+});
+
+// ðŸš€ DIRECT GITHUB REST API PUSH ðŸš€
+document.getElementById('ghPushBtn').addEventListener('click', async function(){
+  const tok = document.getElementById('ghTokenInput').value.trim() || localStorage.getItem(GH_TOKEN_KEY);
+  if(!tok){
+    toast('Please enter your GitHub Token first', 'var(--rd)');
+    document.getElementById('ghTokenInput').focus();
+    return;
+  }
+  
+  localStorage.setItem(GH_TOKEN_KEY, tok);
+  const btn = document.getElementById('ghPushBtn');
+  const origText = btn.innerHTML;
+  btn.innerHTML = '&#8987; Connecting to GitHub...';
+  btn.disabled = true;
+  
+  try {
+    const exportData = buildCurrentDatabaseState();
+    const jsonContent = JSON.stringify(exportData, null, 2);
+    const encodedContent = utf8ToBase64(jsonContent);
+    
+    // 1. Get current file SHA from GitHub
+    const getRes = await fetch('https://api.github.com/repos/' + GH_REPO + '/contents/holiday_data.json', {
+      headers: {
+        'Authorization': 'token ' + tok,
+        'Accept': 'application/vnd.github.v3+json'
+      }
+    });
+    
+    let currentSha = null;
+    if(getRes.ok){
+      const fileData = await getRes.json();
+      currentSha = fileData.sha;
+    }
+    
+    btn.innerHTML = '&#8987; Pushing update to main branch...';
+    
+    // 2. Commit update to GitHub
+    const putRes = await fetch('https://api.github.com/repos/' + GH_REPO + '/contents/holiday_data.json', {
+      method: 'PUT',
+      headers: {
+        'Authorization': 'token ' + tok,
+        'Accept': 'application/vnd.github.v3+json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        message: 'Update holiday tracker database via web portal',
+        content: encodedContent,
+        sha: currentSha || undefined,
+        branch: 'main'
+      })
+    });
+    
+    if(putRes.ok){
+      btn.innerHTML = '&#10004; Pushed to GitHub!';
+      toast('Successfully pushed to GitHub! Cloudflare is updating live for all staff phones.');
+      document.getElementById('ghStatusText').innerHTML = '<span style="color:var(--gr)">&#10004; Last pushed to GitHub online: ' + new Date().toLocaleTimeString() + '</span>';
+      setTimeout(function(){
+        document.getElementById('syncModal').classList.add('hidden');
+        btn.innerHTML = origText;
+        btn.disabled = false;
+      }, 1500);
+    } else {
+      const err = await putRes.json();
+      btn.innerHTML = origText;
+      btn.disabled = false;
+      toast('GitHub error: ' + (err.message || 'Check token permissions'), 'var(--rd)');
+    }
+  } catch(e) {
+    btn.innerHTML = origText;
+    btn.disabled = false;
+    toast('Network error connecting to GitHub', 'var(--rd)');
+  }
+});
+
 document.getElementById('syncClose').addEventListener('click', function(){ document.getElementById('syncModal').classList.add('hidden'); });
 document.getElementById('syncCloseBtn').addEventListener('click', function(){ document.getElementById('syncModal').classList.add('hidden'); });
 
@@ -1055,7 +1172,6 @@ document.getElementById('restoreFileInput').addEventListener('change', function(
     try {
       const imported = JSON.parse(evt.target.result);
       if(imported.staff && imported.years){
-        // Save imported state
         localStorage.setItem(LS_KEY, JSON.stringify(imported));
         toast('Backup restored! Reloading...');
         setTimeout(function(){ location.reload(); }, 800);
