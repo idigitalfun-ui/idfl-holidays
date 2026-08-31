@@ -229,7 +229,6 @@ table.batch-table input:focus{border-color:var(--ac)}
   </div>
   <div class="hdr-stats" id="hdrStats"></div>
   <div style="margin-left:auto;display:flex;gap:8px;align-items:center">
-    <button class="btn btn-ghost" id="adminToggleBtn" style="display:none">&#9881; Manager View</button>
     <button class="btn btn-gr" id="batchWeekBtn">&#128197; Add New Week (All Staff)</button>
     <button class="btn btn-am" id="bulkHolBtn">&#43; Holiday For All</button>
     <button class="btn btn-pu" id="syncModalBtn" title="Sync and backup all company data">&#128260; Sync &amp; Backup</button>
@@ -21087,6 +21086,7 @@ function renderSidebar(){
   const el=document.getElementById('sidebar');
   if(isPortalMode){
     el.style.display = 'none';
+    el.innerHTML = '';
     return;
   }
   el.style.display = 'block';
@@ -21171,7 +21171,7 @@ function renderMain(){
     +'</div>'
     +'</div>'
     +'<div class="profile-actions">'
-    +'<button class="btn btn-pu" id="shareBtn">&#128279; Share / Link</button>'
+    +(!isPortalMode ? '<button class="btn btn-pu" id="shareBtn">&#128279; Share / Link</button>' : '')
     +(isPortalMode ? '<button class="btn btn-ghost" id="bookmarkBtn">&#128241; Save to Phone</button>' : '')
     +'</div>'
     +'</div>'
@@ -21366,7 +21366,10 @@ function renderMain(){
     });
   }
 
-  document.getElementById('shareBtn').addEventListener('click',function(){openShareModal(activeSid);});
+  const sBtn = document.getElementById('shareBtn');
+  if(sBtn){
+    sBtn.addEventListener('click',function(){openShareModal(activeSid);});
+  }
 }
 
 // â”€â”€â”€ Edit week inline â”€â”€â”€
@@ -21383,9 +21386,10 @@ window.startEditWeek=function(idx){
 };
 
 // â”€â”€â”€ Edit Holiday Logs â”€â”€â”€
-window.startEditHol=function(id){ editingHolId=id; renderAll(); };
-window.cancelEditHol=function(){ editingHolId=null; renderAll(); };
+window.startEditHol=function(id){ if(isPortalMode) return; editingHolId=id; renderAll(); };
+window.cancelEditHol=function(){ if(isPortalMode) return; editingHolId=null; renderAll(); };
 window.saveEditHol=function(id){
+  if(isPortalMode) return;
   const d=document.getElementById('editHolDate_'+id).value.trim();
   const h=parseFloat(document.getElementById('editHolHrs_'+id).value);
   const n=document.getElementById('editHolNote_'+id).value.trim();
@@ -21397,9 +21401,10 @@ window.saveEditHol=function(id){
 };
 
 // â”€â”€â”€ Edit Sick Logs â”€â”€â”€
-window.startEditSick=function(id){ editingSickId=id; renderAll(); };
-window.cancelEditSick=function(){ editingSickId=null; renderAll(); };
+window.startEditSick=function(id){ if(isPortalMode) return; editingSickId=id; renderAll(); };
+window.cancelEditSick=function(){ if(isPortalMode) return; editingSickId=null; renderAll(); };
 window.saveEditSick=function(id){
+  if(isPortalMode) return;
   const d=document.getElementById('editSickDate_'+id).value.trim();
   const h=parseFloat(document.getElementById('editSickHrs_'+id).value);
   const n=document.getElementById('editSickNote_'+id).value.trim();
@@ -21410,11 +21415,12 @@ window.saveEditSick=function(id){
   renderAll();
 };
 
-window.delHol=function(id){delHolEntry(activeSid,id);toast('Entry removed');renderAll();};
-window.delSick=function(id){delSickEntry(activeSid,id);toast('Entry removed');renderAll();};
+window.delHol=function(id){ if(isPortalMode) return; delHolEntry(activeSid,id);toast('Entry removed');renderAll();};
+window.delSick=function(id){ if(isPortalMode) return; delSickEntry(activeSid,id);toast('Entry removed');renderAll();};
 
 // â”€â”€â”€ BATCH WEEK ENTRY MODAL â”€â”€â”€
 function openBatchModal(){
+  if(isPortalMode) return;
   let maxWks = 0;
   BASE.staff.forEach(function(s){
     const w = getStaffWeeks(s.id, activeYear);
@@ -21480,6 +21486,7 @@ document.getElementById('batchCancelBtn').addEventListener('click', function(){ 
 document.getElementById('batchWeekBtn').addEventListener('click', openBatchModal);
 
 document.getElementById('batchSaveAllBtn').addEventListener('click', function(){
+  if(isPortalMode) return;
   const label = document.getElementById('batchWkLabel').value.trim();
   const dateVal = document.getElementById('batchWkDate').value;
   if(!label){ toast('Enter a week label', 'var(--rd)'); return; }
@@ -21595,6 +21602,7 @@ async function autoPushToGitHub(silent){
 }
 
 document.getElementById('syncModalBtn').addEventListener('click', function(){
+  if(isPortalMode) return;
   const savedTok = getActiveGitHubToken();
   document.getElementById('ghTokenInput').value = savedTok ? 'â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢' : '';
   document.getElementById('ghStatusText').innerHTML = '<span style="color:var(--gr)">&#10004; Configured &amp; Auto-syncing on every edit to ' + GH_REPO + '</span>';
@@ -21758,10 +21766,11 @@ document.getElementById('shareCopyTextBtn').addEventListener('click',function(){
 function fallbackCopy(txt){const ta=document.createElement('textarea');ta.value=txt;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();document.execCommand('copy');ta.remove();toast('Copied');}
 
 // â”€â”€â”€ Bulk Holiday â”€â”€â”€
-document.getElementById('bulkHolBtn').addEventListener('click',function(){document.getElementById('bulkModal').classList.remove('hidden');});
+document.getElementById('bulkHolBtn').addEventListener('click',function(){ if(isPortalMode) return; document.getElementById('bulkModal').classList.remove('hidden');});
 document.getElementById('bulkClose').addEventListener('click',function(){document.getElementById('bulkModal').classList.add('hidden');});
 document.getElementById('bulkCancelBtn').addEventListener('click',function(){document.getElementById('bulkModal').classList.add('hidden');});
 document.getElementById('bulkSaveBtn').addEventListener('click',function(){
+  if(isPortalMode) return;
   const date=document.getElementById('bulkDate').value;
   const hrs=parseFloat(document.getElementById('bulkHrs').value);
   const note=document.getElementById('bulkNote').value.trim()||'Holiday';
@@ -21778,30 +21787,20 @@ document.getElementById('shareModal').addEventListener('click',function(e){if(e.
 document.getElementById('batchModal').addEventListener('click',function(e){if(e.target===document.getElementById('batchModal'))document.getElementById('batchModal').classList.add('hidden');});
 document.getElementById('syncModal').addEventListener('click',function(e){if(e.target===document.getElementById('syncModal'))document.getElementById('syncModal').classList.add('hidden');});
 document.getElementById('searchBox').addEventListener('input',function(){renderSidebar();});
-document.getElementById('menuBtn').addEventListener('click',function(){document.getElementById('sidebar').classList.toggle('open');});
-
-// Admin / Portal toggle
-document.getElementById('adminToggleBtn').addEventListener('click',function(){
-  isPortalMode = false;
-  document.getElementById('portalBadge').style.display = 'none';
-  document.getElementById('cloudBadge').style.display = 'inline-flex';
-  document.getElementById('hdrSearchWrap').style.display = 'block';
-  document.getElementById('batchWeekBtn').style.display = 'inline-flex';
-  document.getElementById('bulkHolBtn').style.display = 'inline-flex';
-  document.getElementById('syncModalBtn').style.display = 'inline-flex';
-  document.getElementById('adminToggleBtn').style.display = 'none';
-  renderAll();
+document.getElementById('menuBtn').addEventListener('click',function(){
+  if(isPortalMode) return;
+  document.getElementById('sidebar').classList.toggle('open');
 });
 
+// Logo Click Handler: strictly locked in portal mode
 document.getElementById('logoBtn').addEventListener('click',function(){
-  isPortalMode = false;
-  document.getElementById('portalBadge').style.display = 'none';
-  document.getElementById('cloudBadge').style.display = 'inline-flex';
-  document.getElementById('hdrSearchWrap').style.display = 'block';
-  document.getElementById('batchWeekBtn').style.display = 'inline-flex';
-  document.getElementById('bulkHolBtn').style.display = 'inline-flex';
-  document.getElementById('syncModalBtn').style.display = 'inline-flex';
-  document.getElementById('adminToggleBtn').style.display = 'none';
+  if(isPortalMode){
+    // In staff portal mode, clicking logo simply refreshes their personal view
+    location.reload();
+    return;
+  }
+  // In manager view, reset to default
+  activeSid = BASE.staff[0].id;
   renderAll();
 });
 
@@ -21830,13 +21829,19 @@ function checkUrlParams(){
     if(matched){
       activeSid = matched.id;
       isPortalMode = true;
+      document.title = matched.name + ' - IDFL Holiday & Hours Portal';
+      
+      // Strictly isolate staff view: hide all manager tools & sidebar
       document.getElementById('portalBadge').style.display = 'inline-block';
       document.getElementById('cloudBadge').style.display = 'none';
       document.getElementById('hdrSearchWrap').style.display = 'none';
       document.getElementById('batchWeekBtn').style.display = 'none';
       document.getElementById('bulkHolBtn').style.display = 'none';
       document.getElementById('syncModalBtn').style.display = 'none';
-      document.getElementById('adminToggleBtn').style.display = 'inline-flex';
+      document.getElementById('menuBtn').style.display = 'none';
+      document.getElementById('sidebar').style.display = 'none';
+      document.getElementById('sidebar').innerHTML = '';
+      document.getElementById('logoBtn').style.cursor = 'default';
     }
   }
 }
