@@ -31,7 +31,7 @@ header{background:var(--sf);border-bottom:1px solid var(--bd);padding:11px 20px;
 .year-tab{font-family:'Outfit',sans-serif;font-size:.78rem;font-weight:700;padding:6px 16px;border-radius:7px;border:none;background:none;color:var(--tx3);cursor:pointer;transition:all .15s}
 .year-tab:hover{color:var(--tx)}
 .year-tab.active{background:var(--ac);color:#fff}
-.hdr-search{flex:1;max-width:240px;position:relative}
+.hdr-search{flex:1;max-width:220px;position:relative}
 .hdr-search input{width:100%;padding:8px 12px 8px 32px;border:1px solid var(--bd);border-radius:9px;background:var(--sf2);color:var(--tx);font-family:'Outfit',sans-serif;font-size:.79rem;outline:none;transition:border-color .15s}
 .hdr-search input:focus{border-color:var(--ac)}
 .hdr-search svg{position:absolute;left:10px;top:50%;transform:translateY(-50%);opacity:.4;pointer-events:none}
@@ -41,7 +41,7 @@ header{background:var(--sf);border-bottom:1px solid var(--bd);padding:11px 20px;
 .btn-ac{background:var(--ac);color:#fff}.btn-ac:hover{filter:brightness(1.12)}
 .btn-rd{background:var(--rd2);color:var(--rd);border:1px solid var(--rd)}.btn-rd:hover{background:var(--rd);color:#fff}
 .btn-am{background:var(--am2);color:var(--am);border:1px solid var(--am)}.btn-am:hover{background:var(--am);color:#000}
-.btn-gr{background:var(--gr2);color:var(--gr);border:1px solid var(--gr)}.btn-gr:hover{background:var(--gr);color:#000}
+.btn-gr{background:var(--gr);color:#071a0c;font-weight:800}.btn-gr:hover{filter:brightness(1.12)}
 .btn-ghost{background:var(--sf2);color:var(--tx2);border:1px solid var(--bd)}.btn-ghost:hover{border-color:var(--bd2);color:var(--tx)}
 .btn-pk{background:var(--pk2);color:var(--pk);border:1px solid var(--pk)}.btn-pk:hover{background:var(--pk);color:#fff}
 .btn-pu{background:var(--pu2);color:var(--pu);border:1px solid var(--pu)}.btn-pu:hover{background:var(--pu);color:#fff}
@@ -165,9 +165,10 @@ table.weeks td.act{text-align:right;width:46px}
 .add-log-form input[type=text]{flex:2;min-width:90px}
 
 /* â”€â”€ MODALS â”€â”€ */
-.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:100;display:flex;align-items:center;justify-content:center;padding:16px}
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:100;display:flex;align-items:center;justify-content:center;padding:16px}
 .modal-bg.hidden{display:none}
 .modal{background:var(--sf);border:1px solid var(--bd2);border-radius:18px;box-shadow:var(--shadowL);width:100%;max-width:520px;max-height:85vh;overflow-y:auto}
+.modal-large{max-width:880px!important}
 .modal-hd{padding:18px 22px;border-bottom:1px solid var(--bd);display:flex;justify-content:space-between;align-items:center}
 .modal-hd h2{font-size:1.05rem;font-weight:900;display:flex;align-items:center;gap:8px}
 .modal-close{background:none;border:none;color:var(--tx3);cursor:pointer;font-size:1.2rem;padding:2px 6px;border-radius:6px}
@@ -177,6 +178,15 @@ table.weeks td.act{text-align:right;width:46px}
 .modal-body input,.modal-body textarea{width:100%;background:var(--sf2);border:1px solid var(--bd);border-radius:9px;color:var(--tx);font-family:'Outfit',sans-serif;font-size:.82rem;padding:9px 12px;outline:none;margin-bottom:14px}
 .modal-body input:focus,.modal-body textarea:focus{border-color:var(--ac)}
 .modal-footer{padding:14px 22px;border-top:1px solid var(--bd);display:flex;justify-content:flex-end;gap:10px;flex-wrap:wrap}
+
+/* â”€â”€ BATCH WEEK TABLE â”€â”€ */
+.batch-table-wrap{max-height:50vh;overflow-y:auto;border:1px solid var(--bd);border-radius:10px;margin-top:14px}
+table.batch-table{width:100%;border-collapse:collapse;font-size:.78rem}
+table.batch-table thead th{position:sticky;top:0;background:var(--sf2);color:var(--tx2);font-size:.65rem;font-weight:800;text-transform:uppercase;padding:8px 12px;text-align:left;border-bottom:1px solid var(--bd);z-index:2}
+table.batch-table td{padding:6px 12px;border-bottom:1px solid var(--bd)}
+table.batch-table tr.shop-header td{background:var(--sf3);color:var(--ac);font-weight:800;font-size:.72rem;text-transform:uppercase;padding:6px 12px}
+table.batch-table input{background:var(--sf2);border:1px solid var(--bd);border-radius:6px;color:var(--tx);font-family:'JetBrains Mono',monospace;font-size:.75rem;padding:5px 8px;outline:none;width:100%;margin-bottom:0}
+table.batch-table input:focus{border-color:var(--ac)}
 
 /* â”€â”€ SHARE LINK BOX â”€â”€ */
 .share-link-box{background:var(--sf2);border:1px solid var(--bd2);border-radius:10px;padding:12px 14px;display:flex;align-items:center;gap:10px;margin-bottom:16px}
@@ -216,8 +226,9 @@ table.weeks td.act{text-align:right;width:46px}
     <input type="text" id="searchBox" placeholder="Search staff or shop&hellip;">
   </div>
   <div class="hdr-stats" id="hdrStats"></div>
-  <div style="margin-left:auto;display:flex;gap:8px">
+  <div style="margin-left:auto;display:flex;gap:8px;align-items:center">
     <button class="btn btn-ghost" id="adminToggleBtn" style="display:none">&#9881; Manager View</button>
+    <button class="btn btn-gr" id="batchWeekBtn">&#128197; Add New Week (All Staff)</button>
     <button class="btn btn-am" id="bulkHolBtn">&#43; Holiday For All</button>
   </div>
 </header>
@@ -225,6 +236,56 @@ table.weeks td.act{text-align:right;width:46px}
 <div class="body">
   <div class="sidebar" id="sidebar"></div>
   <div class="main" id="main"></div>
+</div>
+
+<!-- ðŸŒŸ FAST BATCH WEEK ENTRY MODAL (ALL 30 STAFF AT ONCE) ðŸŒŸ -->
+<div class="modal-bg hidden" id="batchModal">
+  <div class="modal modal-large">
+    <div class="modal-hd">
+      <h2>&#128197; Add New Week for All Staff</h2>
+      <button class="modal-close" id="batchClose">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div style="display:grid;grid-template-columns:2fr 1fr 1fr;gap:12px;margin-bottom:12px">
+        <div>
+          <label>Period Label</label>
+          <input type="text" id="batchWkLabel" placeholder="e.g. Week 35 31/08/2026 - 06/09/2026">
+        </div>
+        <div>
+          <label>Period Start Date</label>
+          <input type="date" id="batchWkDate">
+        </div>
+        <div>
+          <label>Quick Fill</label>
+          <div style="display:flex;gap:6px">
+            <button class="btn btn-ghost" id="batchFill35Btn" style="flex:1;padding:8px 6px">&#9889; Fill 35h</button>
+            <button class="btn btn-ghost" id="batchClearBtn" style="flex:1;padding:8px 6px">&#8635; Clear</button>
+          </div>
+        </div>
+      </div>
+      
+      <p style="font-size:.73rem;color:var(--tx3);margin-bottom:6px">Enter worked hours for each employee below. Optional: fill holiday or sick pay hours if taken this week.</p>
+      
+      <div class="batch-table-wrap">
+        <table class="batch-table">
+          <thead>
+            <tr>
+              <th style="width:28%">Staff Name &amp; Shop</th>
+              <th style="width:18%">Worked Hours</th>
+              <th style="width:16%">Holiday Pay (h)</th>
+              <th style="width:16%">Sick Pay (h)</th>
+              <th style="width:22%">Note / Reason</th>
+            </tr>
+          </thead>
+          <tbody id="batchTbody"></tbody>
+        </table>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" id="batchCancelBtn">Cancel</button>
+      <button class="btn btn-gr" id="batchSaveAllBtn">&#10004; Save Week for All Staff</button>
+    </div>
+  </div>
 </div>
 
 <!-- Bulk Holiday Modal -->
@@ -278,7 +339,7 @@ table.weeks td.act{text-align:right;width:46px}
 </script>
 <script>
 const SICK_ALLOWANCE_HRS = 35;
-const LS_KEY = 'idfl_tracker_v6';
+const LS_KEY = 'idfl_tracker_v7';
 const BASE = JSON.parse(document.getElementById('holiday-data').textContent);
 
 function loadOv(){ try{ return JSON.parse(localStorage.getItem(LS_KEY)||'{}'); }catch(e){ return {}; } }
@@ -404,10 +465,10 @@ function setWeekHours(sid,year,idx,hours){
   saveOv(ov);
 }
 
-function addWeek(sid,year,label,hours){
+function addWeek(sid,year,label,hours,sDate){
   ensureOvYear(year,sid);
   const weeks = JSON.parse(JSON.stringify(getStaffWeeks(sid,year)));
-  weeks.push({label:label,hours:hours,date:label});
+  weeks.push({label:label,hours:hours,date:sDate||label});
   ov[year][sid].weeks = weeks;
   saveOv(ov);
 }
@@ -491,7 +552,6 @@ function renderSidebar(){
   
   const q=(document.getElementById('searchBox').value||'').toLowerCase();
   
-  // Define shop ordering
   const shopOrder = ['Maynooth', 'Newbridge', 'Portlaoise', 'Tullamore', 'Mullingar', 'Kilkenny', 'Thurles', 'Arklow', 'Limerick', 'Tralee', 'Killarney', 'Letterkenny'];
   const shopGroups = {};
   shopOrder.forEach(function(sh){ shopGroups[sh] = []; });
@@ -811,6 +871,113 @@ window.saveEditSick=function(id){
 window.delHol=function(id){delHolEntry(activeSid,id);toast('Entry removed');renderAll();};
 window.delSick=function(id){delSickEntry(activeSid,id);toast('Entry removed');renderAll();};
 
+// â”€â”€â”€ ðŸŒŸ BATCH WEEK ENTRY MODAL (FAST TIMESHEET ENTRY FOR ALL STAFF) ðŸŒŸ â”€â”€â”€
+function openBatchModal(){
+  // Determine next week label & date
+  let maxWks = 0;
+  BASE.staff.forEach(function(s){
+    const w = getStaffWeeks(s.id, activeYear);
+    if(w.length > maxWks) maxWks = w.length;
+  });
+  const nextWkNum = maxWks + 1;
+  
+  // Format default dates
+  const today = new Date();
+  const dateStr = today.toISOString().split('T')[0];
+  document.getElementById('batchWkLabel').value = 'Week ' + nextWkNum + ' (' + activeYear + ')';
+  document.getElementById('batchWkDate').value = dateStr;
+  
+  const tbody = document.getElementById('batchTbody');
+  tbody.innerHTML = '';
+  
+  const shopOrder = ['Maynooth', 'Newbridge', 'Portlaoise', 'Tullamore', 'Mullingar', 'Kilkenny', 'Thurles', 'Arklow', 'Limerick', 'Tralee', 'Killarney', 'Letterkenny'];
+  const shopGroups = {};
+  shopOrder.forEach(function(sh){ shopGroups[sh] = []; });
+  BASE.staff.forEach(function(s){
+    const sh = s.shop || s.location || 'Other';
+    if(!shopGroups[sh]) shopGroups[sh] = [];
+    shopGroups[sh].push(s);
+  });
+  
+  Object.keys(shopGroups).forEach(function(shop){
+    const members = shopGroups[shop];
+    if(!members.length) return;
+    
+    const shopRow = document.createElement('tr');
+    shopRow.className = 'shop-header';
+    shopRow.innerHTML = '<td colspan="5">&#128101; ' + shop + ' (' + members.length + ' staff)</td>';
+    tbody.appendChild(shopRow);
+    
+    members.forEach(function(s){
+      const tr = document.createElement('tr');
+      tr.innerHTML = '<td><strong>' + s.name + '</strong></td>'
+        + '<td><input type="number" class="batch-hrs" data-sid="' + s.id + '" min="0" step="0.5" placeholder="Worked Hrs" style="text-align:right"></td>'
+        + '<td><input type="number" class="batch-hol" data-sid="' + s.id + '" min="0" step="0.5" placeholder="Hol Hrs" style="text-align:right"></td>'
+        + '<td><input type="number" class="batch-sick" data-sid="' + s.id + '" min="0" step="0.5" placeholder="Sick Hrs" style="text-align:right"></td>'
+        + '<td><input type="text" class="batch-note" data-sid="' + s.id + '" placeholder="Note / Reason"></td>';
+      tbody.appendChild(tr);
+    });
+  });
+  
+  document.getElementById('batchModal').classList.remove('hidden');
+}
+
+document.getElementById('batchFill35Btn').addEventListener('click', function(){
+  document.querySelectorAll('.batch-hrs').forEach(function(inp){
+    inp.value = '35';
+  });
+  toast('Set 35 hrs for all staff');
+});
+
+document.getElementById('batchClearBtn').addEventListener('click', function(){
+  document.querySelectorAll('.batch-hrs, .batch-hol, .batch-sick, .batch-note').forEach(function(inp){
+    inp.value = '';
+  });
+});
+
+document.getElementById('batchClose').addEventListener('click', function(){ document.getElementById('batchModal').classList.add('hidden'); });
+document.getElementById('batchCancelBtn').addEventListener('click', function(){ document.getElementById('batchModal').classList.add('hidden'); });
+document.getElementById('batchWeekBtn').addEventListener('click', openBatchModal);
+
+document.getElementById('batchSaveAllBtn').addEventListener('click', function(){
+  const label = document.getElementById('batchWkLabel').value.trim();
+  const dateVal = document.getElementById('batchWkDate').value;
+  if(!label){ toast('Enter a week label', 'var(--rd)'); return; }
+  
+  let savedCount = 0;
+  BASE.staff.forEach(function(s){
+    const hrsInp = document.querySelector('.batch-hrs[data-sid="' + s.id + '"]');
+    const holInp = document.querySelector('.batch-hol[data-sid="' + s.id + '"]');
+    const sickInp = document.querySelector('.batch-sick[data-sid="' + s.id + '"]');
+    const noteInp = document.querySelector('.batch-note[data-sid="' + s.id + '"]');
+    
+    const hrs = hrsInp ? parseFloat(hrsInp.value) : NaN;
+    const hol = holInp ? parseFloat(holInp.value) : NaN;
+    const sick = sickInp ? parseFloat(sickInp.value) : NaN;
+    const note = noteInp ? noteInp.value.trim() : '';
+    
+    // Add week hours if entered
+    if(!isNaN(hrs)){
+      addWeek(s.id, activeYear, label, hrs, dateVal);
+      savedCount++;
+    }
+    
+    // Log holiday if entered
+    if(!isNaN(hol) && hol > 0){
+      addHolEntry(s.id, activeYear, dateVal || label, hol, note || 'Holiday');
+    }
+    
+    // Log sick if entered
+    if(!isNaN(sick) && sick > 0){
+      addSickEntry(s.id, activeYear, dateVal || label, sick, note || 'Sick');
+    }
+  });
+  
+  document.getElementById('batchModal').classList.add('hidden');
+  toast('Successfully saved week for ' + savedCount + ' staff members!');
+  renderAll();
+});
+
 // â”€â”€â”€ Share Modal with Personal Link & WhatsApp Share â”€â”€â”€
 function openShareModal(sid){
   const staff=BASE.staff.find(function(s){return s.id===sid;});
@@ -901,6 +1068,7 @@ document.getElementById('bulkSaveBtn').addEventListener('click',function(){
 
 document.getElementById('bulkModal').addEventListener('click',function(e){if(e.target===document.getElementById('bulkModal'))document.getElementById('bulkModal').classList.add('hidden');});
 document.getElementById('shareModal').addEventListener('click',function(e){if(e.target===document.getElementById('shareModal'))document.getElementById('shareModal').classList.add('hidden');});
+document.getElementById('batchModal').addEventListener('click',function(e){if(e.target===document.getElementById('batchModal'))document.getElementById('batchModal').classList.add('hidden');});
 document.getElementById('searchBox').addEventListener('input',function(){renderSidebar();});
 document.getElementById('menuBtn').addEventListener('click',function(){document.getElementById('sidebar').classList.toggle('open');});
 
@@ -909,6 +1077,7 @@ document.getElementById('adminToggleBtn').addEventListener('click',function(){
   isPortalMode = false;
   document.getElementById('portalBadge').style.display = 'none';
   document.getElementById('hdrSearchWrap').style.display = 'block';
+  document.getElementById('batchWeekBtn').style.display = 'inline-flex';
   document.getElementById('bulkHolBtn').style.display = 'inline-flex';
   document.getElementById('adminToggleBtn').style.display = 'none';
   renderAll();
@@ -918,6 +1087,7 @@ document.getElementById('logoBtn').addEventListener('click',function(){
   isPortalMode = false;
   document.getElementById('portalBadge').style.display = 'none';
   document.getElementById('hdrSearchWrap').style.display = 'block';
+  document.getElementById('batchWeekBtn').style.display = 'inline-flex';
   document.getElementById('bulkHolBtn').style.display = 'inline-flex';
   document.getElementById('adminToggleBtn').style.display = 'none';
   renderAll();
@@ -950,6 +1120,7 @@ function checkUrlParams(){
       isPortalMode = true;
       document.getElementById('portalBadge').style.display = 'inline-block';
       document.getElementById('hdrSearchWrap').style.display = 'none';
+      document.getElementById('batchWeekBtn').style.display = 'none';
       document.getElementById('bulkHolBtn').style.display = 'none';
       document.getElementById('adminToggleBtn').style.display = 'inline-flex';
     }
@@ -958,7 +1129,7 @@ function checkUrlParams(){
 
 applyStartDates();
 checkUrlParams();
-if(!activeSid) activeSid = 's8'; // Default select Ibrar Tufail (Maynooth)
+if(!activeSid) activeSid = 's22'; // Default select Awais Sageer (Tralee)
 renderAll();
 </script>
 </body>
