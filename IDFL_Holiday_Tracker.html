@@ -68,7 +68,7 @@ header{background:var(--sf);border-bottom:1px solid var(--bd);padding:11px 20px;
 .main{flex:1;min-width:0;overflow-y:auto;padding:20px 24px}
 
 /* â”€â”€ STAFF PORTAL (WINDOW VIEW) â”€â”€ */
-.portal-container{max-width:1080px;margin:0 auto;padding:16px;width:100%}
+.portal-container{max-width:1120px;margin:0 auto;padding:16px;width:100%}
 .portal-header{background:linear-gradient(135deg,var(--sf2),var(--sf));border:1px solid var(--bd2);border-radius:18px;padding:20px 24px;margin-bottom:20px;box-shadow:var(--shadow);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
 .portal-profile{display:flex;align-items:center;gap:16px}
 .portal-avatar{width:54px;height:54px;border-radius:50%;font-size:1.25rem;font-weight:900;display:flex;align-items:center;justify-content:center;color:#090b13;box-shadow:0 0 20px rgba(0,0,0,.4)}
@@ -110,21 +110,21 @@ header{background:var(--sf);border-bottom:1px solid var(--bd);padding:11px 20px;
 .progress-fill.gr{background:var(--gr)}
 .progress-labels{display:flex;justify-content:space-between;font-size:.7rem;color:var(--tx3);font-family:'JetBrains Mono',monospace}
 
-/* â”€â”€ CONTENT GRID (2-COLUMN) â”€â”€ */
-.detail-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:20px;align-items:start}
-@media(max-width:850px){.detail-grid{grid-template-columns:1fr}}
+/* â”€â”€ CONTENT GRID (2-COLUMN BALANCED) â”€â”€ */
+.detail-grid{display:grid;grid-template-columns:minmax(0, 1.1fr) minmax(0, 1fr);gap:20px;align-items:start;width:100%}
+@media(max-width:900px){.detail-grid{grid-template-columns:1fr}}
 
-.card{background:var(--sf);border:1px solid var(--bd);border-radius:16px;box-shadow:var(--shadow);overflow:hidden}
-.card-hd{padding:14px 18px;border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between;gap:10px}
-.card-hd h3{font-size:.88rem;font-weight:800;display:flex;align-items:center;gap:6px}
-.card-sub{font-size:.7rem;color:var(--tx3)}
+.card{background:var(--sf);border:1px solid var(--bd);border-radius:16px;box-shadow:var(--shadow);overflow:hidden;min-width:0;width:100%}
+.card-hd{padding:14px 18px;border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between;gap:10px;min-width:0}
+.card-hd h3{font-size:.88rem;font-weight:800;display:flex;align-items:center;gap:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.card-sub{font-size:.7rem;color:var(--tx3);white-space:nowrap;flex-shrink:0}
 
 /* â”€â”€ WEEKS TABLE â”€â”€ */
-.weeks-wrap{max-height:480px;overflow-y:auto}
+.weeks-wrap{max-height:480px;overflow-y:auto;min-width:0}
 table.weeks{width:100%;border-collapse:collapse;font-size:.78rem}
-table.weeks thead th{position:sticky;top:0;background:var(--sf2);color:var(--tx2);font-size:.64rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;padding:8px 16px;text-align:left;border-bottom:1px solid var(--bd);z-index:2}
+table.weeks thead th{position:sticky;top:0;background:var(--sf2);color:var(--tx2);font-size:.64rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;padding:8px 14px;text-align:left;border-bottom:1px solid var(--bd);z-index:2}
 table.weeks thead th.num{text-align:right}
-table.weeks tbody td{padding:8px 16px;border-bottom:1px solid var(--bd)}
+table.weeks tbody td{padding:8px 14px;border-bottom:1px solid var(--bd)}
 table.weeks tbody tr:last-child td{border-bottom:none}
 table.weeks tbody tr:hover td{background:var(--sf2)}
 table.weeks td.num{text-align:right;font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--ac)}
@@ -132,18 +132,18 @@ table.weeks td.act{text-align:right;width:46px}
 .edit-hrs-inp{width:56px;background:var(--sf2);border:1px solid var(--ac);border-radius:5px;color:var(--tx);font-family:'JetBrains Mono',monospace;font-size:.76rem;padding:2px 5px;outline:none;text-align:right}
 .icon-btn{background:none;border:none;cursor:pointer;color:var(--tx3);padding:3px 6px;border-radius:4px;font-size:.82rem;line-height:1;transition:all .12s}
 .icon-btn:hover{background:var(--sf3);color:var(--tx)}
-.add-week-form{display:flex;gap:6px;padding:10px 14px;border-top:1px solid var(--bd);flex-wrap:wrap;background:var(--sf2)}
+.add-week-form{display:flex;gap:6px;padding:10px 14px;border-top:1px solid var(--bd);flex-wrap:wrap;background:var(--sf2);min-width:0}
 .add-week-form input{background:var(--sf);border:1px solid var(--bd);border-radius:7px;color:var(--tx);font-family:'Outfit',sans-serif;font-size:.73rem;padding:6px 8px;outline:none}
 .add-week-form input:focus{border-color:var(--ac)}
-.add-week-form input.lbl{flex:2;min-width:140px}
-.add-week-form input.hrs{width:64px}
+.add-week-form input.lbl{flex:1;min-width:120px}
+.add-week-form input.hrs{width:56px}
 
 /* â”€â”€ LOGS & INLINE EDITING â”€â”€ */
-.log-list{max-height:240px;overflow-y:auto}
-.log-item{display:flex;align-items:center;gap:10px;padding:10px 16px;border-bottom:1px solid var(--bd);font-size:.76rem}
+.log-list{max-height:240px;overflow-y:auto;min-width:0}
+.log-item{display:flex;align-items:center;gap:8px;padding:9px 14px;border-bottom:1px solid var(--bd);font-size:.76rem;min-width:0}
 .log-item:last-child{border-bottom:none}
-.log-date{font-family:'JetBrains Mono',monospace;color:var(--tx2);min-width:80px;flex-shrink:0;font-size:.72rem}
-.log-note{flex:1;color:var(--tx2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.log-date{font-family:'JetBrains Mono',monospace;color:var(--tx2);min-width:76px;flex-shrink:0;font-size:.72rem}
+.log-note{flex:1;min-width:0;color:var(--tx2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .log-hrs{font-weight:800;font-family:'JetBrains Mono',monospace;flex-shrink:0}
 .log-hrs.hol{color:var(--am)}.log-hrs.sick{color:var(--pk)}
 .log-actions{display:flex;gap:4px;align-items:center;flex-shrink:0}
@@ -152,18 +152,18 @@ table.weeks td.act{text-align:right;width:46px}
 .log-btn.del:hover{color:var(--rd);background:var(--rd2)}
 .log-empty{padding:24px 16px;text-align:center;color:var(--tx3);font-size:.75rem}
 
-.log-edit-row{display:flex;gap:6px;padding:8px 12px;background:var(--sf3);border-bottom:1px solid var(--bd);align-items:center;flex-wrap:wrap}
+.log-edit-row{display:flex;gap:6px;padding:8px 12px;background:var(--sf3);border-bottom:1px solid var(--bd);align-items:center;flex-wrap:wrap;min-width:0}
 .log-edit-row input{background:var(--sf);border:1px solid var(--ac);border-radius:6px;color:var(--tx);font-family:'Outfit',sans-serif;font-size:.73rem;padding:4px 6px;outline:none}
-.log-edit-row input[type=date]{min-width:105px}
+.log-edit-row input[type=date]{width:110px}
 .log-edit-row input[type=number]{width:52px;font-family:'JetBrains Mono',monospace}
-.log-edit-row input[type=text]{flex:1;min-width:110px}
+.log-edit-row input[type=text]{flex:1;min-width:90px}
 
-.add-log-form{display:flex;gap:6px;padding:10px 14px;border-top:1px solid var(--bd);flex-wrap:wrap;background:var(--sf2)}
+.add-log-form{display:flex;gap:6px;padding:10px 14px;border-top:1px solid var(--bd);flex-wrap:wrap;background:var(--sf2);min-width:0}
 .add-log-form input{background:var(--sf);border:1px solid var(--bd);border-radius:7px;color:var(--tx);font-family:'Outfit',sans-serif;font-size:.73rem;padding:6px 8px;outline:none}
 .add-log-form input:focus{border-color:var(--ac)}
-.add-log-form input[type=date]{flex:1;min-width:110px}
-.add-log-form input[type=number]{width:60px}
-.add-log-form input[type=text]{flex:2;min-width:90px}
+.add-log-form input[type=date]{width:115px;flex-shrink:0}
+.add-log-form input[type=number]{width:52px;flex-shrink:0}
+.add-log-form input[type=text]{flex:1;min-width:80px}
 
 /* â”€â”€ MODALS â”€â”€ */
 .modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:100;display:flex;align-items:center;justify-content:center;padding:16px}
@@ -654,14 +654,14 @@ table.batch-table input:focus{border-color:var(--ac)}
                                     },
                                     {
                                         "date":  "11/08/2025",
-                                        "hours":  0,
+                                        "hours":  2,
                                         "id":  "h_2025_s13_238",
                                         "year":  "2025",
                                         "note":  "Please pay sick pay Supposed to work 4.55 hours on Saturday Please pay holiday pay 2 hours"
                                     },
                                     {
                                         "date":  "18/08/2025",
-                                        "hours":  0,
+                                        "hours":  36,
                                         "id":  "h_2025_s13_239",
                                         "year":  "2025",
                                         "note":  "Please pay sick pay for 5.5 (3.85) hours Please pay holiday pay for 36 hours"
@@ -1028,7 +1028,7 @@ table.batch-table input:focus{border-color:var(--ac)}
                                     },
                                     {
                                         "date":  "11/05/2026",
-                                        "hours":  0,
+                                        "hours":  3,
                                         "id":  "h_2026_s29_277",
                                         "year":  "2026",
                                         "note":  "Didn\u0027t receive 3 hrs Bank holiday pay from last week"
@@ -2711,7 +2711,7 @@ table.batch-table input:focus{border-color:var(--ac)}
                                      },
                                      {
                                          "date":  "18/08/2025",
-                                         "hours":  0,
+                                         "hours":  3.85,
                                          "id":  "s_2025_s13_239",
                                          "year":  "2025",
                                          "note":  "Please pay sick pay for 5.5 (3.85) hours Please pay holiday pay for 36 hours"
@@ -3194,7 +3194,51 @@ table.batch-table input:focus{border-color:var(--ac)}
                                "s7":  {
                                           "opening":  0,
                                           "weeks":  [
-
+                                                        {
+                                                            "label":  "Week 44 04/11/2024 - 10/11/2024",
+                                                            "hours":  15.5,
+                                                            "date":  "04/11/2024"
+                                                        },
+                                                        {
+                                                            "label":  "Week 45 11/11/2024 - 17/11/2024",
+                                                            "hours":  15.5,
+                                                            "date":  "11/11/2024"
+                                                        },
+                                                        {
+                                                            "label":  "Week 46 18/11/2024 - 24/11/2024",
+                                                            "hours":  15.5,
+                                                            "date":  "18/11/2024"
+                                                        },
+                                                        {
+                                                            "label":  "Week 47 25/11/2024 - 01/12/2024",
+                                                            "hours":  15.5,
+                                                            "date":  "25/11/2024"
+                                                        },
+                                                        {
+                                                            "label":  "Week 48 02/12/2024 - 08/12/2024",
+                                                            "hours":  15.5,
+                                                            "date":  "02/12/2024"
+                                                        },
+                                                        {
+                                                            "label":  "Week 49 09/12/2024 - 15/12/2024",
+                                                            "hours":  25,
+                                                            "date":  "09/12/2024"
+                                                        },
+                                                        {
+                                                            "label":  "Week 50 16/12/2024 - 22/12/2024",
+                                                            "hours":  24,
+                                                            "date":  "16/12/2024"
+                                                        },
+                                                        {
+                                                            "label":  "Week 51 23/12/2024 - 29/12/2024",
+                                                            "hours":  33,
+                                                            "date":  "23/12/2024"
+                                                        },
+                                                        {
+                                                            "label":  "Week 52 30/12/2024 - 05/01/2025",
+                                                            "hours":  15.5,
+                                                            "date":  "30/12/2024"
+                                                        }
                                                     ],
                                           "totalWorked":  0,
                                           "days":  0,
@@ -8832,6 +8876,21 @@ table.batch-table input:focus{border-color:var(--ac)}
                                "s7":  {
                                           "opening":  14,
                                           "weeks":  [
+                                                        {
+                                                            "label":  "Week 1 06/01/2025 - 12/01/2025",
+                                                            "hours":  19.5,
+                                                            "date":  "06/01/2025"
+                                                        },
+                                                        {
+                                                            "label":  "Week 2 13/01/2025 - 19/01/2025",
+                                                            "hours":  27,
+                                                            "date":  "13/01/2025"
+                                                        },
+                                                        {
+                                                            "label":  "Week 3 20/01/2025 - 26/01/2025",
+                                                            "hours":  18,
+                                                            "date":  "20/01/2025"
+                                                        },
                                                         {
                                                             "label":  "Week 4 27/01/2025 - 02/02/2025",
                                                             "hours":  19.5,
@@ -15720,7 +15779,7 @@ table.batch-table input:focus{border-color:var(--ac)}
                                           "holidaysTaken":  154
                                       },
                                "s7":  {
-                                          "opening":  146.28,
+                                          "opening":  146.2,
                                           "weeks":  [
                                                         {
                                                             "label":  "Week 1 05/01/2026 - 11/01/2026",
@@ -20665,7 +20724,7 @@ table.batch-table input:focus{border-color:var(--ac)}
                       "name":  "Awais Rasheed",
                       "shop":  "Maynooth",
                       "startStatus":  "confirmed",
-                      "startDate":  "21/04/2025",
+                      "startDate":  "04/11/2024",
                       "location":  "Maynooth"
                   },
                   {
@@ -21222,7 +21281,7 @@ function renderMain(){
     +'</div>'
     +'</div>'
     
-    // 2-Column Detailed Section
+    // 2-Column Detailed Section (Balanced minmax grid)
     +'<div class="detail-grid">'
     // Left: Weeks Worked Breakdown
     +'<div class="card">'
@@ -21235,22 +21294,22 @@ function renderMain(){
     +'</div>'
     
     // Right: Editable Holidays & Sick Logs
-    +'<div>'
+    +'<div style="min-width:0;display:flex;flex-direction:column;gap:16px">'
     // Editable Holiday Log Card
     +'<div class="card">'
     +'<div class="card-hd"><h3>&#128198; Holidays Taken Log ('+activeYear+')</h3><span class="card-sub">'+curStats.holLogs.length+' records &bull; -'+fmt1(curStats.holTaken)+' hrs</span></div>'
     +'<div class="log-list" id="holLogList"></div>'
     +(!isPortalMode ? '<div class="add-log-form">'
-    +'<input type="date" id="holDate"><input type="number" id="holHrs" min="0" step="0.5" placeholder="Hrs" style="width:60px">'
+    +'<input type="date" id="holDate"><input type="number" id="holHrs" min="0" step="0.5" placeholder="Hrs">'
     +'<input type="text" id="holNote" placeholder="Note / Reason"><button class="btn btn-am" id="addHolBtn">Add</button></div>' : '')
     +'</div>'
     
     // Editable Sick Log Card
-    +'<div class="card" style="margin-top:16px">'
+    +'<div class="card">'
     +'<div class="card-hd"><h3>&#127973; Sick Days Taken ('+activeYear+')</h3><span class="card-sub">'+curStats.sickLogs.length+' records &bull; '+fmt1(curStats.sickUsed)+' hrs</span></div>'
     +'<div class="log-list" id="sickLogList"></div>'
     +(!isPortalMode ? '<div class="add-log-form">'
-    +'<input type="date" id="sickDate"><input type="number" id="sickHrs" min="0" step="0.5" placeholder="Hrs" style="width:60px">'
+    +'<input type="date" id="sickDate"><input type="number" id="sickHrs" min="0" step="0.5" placeholder="Hrs">'
     +'<input type="text" id="sickNote" placeholder="Note / Details"><button class="btn btn-pk" id="addSickBtn">Add</button></div>' : '')
     +'</div>'
     +'</div>'
@@ -21795,11 +21854,9 @@ document.getElementById('menuBtn').addEventListener('click',function(){
 // Logo Click Handler: strictly locked in portal mode
 document.getElementById('logoBtn').addEventListener('click',function(){
   if(isPortalMode){
-    // In staff portal mode, clicking logo simply refreshes their personal view
     location.reload();
     return;
   }
-  // In manager view, reset to default
   activeSid = BASE.staff[0].id;
   renderAll();
 });
