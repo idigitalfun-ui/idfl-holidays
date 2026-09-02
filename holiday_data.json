@@ -20302,9 +20302,9 @@
                       "startStatus":  "confirmed",
                       "startDate":  "01/08/2022",
                       "location":  "Mullingar",
+                      "sickAllowance":  35,
                       "dailyHours":  8,
-                      "weeklyHours":  40,
-                      "sickAllowance":  35
+                      "weeklyHours":  40
                   },
                   {
                       "id":  "s2",
@@ -20313,9 +20313,9 @@
                       "startStatus":  "confirmed",
                       "startDate":  "01/09/2023",
                       "location":  "Portlaoise",
+                      "sickAllowance":  35,
                       "dailyHours":  8,
-                      "weeklyHours":  40,
-                      "sickAllowance":  35
+                      "weeklyHours":  40
                   },
                   {
                       "id":  "s3",
@@ -20324,9 +20324,9 @@
                       "startStatus":  "confirmed",
                       "startDate":  "01/08/2022",
                       "location":  "Portlaoise",
+                      "sickAllowance":  35,
                       "dailyHours":  7,
-                      "weeklyHours":  35,
-                      "sickAllowance":  35
+                      "weeklyHours":  35
                   },
                   {
                       "id":  "s4",
@@ -20335,9 +20335,9 @@
                       "startStatus":  "confirmed",
                       "startDate":  "01/11/2022",
                       "location":  "Tullamore",
+                      "sickAllowance":  35,
                       "dailyHours":  7,
-                      "weeklyHours":  35,
-                      "sickAllowance":  35
+                      "weeklyHours":  35
                   },
                   {
                       "id":  "s5",
@@ -20346,9 +20346,9 @@
                       "startStatus":  "confirmed",
                       "startDate":  "11/09/2023",
                       "location":  "Maynooth",
+                      "sickAllowance":  35,
                       "dailyHours":  7,
-                      "weeklyHours":  35,
-                      "sickAllowance":  35
+                      "weeklyHours":  35
                   },
                   {
                       "id":  "s6",
@@ -20357,9 +20357,9 @@
                       "startStatus":  "confirmed",
                       "startDate":  "03/07/2023",
                       "location":  "Maynooth",
+                      "sickAllowance":  35,
                       "dailyHours":  7,
-                      "weeklyHours":  35,
-                      "sickAllowance":  35
+                      "weeklyHours":  35
                   },
                   {
                       "id":  "s7",
@@ -20368,9 +20368,9 @@
                       "startStatus":  "confirmed",
                       "startDate":  "04/11/2024",
                       "location":  "Maynooth",
+                      "sickAllowance":  35,
                       "dailyHours":  7,
-                      "weeklyHours":  35,
-                      "sickAllowance":  35
+                      "weeklyHours":  35
                   },
                   {
                       "id":  "s8",
@@ -20379,9 +20379,9 @@
                       "startStatus":  "confirmed",
                       "startDate":  "13/02/2023",
                       "location":  "Maynooth",
+                      "sickAllowance":  35,
                       "dailyHours":  8,
-                      "weeklyHours":  40,
-                      "sickAllowance":  35
+                      "weeklyHours":  40
                   },
                   {
                       "id":  "s30",
@@ -20390,9 +20390,9 @@
                       "startStatus":  "confirmed",
                       "startDate":  "31/05/2026",
                       "location":  "Maynooth",
+                      "sickAllowance":  35,
                       "dailyHours":  7,
-                      "weeklyHours":  35,
-                      "sickAllowance":  35
+                      "weeklyHours":  35
                   },
                   {
                       "id":  "s9",
@@ -20401,9 +20401,9 @@
                       "startStatus":  "confirmed",
                       "startDate":  "10/06/2024",
                       "location":  "Thurles",
+                      "sickAllowance":  35,
                       "dailyHours":  7,
-                      "weeklyHours":  35,
-                      "sickAllowance":  35
+                      "weeklyHours":  35
                   },
                   {
                       "id":  "s16",
@@ -20412,9 +20412,9 @@
                       "startStatus":  "confirmed",
                       "startDate":  "06/05/2024",
                       "location":  "Thurles",
+                      "sickAllowance":  35,
                       "dailyHours":  7,
-                      "weeklyHours":  35,
-                      "sickAllowance":  35
+                      "weeklyHours":  35
                   },
                   {
                       "id":  "s10",
@@ -20423,9 +20423,9 @@
                       "startStatus":  "confirmed",
                       "startDate":  "06/09/2023",
                       "location":  "Kilkenny",
+                      "sickAllowance":  35,
                       "dailyHours":  7,
-                      "weeklyHours":  35,
-                      "sickAllowance":  35
+                      "weeklyHours":  35
                   },
                   {
                       "id":  "s14",
@@ -20434,9 +20434,9 @@
                       "startStatus":  "confirmed",
                       "startDate":  "17/03/2026",
                       "location":  "Kilkenny",
+                      "sickAllowance":  35,
                       "dailyHours":  7,
-                      "weeklyHours":  35,
-                      "sickAllowance":  35
+                      "weeklyHours":  35
                   },
                   {
                       "id":  "s11",
@@ -20445,9 +20445,9 @@
                       "startStatus":  "confirmed",
                       "startDate":  "20/11/2023",
                       "location":  "Newbridge",
+                      "sickAllowance":  35,
                       "dailyHours":  7,
-                      "weeklyHours":  35,
-                      "sickAllowance":  35
+                      "weeklyHours":  35
                   },
                   {
                       "id":  "s12",
@@ -20456,9 +20456,9 @@
                       "startStatus":  "confirmed",
                       "startDate":  "01/08/2022",
                       "location":  "Newbridge",
+                      "sickAllowance":  35,
                       "dailyHours":  7,
-                      "weeklyHours":  35,
-                      "sickAllowance":  35
+                      "weeklyHours":  35
                   },
                   {
                       "id":  "s13",
@@ -20467,9 +20467,9 @@
                       "startStatus":  "confirmed",
                       "startDate":  "01/08/2022",
                       "location":  "Newbridge",
-                      "dailyHours":  7.5,
-                      "weeklyHours":  37.5,
-                      "sickAllowance":  35
+                      "sickAllowance":  35,
+                      "dailyHours":  8,
+                      "weeklyHours":  40
                   },
                   {
                       "id":  "s15",
@@ -20478,9 +20478,9 @@
                       "startStatus":  "confirmed",
                       "startDate":  "01/08/2022",
                       "location":  "Newbridge",
+                      "sickAllowance":  35,
                       "dailyHours":  7,
-                      "weeklyHours":  35,
-                      "sickAllowance":  35
+                      "weeklyHours":  35
                   },
                   {
                       "id":  "s17",
@@ -20489,9 +20489,9 @@
                       "startStatus":  "confirmed",
                       "startDate":  "01/08/2022",
                       "location":  "Arklow",
+                      "sickAllowance":  35,
                       "dailyHours":  7,
-                      "weeklyHours":  35,
-                      "sickAllowance":  35
+                      "weeklyHours":  35
                   },
                   {
                       "id":  "s18",
@@ -20500,9 +20500,9 @@
                       "startStatus":  "confirmed",
                       "startDate":  "06/02/2023",
                       "location":  "Arklow",
+                      "sickAllowance":  35,
                       "dailyHours":  7,
-                      "weeklyHours":  35,
-                      "sickAllowance":  35
+                      "weeklyHours":  35
                   },
                   {
                       "id":  "s20",
@@ -20511,9 +20511,9 @@
                       "startStatus":  "confirmed",
                       "startDate":  "04/09/2023",
                       "location":  "Limerick",
+                      "sickAllowance":  35,
                       "dailyHours":  7,
-                      "weeklyHours":  35,
-                      "sickAllowance":  35
+                      "weeklyHours":  35
                   },
                   {
                       "id":  "s21",
@@ -20522,9 +20522,9 @@
                       "startStatus":  "confirmed",
                       "startDate":  "01/08/2022",
                       "location":  "Tralee",
+                      "sickAllowance":  35,
                       "dailyHours":  7,
-                      "weeklyHours":  35,
-                      "sickAllowance":  35
+                      "weeklyHours":  35
                   },
                   {
                       "id":  "s22",
@@ -20533,9 +20533,9 @@
                       "startStatus":  "confirmed",
                       "startDate":  "10/06/2024",
                       "location":  "Tralee",
+                      "sickAllowance":  35,
                       "dailyHours":  7,
-                      "weeklyHours":  35,
-                      "sickAllowance":  35
+                      "weeklyHours":  35
                   },
                   {
                       "id":  "s23",
@@ -20544,9 +20544,9 @@
                       "startStatus":  "confirmed",
                       "startDate":  "22/06/2024",
                       "location":  "Tralee",
+                      "sickAllowance":  35,
                       "dailyHours":  7,
-                      "weeklyHours":  35,
-                      "sickAllowance":  35
+                      "weeklyHours":  35
                   },
                   {
                       "id":  "s24",
@@ -20555,9 +20555,9 @@
                       "startStatus":  "confirmed",
                       "startDate":  "07/08/2024",
                       "location":  "Tralee",
+                      "sickAllowance":  35,
                       "dailyHours":  7,
-                      "weeklyHours":  35,
-                      "sickAllowance":  35
+                      "weeklyHours":  35
                   },
                   {
                       "id":  "s25",
@@ -20566,9 +20566,9 @@
                       "startStatus":  "confirmed",
                       "startDate":  "20/01/2025",
                       "location":  "Tralee",
+                      "sickAllowance":  35,
                       "dailyHours":  7,
-                      "weeklyHours":  35,
-                      "sickAllowance":  35
+                      "weeklyHours":  35
                   },
                   {
                       "id":  "s31",
@@ -20577,9 +20577,9 @@
                       "startStatus":  "confirmed",
                       "startDate":  "20/07/2026",
                       "location":  "Tralee",
+                      "sickAllowance":  35,
                       "dailyHours":  7,
-                      "weeklyHours":  35,
-                      "sickAllowance":  35
+                      "weeklyHours":  35
                   },
                   {
                       "id":  "s26",
@@ -20588,9 +20588,9 @@
                       "startStatus":  "confirmed",
                       "startDate":  "11/09/2025",
                       "location":  "Killarney",
+                      "sickAllowance":  35,
                       "dailyHours":  7,
-                      "weeklyHours":  35,
-                      "sickAllowance":  35
+                      "weeklyHours":  35
                   },
                   {
                       "id":  "s27",
@@ -20599,9 +20599,9 @@
                       "startStatus":  "confirmed",
                       "startDate":  "28/08/2023",
                       "location":  "Letterkenny",
+                      "sickAllowance":  35,
                       "dailyHours":  7,
-                      "weeklyHours":  35,
-                      "sickAllowance":  35
+                      "weeklyHours":  35
                   },
                   {
                       "id":  "s28",
@@ -20610,9 +20610,9 @@
                       "startStatus":  "confirmed",
                       "startDate":  "19/11/2024",
                       "location":  "Letterkenny",
+                      "sickAllowance":  35,
                       "dailyHours":  7,
-                      "weeklyHours":  35,
-                      "sickAllowance":  35
+                      "weeklyHours":  35
                   },
                   {
                       "id":  "s29",
@@ -20621,9 +20621,9 @@
                       "startStatus":  "confirmed",
                       "startDate":  "02/12/2024",
                       "location":  "Letterkenny",
+                      "sickAllowance":  35,
                       "dailyHours":  7,
-                      "weeklyHours":  35,
-                      "sickAllowance":  35
+                      "weeklyHours":  35
                   }
               ]
 }

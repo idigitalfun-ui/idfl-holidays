@@ -87,7 +87,7 @@ header{background:var(--sf);border-bottom:1px solid var(--bd);padding:11px 20px;
 .hero-title{font-size:.75rem;font-weight:800;text-transform:uppercase;letter-spacing:.6px;color:var(--tx3);display:flex;align-items:center;justify-content:center;gap:6px;margin-bottom:10px}
 .hero-val-big{font-size:3.4rem;font-weight:900;line-height:1;letter-spacing:-1.5px;font-family:'Outfit',sans-serif}
 .hero-sub-big{font-size:1.2rem;font-weight:800;margin-top:6px;letter-spacing:-.2px}
-.hero-weeks-badge{display:inline-block;background:var(--sf3);border:1px solid var(--bd2);color:var(--tx);padding:4px 14px;border-radius:20px;font-size:.84rem;font-weight:800;margin-top:10px}
+.hero-weeks-badge{display:inline-block;background:var(--sf3);border:1px solid var(--bd2);color:var(--tx);padding:5px 16px;border-radius:20px;font-size:.86rem;font-weight:800;margin-top:10px}
 .hero-desc{font-size:.74rem;color:var(--tx3);margin-top:6px}
 
 .hero-breakdown-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:20px;padding-top:16px;border-top:1px solid var(--bd);max-width:720px;margin-left:auto;margin-right:auto}
@@ -105,29 +105,32 @@ header{background:var(--sf);border-bottom:1px solid var(--bd);padding:11px 20px;
 .hero-breakdown-row{display:flex;justify-content:space-between;color:var(--tx2)}
 .hero-breakdown-row strong{font-family:'JetBrains Mono',monospace;color:var(--tx)}
 
-/* â”€â”€ ðŸŒŸ INTERACTIVE HOLIDAY FORECASTER & ESTIMATOR CARD ðŸŒŸ â”€â”€ */
-.estimator-card{background:linear-gradient(135deg,rgba(31,38,64,.8),rgba(17,21,36,.95));border:1px solid var(--bd2);border-radius:16px;padding:20px;box-shadow:var(--shadow);margin-bottom:24px}
+/* â”€â”€ ðŸŒŸ CALENDAR & WEEK-BY-WEEK FUTURE ESTIMATOR CARD ðŸŒŸ â”€â”€ */
+.estimator-card{background:linear-gradient(135deg,rgba(31,38,64,.85),rgba(17,21,36,.98));border:1px solid var(--bd2);border-radius:18px;padding:22px;box-shadow:var(--shadowL);margin-bottom:24px}
 .est-hd{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:8px}
-.est-title{font-size:.92rem;font-weight:900;color:var(--tx);display:flex;align-items:center;gap:8px}
+.est-title{font-size:1.02rem;font-weight:900;color:var(--tx);display:flex;align-items:center;gap:8px}
 .est-badge{background:var(--pu2);color:var(--pu);border:1px solid var(--pu);font-size:.65rem;font-weight:800;padding:2px 8px;border-radius:12px}
 .est-presets{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
-.preset-btn{background:var(--sf2);border:1px solid var(--bd);color:var(--tx2);font-size:.72rem;font-weight:700;padding:5px 11px;border-radius:8px;cursor:pointer;transition:all .15s}
+.preset-btn{background:var(--sf2);border:1px solid var(--bd);color:var(--tx2);font-size:.74rem;font-weight:700;padding:6px 12px;border-radius:8px;cursor:pointer;transition:all .15s}
 .preset-btn:hover{color:var(--tx);border-color:var(--ac)}
 .preset-btn.active{background:var(--ac);color:#fff;border-color:var(--ac)}
-.est-controls{display:grid;grid-template-columns:1fr 1fr;gap:14px;background:var(--sf);border:1px solid var(--bd);border-radius:12px;padding:14px;margin-bottom:14px}
-@media(max-width:650px){.est-controls{grid-template-columns:1fr}}
-.est-ctrl-col label{display:block;font-size:.72rem;font-weight:700;color:var(--tx2);margin-bottom:6px}
-.est-slider-wrap{display:flex;align-items:center;gap:10px}
-.est-slider{flex:1;accent-color:var(--ac)}
-.est-slider-val{font-family:'JetBrains Mono',monospace;font-size:.85rem;font-weight:800;color:var(--ac);min-width:65px}
-.est-input{width:100%;background:var(--sf2);border:1px solid var(--bd);border-radius:7px;color:var(--tx);font-family:'JetBrains Mono',monospace;font-size:.8rem;padding:6px 10px;outline:none}
-.est-input:focus{border-color:var(--ac)}
-.est-results{background:var(--sf2);border:1px solid var(--bd2);border-radius:12px;padding:14px 18px;display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-@media(max-width:700px){.est-results{grid-template-columns:1fr}}
-.est-res-box{display:flex;flex-direction:column;gap:3px}
-.est-res-box span{font-size:.68rem;color:var(--tx3);font-weight:700;text-transform:uppercase}
-.est-res-box strong{font-size:1.15rem;font-family:'Outfit',sans-serif;font-weight:900}
-.est-res-sub{font-size:.72rem;color:var(--tx2);font-weight:700}
+
+.est-target-highlight{background:radial-gradient(ellipse at center, rgba(91,142,245,.15), var(--sf2));border:1px solid var(--ac);border-radius:14px;padding:16px 20px;margin-bottom:18px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px}
+.est-target-left{display:flex;flex-direction:column;gap:3px}
+.est-target-tag{font-size:.7rem;font-weight:800;color:var(--ac);text-transform:uppercase;letter-spacing:.5px}
+.est-target-val{font-size:1.85rem;font-weight:900;color:var(--gr);font-family:'Outfit',sans-serif;letter-spacing:-.5px}
+.est-target-sub{font-size:.88rem;color:var(--tx);font-weight:800}
+
+/* Calendar Timeline Table */
+.est-cal-wrap{max-height:280px;overflow-y:auto;border:1px solid var(--bd);border-radius:12px;background:var(--sf)}
+table.est-cal-table{width:100%;border-collapse:collapse;font-size:.76rem}
+table.est-cal-table thead th{position:sticky;top:0;background:var(--sf2);color:var(--tx2);font-size:.65rem;font-weight:800;text-transform:uppercase;padding:8px 12px;text-align:left;border-bottom:1px solid var(--bd);z-index:2}
+table.est-cal-table tbody tr{cursor:pointer;transition:background .12s}
+table.est-cal-table tbody tr:hover{background:var(--sf2)}
+table.est-cal-table tbody tr.selected{background:rgba(91,142,245,.16);border-left:3px solid var(--ac)}
+table.est-cal-table tbody tr.selected td{font-weight:700}
+table.est-cal-table td{padding:8px 12px;border-bottom:1px solid var(--bd)}
+table.est-cal-table td.num{text-align:right;font-family:'JetBrains Mono',monospace}
 
 /* â”€â”€ PROGRESS BARS â”€â”€ */
 .progress-wrap{margin-top:12px}
@@ -259,7 +262,6 @@ table.batch-table input:focus{border-color:var(--ac)}
   <div style="margin-left:auto;display:flex;gap:8px;align-items:center">
     <button class="btn btn-pk" id="pdfExportModalBtn" title="Export reports as PDF">&#128196; Export PDF</button>
     <button class="btn btn-gr" id="batchWeekBtn">&#128197; Add New Week (All Staff)</button>
-    <button class="btn btn-am" id="bulkHolBtn">&#43; Holiday For All</button>
     <button class="btn btn-pu" id="syncModalBtn" title="Sync and backup all company data">&#128260; Sync &amp; Backup</button>
   </div>
 </header>
@@ -356,7 +358,7 @@ table.batch-table input:focus{border-color:var(--ac)}
         <div>
           <label>Quick Fill Standard Shifts</label>
           <div style="display:flex;gap:6px">
-            <button class="btn btn-gr" id="batchFillStandardBtn" style="flex:2;padding:8px 6px" title="Fills 40h for 8h staff (Rana, Osama, Ibrar), 37.5h for Jalal, 35h for 7h staff">&#9889; Standard Shifts (35/37.5/40h)</button>
+            <button class="btn btn-gr" id="batchFillStandardBtn" style="flex:2;padding:8px 6px" title="Fills 40h for 8h staff (Abdullah, Ibrar, Osama, Jalal), 35h for 7h staff">&#9889; Standard Shifts (35h / 40h)</button>
             <button class="btn btn-ghost" id="batchFill35Btn" style="flex:1;padding:8px 4px">&#9889; 35h All</button>
             <button class="btn btn-ghost" id="batchClearBtn" style="flex:1;padding:8px 4px">&#8635; Clear</button>
           </div>
@@ -420,25 +422,6 @@ table.batch-table input:focus{border-color:var(--ac)}
     </div>
     <div class="modal-footer">
       <button class="btn btn-ghost" id="syncCloseBtn">Close</button>
-    </div>
-  </div>
-</div>
-
-<!-- Bulk Holiday Modal -->
-<div class="modal-bg hidden" id="bulkModal">
-  <div class="modal">
-    <div class="modal-hd"><h2>&#43; Add Holiday for All Staff</h2><button class="modal-close" id="bulkClose">&times;</button></div>
-    <div class="modal-body">
-      <label>Date</label>
-      <input type="date" id="bulkDate">
-      <label>Hours</label>
-      <input type="number" id="bulkHrs" min="0" step="0.5" placeholder="e.g. 7">
-      <label>Note / Description (e.g. Bank Holiday)</label>
-      <input type="text" id="bulkNote" placeholder="Bank Holiday">
-    </div>
-    <div class="modal-footer">
-      <button class="btn btn-ghost" id="bulkCancelBtn">Cancel</button>
-      <button class="btn btn-am" id="bulkSaveBtn">Add to All Staff</button>
     </div>
   </div>
 </div>
@@ -20775,9 +20758,9 @@ table.batch-table input:focus{border-color:var(--ac)}
                       "startStatus":  "confirmed",
                       "startDate":  "01/08/2022",
                       "location":  "Mullingar",
+                      "sickAllowance":  35,
                       "dailyHours":  8,
-                      "weeklyHours":  40,
-                      "sickAllowance":  35
+                      "weeklyHours":  40
                   },
                   {
                       "id":  "s2",
@@ -20786,9 +20769,9 @@ table.batch-table input:focus{border-color:var(--ac)}
                       "startStatus":  "confirmed",
                       "startDate":  "01/09/2023",
                       "location":  "Portlaoise",
+                      "sickAllowance":  35,
                       "dailyHours":  8,
-                      "weeklyHours":  40,
-                      "sickAllowance":  35
+                      "weeklyHours":  40
                   },
                   {
                       "id":  "s3",
@@ -20797,9 +20780,9 @@ table.batch-table input:focus{border-color:var(--ac)}
                       "startStatus":  "confirmed",
                       "startDate":  "01/08/2022",
                       "location":  "Portlaoise",
+                      "sickAllowance":  35,
                       "dailyHours":  7,
-                      "weeklyHours":  35,
-                      "sickAllowance":  35
+                      "weeklyHours":  35
                   },
                   {
                       "id":  "s4",
@@ -20808,9 +20791,9 @@ table.batch-table input:focus{border-color:var(--ac)}
                       "startStatus":  "confirmed",
                       "startDate":  "01/11/2022",
                       "location":  "Tullamore",
+                      "sickAllowance":  35,
                       "dailyHours":  7,
-                      "weeklyHours":  35,
-                      "sickAllowance":  35
+                      "weeklyHours":  35
                   },
                   {
                       "id":  "s5",
@@ -20819,9 +20802,9 @@ table.batch-table input:focus{border-color:var(--ac)}
                       "startStatus":  "confirmed",
                       "startDate":  "11/09/2023",
                       "location":  "Maynooth",
+                      "sickAllowance":  35,
                       "dailyHours":  7,
-                      "weeklyHours":  35,
-                      "sickAllowance":  35
+                      "weeklyHours":  35
                   },
                   {
                       "id":  "s6",
@@ -20830,9 +20813,9 @@ table.batch-table input:focus{border-color:var(--ac)}
                       "startStatus":  "confirmed",
                       "startDate":  "03/07/2023",
                       "location":  "Maynooth",
+                      "sickAllowance":  35,
                       "dailyHours":  7,
-                      "weeklyHours":  35,
-                      "sickAllowance":  35
+                      "weeklyHours":  35
                   },
                   {
                       "id":  "s7",
@@ -20841,9 +20824,9 @@ table.batch-table input:focus{border-color:var(--ac)}
                       "startStatus":  "confirmed",
                       "startDate":  "04/11/2024",
                       "location":  "Maynooth",
+                      "sickAllowance":  35,
                       "dailyHours":  7,
-                      "weeklyHours":  35,
-                      "sickAllowance":  35
+                      "weeklyHours":  35
                   },
                   {
                       "id":  "s8",
@@ -20852,9 +20835,9 @@ table.batch-table input:focus{border-color:var(--ac)}
                       "startStatus":  "confirmed",
                       "startDate":  "13/02/2023",
                       "location":  "Maynooth",
+                      "sickAllowance":  35,
                       "dailyHours":  8,
-                      "weeklyHours":  40,
-                      "sickAllowance":  35
+                      "weeklyHours":  40
                   },
                   {
                       "id":  "s30",
@@ -20863,9 +20846,9 @@ table.batch-table input:focus{border-color:var(--ac)}
                       "startStatus":  "confirmed",
                       "startDate":  "31/05/2026",
                       "location":  "Maynooth",
+                      "sickAllowance":  35,
                       "dailyHours":  7,
-                      "weeklyHours":  35,
-                      "sickAllowance":  35
+                      "weeklyHours":  35
                   },
                   {
                       "id":  "s9",
@@ -20874,9 +20857,9 @@ table.batch-table input:focus{border-color:var(--ac)}
                       "startStatus":  "confirmed",
                       "startDate":  "10/06/2024",
                       "location":  "Thurles",
+                      "sickAllowance":  35,
                       "dailyHours":  7,
-                      "weeklyHours":  35,
-                      "sickAllowance":  35
+                      "weeklyHours":  35
                   },
                   {
                       "id":  "s16",
@@ -20885,9 +20868,9 @@ table.batch-table input:focus{border-color:var(--ac)}
                       "startStatus":  "confirmed",
                       "startDate":  "06/05/2024",
                       "location":  "Thurles",
+                      "sickAllowance":  35,
                       "dailyHours":  7,
-                      "weeklyHours":  35,
-                      "sickAllowance":  35
+                      "weeklyHours":  35
                   },
                   {
                       "id":  "s10",
@@ -20896,9 +20879,9 @@ table.batch-table input:focus{border-color:var(--ac)}
                       "startStatus":  "confirmed",
                       "startDate":  "06/09/2023",
                       "location":  "Kilkenny",
+                      "sickAllowance":  35,
                       "dailyHours":  7,
-                      "weeklyHours":  35,
-                      "sickAllowance":  35
+                      "weeklyHours":  35
                   },
                   {
                       "id":  "s14",
@@ -20907,9 +20890,9 @@ table.batch-table input:focus{border-color:var(--ac)}
                       "startStatus":  "confirmed",
                       "startDate":  "17/03/2026",
                       "location":  "Kilkenny",
+                      "sickAllowance":  35,
                       "dailyHours":  7,
-                      "weeklyHours":  35,
-                      "sickAllowance":  35
+                      "weeklyHours":  35
                   },
                   {
                       "id":  "s11",
@@ -20918,9 +20901,9 @@ table.batch-table input:focus{border-color:var(--ac)}
                       "startStatus":  "confirmed",
                       "startDate":  "20/11/2023",
                       "location":  "Newbridge",
+                      "sickAllowance":  35,
                       "dailyHours":  7,
-                      "weeklyHours":  35,
-                      "sickAllowance":  35
+                      "weeklyHours":  35
                   },
                   {
                       "id":  "s12",
@@ -20929,9 +20912,9 @@ table.batch-table input:focus{border-color:var(--ac)}
                       "startStatus":  "confirmed",
                       "startDate":  "01/08/2022",
                       "location":  "Newbridge",
+                      "sickAllowance":  35,
                       "dailyHours":  7,
-                      "weeklyHours":  35,
-                      "sickAllowance":  35
+                      "weeklyHours":  35
                   },
                   {
                       "id":  "s13",
@@ -20940,9 +20923,9 @@ table.batch-table input:focus{border-color:var(--ac)}
                       "startStatus":  "confirmed",
                       "startDate":  "01/08/2022",
                       "location":  "Newbridge",
-                      "dailyHours":  7.5,
-                      "weeklyHours":  37.5,
-                      "sickAllowance":  35
+                      "sickAllowance":  35,
+                      "dailyHours":  8,
+                      "weeklyHours":  40
                   },
                   {
                       "id":  "s15",
@@ -20951,9 +20934,9 @@ table.batch-table input:focus{border-color:var(--ac)}
                       "startStatus":  "confirmed",
                       "startDate":  "01/08/2022",
                       "location":  "Newbridge",
+                      "sickAllowance":  35,
                       "dailyHours":  7,
-                      "weeklyHours":  35,
-                      "sickAllowance":  35
+                      "weeklyHours":  35
                   },
                   {
                       "id":  "s17",
@@ -20962,9 +20945,9 @@ table.batch-table input:focus{border-color:var(--ac)}
                       "startStatus":  "confirmed",
                       "startDate":  "01/08/2022",
                       "location":  "Arklow",
+                      "sickAllowance":  35,
                       "dailyHours":  7,
-                      "weeklyHours":  35,
-                      "sickAllowance":  35
+                      "weeklyHours":  35
                   },
                   {
                       "id":  "s18",
@@ -20973,9 +20956,9 @@ table.batch-table input:focus{border-color:var(--ac)}
                       "startStatus":  "confirmed",
                       "startDate":  "06/02/2023",
                       "location":  "Arklow",
+                      "sickAllowance":  35,
                       "dailyHours":  7,
-                      "weeklyHours":  35,
-                      "sickAllowance":  35
+                      "weeklyHours":  35
                   },
                   {
                       "id":  "s20",
@@ -20984,9 +20967,9 @@ table.batch-table input:focus{border-color:var(--ac)}
                       "startStatus":  "confirmed",
                       "startDate":  "04/09/2023",
                       "location":  "Limerick",
+                      "sickAllowance":  35,
                       "dailyHours":  7,
-                      "weeklyHours":  35,
-                      "sickAllowance":  35
+                      "weeklyHours":  35
                   },
                   {
                       "id":  "s21",
@@ -20995,9 +20978,9 @@ table.batch-table input:focus{border-color:var(--ac)}
                       "startStatus":  "confirmed",
                       "startDate":  "01/08/2022",
                       "location":  "Tralee",
+                      "sickAllowance":  35,
                       "dailyHours":  7,
-                      "weeklyHours":  35,
-                      "sickAllowance":  35
+                      "weeklyHours":  35
                   },
                   {
                       "id":  "s22",
@@ -21006,9 +20989,9 @@ table.batch-table input:focus{border-color:var(--ac)}
                       "startStatus":  "confirmed",
                       "startDate":  "10/06/2024",
                       "location":  "Tralee",
+                      "sickAllowance":  35,
                       "dailyHours":  7,
-                      "weeklyHours":  35,
-                      "sickAllowance":  35
+                      "weeklyHours":  35
                   },
                   {
                       "id":  "s23",
@@ -21017,9 +21000,9 @@ table.batch-table input:focus{border-color:var(--ac)}
                       "startStatus":  "confirmed",
                       "startDate":  "22/06/2024",
                       "location":  "Tralee",
+                      "sickAllowance":  35,
                       "dailyHours":  7,
-                      "weeklyHours":  35,
-                      "sickAllowance":  35
+                      "weeklyHours":  35
                   },
                   {
                       "id":  "s24",
@@ -21028,9 +21011,9 @@ table.batch-table input:focus{border-color:var(--ac)}
                       "startStatus":  "confirmed",
                       "startDate":  "07/08/2024",
                       "location":  "Tralee",
+                      "sickAllowance":  35,
                       "dailyHours":  7,
-                      "weeklyHours":  35,
-                      "sickAllowance":  35
+                      "weeklyHours":  35
                   },
                   {
                       "id":  "s25",
@@ -21039,9 +21022,9 @@ table.batch-table input:focus{border-color:var(--ac)}
                       "startStatus":  "confirmed",
                       "startDate":  "20/01/2025",
                       "location":  "Tralee",
+                      "sickAllowance":  35,
                       "dailyHours":  7,
-                      "weeklyHours":  35,
-                      "sickAllowance":  35
+                      "weeklyHours":  35
                   },
                   {
                       "id":  "s31",
@@ -21050,9 +21033,9 @@ table.batch-table input:focus{border-color:var(--ac)}
                       "startStatus":  "confirmed",
                       "startDate":  "20/07/2026",
                       "location":  "Tralee",
+                      "sickAllowance":  35,
                       "dailyHours":  7,
-                      "weeklyHours":  35,
-                      "sickAllowance":  35
+                      "weeklyHours":  35
                   },
                   {
                       "id":  "s26",
@@ -21061,9 +21044,9 @@ table.batch-table input:focus{border-color:var(--ac)}
                       "startStatus":  "confirmed",
                       "startDate":  "11/09/2025",
                       "location":  "Killarney",
+                      "sickAllowance":  35,
                       "dailyHours":  7,
-                      "weeklyHours":  35,
-                      "sickAllowance":  35
+                      "weeklyHours":  35
                   },
                   {
                       "id":  "s27",
@@ -21072,9 +21055,9 @@ table.batch-table input:focus{border-color:var(--ac)}
                       "startStatus":  "confirmed",
                       "startDate":  "28/08/2023",
                       "location":  "Letterkenny",
+                      "sickAllowance":  35,
                       "dailyHours":  7,
-                      "weeklyHours":  35,
-                      "sickAllowance":  35
+                      "weeklyHours":  35
                   },
                   {
                       "id":  "s28",
@@ -21083,9 +21066,9 @@ table.batch-table input:focus{border-color:var(--ac)}
                       "startStatus":  "confirmed",
                       "startDate":  "19/11/2024",
                       "location":  "Letterkenny",
+                      "sickAllowance":  35,
                       "dailyHours":  7,
-                      "weeklyHours":  35,
-                      "sickAllowance":  35
+                      "weeklyHours":  35
                   },
                   {
                       "id":  "s29",
@@ -21094,9 +21077,9 @@ table.batch-table input:focus{border-color:var(--ac)}
                       "startStatus":  "confirmed",
                       "startDate":  "02/12/2024",
                       "location":  "Letterkenny",
+                      "sickAllowance":  35,
                       "dailyHours":  7,
-                      "weeklyHours":  35,
-                      "sickAllowance":  35
+                      "weeklyHours":  35
                   }
               ]
 }</script>
@@ -21112,12 +21095,11 @@ function getEmbeddedToken(){
 
 const BASE = JSON.parse(document.getElementById('holiday-data').textContent);
 
-// â”€â”€â”€ Staff Shift Configuration (8h for Rana, Osama, Ibrar; 7.5h for Jalal; 7h standard) â”€â”€â”€
+// â”€â”€â”€ Staff Shift Configuration (40h for Rana, Osama, Ibrar, Jalal; 35h for rest) â”€â”€â”€
 function getStaffDailyHours(sid){
   const s = BASE.staff.find(function(x){ return x.id === sid; });
   if(s && s.dailyHours) return s.dailyHours;
-  if(sid === 's1' || sid === 's2' || sid === 's8') return 8.0;
-  if(sid === 's13') return 7.5;
+  if(sid === 's1' || sid === 's2' || sid === 's8' || sid === 's13') return 8.0;
   return 7.0;
 }
 
@@ -21137,9 +21119,8 @@ let isPortalMode = false;
 let editingHolId = null;
 let editingSickId = null;
 
-// Forecaster State
-let forecastWeeks = 8; // Default 2 months (8 weeks)
-let testHolBookingDays = 0;
+// Calendar Estimator State
+let selectedTargetWeeksAhead = 8; // Default 2 months (8 weeks ahead)
 
 function uid(){ return Date.now().toString(36)+Math.random().toString(36).slice(2,6); }
 function fmt1(n){ return (Math.round((+n||0)*10)/10).toFixed(1); }
@@ -21404,7 +21385,7 @@ function renderSidebar(){
     if(q && !s.name.toLowerCase().includes(q) && !shopName.toLowerCase().includes(q)) return;
     const stats = getFullConnectedStats(s.id)[activeYear];
     const hasData = stats.weeks.length > 0 || stats.opening !== 0 || stats.holLogs.length > 0;
-    const dailyHrs = getStaffDailyHours(s.id);
+    const weeklyHrs = getStaffWeeklyHours(s.id);
     
     let badgeCls='zero', badgeTxt='â€“';
     if(hasData){
@@ -21416,7 +21397,7 @@ function renderSidebar(){
     const div=document.createElement('div');
     div.className='staff-item'+(s.id===activeSid?' active':'');
     div.innerHTML='<div class="si-avatar" style="background:'+avatarColor(s.id)+';color:#0c0e17">'+initials(s.name)+'</div>'
-      +'<div class="si-info"><div class="si-name">'+s.name+'</div><div class="si-sub"><span>'+shopName+'</span><span class="shift-tag">'+dailyHrs+'h/d</span></div></div>'
+      +'<div class="si-info"><div class="si-name">'+s.name+'</div><div class="si-sub"><span>'+shopName+'</span><span class="shift-tag">'+weeklyHrs+'h/wk</span></div></div>'
       +(hasData?'<span class="si-badge '+badgeCls+'">'+badgeTxt+'</span>':'');
     div.addEventListener('click',function(){activeSid=s.id;editingHolId=null;editingSickId=null;renderAll();});
     shopGroups[shopName].push(div);
@@ -21470,7 +21451,7 @@ function renderMain(){
     +'<div class="portal-name">'+staff.name+'</div>'
     +'<div class="portal-sub">'
     +'<span class="portal-shop-badge">'+(staff.shop || staff.location || 'IDFL')+' Shop</span>'
-    +'<span class="portal-shift-badge">&#9200; '+dailyHrs+'h/day ('+weeklyHrs+'h/wk)</span>'
+    +'<span class="portal-shift-badge">&#9200; '+weeklyHrs+' hrs/week ('+dailyHrs+'h/day)</span>'
     +'<span>Started: <strong id="startDisplay">'+(staff.startDate||'<em style="color:var(--am)">On Record</em>')+'</strong></span>'
     +(!isPortalMode ? ' <button class="start-edit-btn" id="startEditBtn">Edit</button>' : '')
     +'</div>'
@@ -21483,7 +21464,7 @@ function renderMain(){
     +'</div>'
     +'</div>'
     
-    // ðŸŒŸ HERO STATS: CENTERED BIG AVAILABLE HOLIDAYS (WITH WEEKS + DAYS + HOURS) ðŸŒŸ
+    // ðŸŒŸ HERO STATS: CENTERED BIG AVAILABLE HOLIDAYS (WITH EXACT WEEKS + DAYS + HOURS) ðŸŒŸ
     +'<div class="hero-center-wrap">'
     // Center Big Card
     +'<div class="hero-card hero-primary-center">'
@@ -21491,7 +21472,7 @@ function renderMain(){
     +'<div class="hero-val-big" style="color:'+balColor+'">'+fmt1(balance)+' hrs</div>'
     +'<div class="hero-sub-big" style="color:'+balColor+'">'+fmt1(balDays)+' working days</div>'
     +(balance > 0 ? '<div class="hero-weeks-badge">&#128197; Equivalent to: <strong>'+breakdown.weeksText+'</strong></div>' : '')
-    +'<div class="hero-desc">Calculated at '+dailyHrs+' hrs / working day ('+weeklyHrs+' hrs / full week)</div>'
+    +'<div class="hero-desc">Calculated at '+weeklyHrs+' hrs / full week ('+dailyHrs+' hrs / working day)</div>'
     +'<div class="hero-breakdown-grid">'
     +'<div class="hero-b-col"><span>Opening Carry-over</span><strong>'+fmt1(curStats.opening)+' hrs</strong></div>'
     +'<div class="hero-b-col"><span>Earned (8% of '+fmt1(curStats.totalWorked)+'h)</span><strong style="color:var(--gr)">+'+fmt1(curStats.earned)+' hrs</strong></div>'
@@ -21521,7 +21502,7 @@ function renderMain(){
     +'<div class="hero-title" style="justify-content:flex-start">&#128197; WORKED HOURS ('+activeYear+')</div>'
     +'<div class="hero-val" style="color:var(--ac)">'+fmt1(curStats.totalWorked)+' hrs</div>'
     +'<div class="hero-sub" style="color:var(--tx2)">'+curStats.weeks.length+' recorded periods</div>'
-    +'<div class="hero-desc">Standard shift: '+dailyHrs+'h/day &bull; Accrues 8% holiday entitlement</div>'
+    +'<div class="hero-desc">Standard shift: '+weeklyHrs+'h/week &bull; Accrues 8% holiday entitlement</div>'
     +'<div class="hero-breakdown">'
     +'<div class="hero-breakdown-row"><span>Standard Full Week</span><strong>'+weeklyHrs+' hrs ('+dailyHrs+'h/day)</strong></div>'
     +'<div class="hero-breakdown-row"><span>Holiday Hours Earned</span><strong style="color:var(--gr)">+'+fmt1(curStats.earned)+' hrs</strong></div>'
@@ -21530,37 +21511,38 @@ function renderMain(){
     +'</div>'
     +'</div>'
     
-    // ðŸŒŸ INTERACTIVE FUTURE HOLIDAY FORECASTER & ESTIMATOR WIDGET ðŸŒŸ
+    // ðŸŒŸ INTERACTIVE FUTURE CALENDAR & WEEK-BY-WEEK ESTIMATOR ðŸŒŸ
     +'<div class="estimator-card" id="holidayEstimatorWidget">'
     +'<div class="est-hd">'
-    +'<div class="est-title">&#128302; Holiday Estimator &amp; Future Forecaster <span class="est-badge">Live Calculator</span></div>'
-    +'<div style="font-size:.73rem;color:var(--tx2)">Estimate upcoming holidays based on future worked hours</div>'
+    +'<div class="est-title">&#128197; Future Holiday Estimator &amp; Calendar Projection <span class="est-badge">Live Planner</span></div>'
+    +'<div style="font-size:.74rem;color:var(--tx2)">Select a target date/week to see your exact estimated available holiday balance if you work '+weeklyHrs+'h/week</div>'
     +'</div>'
     
     +'<div class="est-presets">'
-    +'<span style="font-size:.72rem;color:var(--tx3);align-self:center;margin-right:4px">Quick Presets:</span>'
+    +'<span style="font-size:.72rem;color:var(--tx3);align-self:center;margin-right:4px">Quick Jump:</span>'
     +'<button class="preset-btn" data-w="2">+2 Weeks</button>'
     +'<button class="preset-btn" data-w="4">+1 Month (4 wks)</button>'
     +'<button class="preset-btn active" data-w="8">+2 Months (8 wks)</button>'
-    +'<button class="preset-btn" data-w="13">+3 Months (13 wks)</button>'
-    +'<button class="preset-btn" data-w="26">+6 Months (26 wks)</button>'
+    +'<button class="preset-btn" data-w="12">+3 Months (12 wks)</button>'
+    +'<button class="preset-btn" data-w="18">End of 2026 (Dec)</button>'
     +'</div>'
     
-    +'<div class="est-controls">'
-    +'<div class="est-ctrl-col">'
-    +'<label>Weeks to Work in Future</label>'
-    +'<div class="est-slider-wrap">'
-    +'<input type="range" class="est-slider" id="estSlider" min="1" max="52" value="'+forecastWeeks+'">'
-    +'<span class="est-slider-val" id="estSliderVal">'+forecastWeeks+' Weeks</span>'
-    +'</div>'
-    +'</div>'
-    +'<div class="est-ctrl-col">'
-    +'<label>Average Weekly Hours Worked</label>'
-    +'<input type="number" class="est-input" id="estWeeklyHrsInp" value="'+weeklyHrs+'" step="0.5" min="0">'
-    +'</div>'
-    +'</div>'
+    +'<div class="est-target-highlight" id="estTargetHighlight"></div>'
     
-    +'<div class="est-results" id="estResultsBox"></div>'
+    +'<div style="margin-bottom:8px;font-size:.72rem;font-weight:700;color:var(--tx3);text-transform:uppercase;letter-spacing:.5px">&#128197; Week-by-Week Projection Schedule (Click any future week below to inspect):</div>'
+    +'<div class="est-cal-wrap">'
+    +'<table class="est-cal-table">'
+    +'<thead>'
+    +'<tr>'
+    +'<th style="width:34%">Calendar Week &amp; Period</th>'
+    +'<th style="width:20%">Weekly Worked</th>'
+    +'<th style="width:20%">Weekly Accrued</th>'
+    +'<th style="width:26%;text-align:right">Projected Balance</th>'
+    +'</tr>'
+    +'</thead>'
+    +'<tbody id="estCalTbody"></tbody>'
+    +'</table>'
+    +'</div>'
     +'</div>'
     
     // 2-Column Detailed Section (Balanced minmax grid)
@@ -21653,39 +21635,18 @@ function renderMain(){
     });
   } else { sickListEl.innerHTML='<div class="log-empty">No sick days logged for '+activeYear+'</div>'; }
 
-  // Update Estimator Calculation
-  renderEstimatorResults();
+  // Render Calendar Estimator Schedule
+  renderCalendarEstimatorSchedule();
 
-  // Setup Estimator Listeners
-  const slider = document.getElementById('estSlider');
-  const weeklyHrsInp = document.getElementById('estWeeklyHrsInp');
-  
-  if(slider && weeklyHrsInp){
-    slider.addEventListener('input', function(){
-      forecastWeeks = parseInt(slider.value, 10);
-      document.getElementById('estSliderVal').textContent = forecastWeeks + ' Weeks';
-      document.querySelectorAll('.preset-btn').forEach(function(b){
-        if(parseInt(b.dataset.w, 10) === forecastWeeks) b.classList.add('active');
-        else b.classList.remove('active');
-      });
-      renderEstimatorResults();
+  // Setup Presets Listeners
+  document.querySelectorAll('.preset-btn').forEach(function(b){
+    b.addEventListener('click', function(){
+      selectedTargetWeeksAhead = parseInt(b.dataset.w, 10);
+      document.querySelectorAll('.preset-btn').forEach(function(x){ x.classList.remove('active'); });
+      b.classList.add('active');
+      renderCalendarEstimatorSchedule();
     });
-    
-    weeklyHrsInp.addEventListener('input', function(){
-      renderEstimatorResults();
-    });
-    
-    document.querySelectorAll('.preset-btn').forEach(function(b){
-      b.addEventListener('click', function(){
-        forecastWeeks = parseInt(b.dataset.w, 10);
-        slider.value = forecastWeeks;
-        document.getElementById('estSliderVal').textContent = forecastWeeks + ' Weeks';
-        document.querySelectorAll('.preset-btn').forEach(function(x){ x.classList.remove('active'); });
-        b.classList.add('active');
-        renderEstimatorResults();
-      });
-    });
-  }
+  });
 
   if(!isPortalMode){
     document.getElementById('addWkBtn').addEventListener('click',function(){
@@ -21751,43 +21712,89 @@ function renderMain(){
   });
 }
 
-// â”€â”€â”€ Render Future Holiday Estimator Box â”€â”€â”€
-function renderEstimatorResults(){
-  const resBox = document.getElementById('estResultsBox');
-  if(!resBox || !activeSid) return;
+// â”€â”€â”€ Render Calendar Projection Schedule & Target Highlight â”€â”€â”€
+function renderCalendarEstimatorSchedule(){
+  const calTbody = document.getElementById('estCalTbody');
+  const targetHighlight = document.getElementById('estTargetHighlight');
+  if(!calTbody || !targetHighlight || !activeSid) return;
   
   const curStats = getFullConnectedStats(activeSid)[activeYear];
   const curBalance = curStats.balance;
   const dailyHrs = curStats.dailyHours;
+  const weeklyHrs = dailyHrs * 5;
+  const currentWeeksCount = curStats.weeks.length; // e.g. 34 or 35 weeks recorded
   
-  const wHrsInp = document.getElementById('estWeeklyHrsInp');
-  const avgWeeklyHrs = wHrsInp ? parseFloat(wHrsInp.value) || (dailyHrs * 5) : (dailyHrs * 5);
+  const weeklyAccrual = Math.round(weeklyHrs * 0.08 * 100) / 100; // e.g. +3.2h for 40h staff, +2.8h for 35h staff
   
-  const futureWorked = forecastWeeks * avgWeeklyHrs;
-  const futureEarned = Math.round(futureWorked * 0.08 * 100) / 100;
-  const projectedBalance = Math.round((curBalance + futureEarned) * 100) / 100;
-  const projectedDays = Math.round((projectedBalance / dailyHrs) * 10) / 10;
+  // Future weekly calendar generator starting from next week
+  const startDate = new Date(2026, 7, 31); // 31 Aug 2026 (Week 35)
+  const totalFutureWeeksToRender = 26; // Next 6 months
   
-  const projBreakdown = formatHumanBalanceBreakdown(projectedBalance, activeSid);
+  calTbody.innerHTML = '';
   
-  resBox.innerHTML = 
-    '<div class="est-res-box">'
-    +'<span>Future Hours Worked</span>'
-    +'<strong style="color:var(--ac)">' + fmt1(futureWorked) + ' hrs</strong>'
-    +'<div class="est-res-sub">' + forecastWeeks + ' weeks @ ' + avgWeeklyHrs + 'h/wk</div>'
-    +'</div>'
+  let targetForecast = null;
+  let runningProjectedBalance = curBalance;
+  
+  for(let w = 1; w <= totalFutureWeeksToRender; w++){
+    const wkNum = currentWeeksCount + w;
+    const weekStart = new Date(startDate.getTime() + (w * 7 * 24 * 60 * 60 * 1000));
+    const weekEnd = new Date(weekStart.getTime() + (6 * 24 * 60 * 60 * 1000));
     
-    +'<div class="est-res-box">'
-    +'<span>New Holiday Earned (+8%)</span>'
-    +'<strong style="color:var(--gr)">+' + fmt1(futureEarned) + ' hrs</strong>'
-    +'<div class="est-res-sub">+' + fmt1(futureEarned / dailyHrs) + ' working days</div>'
-    +'</div>'
+    const dStr = weekStart.toLocaleDateString('en-GB', { day: '2-digit', month: 'short' }) + ' - ' + weekEnd.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
     
-    +'<div class="est-res-box">'
-    +'<span>Projected Total Holiday Balance</span>'
-    +'<strong style="color:var(--gr)">' + fmt1(projectedBalance) + ' hrs</strong>'
-    +'<div class="est-res-sub" style="color:#fff;font-weight:800">&#128197; ' + projBreakdown.weeksText + ' (' + projectedDays + ' Days)</div>'
-    +'</div>';
+    runningProjectedBalance = Math.round((runningProjectedBalance + weeklyAccrual) * 100) / 100;
+    const runningDays = Math.round((runningProjectedBalance / dailyHrs) * 10) / 10;
+    const runningBreakdown = formatHumanBalanceBreakdown(runningProjectedBalance, activeSid);
+    
+    const isSelected = (w === selectedTargetWeeksAhead);
+    if(isSelected){
+      targetForecast = {
+        weeksAhead: w,
+        wkNum: wkNum,
+        dateRange: dStr,
+        futureWorked: w * weeklyHrs,
+        futureEarned: Math.round(w * weeklyAccrual * 100) / 100,
+        projectedBalance: runningProjectedBalance,
+        projectedDays: runningDays,
+        projectedBreakdown: runningBreakdown
+      };
+    }
+    
+    const tr = document.createElement('tr');
+    tr.className = isSelected ? 'selected' : '';
+    tr.innerHTML = 
+      '<td><strong>Week ' + wkNum + '</strong> <span style="color:var(--tx3);font-size:.7rem">(' + dStr + ')</span>' + (isSelected ? ' <span style="background:var(--ac);color:#fff;padding:1px 6px;border-radius:4px;font-size:.62rem;font-weight:800">SELECTED TARGET</span>' : '') + '</td>'
+      +'<td>' + weeklyHrs + ' hrs</td>'
+      +'<td style="color:var(--gr);font-weight:700">+' + fmt1(weeklyAccrual) + ' hrs</td>'
+      +'<td class="num"><strong style="color:' + (isSelected ? '#fff' : 'var(--gr)') + '">' + fmt1(runningProjectedBalance) + ' hrs</strong> <span style="font-size:.7rem;color:var(--tx2)">(' + runningBreakdown.weeksText + ')</span></td>';
+      
+    tr.addEventListener('click', (function(targetW){
+      return function(){
+        selectedTargetWeeksAhead = targetW;
+        document.querySelectorAll('.preset-btn').forEach(function(b){
+          if(parseInt(b.dataset.w, 10) === targetW) b.classList.add('active');
+          else b.classList.remove('active');
+        });
+        renderCalendarEstimatorSchedule();
+      };
+    })(w));
+    
+    calTbody.appendChild(tr);
+  }
+  
+  if(targetForecast){
+    targetHighlight.innerHTML = 
+      '<div class="est-target-left">'
+      +'<div class="est-target-tag">&#128302; Target Milestone: In ' + targetForecast.weeksAhead + ' Weeks (Week ' + targetForecast.wkNum + ' &bull; ' + targetForecast.dateRange + ')</div>'
+      +'<div class="est-target-val">' + fmt1(targetForecast.projectedBalance) + ' Hours Available</div>'
+      +'<div class="est-target-sub">&#128197; Equivalent to: <strong>' + targetForecast.projectedBreakdown.weeksText + '</strong> (' + targetForecast.projectedDays + ' Working Days)</div>'
+      +'</div>'
+      +'<div style="text-align:right;display:flex;flex-direction:column;gap:4px">'
+      +'<div style="font-size:.75rem;color:var(--tx2)">Current Starting Balance: <strong>' + fmt1(curBalance) + ' hrs</strong></div>'
+      +'<div style="font-size:.75rem;color:var(--ac)">Future Worked: <strong>+' + fmt1(targetForecast.futureWorked) + ' hrs</strong> (' + targetForecast.weeksAhead + ' wks @ ' + weeklyHrs + 'h)</div>'
+      +'<div style="font-size:.82rem;color:var(--gr);font-weight:800">New Holiday Accrued (+8%): <strong>+' + fmt1(targetForecast.futureEarned) + ' hrs</strong></div>'
+      +'</div>';
+  }
 }
 
 // â”€â”€â”€ Edit week inline â”€â”€â”€
@@ -21876,7 +21883,7 @@ function openBatchModal(){
       const dHrs = getStaffDailyHours(s.id);
       const wHrs = dHrs * 5;
       const tr = document.createElement('tr');
-      tr.innerHTML = '<td><strong>' + s.name + '</strong> <span class="shift-tag">' + wHrs + 'h/wk (' + dHrs + 'h/d)</span></td>'
+      tr.innerHTML = '<td><strong>' + s.name + '</strong> <span class="shift-tag">' + wHrs + 'h/wk</span></td>'
         + '<td><input type="number" class="batch-hrs" data-sid="' + s.id + '" data-def="' + wHrs + '" min="0" step="0.5" placeholder="' + wHrs + 'h" style="text-align:right"></td>'
         + '<td><input type="number" class="batch-hol" data-sid="' + s.id + '" min="0" step="0.5" placeholder="Hol Hrs" style="text-align:right"></td>'
         + '<td><input type="number" class="batch-sick" data-sid="' + s.id + '" min="0" step="0.5" placeholder="Sick Hrs" style="text-align:right"></td>'
@@ -21892,7 +21899,7 @@ document.getElementById('batchFillStandardBtn').addEventListener('click', functi
   document.querySelectorAll('.batch-hrs').forEach(function(inp){
     inp.value = inp.dataset.def || '35';
   });
-  toast('Filled exact standard shifts (40h / 37.5h / 35h)');
+  toast('Filled exact standard shifts (40h for 4 staff, 35h for rest)');
 });
 
 document.getElementById('batchFill35Btn').addEventListener('click', function(){
@@ -22138,7 +22145,7 @@ function openShareModal(sid){
   txt += '==================================================\n';
   txt += 'Staff Member:   ' + staff.name + '\n';
   txt += 'Shop:           ' + shopName + '\n';
-  txt += 'Standard Shift: ' + dailyHrs + ' hrs/day (' + weeklyHrs + ' hrs/week)\n';
+  txt += 'Standard Shift: ' + weeklyHrs + ' hrs/week (' + dailyHrs + ' hrs/day)\n';
   txt += 'Portal Link:    ' + directLink + '\n';
   txt += '==================================================\n\n';
   
@@ -22209,8 +22216,8 @@ function populatePdfStaffDropdown(){
       members.forEach(function(m){
         const opt = document.createElement('option');
         opt.value = m.id;
-        const dHrs = getStaffDailyHours(m.id);
-        opt.textContent = m.name + ' (' + sh + ' - ' + dHrs + 'h/d)';
+        const wHrs = getStaffWeeklyHours(m.id);
+        opt.textContent = m.name + ' (' + sh + ' - ' + wHrs + 'h/wk)';
         if(m.id === activeSid) opt.selected = true;
         grp.appendChild(opt);
       });
@@ -22251,7 +22258,7 @@ function generateSingleStaffPdfHtml(sid, yearChoice){
   html += '</div>';
   html += '<div style="text-align:right;font-size:11px;color:#64748b;line-height:1.4">';
   html += '<div><strong>Date:</strong> ' + new Date().toLocaleDateString('en-GB') + '</div>';
-  html += '<div><strong>Shift:</strong> ' + dailyHrs + 'h/day (' + weeklyHrs + 'h/wk)</div>';
+  html += '<div><strong>Shift:</strong> ' + weeklyHrs + 'h/wk (' + dailyHrs + 'h/d)</div>';
   html += '<div><strong>Ref:</strong> IDFL-' + staff.id.toUpperCase() + '</div>';
   html += '</div>';
   html += '</div>';
@@ -22260,13 +22267,12 @@ function generateSingleStaffPdfHtml(sid, yearChoice){
   html += '<div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:12px 18px;margin-bottom:20px;display:grid;grid-template-columns:repeat(4,1fr);gap:12px;font-size:12px">';
   html += '<div><span style="color:#64748b;display:block;font-size:10px;font-weight:800;text-transform:uppercase">Staff Member</span><strong style="font-size:14px;color:#0f172a">' + staff.name + '</strong></div>';
   html += '<div><span style="color:#64748b;display:block;font-size:10px;font-weight:800;text-transform:uppercase">Branch Shop</span><strong style="font-size:14px;color:#2563eb">' + shopName + '</strong></div>';
-  html += '<div><span style="color:#64748b;display:block;font-size:10px;font-weight:800;text-transform:uppercase">Standard Shift</span><strong style="font-size:13px;color:#0f172a">' + dailyHrs + 'h / day (' + weeklyHrs + 'h/wk)</strong></div>';
+  html += '<div><span style="color:#64748b;display:block;font-size:10px;font-weight:800;text-transform:uppercase">Standard Shift</span><strong style="font-size:13px;color:#0f172a">' + weeklyHrs + 'h / week (' + dailyHrs + 'h/day)</strong></div>';
   html += '<div><span style="color:#64748b;display:block;font-size:10px;font-weight:800;text-transform:uppercase">Report Scope</span><strong style="font-size:13px;color:#0f172a">' + (yearChoice === 'ALL' ? '2024 - 2026' : 'Year ' + yearChoice) + '</strong></div>';
   html += '</div>';
   
   targetYears.forEach(function(y){
     const st = allStats[y];
-    const balCol = st.balance >= (dailyHrs * 2) ? '#16a34a' : (st.balance >= 0 ? '#d97706' : '#dc2626');
     
     html += '<div style="margin-bottom:24px;page-break-inside:avoid">';
     html += '<div style="background:#1e293b;color:#fff;padding:8px 14px;border-radius:8px 8px 0 0;font-weight:800;font-size:13px;display:flex;justify-content:space-between;align-items:center">';
@@ -22339,7 +22345,7 @@ function generateSingleStaffPdfHtml(sid, yearChoice){
   
   // Footer Sign-off
   html += '<div style="border-top:1px solid #cbd5e1;padding-top:12px;margin-top:20px;display:flex;justify-content:space-between;font-size:11px;color:#64748b">';
-  html += '<div>IDFL Company System &bull; Holiday accrual calculated at standard statutory 8% rate &bull; Shift: ' + dailyHrs + 'h/day.</div>';
+  html += '<div>IDFL Company System &bull; Holiday accrual calculated at standard statutory 8% rate &bull; Shift: ' + weeklyHrs + 'h/week.</div>';
   html += '<div>Page 1 of 1</div>';
   html += '</div>';
   
@@ -22393,18 +22399,18 @@ function generateCompanyPdfHtml(year){
     
     members.forEach(function(s){
       const st = getFullConnectedStats(s.id)[year];
-      const dailyHrs = st.dailyHours;
+      const weeklyHrs = getStaffWeeklyHours(s.id);
       shopWorked += st.totalWorked;
       shopEarned += st.earned;
       shopTaken += st.holTaken;
       shopBal += st.balance;
       grandSick += st.sickUsed;
       
-      const balColor = st.balance >= (dailyHrs * 2) ? '#16a34a' : (st.balance >= 0 ? '#d97706' : '#dc2626');
+      const balColor = st.balance >= (weeklyHrs * 0.4) ? '#16a34a' : (st.balance >= 0 ? '#d97706' : '#dc2626');
       
       html += '<tr style="border-bottom:1px solid #e2e8f0">';
       html += '<td style="padding:5px 8px;font-weight:700;color:#0f172a">' + s.name + '</td>';
-      html += '<td style="padding:5px 8px;text-align:center;color:#64748b;font-weight:700">' + dailyHrs + 'h/d</td>';
+      html += '<td style="padding:5px 8px;text-align:center;color:#64748b;font-weight:700">' + weeklyHrs + 'h/wk</td>';
       html += '<td style="padding:5px 8px;text-align:right;color:#475569">' + fmt1(st.opening) + '</td>';
       html += '<td style="padding:5px 8px;text-align:right;font-weight:700;color:#2563eb">' + fmt1(st.totalWorked) + '</td>';
       html += '<td style="padding:5px 8px;text-align:right;color:#16a34a">+' + fmt1(st.earned) + '</td>';
@@ -22524,24 +22530,6 @@ document.getElementById('printCompanyPdfBtn').addEventListener('click', function
   printHtmlContent(content, title);
 });
 
-// â”€â”€â”€ Bulk Holiday â”€â”€â”€
-document.getElementById('bulkHolBtn').addEventListener('click',function(){ if(isPortalMode) return; document.getElementById('bulkModal').classList.remove('hidden');});
-document.getElementById('bulkClose').addEventListener('click',function(){document.getElementById('bulkModal').classList.add('hidden');});
-document.getElementById('bulkCancelBtn').addEventListener('click',function(){document.getElementById('bulkModal').classList.add('hidden');});
-document.getElementById('bulkSaveBtn').addEventListener('click',function(){
-  if(isPortalMode) return;
-  const date=document.getElementById('bulkDate').value;
-  const hrs=parseFloat(document.getElementById('bulkHrs').value);
-  const note=document.getElementById('bulkNote').value.trim()||'Holiday';
-  if(!date||isNaN(hrs)||hrs<=0){toast('Enter date & hours','var(--rd)');return;}
-  let count=0;
-  BASE.staff.forEach(function(s){addHolEntry(s.id,activeYear,date,hrs,note);count++;});
-  document.getElementById('bulkModal').classList.add('hidden');
-  document.getElementById('bulkDate').value='';document.getElementById('bulkHrs').value='';document.getElementById('bulkNote').value='';
-  toast('Added holiday for '+count+' staff');renderAll();
-});
-
-document.getElementById('bulkModal').addEventListener('click',function(e){if(e.target===document.getElementById('bulkModal'))document.getElementById('bulkModal').classList.add('hidden');});
 document.getElementById('shareModal').addEventListener('click',function(e){if(e.target===document.getElementById('shareModal'))document.getElementById('shareModal').classList.add('hidden');});
 document.getElementById('batchModal').addEventListener('click',function(e){if(e.target===document.getElementById('batchModal'))document.getElementById('batchModal').classList.add('hidden');});
 document.getElementById('syncModal').addEventListener('click',function(e){if(e.target===document.getElementById('syncModal'))document.getElementById('syncModal').classList.add('hidden');});
@@ -22595,7 +22583,6 @@ function checkUrlParams(){
       document.getElementById('hdrSearchWrap').style.display = 'none';
       document.getElementById('pdfExportModalBtn').style.display = 'none';
       document.getElementById('batchWeekBtn').style.display = 'none';
-      document.getElementById('bulkHolBtn').style.display = 'none';
       document.getElementById('syncModalBtn').style.display = 'none';
       document.getElementById('menuBtn').style.display = 'none';
       document.getElementById('sidebar').style.display = 'none';
