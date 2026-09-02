@@ -86,8 +86,9 @@ header{background:var(--sf);border-bottom:1px solid var(--bd);padding:11px 20px;
 .hero-primary-center{text-align:center;border-color:var(--bd2);background:radial-gradient(ellipse at top, rgba(91,142,245,0.08), var(--sf) 70%);padding:26px 24px}
 .hero-title{font-size:.75rem;font-weight:800;text-transform:uppercase;letter-spacing:.6px;color:var(--tx3);display:flex;align-items:center;justify-content:center;gap:6px;margin-bottom:10px}
 .hero-val-big{font-size:3.4rem;font-weight:900;line-height:1;letter-spacing:-1.5px;font-family:'Outfit',sans-serif}
-.hero-sub-big{font-size:1.15rem;font-weight:800;margin-top:6px;letter-spacing:-.2px}
-.hero-desc{font-size:.74rem;color:var(--tx3);margin-top:4px}
+.hero-sub-big{font-size:1.2rem;font-weight:800;margin-top:6px;letter-spacing:-.2px}
+.hero-weeks-badge{display:inline-block;background:var(--sf3);border:1px solid var(--bd2);color:var(--tx);padding:4px 14px;border-radius:20px;font-size:.84rem;font-weight:800;margin-top:10px}
+.hero-desc{font-size:.74rem;color:var(--tx3);margin-top:6px}
 
 .hero-breakdown-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:20px;padding-top:16px;border-top:1px solid var(--bd);max-width:720px;margin-left:auto;margin-right:auto}
 @media(max-width:650px){.hero-breakdown-grid{grid-template-columns:1fr;gap:8px}}
@@ -103,6 +104,30 @@ header{background:var(--sf);border-bottom:1px solid var(--bd);padding:11px 20px;
 .hero-breakdown{margin-top:14px;border-top:1px solid var(--bd);padding-top:10px;display:flex;flex-direction:column;gap:6px;font-size:.76rem}
 .hero-breakdown-row{display:flex;justify-content:space-between;color:var(--tx2)}
 .hero-breakdown-row strong{font-family:'JetBrains Mono',monospace;color:var(--tx)}
+
+/* â”€â”€ ðŸŒŸ INTERACTIVE HOLIDAY FORECASTER & ESTIMATOR CARD ðŸŒŸ â”€â”€ */
+.estimator-card{background:linear-gradient(135deg,rgba(31,38,64,.8),rgba(17,21,36,.95));border:1px solid var(--bd2);border-radius:16px;padding:20px;box-shadow:var(--shadow);margin-bottom:24px}
+.est-hd{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:8px}
+.est-title{font-size:.92rem;font-weight:900;color:var(--tx);display:flex;align-items:center;gap:8px}
+.est-badge{background:var(--pu2);color:var(--pu);border:1px solid var(--pu);font-size:.65rem;font-weight:800;padding:2px 8px;border-radius:12px}
+.est-presets{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.preset-btn{background:var(--sf2);border:1px solid var(--bd);color:var(--tx2);font-size:.72rem;font-weight:700;padding:5px 11px;border-radius:8px;cursor:pointer;transition:all .15s}
+.preset-btn:hover{color:var(--tx);border-color:var(--ac)}
+.preset-btn.active{background:var(--ac);color:#fff;border-color:var(--ac)}
+.est-controls{display:grid;grid-template-columns:1fr 1fr;gap:14px;background:var(--sf);border:1px solid var(--bd);border-radius:12px;padding:14px;margin-bottom:14px}
+@media(max-width:650px){.est-controls{grid-template-columns:1fr}}
+.est-ctrl-col label{display:block;font-size:.72rem;font-weight:700;color:var(--tx2);margin-bottom:6px}
+.est-slider-wrap{display:flex;align-items:center;gap:10px}
+.est-slider{flex:1;accent-color:var(--ac)}
+.est-slider-val{font-family:'JetBrains Mono',monospace;font-size:.85rem;font-weight:800;color:var(--ac);min-width:65px}
+.est-input{width:100%;background:var(--sf2);border:1px solid var(--bd);border-radius:7px;color:var(--tx);font-family:'JetBrains Mono',monospace;font-size:.8rem;padding:6px 10px;outline:none}
+.est-input:focus{border-color:var(--ac)}
+.est-results{background:var(--sf2);border:1px solid var(--bd2);border-radius:12px;padding:14px 18px;display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+@media(max-width:700px){.est-results{grid-template-columns:1fr}}
+.est-res-box{display:flex;flex-direction:column;gap:3px}
+.est-res-box span{font-size:.68rem;color:var(--tx3);font-weight:700;text-transform:uppercase}
+.est-res-box strong{font-size:1.15rem;font-family:'Outfit',sans-serif;font-weight:900}
+.est-res-sub{font-size:.72rem;color:var(--tx2);font-weight:700}
 
 /* â”€â”€ PROGRESS BARS â”€â”€ */
 .progress-wrap{margin-top:12px}
@@ -260,7 +285,7 @@ table.batch-table input:focus{border-color:var(--ac)}
               <span style="font-size:1.2rem">&#128100;</span>
               <h3 style="font-size:.95rem;color:var(--tx);font-weight:800">Single Employee Statement</h3>
             </div>
-            <p style="font-size:.75rem;color:var(--tx2);margin-bottom:12px;line-height:1.45">Detailed official statement for one staff member showing opening hours, weekly hours worked breakdown, holiday dates, and sick leave based on their standard daily shift.</p>
+            <p style="font-size:.75rem;color:var(--tx2);margin-bottom:12px;line-height:1.45">Detailed official statement for one staff member showing opening hours, weekly hours worked breakdown, holiday dates, full weeks/days equivalent, and sick leave.</p>
             
             <label style="font-size:.72rem">Select Staff Member</label>
             <select id="pdfStaffSelect"></select>
@@ -20752,7 +20777,7 @@ table.batch-table input:focus{border-color:var(--ac)}
                       "location":  "Mullingar",
                       "dailyHours":  8,
                       "weeklyHours":  40,
-                      "sickAllowance":  40
+                      "sickAllowance":  35
                   },
                   {
                       "id":  "s2",
@@ -20763,7 +20788,7 @@ table.batch-table input:focus{border-color:var(--ac)}
                       "location":  "Portlaoise",
                       "dailyHours":  8,
                       "weeklyHours":  40,
-                      "sickAllowance":  40
+                      "sickAllowance":  35
                   },
                   {
                       "id":  "s3",
@@ -20829,7 +20854,7 @@ table.batch-table input:focus{border-color:var(--ac)}
                       "location":  "Maynooth",
                       "dailyHours":  8,
                       "weeklyHours":  40,
-                      "sickAllowance":  40
+                      "sickAllowance":  35
                   },
                   {
                       "id":  "s30",
@@ -20917,7 +20942,7 @@ table.batch-table input:focus{border-color:var(--ac)}
                       "location":  "Newbridge",
                       "dailyHours":  7.5,
                       "weeklyHours":  37.5,
-                      "sickAllowance":  37.5
+                      "sickAllowance":  35
                   },
                   {
                       "id":  "s15",
@@ -21076,6 +21101,7 @@ table.batch-table input:focus{border-color:var(--ac)}
               ]
 }</script>
 <script>
+const SICK_ALLOWANCE_ANNUAL = 35.0; // Everyone has 35 hrs sick pay allowance per year
 const LS_KEY = 'idfl_tracker_db';
 const GH_REPO = 'idigitalfun-ui/idfl-holidays';
 
@@ -21099,12 +21125,6 @@ function getStaffWeeklyHours(sid){
   return getStaffDailyHours(sid) * 5;
 }
 
-function getStaffSickAllowance(sid){
-  const s = BASE.staff.find(function(x){ return x.id === sid; });
-  if(s && s.sickAllowance) return s.sickAllowance;
-  return getStaffDailyHours(sid) * 5;
-}
-
 function loadOv(){ try{ return JSON.parse(localStorage.getItem(LS_KEY)||'{}'); }catch(e){ return {}; } }
 function saveOv(o){ localStorage.setItem(LS_KEY, JSON.stringify(o)); }
 
@@ -21117,10 +21137,44 @@ let isPortalMode = false;
 let editingHolId = null;
 let editingSickId = null;
 
+// Forecaster State
+let forecastWeeks = 8; // Default 2 months (8 weeks)
+let testHolBookingDays = 0;
+
 function uid(){ return Date.now().toString(36)+Math.random().toString(36).slice(2,6); }
 function fmt1(n){ return (Math.round((+n||0)*10)/10).toFixed(1); }
 function fmtDays(h, sid){ return fmt1(h / getStaffDailyHours(sid)); }
 function initials(n){ return n.split(' ').map(function(p){return p[0];}).join('').toUpperCase().slice(0,2); }
+
+function formatHumanBalanceBreakdown(hours, sid){
+  const dailyHrs = getStaffDailyHours(sid);
+  const weeklyHrs = dailyHrs * 5;
+  
+  if(hours <= 0) return { fullText: '0.0 working days', weeksText: '0 Weeks', fullWeeks: 0, extraDays: 0, extraHrs: 0 };
+  
+  const fullWeeks = Math.floor(hours / weeklyHrs);
+  const remainderAfterWeeks = Math.round((hours - (fullWeeks * weeklyHrs)) * 100) / 100;
+  const extraDays = Math.floor(remainderAfterWeeks / dailyHrs);
+  const extraHrs = Math.round((remainderAfterWeeks - (extraDays * dailyHrs)) * 10) / 10;
+  const totalDays = Math.round((hours / dailyHrs) * 10) / 10;
+  
+  const parts = [];
+  if(fullWeeks > 0) parts.push(fullWeeks + (fullWeeks === 1 ? ' Week' : ' Weeks'));
+  if(extraDays > 0) parts.push(extraDays + (extraDays === 1 ? ' Day' : ' Days'));
+  if(extraHrs > 0) parts.push(extraHrs + ' hrs');
+  
+  const weeksText = parts.length > 0 ? parts.join(' + ') : '0 hrs';
+  const fullText = weeksText + ' (' + totalDays + ' Days Total)';
+  
+  return {
+    fullText: fullText,
+    weeksText: weeksText,
+    totalDays: totalDays,
+    fullWeeks: fullWeeks,
+    extraDays: extraDays,
+    extraHrs: extraHrs
+  };
+}
 
 function avatarColor(sid){
   const palette=['#5b8ef5','#4ade80','#fbbf24','#a78bfa','#f472b6','#f87171','#38bdf8','#f59e0b'];
@@ -21189,11 +21243,12 @@ function computeYearStats(sid, year){
   const sickUsed = sickLogs.reduce(function(s,e){ return s + (e.hours||0); }, 0);
   
   const dailyHours = getStaffDailyHours(sid);
-  const sickAllowance = getStaffSickAllowance(sid);
-  const sickRemaining = sickAllowance - sickUsed;
+  const sickAllowance = SICK_ALLOWANCE_ANNUAL; // 35.0 hrs for everyone
+  const sickRemaining = Math.max(0, Math.round((sickAllowance - sickUsed) * 100) / 100);
   
   const balance = Math.round((opening + earned - holTaken) * 100) / 100;
   const days = balance / dailyHours;
+  const breakdown = formatHumanBalanceBreakdown(balance, sid);
   
   return {
     opening: opening,
@@ -21202,6 +21257,7 @@ function computeYearStats(sid, year){
     holTaken: holTaken,
     balance: balance,
     days: days,
+    breakdown: breakdown,
     dailyHours: dailyHours,
     sickAllowance: sickAllowance,
     sickUsed: sickUsed,
@@ -21391,10 +21447,11 @@ function renderMain(){
   const curStats = connectedStats[activeYear];
   const dailyHrs = curStats.dailyHours;
   const weeklyHrs = dailyHrs * 5;
-  const sickAllowance = curStats.sickAllowance;
+  const sickAllowance = curStats.sickAllowance; // 35.0 hrs
   
   const balance = curStats.balance;
   const balDays = curStats.days;
+  const breakdown = curStats.breakdown;
   const sickPct = Math.min(100, Math.round(curStats.sickUsed / sickAllowance * 100));
   
   let balColor='var(--gr)';
@@ -21426,14 +21483,15 @@ function renderMain(){
     +'</div>'
     +'</div>'
     
-    // ðŸŒŸ HERO STATS: CENTERED BIG AVAILABLE HOLIDAYS + 2 SUB CARDS ðŸŒŸ
+    // ðŸŒŸ HERO STATS: CENTERED BIG AVAILABLE HOLIDAYS (WITH WEEKS + DAYS + HOURS) ðŸŒŸ
     +'<div class="hero-center-wrap">'
     // Center Big Card
     +'<div class="hero-card hero-primary-center">'
     +'<div class="hero-title">&#127958; AVAILABLE HOLIDAY BALANCE ('+activeYear+')</div>'
     +'<div class="hero-val-big" style="color:'+balColor+'">'+fmt1(balance)+' hrs</div>'
     +'<div class="hero-sub-big" style="color:'+balColor+'">'+fmt1(balDays)+' working days</div>'
-    +'<div class="hero-desc">Based on '+dailyHrs+' hrs / working day ('+weeklyHrs+' hrs / full week)</div>'
+    +(balance > 0 ? '<div class="hero-weeks-badge">&#128197; Equivalent to: <strong>'+breakdown.weeksText+'</strong></div>' : '')
+    +'<div class="hero-desc">Calculated at '+dailyHrs+' hrs / working day ('+weeklyHrs+' hrs / full week)</div>'
     +'<div class="hero-breakdown-grid">'
     +'<div class="hero-b-col"><span>Opening Carry-over</span><strong>'+fmt1(curStats.opening)+' hrs</strong></div>'
     +'<div class="hero-b-col"><span>Earned (8% of '+fmt1(curStats.totalWorked)+'h)</span><strong style="color:var(--gr)">+'+fmt1(curStats.earned)+' hrs</strong></div>'
@@ -21443,17 +21501,17 @@ function renderMain(){
     
     // 2 Sub Cards Underneath
     +'<div class="hero-sub-grid">'
-    // Sub Card 1: Sick Allowance
+    // Sub Card 1: Sick Allowance (35h for everyone)
     +'<div class="hero-card">'
-    +'<div class="hero-title" style="justify-content:flex-start">&#127973; SICK ALLOWANCE ('+activeYear+')</div>'
-    +'<div class="hero-val" style="color:'+(curStats.sickRemaining>=0?'var(--pk)':'var(--rd)')+'">'+fmt1(curStats.sickRemaining)+' hrs</div>'
-    +'<div class="hero-sub" style="color:'+(curStats.sickRemaining>=0?'var(--pk)':'var(--rd)')+'">'+fmt1(curStats.sickRemaining/dailyHrs)+' days remaining</div>'
+    +'<div class="hero-title" style="justify-content:flex-start">&#127973; SICK LEAVE ALLOWANCE ('+activeYear+')</div>'
+    +'<div class="hero-val" style="color:'+(curStats.sickRemaining>0?'var(--pk)':'var(--rd)')+'">'+fmt1(curStats.sickRemaining)+' hrs</div>'
+    +'<div class="hero-sub" style="color:'+(curStats.sickRemaining>0?'var(--pk)':'var(--rd)')+'">'+fmt1(curStats.sickRemaining/dailyHrs)+' days remaining</div>'
     +'<div class="progress-wrap">'
-    +'<div class="progress-labels"><span>'+fmt1(curStats.sickUsed)+' hrs used</span><span>'+fmt1(sickAllowance)+' hrs allowance (5 days)</span></div>'
-    +'<div class="progress-track"><div class="progress-fill '+(curStats.sickUsed>sickAllowance?'rd':'pk')+'" style="width:'+sickPct+'%"></div></div>'
+    +'<div class="progress-labels"><span>'+fmt1(curStats.sickUsed)+' hrs used</span><span>35.0 hrs annual allowance</span></div>'
+    +'<div class="progress-track"><div class="progress-fill '+(curStats.sickUsed>35?'rd':'pk')+'" style="width:'+sickPct+'%"></div></div>'
     +'</div>'
     +'<div class="hero-breakdown">'
-    +'<div class="hero-breakdown-row"><span>Annual Company Allowance</span><strong>'+fmt1(sickAllowance)+' hrs (5 days @ '+dailyHrs+'h)</strong></div>'
+    +'<div class="hero-breakdown-row"><span>Annual Company Allowance</span><strong>35.0 hrs (All Staff)</strong></div>'
     +'<div class="hero-breakdown-row"><span>Used in '+activeYear+'</span><strong style="color:var(--rd)">'+fmt1(curStats.sickUsed)+' hrs</strong></div>'
     +'</div>'
     +'</div>'
@@ -21470,6 +21528,39 @@ function renderMain(){
     +'</div>'
     +'</div>'
     +'</div>'
+    +'</div>'
+    
+    // ðŸŒŸ INTERACTIVE FUTURE HOLIDAY FORECASTER & ESTIMATOR WIDGET ðŸŒŸ
+    +'<div class="estimator-card" id="holidayEstimatorWidget">'
+    +'<div class="est-hd">'
+    +'<div class="est-title">&#128302; Holiday Estimator &amp; Future Forecaster <span class="est-badge">Live Calculator</span></div>'
+    +'<div style="font-size:.73rem;color:var(--tx2)">Estimate upcoming holidays based on future worked hours</div>'
+    +'</div>'
+    
+    +'<div class="est-presets">'
+    +'<span style="font-size:.72rem;color:var(--tx3);align-self:center;margin-right:4px">Quick Presets:</span>'
+    +'<button class="preset-btn" data-w="2">+2 Weeks</button>'
+    +'<button class="preset-btn" data-w="4">+1 Month (4 wks)</button>'
+    +'<button class="preset-btn active" data-w="8">+2 Months (8 wks)</button>'
+    +'<button class="preset-btn" data-w="13">+3 Months (13 wks)</button>'
+    +'<button class="preset-btn" data-w="26">+6 Months (26 wks)</button>'
+    +'</div>'
+    
+    +'<div class="est-controls">'
+    +'<div class="est-ctrl-col">'
+    +'<label>Weeks to Work in Future</label>'
+    +'<div class="est-slider-wrap">'
+    +'<input type="range" class="est-slider" id="estSlider" min="1" max="52" value="'+forecastWeeks+'">'
+    +'<span class="est-slider-val" id="estSliderVal">'+forecastWeeks+' Weeks</span>'
+    +'</div>'
+    +'</div>'
+    +'<div class="est-ctrl-col">'
+    +'<label>Average Weekly Hours Worked</label>'
+    +'<input type="number" class="est-input" id="estWeeklyHrsInp" value="'+weeklyHrs+'" step="0.5" min="0">'
+    +'</div>'
+    +'</div>'
+    
+    +'<div class="est-results" id="estResultsBox"></div>'
     +'</div>'
     
     // 2-Column Detailed Section (Balanced minmax grid)
@@ -21562,6 +21653,40 @@ function renderMain(){
     });
   } else { sickListEl.innerHTML='<div class="log-empty">No sick days logged for '+activeYear+'</div>'; }
 
+  // Update Estimator Calculation
+  renderEstimatorResults();
+
+  // Setup Estimator Listeners
+  const slider = document.getElementById('estSlider');
+  const weeklyHrsInp = document.getElementById('estWeeklyHrsInp');
+  
+  if(slider && weeklyHrsInp){
+    slider.addEventListener('input', function(){
+      forecastWeeks = parseInt(slider.value, 10);
+      document.getElementById('estSliderVal').textContent = forecastWeeks + ' Weeks';
+      document.querySelectorAll('.preset-btn').forEach(function(b){
+        if(parseInt(b.dataset.w, 10) === forecastWeeks) b.classList.add('active');
+        else b.classList.remove('active');
+      });
+      renderEstimatorResults();
+    });
+    
+    weeklyHrsInp.addEventListener('input', function(){
+      renderEstimatorResults();
+    });
+    
+    document.querySelectorAll('.preset-btn').forEach(function(b){
+      b.addEventListener('click', function(){
+        forecastWeeks = parseInt(b.dataset.w, 10);
+        slider.value = forecastWeeks;
+        document.getElementById('estSliderVal').textContent = forecastWeeks + ' Weeks';
+        document.querySelectorAll('.preset-btn').forEach(function(x){ x.classList.remove('active'); });
+        b.classList.add('active');
+        renderEstimatorResults();
+      });
+    });
+  }
+
   if(!isPortalMode){
     document.getElementById('addWkBtn').addEventListener('click',function(){
       const lbl=document.getElementById('newWkLabel').value.trim();
@@ -21624,6 +21749,45 @@ function renderMain(){
   document.getElementById('staffPdfBtn').addEventListener('click',function(){
     openPdfModal(activeSid);
   });
+}
+
+// â”€â”€â”€ Render Future Holiday Estimator Box â”€â”€â”€
+function renderEstimatorResults(){
+  const resBox = document.getElementById('estResultsBox');
+  if(!resBox || !activeSid) return;
+  
+  const curStats = getFullConnectedStats(activeSid)[activeYear];
+  const curBalance = curStats.balance;
+  const dailyHrs = curStats.dailyHours;
+  
+  const wHrsInp = document.getElementById('estWeeklyHrsInp');
+  const avgWeeklyHrs = wHrsInp ? parseFloat(wHrsInp.value) || (dailyHrs * 5) : (dailyHrs * 5);
+  
+  const futureWorked = forecastWeeks * avgWeeklyHrs;
+  const futureEarned = Math.round(futureWorked * 0.08 * 100) / 100;
+  const projectedBalance = Math.round((curBalance + futureEarned) * 100) / 100;
+  const projectedDays = Math.round((projectedBalance / dailyHrs) * 10) / 10;
+  
+  const projBreakdown = formatHumanBalanceBreakdown(projectedBalance, activeSid);
+  
+  resBox.innerHTML = 
+    '<div class="est-res-box">'
+    +'<span>Future Hours Worked</span>'
+    +'<strong style="color:var(--ac)">' + fmt1(futureWorked) + ' hrs</strong>'
+    +'<div class="est-res-sub">' + forecastWeeks + ' weeks @ ' + avgWeeklyHrs + 'h/wk</div>'
+    +'</div>'
+    
+    +'<div class="est-res-box">'
+    +'<span>New Holiday Earned (+8%)</span>'
+    +'<strong style="color:var(--gr)">+' + fmt1(futureEarned) + ' hrs</strong>'
+    +'<div class="est-res-sub">+' + fmt1(futureEarned / dailyHrs) + ' working days</div>'
+    +'</div>'
+    
+    +'<div class="est-res-box">'
+    +'<span>Projected Total Holiday Balance</span>'
+    +'<strong style="color:var(--gr)">' + fmt1(projectedBalance) + ' hrs</strong>'
+    +'<div class="est-res-sub" style="color:#fff;font-weight:800">&#128197; ' + projBreakdown.weeksText + ' (' + projectedDays + ' Days)</div>'
+    +'</div>';
 }
 
 // â”€â”€â”€ Edit week inline â”€â”€â”€
@@ -21985,8 +22149,8 @@ function openShareModal(sid){
     txt += '  Worked Hours:       ' + fmt1(st.totalWorked) + ' hrs (' + st.weeks.length + ' periods)\n';
     txt += '  Accrued (8%):       +' + fmt1(st.earned) + ' hrs\n';
     txt += '  Holidays Taken:     -' + fmt1(st.holTaken) + ' hrs (' + st.holLogs.length + ' dates)\n';
-    txt += '  Balance Available:  ' + fmt1(st.balance) + ' hrs (' + fmt1(st.days) + ' days)\n';
-    txt += '  Sick Days Used:     ' + fmt1(st.sickUsed) + ' hrs (Remaining: ' + fmt1(st.sickRemaining) + ' hrs)\n';
+    txt += '  Balance Available:  ' + fmt1(st.balance) + ' hrs (' + st.breakdown.weeksText + ' / ' + fmt1(st.days) + ' days)\n';
+    txt += '  Sick Days Used:     ' + fmt1(st.sickUsed) + ' hrs (Remaining: ' + fmt1(st.sickRemaining) + ' hrs of 35h)\n';
     if(st.holLogs.length > 0){
       txt += '  Holidays Log:\n';
       st.holLogs.forEach(function(h){ txt += '    * ' + (h.date||'').padEnd(12) + (fmt1(h.hours)+'h').padEnd(8) + ' ' + (h.note||'Holiday') + '\n'; });
@@ -21999,13 +22163,13 @@ function openShareModal(sid){
   });
   
   txt += '==================================================\n';
-  txt += 'CURRENT 2026 BALANCE: ' + fmt1(allStats['2026'].balance) + ' HRS (' + fmt1(allStats['2026'].days) + ' WORKING DAYS)\n';
-  txt += 'CURRENT SICK REMAINING: ' + fmt1(allStats['2026'].sickRemaining) + ' HRS\n';
+  txt += 'CURRENT 2026 BALANCE: ' + fmt1(allStats['2026'].balance) + ' HRS (' + allStats['2026'].breakdown.weeksText + ')\n';
+  txt += 'CURRENT SICK REMAINING: ' + fmt1(allStats['2026'].sickRemaining) + ' HRS (of 35h allowance)\n';
   
   document.getElementById('shareOutput').textContent=txt;
   
   document.getElementById('shareWhatsAppBtn').onclick = function(){
-    const waText = encodeURIComponent('Hi ' + staff.name + ' (' + shopName + '), here is your IDFL Holiday & Hours portal link:\n' + directLink + '\n\nCurrent 2026 Holiday Balance: ' + fmt1(allStats['2026'].balance) + ' hrs (' + fmt1(allStats['2026'].days) + ' days @ ' + dailyHrs + 'h/day)\nSick Allowance Remaining: ' + fmt1(allStats['2026'].sickRemaining) + ' hrs');
+    const waText = encodeURIComponent('Hi ' + staff.name + ' (' + shopName + '), here is your IDFL Holiday & Hours portal link:\n' + directLink + '\n\nCurrent 2026 Holiday Balance: ' + fmt1(allStats['2026'].balance) + ' hrs (' + allStats['2026'].breakdown.weeksText + ')\nSick Allowance Remaining: ' + fmt1(allStats['2026'].sickRemaining) + ' hrs (of 35h allowance)');
     window.open('https://api.whatsapp.com/send?text=' + waText, '_blank');
   };
   
@@ -22074,7 +22238,6 @@ function generateSingleStaffPdfHtml(sid, yearChoice){
   const shopName = staff.shop || staff.location || 'IDFL';
   const dailyHrs = getStaffDailyHours(sid);
   const weeklyHrs = dailyHrs * 5;
-  const sickAllowance = getStaffSickAllowance(sid);
   
   const targetYears = yearChoice === 'ALL' ? ['2024', '2025', '2026'] : [yearChoice];
   
@@ -22108,7 +22271,7 @@ function generateSingleStaffPdfHtml(sid, yearChoice){
     html += '<div style="margin-bottom:24px;page-break-inside:avoid">';
     html += '<div style="background:#1e293b;color:#fff;padding:8px 14px;border-radius:8px 8px 0 0;font-weight:800;font-size:13px;display:flex;justify-content:space-between;align-items:center">';
     html += '<span>&#128197; YEAR ' + y + ' SUMMARY</span>';
-    html += '<span>Available Balance: <strong style="color:#4ade80">' + fmt1(st.balance) + ' hrs (' + fmt1(st.days) + ' working days @ ' + dailyHrs + 'h)</strong></span>';
+    html += '<span>Available Balance: <strong style="color:#4ade80">' + fmt1(st.balance) + ' hrs (' + st.breakdown.weeksText + ')</strong></span>';
     html += '</div>';
     
     // KPI Cards
@@ -22246,7 +22409,7 @@ function generateCompanyPdfHtml(year){
       html += '<td style="padding:5px 8px;text-align:right;font-weight:700;color:#2563eb">' + fmt1(st.totalWorked) + '</td>';
       html += '<td style="padding:5px 8px;text-align:right;color:#16a34a">+' + fmt1(st.earned) + '</td>';
       html += '<td style="padding:5px 8px;text-align:right;color:#d97706">-' + fmt1(st.holTaken) + '</td>';
-      html += '<td style="padding:5px 8px;text-align:right;font-weight:800;color:' + balColor + ';background:#eef2ff">' + fmt1(st.balance) + 'h (' + fmt1(st.days) + 'd)</td>';
+      html += '<td style="padding:5px 8px;text-align:right;font-weight:800;color:' + balColor + ';background:#eef2ff">' + fmt1(st.balance) + 'h (' + st.breakdown.weeksText + ')</td>';
       html += '<td style="padding:5px 8px;text-align:right;color:#db2777">' + fmt1(st.sickUsed) + 'h</td>';
       html += '</tr>';
     });
