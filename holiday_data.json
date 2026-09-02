@@ -20301,7 +20301,10 @@
                       "shop":  "Mullingar",
                       "startStatus":  "confirmed",
                       "startDate":  "01/08/2022",
-                      "location":  "Mullingar"
+                      "location":  "Mullingar",
+                      "dailyHours":  8,
+                      "weeklyHours":  40,
+                      "sickAllowance":  40
                   },
                   {
                       "id":  "s2",
@@ -20309,7 +20312,10 @@
                       "shop":  "Portlaoise",
                       "startStatus":  "confirmed",
                       "startDate":  "01/09/2023",
-                      "location":  "Portlaoise"
+                      "location":  "Portlaoise",
+                      "dailyHours":  8,
+                      "weeklyHours":  40,
+                      "sickAllowance":  40
                   },
                   {
                       "id":  "s3",
@@ -20317,7 +20323,10 @@
                       "shop":  "Portlaoise",
                       "startStatus":  "confirmed",
                       "startDate":  "01/08/2022",
-                      "location":  "Portlaoise"
+                      "location":  "Portlaoise",
+                      "dailyHours":  7,
+                      "weeklyHours":  35,
+                      "sickAllowance":  35
                   },
                   {
                       "id":  "s4",
@@ -20325,7 +20334,10 @@
                       "shop":  "Tullamore",
                       "startStatus":  "confirmed",
                       "startDate":  "01/11/2022",
-                      "location":  "Tullamore"
+                      "location":  "Tullamore",
+                      "dailyHours":  7,
+                      "weeklyHours":  35,
+                      "sickAllowance":  35
                   },
                   {
                       "id":  "s5",
@@ -20333,7 +20345,10 @@
                       "shop":  "Maynooth",
                       "startStatus":  "confirmed",
                       "startDate":  "11/09/2023",
-                      "location":  "Maynooth"
+                      "location":  "Maynooth",
+                      "dailyHours":  7,
+                      "weeklyHours":  35,
+                      "sickAllowance":  35
                   },
                   {
                       "id":  "s6",
@@ -20341,7 +20356,10 @@
                       "shop":  "Maynooth",
                       "startStatus":  "confirmed",
                       "startDate":  "03/07/2023",
-                      "location":  "Maynooth"
+                      "location":  "Maynooth",
+                      "dailyHours":  7,
+                      "weeklyHours":  35,
+                      "sickAllowance":  35
                   },
                   {
                       "id":  "s7",
@@ -20349,7 +20367,10 @@
                       "shop":  "Maynooth",
                       "startStatus":  "confirmed",
                       "startDate":  "04/11/2024",
-                      "location":  "Maynooth"
+                      "location":  "Maynooth",
+                      "dailyHours":  7,
+                      "weeklyHours":  35,
+                      "sickAllowance":  35
                   },
                   {
                       "id":  "s8",
@@ -20357,7 +20378,10 @@
                       "shop":  "Maynooth",
                       "startStatus":  "confirmed",
                       "startDate":  "13/02/2023",
-                      "location":  "Maynooth"
+                      "location":  "Maynooth",
+                      "dailyHours":  8,
+                      "weeklyHours":  40,
+                      "sickAllowance":  40
                   },
                   {
                       "id":  "s30",
@@ -20365,7 +20389,10 @@
                       "shop":  "Maynooth",
                       "startStatus":  "confirmed",
                       "startDate":  "31/05/2026",
-                      "location":  "Maynooth"
+                      "location":  "Maynooth",
+                      "dailyHours":  7,
+                      "weeklyHours":  35,
+                      "sickAllowance":  35
                   },
                   {
                       "id":  "s9",
@@ -20373,7 +20400,10 @@
                       "shop":  "Thurles",
                       "startStatus":  "confirmed",
                       "startDate":  "10/06/2024",
-                      "location":  "Thurles"
+                      "location":  "Thurles",
+                      "dailyHours":  7,
+                      "weeklyHours":  35,
+                      "sickAllowance":  35
                   },
                   {
                       "id":  "s16",
@@ -20381,7 +20411,10 @@
                       "shop":  "Thurles",
                       "startStatus":  "confirmed",
                       "startDate":  "06/05/2024",
-                      "location":  "Thurles"
+                      "location":  "Thurles",
+                      "dailyHours":  7,
+                      "weeklyHours":  35,
+                      "sickAllowance":  35
                   },
                   {
                       "id":  "s10",
@@ -20389,7 +20422,10 @@
                       "shop":  "Kilkenny",
                       "startStatus":  "confirmed",
                       "startDate":  "06/09/2023",
-                      "location":  "Kilkenny"
+                      "location":  "Kilkenny",
+                      "dailyHours":  7,
+                      "weeklyHours":  35,
+                      "sickAllowance":  35
                   },
                   {
                       "id":  "s14",
@@ -20397,7 +20433,10 @@
                       "shop":  "Kilkenny",
                       "startStatus":  "confirmed",
                       "startDate":  "17/03/2026",
-                      "location":  "Kilkenny"
+                      "location":  "Kilkenny",
+                      "dailyHours":  7,
+                      "weeklyHours":  35,
+                      "sickAllowance":  35
                   },
                   {
                       "id":  "s11",
@@ -20405,7 +20444,10 @@
                       "shop":  "Newbridge",
                       "startStatus":  "confirmed",
                       "startDate":  "20/11/2023",
-                      "location":  "Newbridge"
+                      "location":  "Newbridge",
+                      "dailyHours":  7,
+                      "weeklyHours":  35,
+                      "sickAllowance":  35
                   },
                   {
                       "id":  "s12",
@@ -20413,7 +20455,10 @@
                       "shop":  "Newbridge",
                       "startStatus":  "confirmed",
                       "startDate":  "01/08/2022",
-                      "location":  "Newbridge"
+                      "location":  "Newbridge",
+                      "dailyHours":  7,
+                      "weeklyHours":  35,
+                      "sickAllowance":  35
                   },
                   {
                       "id":  "s13",
@@ -20421,7 +20466,10 @@
                       "shop":  "Newbridge",
                       "startStatus":  "confirmed",
                       "startDate":  "01/08/2022",
-                      "location":  "Newbridge"
+                      "location":  "Newbridge",
+                      "dailyHours":  7.5,
+                      "weeklyHours":  37.5,
+                      "sickAllowance":  37.5
                   },
                   {
                       "id":  "s15",
@@ -20429,7 +20477,10 @@
                       "shop":  "Newbridge",
                       "startStatus":  "confirmed",
                       "startDate":  "01/08/2022",
-                      "location":  "Newbridge"
+                      "location":  "Newbridge",
+                      "dailyHours":  7,
+                      "weeklyHours":  35,
+                      "sickAllowance":  35
                   },
                   {
                       "id":  "s17",
@@ -20437,7 +20488,10 @@
                       "shop":  "Arklow",
                       "startStatus":  "confirmed",
                       "startDate":  "01/08/2022",
-                      "location":  "Arklow"
+                      "location":  "Arklow",
+                      "dailyHours":  7,
+                      "weeklyHours":  35,
+                      "sickAllowance":  35
                   },
                   {
                       "id":  "s18",
@@ -20445,7 +20499,10 @@
                       "shop":  "Arklow",
                       "startStatus":  "confirmed",
                       "startDate":  "06/02/2023",
-                      "location":  "Arklow"
+                      "location":  "Arklow",
+                      "dailyHours":  7,
+                      "weeklyHours":  35,
+                      "sickAllowance":  35
                   },
                   {
                       "id":  "s20",
@@ -20453,7 +20510,10 @@
                       "shop":  "Limerick",
                       "startStatus":  "confirmed",
                       "startDate":  "04/09/2023",
-                      "location":  "Limerick"
+                      "location":  "Limerick",
+                      "dailyHours":  7,
+                      "weeklyHours":  35,
+                      "sickAllowance":  35
                   },
                   {
                       "id":  "s21",
@@ -20461,7 +20521,10 @@
                       "shop":  "Tralee",
                       "startStatus":  "confirmed",
                       "startDate":  "01/08/2022",
-                      "location":  "Tralee"
+                      "location":  "Tralee",
+                      "dailyHours":  7,
+                      "weeklyHours":  35,
+                      "sickAllowance":  35
                   },
                   {
                       "id":  "s22",
@@ -20469,7 +20532,10 @@
                       "shop":  "Tralee",
                       "startStatus":  "confirmed",
                       "startDate":  "10/06/2024",
-                      "location":  "Tralee"
+                      "location":  "Tralee",
+                      "dailyHours":  7,
+                      "weeklyHours":  35,
+                      "sickAllowance":  35
                   },
                   {
                       "id":  "s23",
@@ -20477,7 +20543,10 @@
                       "shop":  "Tralee",
                       "startStatus":  "confirmed",
                       "startDate":  "22/06/2024",
-                      "location":  "Tralee"
+                      "location":  "Tralee",
+                      "dailyHours":  7,
+                      "weeklyHours":  35,
+                      "sickAllowance":  35
                   },
                   {
                       "id":  "s24",
@@ -20485,7 +20554,10 @@
                       "shop":  "Tralee",
                       "startStatus":  "confirmed",
                       "startDate":  "07/08/2024",
-                      "location":  "Tralee"
+                      "location":  "Tralee",
+                      "dailyHours":  7,
+                      "weeklyHours":  35,
+                      "sickAllowance":  35
                   },
                   {
                       "id":  "s25",
@@ -20493,7 +20565,10 @@
                       "shop":  "Tralee",
                       "startStatus":  "confirmed",
                       "startDate":  "20/01/2025",
-                      "location":  "Tralee"
+                      "location":  "Tralee",
+                      "dailyHours":  7,
+                      "weeklyHours":  35,
+                      "sickAllowance":  35
                   },
                   {
                       "id":  "s31",
@@ -20501,7 +20576,10 @@
                       "shop":  "Tralee",
                       "startStatus":  "confirmed",
                       "startDate":  "20/07/2026",
-                      "location":  "Tralee"
+                      "location":  "Tralee",
+                      "dailyHours":  7,
+                      "weeklyHours":  35,
+                      "sickAllowance":  35
                   },
                   {
                       "id":  "s26",
@@ -20509,7 +20587,10 @@
                       "shop":  "Killarney",
                       "startStatus":  "confirmed",
                       "startDate":  "11/09/2025",
-                      "location":  "Killarney"
+                      "location":  "Killarney",
+                      "dailyHours":  7,
+                      "weeklyHours":  35,
+                      "sickAllowance":  35
                   },
                   {
                       "id":  "s27",
@@ -20517,7 +20598,10 @@
                       "shop":  "Letterkenny",
                       "startStatus":  "confirmed",
                       "startDate":  "28/08/2023",
-                      "location":  "Letterkenny"
+                      "location":  "Letterkenny",
+                      "dailyHours":  7,
+                      "weeklyHours":  35,
+                      "sickAllowance":  35
                   },
                   {
                       "id":  "s28",
@@ -20525,7 +20609,10 @@
                       "shop":  "Letterkenny",
                       "startStatus":  "confirmed",
                       "startDate":  "19/11/2024",
-                      "location":  "Letterkenny"
+                      "location":  "Letterkenny",
+                      "dailyHours":  7,
+                      "weeklyHours":  35,
+                      "sickAllowance":  35
                   },
                   {
                       "id":  "s29",
@@ -20533,7 +20620,10 @@
                       "shop":  "Letterkenny",
                       "startStatus":  "confirmed",
                       "startDate":  "02/12/2024",
-                      "location":  "Letterkenny"
+                      "location":  "Letterkenny",
+                      "dailyHours":  7,
+                      "weeklyHours":  35,
+                      "sickAllowance":  35
                   }
               ]
 }

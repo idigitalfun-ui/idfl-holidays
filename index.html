@@ -61,11 +61,12 @@ header{background:var(--sf);border-bottom:1px solid var(--bd);padding:11px 20px;
 .si-avatar{width:32px;height:32px;border-radius:50%;background:var(--sf3);color:var(--tx2);font-size:.68rem;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .si-info{flex:1;min-width:0}
 .si-name{font-weight:700;font-size:.81rem;color:var(--tx);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.si-sub{font-size:.64rem;color:var(--tx3);margin-top:1px}
+.si-sub{font-size:.64rem;color:var(--tx3);margin-top:1px;display:flex;align-items:center;gap:4px}
 .si-badge{font-size:.62rem;font-weight:800;padding:2px 7px;border-radius:9px;flex-shrink:0;font-family:'JetBrains Mono',monospace}
 .si-badge.pos{background:var(--gr2);color:var(--gr)}
 .si-badge.neg{background:var(--rd2);color:var(--rd)}
 .si-badge.zero{background:var(--sf3);color:var(--tx3)}
+.shift-tag{font-size:.58rem;background:var(--sf3);color:var(--tx2);padding:1px 5px;border-radius:4px;font-weight:700}
 .main{flex:1;min-width:0;overflow-y:auto;padding:20px 24px}
 
 /* â”€â”€ STAFF PORTAL (WINDOW VIEW) â”€â”€ */
@@ -76,6 +77,7 @@ header{background:var(--sf);border-bottom:1px solid var(--bd);padding:11px 20px;
 .portal-name{font-size:1.45rem;font-weight:900;letter-spacing:-.4px;color:var(--tx)}
 .portal-sub{font-size:.82rem;color:var(--tx2);margin-top:3px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 .portal-shop-badge{background:var(--ac2);border:1px solid var(--ac);padding:2px 10px;border-radius:20px;font-size:.74rem;font-weight:800;color:var(--ac)}
+.portal-shift-badge{background:var(--pu2);border:1px solid var(--pu);padding:2px 8px;border-radius:20px;font-size:.72rem;font-weight:800;color:var(--pu)}
 
 /* â”€â”€ HERO STATS (CENTERED BIG HOLIDAY + 2 SUB CARDS) â”€â”€ */
 .hero-center-wrap{display:flex;flex-direction:column;gap:16px;margin-bottom:24px}
@@ -258,7 +260,7 @@ table.batch-table input:focus{border-color:var(--ac)}
               <span style="font-size:1.2rem">&#128100;</span>
               <h3 style="font-size:.95rem;color:var(--tx);font-weight:800">Single Employee Statement</h3>
             </div>
-            <p style="font-size:.75rem;color:var(--tx2);margin-bottom:12px;line-height:1.45">Detailed official statement for one staff member showing opening hours, weekly hours worked breakdown, holiday dates, and sick leave.</p>
+            <p style="font-size:.75rem;color:var(--tx2);margin-bottom:12px;line-height:1.45">Detailed official statement for one staff member showing opening hours, weekly hours worked breakdown, holiday dates, and sick leave based on their standard daily shift.</p>
             
             <label style="font-size:.72rem">Select Staff Member</label>
             <select id="pdfStaffSelect"></select>
@@ -284,7 +286,7 @@ table.batch-table input:focus{border-color:var(--ac)}
               <span style="font-size:1.2rem">&#127970;</span>
               <h3 style="font-size:.95rem;color:var(--tx);font-weight:800">All Staff Company Report</h3>
             </div>
-            <p style="font-size:.75rem;color:var(--tx2);margin-bottom:12px;line-height:1.45">Company-wide executive summary table grouped by Shop across all 30 staff members with total hours worked, accruals, holidays taken, and balances.</p>
+            <p style="font-size:.75rem;color:var(--tx2);margin-bottom:12px;line-height:1.45">Company-wide executive summary table grouped by Shop across all 30 staff members with exact standard daily shifts, total hours, accruals, holidays, and balances.</p>
             
             <label style="font-size:.72rem">Select Year</label>
             <select id="pdfCompanyYear">
@@ -317,7 +319,7 @@ table.batch-table input:focus{border-color:var(--ac)}
       <button class="modal-close" id="batchClose">&times;</button>
     </div>
     <div class="modal-body">
-      <div style="display:grid;grid-template-columns:2fr 1fr 1fr;gap:12px;margin-bottom:12px">
+      <div style="display:grid;grid-template-columns:2fr 1.2fr 1.8fr;gap:12px;margin-bottom:12px">
         <div>
           <label>Period Label</label>
           <input type="text" id="batchWkLabel" placeholder="e.g. Week 35 31/08/2026 - 06/09/2026">
@@ -327,10 +329,11 @@ table.batch-table input:focus{border-color:var(--ac)}
           <input type="date" id="batchWkDate">
         </div>
         <div>
-          <label>Quick Fill</label>
+          <label>Quick Fill Standard Shifts</label>
           <div style="display:flex;gap:6px">
-            <button class="btn btn-ghost" id="batchFill35Btn" style="flex:1;padding:8px 6px">&#9889; Fill 35h</button>
-            <button class="btn btn-ghost" id="batchClearBtn" style="flex:1;padding:8px 6px">&#8635; Clear</button>
+            <button class="btn btn-gr" id="batchFillStandardBtn" style="flex:2;padding:8px 6px" title="Fills 40h for 8h staff (Rana, Osama, Ibrar), 37.5h for Jalal, 35h for 7h staff">&#9889; Standard Shifts (35/37.5/40h)</button>
+            <button class="btn btn-ghost" id="batchFill35Btn" style="flex:1;padding:8px 4px">&#9889; 35h All</button>
+            <button class="btn btn-ghost" id="batchClearBtn" style="flex:1;padding:8px 4px">&#8635; Clear</button>
           </div>
         </div>
       </div>
@@ -341,7 +344,7 @@ table.batch-table input:focus{border-color:var(--ac)}
         <table class="batch-table">
           <thead>
             <tr>
-              <th style="width:28%">Staff Name &amp; Shop</th>
+              <th style="width:28%">Staff Name &amp; Shift</th>
               <th style="width:18%">Worked Hours</th>
               <th style="width:16%">Holiday Pay (h)</th>
               <th style="width:16%">Sick Pay (h)</th>
@@ -20746,7 +20749,10 @@ table.batch-table input:focus{border-color:var(--ac)}
                       "shop":  "Mullingar",
                       "startStatus":  "confirmed",
                       "startDate":  "01/08/2022",
-                      "location":  "Mullingar"
+                      "location":  "Mullingar",
+                      "dailyHours":  8,
+                      "weeklyHours":  40,
+                      "sickAllowance":  40
                   },
                   {
                       "id":  "s2",
@@ -20754,7 +20760,10 @@ table.batch-table input:focus{border-color:var(--ac)}
                       "shop":  "Portlaoise",
                       "startStatus":  "confirmed",
                       "startDate":  "01/09/2023",
-                      "location":  "Portlaoise"
+                      "location":  "Portlaoise",
+                      "dailyHours":  8,
+                      "weeklyHours":  40,
+                      "sickAllowance":  40
                   },
                   {
                       "id":  "s3",
@@ -20762,7 +20771,10 @@ table.batch-table input:focus{border-color:var(--ac)}
                       "shop":  "Portlaoise",
                       "startStatus":  "confirmed",
                       "startDate":  "01/08/2022",
-                      "location":  "Portlaoise"
+                      "location":  "Portlaoise",
+                      "dailyHours":  7,
+                      "weeklyHours":  35,
+                      "sickAllowance":  35
                   },
                   {
                       "id":  "s4",
@@ -20770,7 +20782,10 @@ table.batch-table input:focus{border-color:var(--ac)}
                       "shop":  "Tullamore",
                       "startStatus":  "confirmed",
                       "startDate":  "01/11/2022",
-                      "location":  "Tullamore"
+                      "location":  "Tullamore",
+                      "dailyHours":  7,
+                      "weeklyHours":  35,
+                      "sickAllowance":  35
                   },
                   {
                       "id":  "s5",
@@ -20778,7 +20793,10 @@ table.batch-table input:focus{border-color:var(--ac)}
                       "shop":  "Maynooth",
                       "startStatus":  "confirmed",
                       "startDate":  "11/09/2023",
-                      "location":  "Maynooth"
+                      "location":  "Maynooth",
+                      "dailyHours":  7,
+                      "weeklyHours":  35,
+                      "sickAllowance":  35
                   },
                   {
                       "id":  "s6",
@@ -20786,7 +20804,10 @@ table.batch-table input:focus{border-color:var(--ac)}
                       "shop":  "Maynooth",
                       "startStatus":  "confirmed",
                       "startDate":  "03/07/2023",
-                      "location":  "Maynooth"
+                      "location":  "Maynooth",
+                      "dailyHours":  7,
+                      "weeklyHours":  35,
+                      "sickAllowance":  35
                   },
                   {
                       "id":  "s7",
@@ -20794,7 +20815,10 @@ table.batch-table input:focus{border-color:var(--ac)}
                       "shop":  "Maynooth",
                       "startStatus":  "confirmed",
                       "startDate":  "04/11/2024",
-                      "location":  "Maynooth"
+                      "location":  "Maynooth",
+                      "dailyHours":  7,
+                      "weeklyHours":  35,
+                      "sickAllowance":  35
                   },
                   {
                       "id":  "s8",
@@ -20802,7 +20826,10 @@ table.batch-table input:focus{border-color:var(--ac)}
                       "shop":  "Maynooth",
                       "startStatus":  "confirmed",
                       "startDate":  "13/02/2023",
-                      "location":  "Maynooth"
+                      "location":  "Maynooth",
+                      "dailyHours":  8,
+                      "weeklyHours":  40,
+                      "sickAllowance":  40
                   },
                   {
                       "id":  "s30",
@@ -20810,7 +20837,10 @@ table.batch-table input:focus{border-color:var(--ac)}
                       "shop":  "Maynooth",
                       "startStatus":  "confirmed",
                       "startDate":  "31/05/2026",
-                      "location":  "Maynooth"
+                      "location":  "Maynooth",
+                      "dailyHours":  7,
+                      "weeklyHours":  35,
+                      "sickAllowance":  35
                   },
                   {
                       "id":  "s9",
@@ -20818,7 +20848,10 @@ table.batch-table input:focus{border-color:var(--ac)}
                       "shop":  "Thurles",
                       "startStatus":  "confirmed",
                       "startDate":  "10/06/2024",
-                      "location":  "Thurles"
+                      "location":  "Thurles",
+                      "dailyHours":  7,
+                      "weeklyHours":  35,
+                      "sickAllowance":  35
                   },
                   {
                       "id":  "s16",
@@ -20826,7 +20859,10 @@ table.batch-table input:focus{border-color:var(--ac)}
                       "shop":  "Thurles",
                       "startStatus":  "confirmed",
                       "startDate":  "06/05/2024",
-                      "location":  "Thurles"
+                      "location":  "Thurles",
+                      "dailyHours":  7,
+                      "weeklyHours":  35,
+                      "sickAllowance":  35
                   },
                   {
                       "id":  "s10",
@@ -20834,7 +20870,10 @@ table.batch-table input:focus{border-color:var(--ac)}
                       "shop":  "Kilkenny",
                       "startStatus":  "confirmed",
                       "startDate":  "06/09/2023",
-                      "location":  "Kilkenny"
+                      "location":  "Kilkenny",
+                      "dailyHours":  7,
+                      "weeklyHours":  35,
+                      "sickAllowance":  35
                   },
                   {
                       "id":  "s14",
@@ -20842,7 +20881,10 @@ table.batch-table input:focus{border-color:var(--ac)}
                       "shop":  "Kilkenny",
                       "startStatus":  "confirmed",
                       "startDate":  "17/03/2026",
-                      "location":  "Kilkenny"
+                      "location":  "Kilkenny",
+                      "dailyHours":  7,
+                      "weeklyHours":  35,
+                      "sickAllowance":  35
                   },
                   {
                       "id":  "s11",
@@ -20850,7 +20892,10 @@ table.batch-table input:focus{border-color:var(--ac)}
                       "shop":  "Newbridge",
                       "startStatus":  "confirmed",
                       "startDate":  "20/11/2023",
-                      "location":  "Newbridge"
+                      "location":  "Newbridge",
+                      "dailyHours":  7,
+                      "weeklyHours":  35,
+                      "sickAllowance":  35
                   },
                   {
                       "id":  "s12",
@@ -20858,7 +20903,10 @@ table.batch-table input:focus{border-color:var(--ac)}
                       "shop":  "Newbridge",
                       "startStatus":  "confirmed",
                       "startDate":  "01/08/2022",
-                      "location":  "Newbridge"
+                      "location":  "Newbridge",
+                      "dailyHours":  7,
+                      "weeklyHours":  35,
+                      "sickAllowance":  35
                   },
                   {
                       "id":  "s13",
@@ -20866,7 +20914,10 @@ table.batch-table input:focus{border-color:var(--ac)}
                       "shop":  "Newbridge",
                       "startStatus":  "confirmed",
                       "startDate":  "01/08/2022",
-                      "location":  "Newbridge"
+                      "location":  "Newbridge",
+                      "dailyHours":  7.5,
+                      "weeklyHours":  37.5,
+                      "sickAllowance":  37.5
                   },
                   {
                       "id":  "s15",
@@ -20874,7 +20925,10 @@ table.batch-table input:focus{border-color:var(--ac)}
                       "shop":  "Newbridge",
                       "startStatus":  "confirmed",
                       "startDate":  "01/08/2022",
-                      "location":  "Newbridge"
+                      "location":  "Newbridge",
+                      "dailyHours":  7,
+                      "weeklyHours":  35,
+                      "sickAllowance":  35
                   },
                   {
                       "id":  "s17",
@@ -20882,7 +20936,10 @@ table.batch-table input:focus{border-color:var(--ac)}
                       "shop":  "Arklow",
                       "startStatus":  "confirmed",
                       "startDate":  "01/08/2022",
-                      "location":  "Arklow"
+                      "location":  "Arklow",
+                      "dailyHours":  7,
+                      "weeklyHours":  35,
+                      "sickAllowance":  35
                   },
                   {
                       "id":  "s18",
@@ -20890,7 +20947,10 @@ table.batch-table input:focus{border-color:var(--ac)}
                       "shop":  "Arklow",
                       "startStatus":  "confirmed",
                       "startDate":  "06/02/2023",
-                      "location":  "Arklow"
+                      "location":  "Arklow",
+                      "dailyHours":  7,
+                      "weeklyHours":  35,
+                      "sickAllowance":  35
                   },
                   {
                       "id":  "s20",
@@ -20898,7 +20958,10 @@ table.batch-table input:focus{border-color:var(--ac)}
                       "shop":  "Limerick",
                       "startStatus":  "confirmed",
                       "startDate":  "04/09/2023",
-                      "location":  "Limerick"
+                      "location":  "Limerick",
+                      "dailyHours":  7,
+                      "weeklyHours":  35,
+                      "sickAllowance":  35
                   },
                   {
                       "id":  "s21",
@@ -20906,7 +20969,10 @@ table.batch-table input:focus{border-color:var(--ac)}
                       "shop":  "Tralee",
                       "startStatus":  "confirmed",
                       "startDate":  "01/08/2022",
-                      "location":  "Tralee"
+                      "location":  "Tralee",
+                      "dailyHours":  7,
+                      "weeklyHours":  35,
+                      "sickAllowance":  35
                   },
                   {
                       "id":  "s22",
@@ -20914,7 +20980,10 @@ table.batch-table input:focus{border-color:var(--ac)}
                       "shop":  "Tralee",
                       "startStatus":  "confirmed",
                       "startDate":  "10/06/2024",
-                      "location":  "Tralee"
+                      "location":  "Tralee",
+                      "dailyHours":  7,
+                      "weeklyHours":  35,
+                      "sickAllowance":  35
                   },
                   {
                       "id":  "s23",
@@ -20922,7 +20991,10 @@ table.batch-table input:focus{border-color:var(--ac)}
                       "shop":  "Tralee",
                       "startStatus":  "confirmed",
                       "startDate":  "22/06/2024",
-                      "location":  "Tralee"
+                      "location":  "Tralee",
+                      "dailyHours":  7,
+                      "weeklyHours":  35,
+                      "sickAllowance":  35
                   },
                   {
                       "id":  "s24",
@@ -20930,7 +21002,10 @@ table.batch-table input:focus{border-color:var(--ac)}
                       "shop":  "Tralee",
                       "startStatus":  "confirmed",
                       "startDate":  "07/08/2024",
-                      "location":  "Tralee"
+                      "location":  "Tralee",
+                      "dailyHours":  7,
+                      "weeklyHours":  35,
+                      "sickAllowance":  35
                   },
                   {
                       "id":  "s25",
@@ -20938,7 +21013,10 @@ table.batch-table input:focus{border-color:var(--ac)}
                       "shop":  "Tralee",
                       "startStatus":  "confirmed",
                       "startDate":  "20/01/2025",
-                      "location":  "Tralee"
+                      "location":  "Tralee",
+                      "dailyHours":  7,
+                      "weeklyHours":  35,
+                      "sickAllowance":  35
                   },
                   {
                       "id":  "s31",
@@ -20946,7 +21024,10 @@ table.batch-table input:focus{border-color:var(--ac)}
                       "shop":  "Tralee",
                       "startStatus":  "confirmed",
                       "startDate":  "20/07/2026",
-                      "location":  "Tralee"
+                      "location":  "Tralee",
+                      "dailyHours":  7,
+                      "weeklyHours":  35,
+                      "sickAllowance":  35
                   },
                   {
                       "id":  "s26",
@@ -20954,7 +21035,10 @@ table.batch-table input:focus{border-color:var(--ac)}
                       "shop":  "Killarney",
                       "startStatus":  "confirmed",
                       "startDate":  "11/09/2025",
-                      "location":  "Killarney"
+                      "location":  "Killarney",
+                      "dailyHours":  7,
+                      "weeklyHours":  35,
+                      "sickAllowance":  35
                   },
                   {
                       "id":  "s27",
@@ -20962,7 +21046,10 @@ table.batch-table input:focus{border-color:var(--ac)}
                       "shop":  "Letterkenny",
                       "startStatus":  "confirmed",
                       "startDate":  "28/08/2023",
-                      "location":  "Letterkenny"
+                      "location":  "Letterkenny",
+                      "dailyHours":  7,
+                      "weeklyHours":  35,
+                      "sickAllowance":  35
                   },
                   {
                       "id":  "s28",
@@ -20970,7 +21057,10 @@ table.batch-table input:focus{border-color:var(--ac)}
                       "shop":  "Letterkenny",
                       "startStatus":  "confirmed",
                       "startDate":  "19/11/2024",
-                      "location":  "Letterkenny"
+                      "location":  "Letterkenny",
+                      "dailyHours":  7,
+                      "weeklyHours":  35,
+                      "sickAllowance":  35
                   },
                   {
                       "id":  "s29",
@@ -20978,12 +21068,14 @@ table.batch-table input:focus{border-color:var(--ac)}
                       "shop":  "Letterkenny",
                       "startStatus":  "confirmed",
                       "startDate":  "02/12/2024",
-                      "location":  "Letterkenny"
+                      "location":  "Letterkenny",
+                      "dailyHours":  7,
+                      "weeklyHours":  35,
+                      "sickAllowance":  35
                   }
               ]
 }</script>
 <script>
-const SICK_ALLOWANCE_HRS = 35;
 const LS_KEY = 'idfl_tracker_db';
 const GH_REPO = 'idigitalfun-ui/idfl-holidays';
 
@@ -20993,6 +21085,25 @@ function getEmbeddedToken(){
 }
 
 const BASE = JSON.parse(document.getElementById('holiday-data').textContent);
+
+// â”€â”€â”€ Staff Shift Configuration (8h for Rana, Osama, Ibrar; 7.5h for Jalal; 7h standard) â”€â”€â”€
+function getStaffDailyHours(sid){
+  const s = BASE.staff.find(function(x){ return x.id === sid; });
+  if(s && s.dailyHours) return s.dailyHours;
+  if(sid === 's1' || sid === 's2' || sid === 's8') return 8.0;
+  if(sid === 's13') return 7.5;
+  return 7.0;
+}
+
+function getStaffWeeklyHours(sid){
+  return getStaffDailyHours(sid) * 5;
+}
+
+function getStaffSickAllowance(sid){
+  const s = BASE.staff.find(function(x){ return x.id === sid; });
+  if(s && s.sickAllowance) return s.sickAllowance;
+  return getStaffDailyHours(sid) * 5;
+}
 
 function loadOv(){ try{ return JSON.parse(localStorage.getItem(LS_KEY)||'{}'); }catch(e){ return {}; } }
 function saveOv(o){ localStorage.setItem(LS_KEY, JSON.stringify(o)); }
@@ -21008,7 +21119,7 @@ let editingSickId = null;
 
 function uid(){ return Date.now().toString(36)+Math.random().toString(36).slice(2,6); }
 function fmt1(n){ return (Math.round((+n||0)*10)/10).toFixed(1); }
-function fmtDays(h){ return fmt1(h/7); }
+function fmtDays(h, sid){ return fmt1(h / getStaffDailyHours(sid)); }
 function initials(n){ return n.split(' ').map(function(p){return p[0];}).join('').toUpperCase().slice(0,2); }
 
 function avatarColor(sid){
@@ -21076,10 +21187,13 @@ function computeYearStats(sid, year){
   
   const sickLogs = getStaffSickLogs(sid, year);
   const sickUsed = sickLogs.reduce(function(s,e){ return s + (e.hours||0); }, 0);
-  const sickRemaining = SICK_ALLOWANCE_HRS - sickUsed;
+  
+  const dailyHours = getStaffDailyHours(sid);
+  const sickAllowance = getStaffSickAllowance(sid);
+  const sickRemaining = sickAllowance - sickUsed;
   
   const balance = Math.round((opening + earned - holTaken) * 100) / 100;
-  const days = balance / 7;
+  const days = balance / dailyHours;
   
   return {
     opening: opening,
@@ -21088,6 +21202,8 @@ function computeYearStats(sid, year){
     holTaken: holTaken,
     balance: balance,
     days: days,
+    dailyHours: dailyHours,
+    sickAllowance: sickAllowance,
     sickUsed: sickUsed,
     sickRemaining: sickRemaining,
     holLogs: holLogs,
@@ -21232,6 +21348,7 @@ function renderSidebar(){
     if(q && !s.name.toLowerCase().includes(q) && !shopName.toLowerCase().includes(q)) return;
     const stats = getFullConnectedStats(s.id)[activeYear];
     const hasData = stats.weeks.length > 0 || stats.opening !== 0 || stats.holLogs.length > 0;
+    const dailyHrs = getStaffDailyHours(s.id);
     
     let badgeCls='zero', badgeTxt='â€“';
     if(hasData){
@@ -21243,7 +21360,7 @@ function renderSidebar(){
     const div=document.createElement('div');
     div.className='staff-item'+(s.id===activeSid?' active':'');
     div.innerHTML='<div class="si-avatar" style="background:'+avatarColor(s.id)+';color:#0c0e17">'+initials(s.name)+'</div>'
-      +'<div class="si-info"><div class="si-name">'+s.name+'</div><div class="si-sub">'+shopName+'</div></div>'
+      +'<div class="si-info"><div class="si-name">'+s.name+'</div><div class="si-sub"><span>'+shopName+'</span><span class="shift-tag">'+dailyHrs+'h/d</span></div></div>'
       +(hasData?'<span class="si-badge '+badgeCls+'">'+badgeTxt+'</span>':'');
     div.addEventListener('click',function(){activeSid=s.id;editingHolId=null;editingSickId=null;renderAll();});
     shopGroups[shopName].push(div);
@@ -21272,14 +21389,17 @@ function renderMain(){
   
   const connectedStats = getFullConnectedStats(activeSid);
   const curStats = connectedStats[activeYear];
+  const dailyHrs = curStats.dailyHours;
+  const weeklyHrs = dailyHrs * 5;
+  const sickAllowance = curStats.sickAllowance;
   
   const balance = curStats.balance;
   const balDays = curStats.days;
-  const sickPct = Math.min(100, Math.round(curStats.sickUsed / SICK_ALLOWANCE_HRS * 100));
+  const sickPct = Math.min(100, Math.round(curStats.sickUsed / sickAllowance * 100));
   
   let balColor='var(--gr)';
   if(balance<0) balColor='var(--rd)';
-  else if(balance<14) balColor='var(--am)';
+  else if(balance< (dailyHrs * 2)) balColor='var(--am)';
   
   el.innerHTML=
     '<div class="portal-container">'
@@ -21293,6 +21413,7 @@ function renderMain(){
     +'<div class="portal-name">'+staff.name+'</div>'
     +'<div class="portal-sub">'
     +'<span class="portal-shop-badge">'+(staff.shop || staff.location || 'IDFL')+' Shop</span>'
+    +'<span class="portal-shift-badge">&#9200; '+dailyHrs+'h/day ('+weeklyHrs+'h/wk)</span>'
     +'<span>Started: <strong id="startDisplay">'+(staff.startDate||'<em style="color:var(--am)">On Record</em>')+'</strong></span>'
     +(!isPortalMode ? ' <button class="start-edit-btn" id="startEditBtn">Edit</button>' : '')
     +'</div>'
@@ -21312,7 +21433,7 @@ function renderMain(){
     +'<div class="hero-title">&#127958; AVAILABLE HOLIDAY BALANCE ('+activeYear+')</div>'
     +'<div class="hero-val-big" style="color:'+balColor+'">'+fmt1(balance)+' hrs</div>'
     +'<div class="hero-sub-big" style="color:'+balColor+'">'+fmt1(balDays)+' working days</div>'
-    +'<div class="hero-desc">Based on 7 hrs / working day</div>'
+    +'<div class="hero-desc">Based on '+dailyHrs+' hrs / working day ('+weeklyHrs+' hrs / full week)</div>'
     +'<div class="hero-breakdown-grid">'
     +'<div class="hero-b-col"><span>Opening Carry-over</span><strong>'+fmt1(curStats.opening)+' hrs</strong></div>'
     +'<div class="hero-b-col"><span>Earned (8% of '+fmt1(curStats.totalWorked)+'h)</span><strong style="color:var(--gr)">+'+fmt1(curStats.earned)+' hrs</strong></div>'
@@ -21326,13 +21447,13 @@ function renderMain(){
     +'<div class="hero-card">'
     +'<div class="hero-title" style="justify-content:flex-start">&#127973; SICK ALLOWANCE ('+activeYear+')</div>'
     +'<div class="hero-val" style="color:'+(curStats.sickRemaining>=0?'var(--pk)':'var(--rd)')+'">'+fmt1(curStats.sickRemaining)+' hrs</div>'
-    +'<div class="hero-sub" style="color:'+(curStats.sickRemaining>=0?'var(--pk)':'var(--rd)')+'">'+fmt1(curStats.sickRemaining/7)+' days remaining</div>'
+    +'<div class="hero-sub" style="color:'+(curStats.sickRemaining>=0?'var(--pk)':'var(--rd)')+'">'+fmt1(curStats.sickRemaining/dailyHrs)+' days remaining</div>'
     +'<div class="progress-wrap">'
-    +'<div class="progress-labels"><span>'+fmt1(curStats.sickUsed)+' hrs used</span><span>'+SICK_ALLOWANCE_HRS+' hrs allowance</span></div>'
-    +'<div class="progress-track"><div class="progress-fill '+(curStats.sickUsed>SICK_ALLOWANCE_HRS?'rd':'pk')+'" style="width:'+sickPct+'%"></div></div>'
+    +'<div class="progress-labels"><span>'+fmt1(curStats.sickUsed)+' hrs used</span><span>'+fmt1(sickAllowance)+' hrs allowance (5 days)</span></div>'
+    +'<div class="progress-track"><div class="progress-fill '+(curStats.sickUsed>sickAllowance?'rd':'pk')+'" style="width:'+sickPct+'%"></div></div>'
     +'</div>'
     +'<div class="hero-breakdown">'
-    +'<div class="hero-breakdown-row"><span>Annual Company Allowance</span><strong>35.0 hrs (5 days)</strong></div>'
+    +'<div class="hero-breakdown-row"><span>Annual Company Allowance</span><strong>'+fmt1(sickAllowance)+' hrs (5 days @ '+dailyHrs+'h)</strong></div>'
     +'<div class="hero-breakdown-row"><span>Used in '+activeYear+'</span><strong style="color:var(--rd)">'+fmt1(curStats.sickUsed)+' hrs</strong></div>'
     +'</div>'
     +'</div>'
@@ -21342,9 +21463,9 @@ function renderMain(){
     +'<div class="hero-title" style="justify-content:flex-start">&#128197; WORKED HOURS ('+activeYear+')</div>'
     +'<div class="hero-val" style="color:var(--ac)">'+fmt1(curStats.totalWorked)+' hrs</div>'
     +'<div class="hero-sub" style="color:var(--tx2)">'+curStats.weeks.length+' recorded periods</div>'
-    +'<div class="hero-desc">Generates 8% holiday entitlement</div>'
+    +'<div class="hero-desc">Standard shift: '+dailyHrs+'h/day &bull; Accrues 8% holiday entitlement</div>'
     +'<div class="hero-breakdown">'
-    +'<div class="hero-breakdown-row"><span>Accrual Rate</span><strong>8.0% of total hours</strong></div>'
+    +'<div class="hero-breakdown-row"><span>Standard Full Week</span><strong>'+weeklyHrs+' hrs ('+dailyHrs+'h/day)</strong></div>'
     +'<div class="hero-breakdown-row"><span>Holiday Hours Earned</span><strong style="color:var(--gr)">+'+fmt1(curStats.earned)+' hrs</strong></div>'
     +'</div>'
     +'</div>'
@@ -21359,7 +21480,7 @@ function renderMain(){
     +'<div class="weeks-wrap"><table class="weeks"><thead><tr><th>Period Date Range</th><th class="num">Hours Worked</th>'+(!isPortalMode?'<th class="act"></th>':'')+'</tr></thead><tbody id="weeksTbody"></tbody></table></div>'
     +(!isPortalMode ? '<div class="add-week-form">'
     +'<input class="lbl" type="text" id="newWkLabel" placeholder="Period label (e.g. Week 35 31/08 - 06/09)">'
-    +'<input class="hrs" type="number" id="newWkHrs" min="0" step="0.5" placeholder="Hrs">'
+    +'<input class="hrs" type="number" id="newWkHrs" min="0" step="0.5" placeholder="'+weeklyHrs+'">'
     +'<button class="btn btn-ac" id="addWkBtn">Add Week</button></div>' : '')
     +'</div>'
     
@@ -21370,7 +21491,7 @@ function renderMain(){
     +'<div class="card-hd"><h3>&#128198; Holidays Taken Log ('+activeYear+')</h3><span class="card-sub">'+curStats.holLogs.length+' records &bull; -'+fmt1(curStats.holTaken)+' hrs</span></div>'
     +'<div class="log-list" id="holLogList"></div>'
     +(!isPortalMode ? '<div class="add-log-form">'
-    +'<input type="date" id="holDate"><input type="number" id="holHrs" min="0" step="0.5" placeholder="Hrs">'
+    +'<input type="date" id="holDate"><input type="number" id="holHrs" min="0" step="0.5" placeholder="'+dailyHrs+'">'
     +'<input type="text" id="holNote" placeholder="Note / Reason"><button class="btn btn-am" id="addHolBtn">Add</button></div>' : '')
     +'</div>'
     
@@ -21379,7 +21500,7 @@ function renderMain(){
     +'<div class="card-hd"><h3>&#127973; Sick Days Taken ('+activeYear+')</h3><span class="card-sub">'+curStats.sickLogs.length+' records &bull; '+fmt1(curStats.sickUsed)+' hrs</span></div>'
     +'<div class="log-list" id="sickLogList"></div>'
     +(!isPortalMode ? '<div class="add-log-form">'
-    +'<input type="date" id="sickDate"><input type="number" id="sickHrs" min="0" step="0.5" placeholder="Hrs">'
+    +'<input type="date" id="sickDate"><input type="number" id="sickHrs" min="0" step="0.5" placeholder="'+dailyHrs+'">'
     +'<input type="text" id="sickNote" placeholder="Note / Details"><button class="btn btn-pk" id="addSickBtn">Add</button></div>' : '')
     +'</div>'
     +'</div>'
@@ -21588,9 +21709,11 @@ function openBatchModal(){
     tbody.appendChild(shopRow);
     
     members.forEach(function(s){
+      const dHrs = getStaffDailyHours(s.id);
+      const wHrs = dHrs * 5;
       const tr = document.createElement('tr');
-      tr.innerHTML = '<td><strong>' + s.name + '</strong></td>'
-        + '<td><input type="number" class="batch-hrs" data-sid="' + s.id + '" min="0" step="0.5" placeholder="Worked Hrs" style="text-align:right"></td>'
+      tr.innerHTML = '<td><strong>' + s.name + '</strong> <span class="shift-tag">' + wHrs + 'h/wk (' + dHrs + 'h/d)</span></td>'
+        + '<td><input type="number" class="batch-hrs" data-sid="' + s.id + '" data-def="' + wHrs + '" min="0" step="0.5" placeholder="' + wHrs + 'h" style="text-align:right"></td>'
         + '<td><input type="number" class="batch-hol" data-sid="' + s.id + '" min="0" step="0.5" placeholder="Hol Hrs" style="text-align:right"></td>'
         + '<td><input type="number" class="batch-sick" data-sid="' + s.id + '" min="0" step="0.5" placeholder="Sick Hrs" style="text-align:right"></td>'
         + '<td><input type="text" class="batch-note" data-sid="' + s.id + '" placeholder="Note / Reason"></td>';
@@ -21600,6 +21723,13 @@ function openBatchModal(){
   
   document.getElementById('batchModal').classList.remove('hidden');
 }
+
+document.getElementById('batchFillStandardBtn').addEventListener('click', function(){
+  document.querySelectorAll('.batch-hrs').forEach(function(inp){
+    inp.value = inp.dataset.def || '35';
+  });
+  toast('Filled exact standard shifts (40h / 37.5h / 35h)');
+});
 
 document.getElementById('batchFill35Btn').addEventListener('click', function(){
   document.querySelectorAll('.batch-hrs').forEach(function(inp){
@@ -21832,6 +21962,8 @@ function openShareModal(sid){
   if(!staff) return;
   const allStats = getFullConnectedStats(sid);
   const shopName = staff.shop || staff.location || 'IDFL';
+  const dailyHrs = getStaffDailyHours(sid);
+  const weeklyHrs = dailyHrs * 5;
   
   const origin = window.location.origin + window.location.pathname;
   const directLink = origin + '?staff=' + sid;
@@ -21840,9 +21972,10 @@ function openShareModal(sid){
   
   let txt = 'IDFL HOLIDAY & SICK LEAVE SUMMARY\n';
   txt += '==================================================\n';
-  txt += 'Staff Member: ' + staff.name + '\n';
-  txt += 'Shop:         ' + shopName + '\n';
-  txt += 'Portal Link:  ' + directLink + '\n';
+  txt += 'Staff Member:   ' + staff.name + '\n';
+  txt += 'Shop:           ' + shopName + '\n';
+  txt += 'Standard Shift: ' + dailyHrs + ' hrs/day (' + weeklyHrs + ' hrs/week)\n';
+  txt += 'Portal Link:    ' + directLink + '\n';
   txt += '==================================================\n\n';
   
   ['2024', '2025', '2026'].forEach(function(y){
@@ -21866,13 +21999,13 @@ function openShareModal(sid){
   });
   
   txt += '==================================================\n';
-  txt += 'CURRENT 2026 BALANCE: ' + fmt1(allStats['2026'].balance) + ' HRS (' + fmt1(allStats['2026'].days) + ' DAYS)\n';
+  txt += 'CURRENT 2026 BALANCE: ' + fmt1(allStats['2026'].balance) + ' HRS (' + fmt1(allStats['2026'].days) + ' WORKING DAYS)\n';
   txt += 'CURRENT SICK REMAINING: ' + fmt1(allStats['2026'].sickRemaining) + ' HRS\n';
   
   document.getElementById('shareOutput').textContent=txt;
   
   document.getElementById('shareWhatsAppBtn').onclick = function(){
-    const waText = encodeURIComponent('Hi ' + staff.name + ' (' + shopName + '), here is your IDFL Holiday & Hours portal link:\n' + directLink + '\n\nCurrent 2026 Holiday Balance: ' + fmt1(allStats['2026'].balance) + ' hrs (' + fmt1(allStats['2026'].days) + ' days)\nSick Allowance Remaining: ' + fmt1(allStats['2026'].sickRemaining) + ' hrs');
+    const waText = encodeURIComponent('Hi ' + staff.name + ' (' + shopName + '), here is your IDFL Holiday & Hours portal link:\n' + directLink + '\n\nCurrent 2026 Holiday Balance: ' + fmt1(allStats['2026'].balance) + ' hrs (' + fmt1(allStats['2026'].days) + ' days @ ' + dailyHrs + 'h/day)\nSick Allowance Remaining: ' + fmt1(allStats['2026'].sickRemaining) + ' hrs');
     window.open('https://api.whatsapp.com/send?text=' + waText, '_blank');
   };
   
@@ -21912,7 +22045,8 @@ function populatePdfStaffDropdown(){
       members.forEach(function(m){
         const opt = document.createElement('option');
         opt.value = m.id;
-        opt.textContent = m.name + ' (' + sh + ')';
+        const dHrs = getStaffDailyHours(m.id);
+        opt.textContent = m.name + ' (' + sh + ' - ' + dHrs + 'h/d)';
         if(m.id === activeSid) opt.selected = true;
         grp.appendChild(opt);
       });
@@ -21938,6 +22072,9 @@ function generateSingleStaffPdfHtml(sid, yearChoice){
   if(!staff) return '';
   const allStats = getFullConnectedStats(sid);
   const shopName = staff.shop || staff.location || 'IDFL';
+  const dailyHrs = getStaffDailyHours(sid);
+  const weeklyHrs = dailyHrs * 5;
+  const sickAllowance = getStaffSickAllowance(sid);
   
   const targetYears = yearChoice === 'ALL' ? ['2024', '2025', '2026'] : [yearChoice];
   
@@ -21951,6 +22088,7 @@ function generateSingleStaffPdfHtml(sid, yearChoice){
   html += '</div>';
   html += '<div style="text-align:right;font-size:11px;color:#64748b;line-height:1.4">';
   html += '<div><strong>Date:</strong> ' + new Date().toLocaleDateString('en-GB') + '</div>';
+  html += '<div><strong>Shift:</strong> ' + dailyHrs + 'h/day (' + weeklyHrs + 'h/wk)</div>';
   html += '<div><strong>Ref:</strong> IDFL-' + staff.id.toUpperCase() + '</div>';
   html += '</div>';
   html += '</div>';
@@ -21959,18 +22097,18 @@ function generateSingleStaffPdfHtml(sid, yearChoice){
   html += '<div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:12px 18px;margin-bottom:20px;display:grid;grid-template-columns:repeat(4,1fr);gap:12px;font-size:12px">';
   html += '<div><span style="color:#64748b;display:block;font-size:10px;font-weight:800;text-transform:uppercase">Staff Member</span><strong style="font-size:14px;color:#0f172a">' + staff.name + '</strong></div>';
   html += '<div><span style="color:#64748b;display:block;font-size:10px;font-weight:800;text-transform:uppercase">Branch Shop</span><strong style="font-size:14px;color:#2563eb">' + shopName + '</strong></div>';
-  html += '<div><span style="color:#64748b;display:block;font-size:10px;font-weight:800;text-transform:uppercase">Starting Date</span><strong style="font-size:13px;color:#0f172a">' + (staff.startDate || 'On Record') + '</strong></div>';
+  html += '<div><span style="color:#64748b;display:block;font-size:10px;font-weight:800;text-transform:uppercase">Standard Shift</span><strong style="font-size:13px;color:#0f172a">' + dailyHrs + 'h / day (' + weeklyHrs + 'h/wk)</strong></div>';
   html += '<div><span style="color:#64748b;display:block;font-size:10px;font-weight:800;text-transform:uppercase">Report Scope</span><strong style="font-size:13px;color:#0f172a">' + (yearChoice === 'ALL' ? '2024 - 2026' : 'Year ' + yearChoice) + '</strong></div>';
   html += '</div>';
   
   targetYears.forEach(function(y){
     const st = allStats[y];
-    const balCol = st.balance >= 14 ? '#16a34a' : (st.balance >= 0 ? '#d97706' : '#dc2626');
+    const balCol = st.balance >= (dailyHrs * 2) ? '#16a34a' : (st.balance >= 0 ? '#d97706' : '#dc2626');
     
     html += '<div style="margin-bottom:24px;page-break-inside:avoid">';
     html += '<div style="background:#1e293b;color:#fff;padding:8px 14px;border-radius:8px 8px 0 0;font-weight:800;font-size:13px;display:flex;justify-content:space-between;align-items:center">';
     html += '<span>&#128197; YEAR ' + y + ' SUMMARY</span>';
-    html += '<span>Available Balance: <strong style="color:#4ade80">' + fmt1(st.balance) + ' hrs (' + fmt1(st.days) + ' days)</strong></span>';
+    html += '<span>Available Balance: <strong style="color:#4ade80">' + fmt1(st.balance) + ' hrs (' + fmt1(st.days) + ' working days @ ' + dailyHrs + 'h)</strong></span>';
     html += '</div>';
     
     // KPI Cards
@@ -22038,7 +22176,7 @@ function generateSingleStaffPdfHtml(sid, yearChoice){
   
   // Footer Sign-off
   html += '<div style="border-top:1px solid #cbd5e1;padding-top:12px;margin-top:20px;display:flex;justify-content:space-between;font-size:11px;color:#64748b">';
-  html += '<div>IDFL Company System &bull; Holiday accrual calculated at standard statutory 8% rate.</div>';
+  html += '<div>IDFL Company System &bull; Holiday accrual calculated at standard statutory 8% rate &bull; Shift: ' + dailyHrs + 'h/day.</div>';
   html += '<div>Page 1 of 1</div>';
   html += '</div>';
   
@@ -22080,7 +22218,7 @@ function generateCompanyPdfHtml(year){
     html += '<table style="width:100%;border-collapse:collapse;font-size:11px;border:1px solid #cbd5e1;border-top:none">';
     html += '<thead><tr style="background:#f1f5f9;color:#334155;border-bottom:1px solid #cbd5e1">';
     html += '<th style="padding:6px 8px;text-align:left">Staff Name</th>';
-    html += '<th style="padding:6px 8px;text-align:center">Start Date</th>';
+    html += '<th style="padding:6px 8px;text-align:center">Shift</th>';
     html += '<th style="padding:6px 8px;text-align:right">Opening</th>';
     html += '<th style="padding:6px 8px;text-align:right">Worked Hrs</th>';
     html += '<th style="padding:6px 8px;text-align:right">Earned (8%)</th>';
@@ -22092,17 +22230,18 @@ function generateCompanyPdfHtml(year){
     
     members.forEach(function(s){
       const st = getFullConnectedStats(s.id)[year];
+      const dailyHrs = st.dailyHours;
       shopWorked += st.totalWorked;
       shopEarned += st.earned;
       shopTaken += st.holTaken;
       shopBal += st.balance;
       grandSick += st.sickUsed;
       
-      const balColor = st.balance >= 14 ? '#16a34a' : (st.balance >= 0 ? '#d97706' : '#dc2626');
+      const balColor = st.balance >= (dailyHrs * 2) ? '#16a34a' : (st.balance >= 0 ? '#d97706' : '#dc2626');
       
       html += '<tr style="border-bottom:1px solid #e2e8f0">';
       html += '<td style="padding:5px 8px;font-weight:700;color:#0f172a">' + s.name + '</td>';
-      html += '<td style="padding:5px 8px;text-align:center;color:#64748b">' + (s.startDate || '-') + '</td>';
+      html += '<td style="padding:5px 8px;text-align:center;color:#64748b;font-weight:700">' + dailyHrs + 'h/d</td>';
       html += '<td style="padding:5px 8px;text-align:right;color:#475569">' + fmt1(st.opening) + '</td>';
       html += '<td style="padding:5px 8px;text-align:right;font-weight:700;color:#2563eb">' + fmt1(st.totalWorked) + '</td>';
       html += '<td style="padding:5px 8px;text-align:right;color:#16a34a">+' + fmt1(st.earned) + '</td>';
@@ -22133,7 +22272,7 @@ function generateCompanyPdfHtml(year){
   // Grand Company Total
   html += '<div style="background:#1e293b;color:#fff;border-radius:8px;padding:12px 18px;margin-top:20px;display:flex;justify-content:space-between;align-items:center;font-size:13px;font-weight:800">';
   html += '<span>COMPANY GRAND TOTAL (' + BASE.staff.length + ' STAFF)</span>';
-  html += '<span>Total Worked: <span style="color:#60a5fa">' + fmt1(grandWorked) + 'h</span> &bull; Accrued: <span style="color:#4ade80">+' + fmt1(grandEarned) + 'h</span> &bull; Taken: <span style="color:#fbbf24">-' + fmt1(grandTaken) + 'h</span> &bull; Net Balance: <span style="color:#38bdf8">' + fmt1(grandBal) + 'h (' + fmt1(grandBal/7) + ' days)</span></span>';
+  html += '<span>Total Worked: <span style="color:#60a5fa">' + fmt1(grandWorked) + 'h</span> &bull; Accrued: <span style="color:#4ade80">+' + fmt1(grandEarned) + 'h</span> &bull; Taken: <span style="color:#fbbf24">-' + fmt1(grandTaken) + 'h</span> &bull; Net Balance: <span style="color:#38bdf8">' + fmt1(grandBal) + 'h</span></span>';
   html += '</div>';
   
   html += '</div>';
