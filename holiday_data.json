@@ -2142,480 +2142,154 @@
       }
     ],
     "s32": [],
-    "f1": [
-      {
-        "id": "h_2024_f1_209",
-        "year": "2024",
-        "date": "22/01/2024",
-        "hours": 35,
-        "note": "Please Pay 35 hrs Holiday Pay"
-      },
-      {
-        "id": "h_2024_f1_210",
-        "year": "2024",
-        "date": "29/01/2024",
-        "hours": 7,
-        "note": "Please Pay 7 hrs Holiday Pay"
-      },
-      {
-        "id": "h_2024_f1_218",
-        "year": "2024",
-        "date": "25/03/2024",
-        "hours": 7,
-        "note": "Please pay 7 hrs holiday pay"
-      },
-      {
-        "id": "h_2024_f1_222",
-        "year": "2024",
-        "date": "22/04/2024",
-        "hours": 7,
-        "note": "Please pay 7 hrs holiday pay"
-      },
-      {
-        "id": "h_2024_f1_223",
-        "year": "2024",
-        "date": "29/04/2024",
-        "hours": 14,
-        "note": "Please pay 14 hrs holiday pay"
-      },
-      {
-        "id": "h_2024_f1_240",
-        "year": "2024",
-        "date": "02/09/2024",
-        "hours": 14,
-        "note": "Please pay 14 hrs holiday pay"
-      },
-      {
-        "id": "h_2024_f1_246",
-        "year": "2024",
-        "date": "14/10/2024",
-        "hours": 35,
-        "note": "Please pay 35 hrs holiday pay"
-      },
-      {
-        "id": "h_2024_f1_247",
-        "year": "2024",
-        "date": "21/10/2024",
-        "hours": 14,
-        "note": "Please pay 14 hrs holiday pay"
-      },
-      {
-        "id": "h_2024_f1_253",
-        "year": "2024",
-        "date": "02/12/2024",
-        "hours": 28,
-        "note": "Please pay 28 hrs holiday pay"
-      },
-      {
-        "id": "h_2025_f1_258",
-        "year": "2025",
-        "date": "06/01/2025",
-        "hours": 14,
-        "note": "Please pay 14 hours holiday pay"
-      },
-      {
-        "id": "h_2025_f1_259",
-        "year": "2025",
-        "date": "13/01/2025",
-        "hours": 35,
-        "note": "Please pay 35 hours holiday pay"
-      },
-      {
-        "id": "h_2025_f1_265",
-        "year": "2025",
-        "date": "24/02/2025",
-        "hours": 7,
-        "note": "Please pay 7 hours holiday pay"
-      },
-      {
-        "id": "h_2025_f1_267",
-        "year": "2025",
-        "date": "10/03/2025",
-        "hours": 14,
-        "note": "Please pay 14 hours holiday pay"
-      },
-      {
-        "id": "h_2025_f1_276",
-        "year": "2025",
-        "date": "12/05/2025",
-        "hours": 14,
-        "note": "Please pay 14 hours holiday pay"
-      },
-      {
-        "id": "h_2025_f1_285",
-        "year": "2025",
-        "date": "14/07/2025",
-        "hours": 7,
-        "note": "Please pay 7 hours holiday pay"
-      },
-      {
-        "id": "h_2025_f1_287",
-        "year": "2025",
-        "date": "28/07/2025",
-        "hours": 28,
-        "note": "Please pay 28 hours holiday pay"
-      },
-      {
-        "id": "h_2025_f1_288",
-        "year": "2025",
-        "date": "04/08/2025",
-        "hours": 21,
-        "note": "Please pay 21 hours holiday pay  7.5"
-      },
-      {
-        "id": "h_2025_f1_292",
-        "year": "2025",
-        "date": "01/09/2025",
-        "hours": 7,
-        "note": "Please pay 7 hours holiday pay"
-      },
-      {
-        "id": "h_2025_f1_298",
-        "year": "2025",
-        "date": "13/10/2025",
-        "hours": 7,
-        "note": "Please pay  7 hours holiday pay"
-      },
-      {
-        "id": "h_2025_f1_299",
-        "year": "2025",
-        "date": "20/10/2025",
-        "hours": 7,
-        "note": "Please pay  7 hours holiday pay"
-      },
-      {
-        "id": "h_2025_f1_304",
-        "year": "2025",
-        "date": "24/11/2025",
-        "hours": 14,
-        "note": "Please pay 14 hours holiday pay"
-      },
-      {
-        "id": "h_2025_f1_305",
-        "year": "2025",
-        "date": "01/12/2025",
-        "hours": 14,
-        "note": "\"Please pay 14 hours holiday pay"
-      },
-      {
-        "id": "h_2026_f1_312",
-        "year": "2026",
-        "date": "19/01/2026",
-        "hours": 14,
-        "note": "Please pay 14 hrs holiday pay"
-      },
-      {
-        "id": "h_2026_f1_316",
-        "year": "2026",
-        "date": "16/02/2026",
-        "hours": 35,
-        "note": "Please pay 35 hrs holiday pay"
-      }
-    ],
-    "f2": [
-      {
-        "id": "h_2026_f2_329",
-        "year": "2026",
-        "date": "18/05/2026",
-        "hours": 35,
-        "note": "Please pay 35 hours holiday pay"
-      },
-      {
-        "id": "h_2026_f2_330",
-        "year": "2026",
-        "date": "25/05/2026",
-        "hours": 35,
-        "note": "Please pay 35 hours holiday pay"
-      },
-      {
-        "id": "h_2026_f2_331",
-        "year": "2026",
-        "date": "01/06/2026",
-        "hours": 35,
-        "note": "Please pay 35 hours holiday pay"
-      },
-      {
-        "id": "h_2026_f2_332",
-        "year": "2026",
-        "date": "08/06/2026",
-        "hours": 35,
-        "note": "Please pay 35 hours holiday pay"
-      },
-      {
-        "id": "h_2026_f2_333",
-        "year": "2026",
-        "date": "15/06/2026",
-        "hours": 14,
-        "note": "Please pay 14 hours holiday pay"
-      }
-    ],
-    "f3": [
-      {
-        "id": "h_2024_f3_215",
-        "year": "2024",
-        "date": "04/03/2024",
-        "hours": 7,
-        "note": "Please pay 7 hrs holiday pay"
-      },
-      {
-        "id": "h_2024_f3_231",
-        "year": "2024",
-        "date": "01/07/2024",
-        "hours": 14,
-        "note": "Please pay 14 hrs holiday pay"
-      },
-      {
-        "id": "h_2024_f3_239",
-        "year": "2024",
-        "date": "26/08/2024",
-        "hours": 14,
-        "note": "Please pay 14 hrs holiday pay"
-      },
-      {
-        "id": "h_2024_f3_243",
-        "year": "2024",
-        "date": "23/09/2024",
-        "hours": 35,
-        "note": "Please pay 35 hrs holiday pay"
-      },
-      {
-        "id": "h_2024_f3_250",
-        "year": "2024",
-        "date": "11/11/2024",
-        "hours": 35,
-        "note": "Please pay 35 hrs holiday pay"
-      },
-      {
-        "id": "h_2025_f3_272",
-        "year": "2025",
-        "date": "14/04/2025",
-        "hours": 7,
-        "note": "Please pay 7 hours holiday pay"
-      },
-      {
-        "id": "h_2025_f3_277",
-        "year": "2025",
-        "date": "19/05/2025",
-        "hours": 35,
-        "note": "Please pay 35 hours holiday pay"
-      },
-      {
-        "id": "h_2025_f3_291",
-        "year": "2025",
-        "date": "25/08/2025",
-        "hours": 35,
-        "note": "Please pay 35 hours holiday pay"
-      },
-      {
-        "id": "h_2025_f3_298",
-        "year": "2025",
-        "date": "13/10/2025",
-        "hours": 7,
-        "note": "Please pay  7 hours holiday pay"
-      },
-      {
-        "id": "h_2025_f3_302",
-        "year": "2025",
-        "date": "10/11/2025",
-        "hours": 14,
-        "note": "Please pay 14 hours holiday pay"
-      },
-      {
-        "id": "h_2026_f3_312",
-        "year": "2026",
-        "date": "19/01/2026",
-        "hours": 21,
-        "note": "Please pay 21 hrs holiday pay"
-      },
-      {
-        "id": "h_2026_f3_324",
-        "year": "2026",
-        "date": "13/04/2026",
-        "hours": 8,
-        "note": "Please pay 8 hrs holiday pay"
-      },
-      {
-        "id": "h_2026_f3_329",
-        "year": "2026",
-        "date": "18/05/2026",
-        "hours": 7,
-        "note": "Please pay 7 hours holiday pay"
-      }
-    ],
+    "f1": [],
+    "f2": [],
+    "f3": [],
     "f4": [
       {
-        "id": "h_2025_f4_265",
+        "id": "h_2025_f4_13468",
         "year": "2025",
         "date": "24/02/2025",
         "hours": 7,
-        "note": "Please pay 7 hours holiday pay"
+        "note": "6 | Please pay 7 hours holiday pay"
       },
       {
-        "id": "h_2025_f4_285",
+        "id": "h_2025_f4_14465",
         "year": "2025",
         "date": "14/07/2025",
         "hours": 14,
-        "note": "Please pay 14 hours holiday pay"
+        "note": "0 | Please pay 14 hours holiday pay"
       },
       {
-        "id": "h_2025_f4_290",
+        "id": "h_2025_f4_14718",
         "year": "2025",
         "date": "18/08/2025",
         "hours": 7,
-        "note": "Please pay 7 hours holiday pay"
+        "note": "0 | Please pay 7 hours holiday pay"
       }
     ],
     "f5": [
       {
-        "id": "h_2024_f5_225",
+        "id": "h_2024_f5_11481",
         "year": "2024",
         "date": "13/05/2024",
         "hours": 21,
-        "note": "Please pay 21 hrs holiday pay"
+        "note": "5 | Please pay 21 hrs holiday pay"
       },
       {
-        "id": "h_2024_f5_239",
+        "id": "h_2024_f5_12153",
         "year": "2024",
         "date": "26/08/2024",
         "hours": 28,
-        "note": "Please pay 28 hrs holiday pay"
+        "note": "5 | Please pay 28 hrs holiday pay"
       },
       {
-        "id": "h_2025_f5_261",
+        "id": "h_2025_f5_13255",
         "year": "2025",
         "date": "27/01/2025",
         "hours": 28,
-        "note": "Please pay 28 hours holiday pay"
+        "note": "5 | Please pay 28 hours holiday pay"
       },
       {
-        "id": "h_2025_f5_269",
+        "id": "h_2025_f5_13657",
         "year": "2025",
         "date": "24/03/2025",
         "hours": 7,
-        "note": "Please pay 7 hours holiday pay"
+        "note": "5 | Please pay 7 hours holiday pay"
       },
       {
-        "id": "h_2025_f5_280",
+        "id": "h_2025_f5_14208",
         "year": "2025",
         "date": "09/06/2025",
         "hours": 35,
-        "note": "Please pay 35 hours holiday pay"
+        "note": "0 | Please pay 35 hours holiday pay"
       },
       {
-        "id": "h_2025_f5_281",
+        "id": "h_2025_f5_14257",
         "year": "2025",
         "date": "16/06/2025",
         "hours": 14,
-        "note": "Please pay 14 hours holiday pay"
+        "note": "6 | Please pay 14 hours holiday pay"
       },
       {
-        "id": "h_2025_f5_296",
+        "id": "h_2025_f5_14993",
         "year": "2025",
         "date": "29/09/2025",
         "hours": 7,
-        "note": "Please pay 7 hours holiday pay"
+        "note": "5 | Please pay 7 hours holiday pay"
       },
       {
-        "id": "h_2025_f5_298",
+        "id": "h_2025_f5_15083",
         "year": "2025",
         "date": "13/10/2025",
         "hours": 14,
-        "note": "Please pay  14 hours holiday pay"
+        "note": "5 |  Please pay  14 hours holiday pay"
       },
       {
-        "id": "h_2025_f5_299",
+        "id": "h_2025_f5_15131",
         "year": "2025",
         "date": "20/10/2025",
         "hours": 14,
-        "note": "Please pay  14 hours holiday pay"
+        "note": "5 |  Please pay  14 hours holiday pay"
       },
       {
-        "id": "h_2025_f5_300",
+        "id": "h_2025_f5_15180",
         "year": "2025",
         "date": "27/10/2025",
         "hours": 14,
-        "note": "Please pay 14 hours holiday pay 5 5"
+        "note": "5 | Please pay 14 hours holiday pay | 5 | 5"
       },
       {
-        "id": "h_2025_f5_301",
+        "id": "h_2025_f5_15226",
         "year": "2025",
         "date": "03/11/2025",
         "hours": 7,
-        "note": "Please pay 7 hours holiday pay"
+        "note": "5 | Please pay 7 hours holiday pay"
       },
       {
-        "id": "h_2025_f5_302",
+        "id": "h_2025_f5_15272",
         "year": "2025",
         "date": "10/11/2025",
         "hours": 14,
-        "note": "Please pay 14 hours holiday pay"
+        "note": "5.5 | Please pay 14 hours holiday pay"
       },
       {
-        "id": "h_2025_f5_303",
+        "id": "h_2025_f5_15319",
         "year": "2025",
         "date": "17/11/2025",
         "hours": 14,
-        "note": "Please pay 14 hours holiday pay"
+        "note": "0 | Please pay 14 hours holiday pay"
       },
       {
-        "id": "h_2025_f5_305",
+        "id": "h_2025_f5_15412",
         "year": "2025",
         "date": "01/12/2025",
         "hours": 7,
-        "note": "Please pay 7 hours holiday pay"
+        "note": "5.5 | Please pay 7 hours holiday pay"
       },
       {
-        "id": "h_2026_f5_311",
+        "id": "h_2026_f5_15751",
         "year": "2026",
         "date": "12/01/2026",
         "hours": 14,
-        "note": "Please pay 14 hrs holiday pay"
+        "note": "0 | Please pay 14 hrs holiday pay"
       },
       {
-        "id": "h_2026_f5_314",
+        "id": "h_2026_f5_15890",
         "year": "2026",
         "date": "02/02/2026",
         "hours": 30,
-        "note": "\"Please pay 30 hrs holiday pay"
+        "note": "0 | \"Please pay 30 hrs holiday pay"
       }
     ],
-    "f6": [
-      {
-        "id": "h_2024_f6_243",
-        "year": "2024",
-        "date": "23/09/2024",
-        "hours": 21,
-        "note": "Please pay 21 hrs holiday pay"
-      },
-      {
-        "id": "h_2024_f6_247",
-        "year": "2024",
-        "date": "21/10/2024",
-        "hours": 21,
-        "note": "Please pay 21 hrs holiday pay"
-      },
-      {
-        "id": "h_2024_f6_257",
-        "year": "2024",
-        "date": "30/12/2024",
-        "hours": 5.5,
-        "note": "Left Job - Please pay his remaining holidays  5.5"
-      },
-      {
-        "id": "h_2025_f6_293",
-        "year": "2025",
-        "date": "08/09/2025",
-        "hours": 9,
-        "note": "Please pay 9 hours holiday pay"
-      }
-    ],
+    "f6": [],
     "f7": [
       {
-        "id": "h_2024_f7_211",
+        "id": "h_2024_f7_10774",
         "year": "2024",
         "date": "05/02/2024",
         "hours": 28,
-        "note": "Please Pay 28 hrs Holiday Pay  6"
+        "note": "0 | Please Pay 28 hrs Holiday Pay | 6"
       }
     ],
     "f8": [],
@@ -2625,11 +2299,11 @@
     "f12": [],
     "f13": [
       {
-        "id": "h_2024_f13_222",
+        "id": "h_2024_f13_11355",
         "year": "2024",
         "date": "22/04/2024",
         "hours": 15,
-        "note": "Please pay 15 hrs holiday pay"
+        "note": "0 | Please pay 15 hrs holiday pay"
       }
     ],
     "f14": [],
@@ -2644,76 +2318,69 @@
     "f23": [],
     "f24": [
       {
-        "id": "h_2024_f24_208",
+        "id": "h_2024_f24_10631",
         "year": "2024",
         "date": "15/01/2024",
         "hours": 25,
-        "note": "Please pay 25 hours holiday pay"
+        "note": "0 | Please pay 25 hours holiday pay"
       }
     ],
     "f25": [
       {
-        "id": "h_2024_f25_229",
+        "id": "h_2024_f25_11700",
         "year": "2024",
         "date": "17/06/2024",
         "hours": 14,
-        "note": "Please pay 14 hrs holiday pay"
+        "note": "0 | Please pay 14 hrs holiday pay"
       },
       {
-        "id": "h_2024_f25_230",
+        "id": "h_2024_f25_11750",
         "year": "2024",
         "date": "24/06/2024",
         "hours": 21,
-        "note": "Please pay 21 hrs holiday pay"
+        "note": "5.5 | Please pay 21 hrs holiday pay"
       }
     ],
     "f26": [],
     "f27": [
       {
-        "id": "h_2025_f27_265",
+        "id": "h_2025_f27_13453",
         "year": "2025",
         "date": "24/02/2025",
         "hours": 35,
-        "note": "Please pay 35 hours holiday pay"
+        "note": "0 | Please pay 35 hours holiday pay"
       },
       {
-        "id": "h_2025_f27_266",
+        "id": "h_2025_f27_13504",
         "year": "2025",
         "date": "03/03/2025",
         "hours": 35,
-        "note": "Please pay 35 hours holiday pay"
-      },
-      {
-        "id": "h_2025_f27_291",
-        "year": "2025",
-        "date": "25/08/2025",
-        "hours": 35.08,
-        "note": "\"Left Job - Please Pay his remaining holiday pay (35.08 hrs we have on our side  please crosscheck)\""
+        "note": "0 | Please pay 35 hours holiday pay"
       }
     ],
     "f28": [],
     "f29": [],
     "f30": [
       {
-        "id": "h_2024_f30_209",
+        "id": "h_2024_f30_10667",
         "year": "2024",
         "date": "22/01/2024",
         "hours": 7,
-        "note": "Please Pay 7 hrs Holiday Pay"
+        "note": "5.5 | Please Pay 7 hrs Holiday Pay"
       },
       {
-        "id": "h_2024_f30_214",
+        "id": "h_2024_f30_10929",
         "year": "2024",
         "date": "26/02/2024",
         "hours": 14,
-        "note": "Please pay 14 hrs holiday pay"
+        "note": "0 | Please pay 14 hrs holiday pay"
       },
       {
-        "id": "h_2024_f30_215",
+        "id": "h_2024_f30_10980",
         "year": "2024",
         "date": "04/03/2024",
         "hours": 21,
-        "note": "Please pay 21 hrs holiday pay"
+        "note": "0 | Please pay 21 hrs holiday pay"
       }
     ],
     "f31": [],
@@ -7929,258 +7596,7 @@
       },
       "f1": {
         "opening": 104.4,
-        "weeks": [
-          {
-            "label": "Week 1 01/01/2024 - 07/01/2024",
-            "hours": 34,
-            "date": "01/01/2024"
-          },
-          {
-            "label": "Week 2 08/01/2024 - 14/01/2024",
-            "hours": 34.5,
-            "date": "08/01/2024"
-          },
-          {
-            "label": "Week 3 15/01/2024 - 21/01/2024",
-            "hours": 37,
-            "date": "15/01/2024"
-          },
-          {
-            "label": "Week 5 29/01/2024 - 04/02/2024",
-            "hours": 30,
-            "date": "29/01/2024"
-          },
-          {
-            "label": "Week 6 05/02/2024 - 11/02/2024",
-            "hours": 34.5,
-            "date": "05/02/2024"
-          },
-          {
-            "label": "Week 7 12/02/2024 - 18/02/2024",
-            "hours": 29,
-            "date": "12/02/2024"
-          },
-          {
-            "label": "Week 8 19/02/2024 - 25/02/2024",
-            "hours": 20.5,
-            "date": "19/02/2024"
-          },
-          {
-            "label": "Week 9 26/02/2024 - 03/03/2024",
-            "hours": 35,
-            "date": "26/02/2024"
-          },
-          {
-            "label": "Week 10 04/03/2024 - 10/03/2024",
-            "hours": 37.5,
-            "date": "04/03/2024"
-          },
-          {
-            "label": "Week 11 11/03/2024 - 17/03/2024",
-            "hours": 35.5,
-            "date": "11/03/2024"
-          },
-          {
-            "label": "Week 12 18/03/2024 - 24/03/2024",
-            "hours": 35,
-            "date": "18/03/2024"
-          },
-          {
-            "label": "Week 13 25/03/2024 - 31/03/2024",
-            "hours": 15,
-            "date": "25/03/2024"
-          },
-          {
-            "label": "Week 14 01/04/2024 - 07/04/2024",
-            "hours": 32.5,
-            "date": "01/04/2024"
-          },
-          {
-            "label": "Week 15 08/04/2024 - 14/04/2024",
-            "hours": 35,
-            "date": "08/04/2024"
-          },
-          {
-            "label": "Week 16 15/04/2024 - 21/04/2024",
-            "hours": 35.5,
-            "date": "15/04/2024"
-          },
-          {
-            "label": "Week 17 22/04/2024 - 28/04/2024",
-            "hours": 30,
-            "date": "22/04/2024"
-          },
-          {
-            "label": "Week 18 29/04/2024 - 05/05/2024",
-            "hours": 25,
-            "date": "29/04/2024"
-          },
-          {
-            "label": "Week 19 06/05/2024 - 12/05/2024",
-            "hours": 34,
-            "date": "06/05/2024"
-          },
-          {
-            "label": "Week 20 13/05/2024 - 19/05/2024",
-            "hours": 35.5,
-            "date": "13/05/2024"
-          },
-          {
-            "label": "Week 21 20/05/2024 - 26/05/2024",
-            "hours": 34,
-            "date": "20/05/2024"
-          },
-          {
-            "label": "Week 22 27/05/2024 - 02/06/2024",
-            "hours": 34,
-            "date": "27/05/2024"
-          },
-          {
-            "label": "Week 23 10/06/2024 - 16/06/2024",
-            "hours": 34,
-            "date": "10/06/2024"
-          },
-          {
-            "label": "Week 24 17/06/2024 - 23/06/2024",
-            "hours": 30,
-            "date": "17/06/2024"
-          },
-          {
-            "label": "Week 25 24/06/2024 - 30/06/2024",
-            "hours": 35.5,
-            "date": "24/06/2024"
-          },
-          {
-            "label": "Week 26 01/07/2024 - 07/07/2024",
-            "hours": 42,
-            "date": "01/07/2024"
-          },
-          {
-            "label": "Week 27 08/07/2024 - 14/07/2024",
-            "hours": 35,
-            "date": "08/07/2024"
-          },
-          {
-            "label": "Week 28 15/07/2024 - 21/07/2024",
-            "hours": 40.5,
-            "date": "15/07/2024"
-          },
-          {
-            "label": "Week 29 22/07/2024 - 28/07/2024",
-            "hours": 35,
-            "date": "22/07/2024"
-          },
-          {
-            "label": "Week 30 29/07/2024 - 04/08/2024",
-            "hours": 36,
-            "date": "29/07/2024"
-          },
-          {
-            "label": "Week 31 05/08/2024 - 11/08/2024",
-            "hours": 32,
-            "date": "05/08/2024"
-          },
-          {
-            "label": "Week 32 12/08/2024 - 18/08/2024",
-            "hours": 41.5,
-            "date": "12/08/2024"
-          },
-          {
-            "label": "Week 33 19/08/2024 - 25/08/2024",
-            "hours": 31.5,
-            "date": "19/08/2024"
-          },
-          {
-            "label": "Week 34 26/08/2024 - 01/09/2024",
-            "hours": 42.5,
-            "date": "26/08/2024"
-          },
-          {
-            "label": "Week 35 02/09/2024 - 08/09/2024",
-            "hours": 22.5,
-            "date": "02/09/2024"
-          },
-          {
-            "label": "Week 36 09/09/2024 - 15/09/2024",
-            "hours": 36,
-            "date": "09/09/2024"
-          },
-          {
-            "label": "Week 37 16/09/2024 - 22/09/2024",
-            "hours": 21,
-            "date": "16/09/2024"
-          },
-          {
-            "label": "Week 38 23/09/2024 - 29/09/2024",
-            "hours": 34.5,
-            "date": "23/09/2024"
-          },
-          {
-            "label": "Week 39 30/09/2024 - 06/10/2024",
-            "hours": 35.5,
-            "date": "30/09/2024"
-          },
-          {
-            "label": "Week 40 07/10/2024 - 13/10/2024",
-            "hours": 40,
-            "date": "07/10/2024"
-          },
-          {
-            "label": "Week 42 21/10/2024 - 27/10/2024",
-            "hours": 23.5,
-            "date": "21/10/2024"
-          },
-          {
-            "label": "Week 43 28/10/2024 - 03/11/2024",
-            "hours": 32.5,
-            "date": "28/10/2024"
-          },
-          {
-            "label": "Week 44 04/11/2024 - 10/11/2024",
-            "hours": 35,
-            "date": "04/11/2024"
-          },
-          {
-            "label": "Week 45 11/11/2024 - 17/11/2024",
-            "hours": 35.5,
-            "date": "11/11/2024"
-          },
-          {
-            "label": "Week 46 18/11/2024 - 24/11/2024",
-            "hours": 35,
-            "date": "18/11/2024"
-          },
-          {
-            "label": "Week 47 25/11/2024 - 01/12/2024",
-            "hours": 35,
-            "date": "25/11/2024"
-          },
-          {
-            "label": "Week 48 02/12/2024 - 08/12/2024",
-            "hours": 7.5,
-            "date": "02/12/2024"
-          },
-          {
-            "label": "Week 49 09/12/2024 - 15/12/2024",
-            "hours": 41.5,
-            "date": "09/12/2024"
-          },
-          {
-            "label": "Week 50 16/12/2024 - 22/12/2024",
-            "hours": 40,
-            "date": "16/12/2024"
-          },
-          {
-            "label": "Week 51 23/12/2024 - 29/12/2024",
-            "hours": 29,
-            "date": "23/12/2024"
-          },
-          {
-            "label": "Week 52 30/12/2024 - 05/01/2025",
-            "hours": 35.5,
-            "date": "30/12/2024"
-          }
-        ]
+        "weeks": []
       },
       "f2": {
         "opening": 0,
@@ -8188,258 +7604,7 @@
       },
       "f3": {
         "opening": 44.04,
-        "weeks": [
-          {
-            "label": "Week 1 01/01/2024 - 07/01/2024",
-            "hours": 23.5,
-            "date": "01/01/2024"
-          },
-          {
-            "label": "Week 2 08/01/2024 - 14/01/2024",
-            "hours": 25.5,
-            "date": "08/01/2024"
-          },
-          {
-            "label": "Week 3 15/01/2024 - 21/01/2024",
-            "hours": 30.5,
-            "date": "15/01/2024"
-          },
-          {
-            "label": "Week 4 22/01/2024 - 28/01/2024",
-            "hours": 26,
-            "date": "22/01/2024"
-          },
-          {
-            "label": "Week 5 29/01/2024 - 04/02/2024",
-            "hours": 30.5,
-            "date": "29/01/2024"
-          },
-          {
-            "label": "Week 6 05/02/2024 - 11/02/2024",
-            "hours": 30.5,
-            "date": "05/02/2024"
-          },
-          {
-            "label": "Week 7 12/02/2024 - 18/02/2024",
-            "hours": 31,
-            "date": "12/02/2024"
-          },
-          {
-            "label": "Week 8 19/02/2024 - 25/02/2024",
-            "hours": 30.5,
-            "date": "19/02/2024"
-          },
-          {
-            "label": "Week 9 26/02/2024 - 03/03/2024",
-            "hours": 30.5,
-            "date": "26/02/2024"
-          },
-          {
-            "label": "Week 10 04/03/2024 - 10/03/2024",
-            "hours": 19.5,
-            "date": "04/03/2024"
-          },
-          {
-            "label": "Week 11 11/03/2024 - 17/03/2024",
-            "hours": 30.5,
-            "date": "11/03/2024"
-          },
-          {
-            "label": "Week 12 18/03/2024 - 24/03/2024",
-            "hours": 27.5,
-            "date": "18/03/2024"
-          },
-          {
-            "label": "Week 13 25/03/2024 - 31/03/2024",
-            "hours": 25.5,
-            "date": "25/03/2024"
-          },
-          {
-            "label": "Week 14 01/04/2024 - 07/04/2024",
-            "hours": 30.5,
-            "date": "01/04/2024"
-          },
-          {
-            "label": "Week 15 08/04/2024 - 14/04/2024",
-            "hours": 30.5,
-            "date": "08/04/2024"
-          },
-          {
-            "label": "Week 16 15/04/2024 - 21/04/2024",
-            "hours": 30.5,
-            "date": "15/04/2024"
-          },
-          {
-            "label": "Week 17 22/04/2024 - 28/04/2024",
-            "hours": 30.5,
-            "date": "22/04/2024"
-          },
-          {
-            "label": "Week 18 29/04/2024 - 05/05/2024",
-            "hours": 25.5,
-            "date": "29/04/2024"
-          },
-          {
-            "label": "Week 19 06/05/2024 - 12/05/2024",
-            "hours": 30.5,
-            "date": "06/05/2024"
-          },
-          {
-            "label": "Week 20 13/05/2024 - 19/05/2024",
-            "hours": 30.5,
-            "date": "13/05/2024"
-          },
-          {
-            "label": "Week 21 20/05/2024 - 26/05/2024",
-            "hours": 31,
-            "date": "20/05/2024"
-          },
-          {
-            "label": "Week 22 27/05/2024 - 02/06/2024",
-            "hours": 30.5,
-            "date": "27/05/2024"
-          },
-          {
-            "label": "Week 23 10/06/2024 - 16/06/2024",
-            "hours": 28,
-            "date": "10/06/2024"
-          },
-          {
-            "label": "Week 24 17/06/2024 - 23/06/2024",
-            "hours": 30.5,
-            "date": "17/06/2024"
-          },
-          {
-            "label": "Week 25 24/06/2024 - 30/06/2024",
-            "hours": 30.5,
-            "date": "24/06/2024"
-          },
-          {
-            "label": "Week 26 01/07/2024 - 07/07/2024",
-            "hours": 21,
-            "date": "01/07/2024"
-          },
-          {
-            "label": "Week 27 08/07/2024 - 14/07/2024",
-            "hours": 30.5,
-            "date": "08/07/2024"
-          },
-          {
-            "label": "Week 28 15/07/2024 - 21/07/2024",
-            "hours": 30.5,
-            "date": "15/07/2024"
-          },
-          {
-            "label": "Week 29 22/07/2024 - 28/07/2024",
-            "hours": 30.5,
-            "date": "22/07/2024"
-          },
-          {
-            "label": "Week 30 29/07/2024 - 04/08/2024",
-            "hours": 30.5,
-            "date": "29/07/2024"
-          },
-          {
-            "label": "Week 31 05/08/2024 - 11/08/2024",
-            "hours": 30.5,
-            "date": "05/08/2024"
-          },
-          {
-            "label": "Week 32 12/08/2024 - 18/08/2024",
-            "hours": 30.5,
-            "date": "12/08/2024"
-          },
-          {
-            "label": "Week 33 19/08/2024 - 25/08/2024",
-            "hours": 39.5,
-            "date": "19/08/2024"
-          },
-          {
-            "label": "Week 34 26/08/2024 - 01/09/2024",
-            "hours": 20.5,
-            "date": "26/08/2024"
-          },
-          {
-            "label": "Week 35 02/09/2024 - 08/09/2024",
-            "hours": 30.5,
-            "date": "02/09/2024"
-          },
-          {
-            "label": "Week 36 09/09/2024 - 15/09/2024",
-            "hours": 32,
-            "date": "09/09/2024"
-          },
-          {
-            "label": "Week 37 16/09/2024 - 22/09/2024",
-            "hours": 32,
-            "date": "16/09/2024"
-          },
-          {
-            "label": "Week 39 30/09/2024 - 06/10/2024",
-            "hours": 30.5,
-            "date": "30/09/2024"
-          },
-          {
-            "label": "Week 40 07/10/2024 - 13/10/2024",
-            "hours": 30.5,
-            "date": "07/10/2024"
-          },
-          {
-            "label": "Week 41 14/10/2024 - 20/10/2024",
-            "hours": 31,
-            "date": "14/10/2024"
-          },
-          {
-            "label": "Week 42 21/10/2024 - 27/10/2024",
-            "hours": 30.5,
-            "date": "21/10/2024"
-          },
-          {
-            "label": "Week 43 28/10/2024 - 03/11/2024",
-            "hours": 30.5,
-            "date": "28/10/2024"
-          },
-          {
-            "label": "Week 44 04/11/2024 - 10/11/2024",
-            "hours": 30,
-            "date": "04/11/2024"
-          },
-          {
-            "label": "Week 46 18/11/2024 - 24/11/2024",
-            "hours": 32,
-            "date": "18/11/2024"
-          },
-          {
-            "label": "Week 47 25/11/2024 - 01/12/2024",
-            "hours": 32,
-            "date": "25/11/2024"
-          },
-          {
-            "label": "Week 48 02/12/2024 - 08/12/2024",
-            "hours": 26.5,
-            "date": "02/12/2024"
-          },
-          {
-            "label": "Week 49 09/12/2024 - 15/12/2024",
-            "hours": 34,
-            "date": "09/12/2024"
-          },
-          {
-            "label": "Week 50 16/12/2024 - 22/12/2024",
-            "hours": 43,
-            "date": "16/12/2024"
-          },
-          {
-            "label": "Week 51 23/12/2024 - 29/12/2024",
-            "hours": 31.5,
-            "date": "23/12/2024"
-          },
-          {
-            "label": "Week 52 30/12/2024 - 05/01/2025",
-            "hours": 25.5,
-            "date": "30/12/2024"
-          }
-        ]
+        "weeks": []
       },
       "f4": {
         "opening": 47,
@@ -8510,6 +7675,11 @@
             "date": "01/07/2024"
           },
           {
+            "label": "Week 27 08/07/2024 - 14/07/2024",
+            "hours": 0,
+            "date": "08/07/2024"
+          },
+          {
             "label": "Week 28 15/07/2024 - 21/07/2024",
             "hours": 14,
             "date": "15/07/2024"
@@ -8553,6 +7723,11 @@
             "label": "Week 36 09/09/2024 - 15/09/2024",
             "hours": 12.5,
             "date": "09/09/2024"
+          },
+          {
+            "label": "Week 37 16/09/2024 - 22/09/2024",
+            "hours": 0,
+            "date": "16/09/2024"
           },
           {
             "label": "Week 38 23/09/2024 - 29/09/2024",
@@ -8898,263 +8073,7 @@
       },
       "f6": {
         "opening": 0,
-        "weeks": [
-          {
-            "label": "Week 1 01/01/2024 - 07/01/2024",
-            "hours": 28,
-            "date": "01/01/2024"
-          },
-          {
-            "label": "Week 2 08/01/2024 - 14/01/2024",
-            "hours": 35,
-            "date": "08/01/2024"
-          },
-          {
-            "label": "Week 3 15/01/2024 - 21/01/2024",
-            "hours": 35,
-            "date": "15/01/2024"
-          },
-          {
-            "label": "Week 4 22/01/2024 - 28/01/2024",
-            "hours": 33.5,
-            "date": "22/01/2024"
-          },
-          {
-            "label": "Week 5 29/01/2024 - 04/02/2024",
-            "hours": 33.5,
-            "date": "29/01/2024"
-          },
-          {
-            "label": "Week 6 05/02/2024 - 11/02/2024",
-            "hours": 33.5,
-            "date": "05/02/2024"
-          },
-          {
-            "label": "Week 7 12/02/2024 - 18/02/2024",
-            "hours": 33.5,
-            "date": "12/02/2024"
-          },
-          {
-            "label": "Week 8 19/02/2024 - 25/02/2024",
-            "hours": 35,
-            "date": "19/02/2024"
-          },
-          {
-            "label": "Week 9 26/02/2024 - 03/03/2024",
-            "hours": 33.5,
-            "date": "26/02/2024"
-          },
-          {
-            "label": "Week 10 04/03/2024 - 10/03/2024",
-            "hours": 33.5,
-            "date": "04/03/2024"
-          },
-          {
-            "label": "Week 11 11/03/2024 - 17/03/2024",
-            "hours": 33.5,
-            "date": "11/03/2024"
-          },
-          {
-            "label": "Week 12 18/03/2024 - 24/03/2024",
-            "hours": 33.5,
-            "date": "18/03/2024"
-          },
-          {
-            "label": "Week 13 25/03/2024 - 31/03/2024",
-            "hours": 33.5,
-            "date": "25/03/2024"
-          },
-          {
-            "label": "Week 14 01/04/2024 - 07/04/2024",
-            "hours": 33.5,
-            "date": "01/04/2024"
-          },
-          {
-            "label": "Week 15 08/04/2024 - 14/04/2024",
-            "hours": 33.5,
-            "date": "08/04/2024"
-          },
-          {
-            "label": "Week 16 15/04/2024 - 21/04/2024",
-            "hours": 33.5,
-            "date": "15/04/2024"
-          },
-          {
-            "label": "Week 17 22/04/2024 - 28/04/2024",
-            "hours": 33.5,
-            "date": "22/04/2024"
-          },
-          {
-            "label": "Week 18 29/04/2024 - 05/05/2024",
-            "hours": 33.5,
-            "date": "29/04/2024"
-          },
-          {
-            "label": "Week 19 06/05/2024 - 12/05/2024",
-            "hours": 33.5,
-            "date": "06/05/2024"
-          },
-          {
-            "label": "Week 20 13/05/2024 - 19/05/2024",
-            "hours": 33.5,
-            "date": "13/05/2024"
-          },
-          {
-            "label": "Week 21 20/05/2024 - 26/05/2024",
-            "hours": 33.5,
-            "date": "20/05/2024"
-          },
-          {
-            "label": "Week 22 27/05/2024 - 02/06/2024",
-            "hours": 33.5,
-            "date": "27/05/2024"
-          },
-          {
-            "label": "Week 23 10/06/2024 - 16/06/2024",
-            "hours": 33.5,
-            "date": "10/06/2024"
-          },
-          {
-            "label": "Week 24 17/06/2024 - 23/06/2024",
-            "hours": 33.5,
-            "date": "17/06/2024"
-          },
-          {
-            "label": "Week 25 24/06/2024 - 30/06/2024",
-            "hours": 33.5,
-            "date": "24/06/2024"
-          },
-          {
-            "label": "Week 26 01/07/2024 - 07/07/2024",
-            "hours": 33.5,
-            "date": "01/07/2024"
-          },
-          {
-            "label": "Week 27 08/07/2024 - 14/07/2024",
-            "hours": 33.5,
-            "date": "08/07/2024"
-          },
-          {
-            "label": "Week 28 15/07/2024 - 21/07/2024",
-            "hours": 33.5,
-            "date": "15/07/2024"
-          },
-          {
-            "label": "Week 29 22/07/2024 - 28/07/2024",
-            "hours": 33.5,
-            "date": "22/07/2024"
-          },
-          {
-            "label": "Week 30 29/07/2024 - 04/08/2024",
-            "hours": 33.5,
-            "date": "29/07/2024"
-          },
-          {
-            "label": "Week 31 05/08/2024 - 11/08/2024",
-            "hours": 33.5,
-            "date": "05/08/2024"
-          },
-          {
-            "label": "Week 32 12/08/2024 - 18/08/2024",
-            "hours": 33.5,
-            "date": "12/08/2024"
-          },
-          {
-            "label": "Week 33 19/08/2024 - 25/08/2024",
-            "hours": 33.5,
-            "date": "19/08/2024"
-          },
-          {
-            "label": "Week 34 26/08/2024 - 01/09/2024",
-            "hours": 33.5,
-            "date": "26/08/2024"
-          },
-          {
-            "label": "Week 35 02/09/2024 - 08/09/2024",
-            "hours": 33.5,
-            "date": "02/09/2024"
-          },
-          {
-            "label": "Week 36 09/09/2024 - 15/09/2024",
-            "hours": 33.5,
-            "date": "09/09/2024"
-          },
-          {
-            "label": "Week 37 16/09/2024 - 22/09/2024",
-            "hours": 33.5,
-            "date": "16/09/2024"
-          },
-          {
-            "label": "Week 38 23/09/2024 - 29/09/2024",
-            "hours": 14,
-            "date": "23/09/2024"
-          },
-          {
-            "label": "Week 39 30/09/2024 - 06/10/2024",
-            "hours": 33.5,
-            "date": "30/09/2024"
-          },
-          {
-            "label": "Week 40 07/10/2024 - 13/10/2024",
-            "hours": 33.5,
-            "date": "07/10/2024"
-          },
-          {
-            "label": "Week 41 14/10/2024 - 20/10/2024",
-            "hours": 33.5,
-            "date": "14/10/2024"
-          },
-          {
-            "label": "Week 42 21/10/2024 - 27/10/2024",
-            "hours": 11,
-            "date": "21/10/2024"
-          },
-          {
-            "label": "Week 43 28/10/2024 - 03/11/2024",
-            "hours": 33.5,
-            "date": "28/10/2024"
-          },
-          {
-            "label": "Week 44 04/11/2024 - 10/11/2024",
-            "hours": 33.5,
-            "date": "04/11/2024"
-          },
-          {
-            "label": "Week 45 11/11/2024 - 17/11/2024",
-            "hours": 33.5,
-            "date": "11/11/2024"
-          },
-          {
-            "label": "Week 46 18/11/2024 - 24/11/2024",
-            "hours": 33.5,
-            "date": "18/11/2024"
-          },
-          {
-            "label": "Week 47 25/11/2024 - 01/12/2024",
-            "hours": 33.5,
-            "date": "25/11/2024"
-          },
-          {
-            "label": "Week 48 02/12/2024 - 08/12/2024",
-            "hours": 33.5,
-            "date": "02/12/2024"
-          },
-          {
-            "label": "Week 49 09/12/2024 - 15/12/2024",
-            "hours": 33.5,
-            "date": "09/12/2024"
-          },
-          {
-            "label": "Week 50 16/12/2024 - 22/12/2024",
-            "hours": 33.5,
-            "date": "16/12/2024"
-          },
-          {
-            "label": "Week 51 23/12/2024 - 29/12/2024",
-            "hours": 19.5,
-            "date": "23/12/2024"
-          }
-        ]
+        "weeks": []
       },
       "f7": {
         "opening": 41.12,
@@ -9185,6 +8104,11 @@
             "date": "29/01/2024"
           },
           {
+            "label": "Week 6 05/02/2024 - 11/02/2024",
+            "hours": 0,
+            "date": "05/02/2024"
+          },
+          {
             "label": "Week 7 12/02/2024 - 18/02/2024",
             "hours": 32,
             "date": "12/02/2024"
@@ -9213,6 +8137,11 @@
             "label": "Week 1 01/01/2024 - 07/01/2024",
             "hours": 20,
             "date": "01/01/2024"
+          },
+          {
+            "label": "Week 2 08/01/2024 - 14/01/2024",
+            "hours": 0,
+            "date": "08/01/2024"
           },
           {
             "label": "Week 3 15/01/2024 - 21/01/2024",
@@ -9356,6 +8285,11 @@
             "date": "25/03/2024"
           },
           {
+            "label": "Week 14 01/04/2024 - 07/04/2024",
+            "hours": 0,
+            "date": "01/04/2024"
+          },
+          {
             "label": "Week 15 08/04/2024 - 14/04/2024",
             "hours": 4.5,
             "date": "08/04/2024"
@@ -9364,6 +8298,21 @@
             "label": "Week 16 15/04/2024 - 21/04/2024",
             "hours": 4.5,
             "date": "15/04/2024"
+          },
+          {
+            "label": "Week 17 22/04/2024 - 28/04/2024",
+            "hours": 0,
+            "date": "22/04/2024"
+          },
+          {
+            "label": "Week 18 29/04/2024 - 05/05/2024",
+            "hours": 0,
+            "date": "29/04/2024"
+          },
+          {
+            "label": "Week 19 06/05/2024 - 12/05/2024",
+            "hours": 0,
+            "date": "06/05/2024"
           }
         ]
       },
@@ -9515,6 +8464,11 @@
             "label": "Week 22 27/05/2024 - 02/06/2024",
             "hours": 32,
             "date": "27/05/2024"
+          },
+          {
+            "label": "Week 23 10/06/2024 - 16/06/2024",
+            "hours": 0,
+            "date": "10/06/2024"
           }
         ]
       },
@@ -9522,9 +8476,19 @@
         "opening": 54.06,
         "weeks": [
           {
+            "label": "Week 1 01/01/2024 - 07/01/2024",
+            "hours": 0,
+            "date": "01/01/2024"
+          },
+          {
             "label": "Week 2 08/01/2024 - 14/01/2024",
             "hours": 28.5,
             "date": "08/01/2024"
+          },
+          {
+            "label": "Week 3 15/01/2024 - 21/01/2024",
+            "hours": 0,
+            "date": "15/01/2024"
           },
           {
             "label": "Week 4 22/01/2024 - 28/01/2024",
@@ -9545,6 +8509,11 @@
             "label": "Week 7 12/02/2024 - 18/02/2024",
             "hours": 27,
             "date": "12/02/2024"
+          },
+          {
+            "label": "Week 8 19/02/2024 - 25/02/2024",
+            "hours": 0,
+            "date": "19/02/2024"
           }
         ]
       },
@@ -9560,6 +8529,11 @@
             "label": "Week 2 08/01/2024 - 14/01/2024",
             "hours": 26.5,
             "date": "08/01/2024"
+          },
+          {
+            "label": "Week 3 15/01/2024 - 21/01/2024",
+            "hours": 0,
+            "date": "15/01/2024"
           },
           {
             "label": "Week 4 22/01/2024 - 28/01/2024",
@@ -9920,6 +8894,11 @@
             "label": "Week 45 11/11/2024 - 17/11/2024",
             "hours": 25,
             "date": "11/11/2024"
+          },
+          {
+            "label": "Week 46 18/11/2024 - 24/11/2024",
+            "hours": 0,
+            "date": "18/11/2024"
           }
         ]
       },
@@ -9970,6 +8949,16 @@
             "label": "Week 30 29/07/2024 - 04/08/2024",
             "hours": 40.5,
             "date": "29/07/2024"
+          },
+          {
+            "label": "Week 31 05/08/2024 - 11/08/2024",
+            "hours": 0,
+            "date": "05/08/2024"
+          },
+          {
+            "label": "Week 32 12/08/2024 - 18/08/2024",
+            "hours": 0,
+            "date": "12/08/2024"
           },
           {
             "label": "Week 33 19/08/2024 - 25/08/2024",
@@ -10153,6 +9142,11 @@
             "label": "Week 14 01/04/2024 - 07/04/2024",
             "hours": 26.5,
             "date": "01/04/2024"
+          },
+          {
+            "label": "Week 15 08/04/2024 - 14/04/2024",
+            "hours": 0,
+            "date": "08/04/2024"
           }
         ]
       },
@@ -15685,703 +14679,15 @@
       },
       "f1": {
         "opening": 0,
-        "weeks": [
-          {
-            "label": "Week 1 06/01/2025 - 12/01/2025",
-            "hours": 21,
-            "date": "06/01/2025"
-          },
-          {
-            "label": "Week 3 20/01/2025 - 26/01/2025",
-            "hours": 41,
-            "date": "20/01/2025"
-          },
-          {
-            "label": "Week 4 27/01/2025 - 02/02/2025",
-            "hours": 46,
-            "date": "27/01/2025"
-          },
-          {
-            "label": "Week 5 03/02/2025 - 09/02/2025",
-            "hours": 32.5,
-            "date": "03/02/2025"
-          },
-          {
-            "label": "Week 6 10/02/2025 - 16/02/2025",
-            "hours": 35,
-            "date": "10/02/2025"
-          },
-          {
-            "label": "Week 7 17/02/2025 - 23/02/2025",
-            "hours": 27.5,
-            "date": "17/02/2025"
-          },
-          {
-            "label": "Week 8 24/02/2025 - 02/03/2025",
-            "hours": 29.5,
-            "date": "24/02/2025"
-          },
-          {
-            "label": "Week 9 03/03/2025 - 09/03/2025",
-            "hours": 36,
-            "date": "03/03/2025"
-          },
-          {
-            "label": "Week 10 10/03/2025 - 16/03/2025",
-            "hours": 22,
-            "date": "10/03/2025"
-          },
-          {
-            "label": "Week 11 17/03/2025 - 23/03/2025",
-            "hours": 33.5,
-            "date": "17/03/2025"
-          },
-          {
-            "label": "Week 12 24/03/2025 - 30/03/2025",
-            "hours": 35.5,
-            "date": "24/03/2025"
-          },
-          {
-            "label": "Week 13 31/03/2025 - 06/04/2025",
-            "hours": 35,
-            "date": "31/03/2025"
-          },
-          {
-            "label": "Week 14 07/04/2025 - 13/04/2025",
-            "hours": 31,
-            "date": "07/04/2025"
-          },
-          {
-            "label": "Week 15 14/04/2025 - 20/04/2025",
-            "hours": 27,
-            "date": "14/04/2025"
-          },
-          {
-            "label": "Week 16 21/04/2025 - 27/04/2025",
-            "hours": 31,
-            "date": "21/04/2025"
-          },
-          {
-            "label": "Week 17 28/04/2025 - 04/05/2025",
-            "hours": 32,
-            "date": "28/04/2025"
-          },
-          {
-            "label": "Week 18 05/05/2025 - 11/05/2025",
-            "hours": 33.5,
-            "date": "05/05/2025"
-          },
-          {
-            "label": "Week 19 12/05/2025 - 18/05/2025",
-            "hours": 21,
-            "date": "12/05/2025"
-          },
-          {
-            "label": "Week 20 19/05/2025 - 25/05/2025",
-            "hours": 33,
-            "date": "19/05/2025"
-          },
-          {
-            "label": "Week 21 26/05/2025 - 01/06/2025",
-            "hours": 36.5,
-            "date": "26/05/2025"
-          },
-          {
-            "label": "Week 22 02/06/2025 - 08/06/2025",
-            "hours": 31.5,
-            "date": "02/06/2025"
-          },
-          {
-            "label": "Week 23 09/06/2025 - 15/06/2025",
-            "hours": 36.5,
-            "date": "09/06/2025"
-          },
-          {
-            "label": "Week 24 16/06/2025 - 22/06/2025",
-            "hours": 34,
-            "date": "16/06/2025"
-          },
-          {
-            "label": "Week 25 23/06/2025 - 29/06/2025",
-            "hours": 31,
-            "date": "23/06/2025"
-          },
-          {
-            "label": "Week 26 30/06/2025 - 06/07/2025",
-            "hours": 32.5,
-            "date": "30/06/2025"
-          },
-          {
-            "label": "Week 27 07/07/2025 - 13/07/2025",
-            "hours": 26,
-            "date": "07/07/2025"
-          },
-          {
-            "label": "Week 28 14/07/2025 - 20/07/2025",
-            "hours": 25.5,
-            "date": "14/07/2025"
-          },
-          {
-            "label": "Week 29 21/07/2025 - 27/07/2025",
-            "hours": 33.5,
-            "date": "21/07/2025"
-          },
-          {
-            "label": "Week 30 28/07/2025 - 03/08/2025",
-            "hours": 7.5,
-            "date": "28/07/2025"
-          },
-          {
-            "label": "Week 31 04/08/2025 - 10/08/2025",
-            "hours": 13,
-            "date": "04/08/2025"
-          },
-          {
-            "label": "Week 32 11/08/2025 - 17/08/2025",
-            "hours": 35,
-            "date": "11/08/2025"
-          },
-          {
-            "label": "Week 33 18/08/2025 - 24/08/2025",
-            "hours": 37,
-            "date": "18/08/2025"
-          },
-          {
-            "label": "Week 34 25/08/2025 - 31/08/2025",
-            "hours": 34.5,
-            "date": "25/08/2025"
-          },
-          {
-            "label": "Week 35 01/09/2025 - 07/09/2025",
-            "hours": 28.5,
-            "date": "01/09/2025"
-          },
-          {
-            "label": "Week 36 08/09/2025 - 14/09/2025",
-            "hours": 27.5,
-            "date": "08/09/2025"
-          },
-          {
-            "label": "Week 37 15/09/2025 - 21/09/2025",
-            "hours": 35.5,
-            "date": "15/09/2025"
-          },
-          {
-            "label": "Week 38 22/09/2025 - 28/09/2025",
-            "hours": 35.5,
-            "date": "22/09/2025"
-          },
-          {
-            "label": "Week 39 29/09/2025 - 05/10/2025",
-            "hours": 32.5,
-            "date": "29/09/2025"
-          },
-          {
-            "label": "Week 40 06/10/2025 - 12/10/2025",
-            "hours": 37,
-            "date": "06/10/2025"
-          },
-          {
-            "label": "Week 41 13/10/2025 - 19/10/2025",
-            "hours": 29,
-            "date": "13/10/2025"
-          },
-          {
-            "label": "Week 42 20/10/2025 - 26/10/2025",
-            "hours": 29.5,
-            "date": "20/10/2025"
-          },
-          {
-            "label": "Week 43 27/10/2025 - 02/11/2025",
-            "hours": 28,
-            "date": "27/10/2025"
-          },
-          {
-            "label": "Week 44 03/11/2025 - 09/11/2025",
-            "hours": 36,
-            "date": "03/11/2025"
-          },
-          {
-            "label": "Week 45 10/11/2025 - 16/11/2025",
-            "hours": 33,
-            "date": "10/11/2025"
-          },
-          {
-            "label": "Week 46 17/11/2025 - 23/11/2025",
-            "hours": 35.5,
-            "date": "17/11/2025"
-          },
-          {
-            "label": "Week 47 24/11/2025 - 30/11/2025",
-            "hours": 14.5,
-            "date": "24/11/2025"
-          },
-          {
-            "label": "Week 48 01/12/2025 - 07/12/2025",
-            "hours": 22,
-            "date": "01/12/2025"
-          },
-          {
-            "label": "Week 49 08/12/2025 - 14/12/2025",
-            "hours": 34,
-            "date": "08/12/2025"
-          },
-          {
-            "label": "Week 50 15/12/2025 - 21/12/2025",
-            "hours": 48,
-            "date": "15/12/2025"
-          },
-          {
-            "label": "Week 51 22/12/2025 - 28/12/2025",
-            "hours": 35,
-            "date": "22/12/2025"
-          },
-          {
-            "label": "Week 52 29/12/2025 - 04/12/2026",
-            "hours": 41,
-            "date": "29/12/2025"
-          }
-        ]
+        "weeks": []
       },
       "f2": {
         "opening": 0,
-        "weeks": [
-          {
-            "label": "Week 5 03/02/2025 - 09/02/2025",
-            "hours": 5.5,
-            "date": "03/02/2025"
-          },
-          {
-            "label": "Week 16 21/04/2025 - 27/04/2025",
-            "hours": 24,
-            "date": "21/04/2025"
-          },
-          {
-            "label": "Week 17 28/04/2025 - 04/05/2025",
-            "hours": 26.5,
-            "date": "28/04/2025"
-          },
-          {
-            "label": "Week 18 05/05/2025 - 11/05/2025",
-            "hours": 25,
-            "date": "05/05/2025"
-          },
-          {
-            "label": "Week 19 12/05/2025 - 18/05/2025",
-            "hours": 17.5,
-            "date": "12/05/2025"
-          },
-          {
-            "label": "Week 20 19/05/2025 - 25/05/2025",
-            "hours": 24,
-            "date": "19/05/2025"
-          },
-          {
-            "label": "Week 21 26/05/2025 - 01/06/2025",
-            "hours": 12.5,
-            "date": "26/05/2025"
-          },
-          {
-            "label": "Week 22 02/06/2025 - 08/06/2025",
-            "hours": 18.5,
-            "date": "02/06/2025"
-          },
-          {
-            "label": "Week 23 09/06/2025 - 15/06/2025",
-            "hours": 25.5,
-            "date": "09/06/2025"
-          },
-          {
-            "label": "Week 24 16/06/2025 - 22/06/2025",
-            "hours": 19,
-            "date": "16/06/2025"
-          },
-          {
-            "label": "Week 25 23/06/2025 - 29/06/2025",
-            "hours": 19,
-            "date": "23/06/2025"
-          },
-          {
-            "label": "Week 26 30/06/2025 - 06/07/2025",
-            "hours": 27,
-            "date": "30/06/2025"
-          },
-          {
-            "label": "Week 27 07/07/2025 - 13/07/2025",
-            "hours": 23.5,
-            "date": "07/07/2025"
-          },
-          {
-            "label": "Week 28 14/07/2025 - 20/07/2025",
-            "hours": 31.5,
-            "date": "14/07/2025"
-          },
-          {
-            "label": "Week 29 21/07/2025 - 27/07/2025",
-            "hours": 31,
-            "date": "21/07/2025"
-          },
-          {
-            "label": "Week 30 28/07/2025 - 03/08/2025",
-            "hours": 25.5,
-            "date": "28/07/2025"
-          },
-          {
-            "label": "Week 31 04/08/2025 - 10/08/2025",
-            "hours": 24,
-            "date": "04/08/2025"
-          },
-          {
-            "label": "Week 32 11/08/2025 - 17/08/2025",
-            "hours": 33.5,
-            "date": "11/08/2025"
-          },
-          {
-            "label": "Week 33 18/08/2025 - 24/08/2025",
-            "hours": 27,
-            "date": "18/08/2025"
-          },
-          {
-            "label": "Week 34 25/08/2025 - 31/08/2025",
-            "hours": 27,
-            "date": "25/08/2025"
-          },
-          {
-            "label": "Week 35 01/09/2025 - 07/09/2025",
-            "hours": 32,
-            "date": "01/09/2025"
-          },
-          {
-            "label": "Week 36 08/09/2025 - 14/09/2025",
-            "hours": 31.5,
-            "date": "08/09/2025"
-          },
-          {
-            "label": "Week 37 15/09/2025 - 21/09/2025",
-            "hours": 31,
-            "date": "15/09/2025"
-          },
-          {
-            "label": "Week 38 22/09/2025 - 28/09/2025",
-            "hours": 38,
-            "date": "22/09/2025"
-          },
-          {
-            "label": "Week 39 29/09/2025 - 05/10/2025",
-            "hours": 32,
-            "date": "29/09/2025"
-          },
-          {
-            "label": "Week 40 06/10/2025 - 12/10/2025",
-            "hours": 33.5,
-            "date": "06/10/2025"
-          },
-          {
-            "label": "Week 41 13/10/2025 - 19/10/2025",
-            "hours": 33,
-            "date": "13/10/2025"
-          },
-          {
-            "label": "Week 42 20/10/2025 - 26/10/2025",
-            "hours": 35.5,
-            "date": "20/10/2025"
-          },
-          {
-            "label": "Week 43 27/10/2025 - 02/11/2025",
-            "hours": 32,
-            "date": "27/10/2025"
-          },
-          {
-            "label": "Week 44 03/11/2025 - 09/11/2025",
-            "hours": 25,
-            "date": "03/11/2025"
-          },
-          {
-            "label": "Week 45 10/11/2025 - 16/11/2025",
-            "hours": 29.5,
-            "date": "10/11/2025"
-          },
-          {
-            "label": "Week 46 17/11/2025 - 23/11/2025",
-            "hours": 29.5,
-            "date": "17/11/2025"
-          },
-          {
-            "label": "Week 47 24/11/2025 - 30/11/2025",
-            "hours": 30,
-            "date": "24/11/2025"
-          },
-          {
-            "label": "Week 48 01/12/2025 - 07/12/2025",
-            "hours": 34.5,
-            "date": "01/12/2025"
-          },
-          {
-            "label": "Week 49 08/12/2025 - 14/12/2025",
-            "hours": 41,
-            "date": "08/12/2025"
-          },
-          {
-            "label": "Week 50 15/12/2025 - 21/12/2025",
-            "hours": 34.5,
-            "date": "15/12/2025"
-          },
-          {
-            "label": "Week 51 22/12/2025 - 28/12/2025",
-            "hours": 30,
-            "date": "22/12/2025"
-          },
-          {
-            "label": "Week 52 29/12/2025 - 04/12/2026",
-            "hours": 27,
-            "date": "29/12/2025"
-          }
-        ]
+        "weeks": []
       },
       "f3": {
         "opening": 0,
-        "weeks": [
-          {
-            "label": "Week 1 06/01/2025 - 12/01/2025",
-            "hours": 26.5,
-            "date": "06/01/2025"
-          },
-          {
-            "label": "Week 2 13/01/2025 - 19/01/2025",
-            "hours": 31.5,
-            "date": "13/01/2025"
-          },
-          {
-            "label": "Week 3 20/01/2025 - 26/01/2025",
-            "hours": 34,
-            "date": "20/01/2025"
-          },
-          {
-            "label": "Week 4 27/01/2025 - 02/02/2025",
-            "hours": 30.5,
-            "date": "27/01/2025"
-          },
-          {
-            "label": "Week 5 03/02/2025 - 09/02/2025",
-            "hours": 24.5,
-            "date": "03/02/2025"
-          },
-          {
-            "label": "Week 6 10/02/2025 - 16/02/2025",
-            "hours": 30.5,
-            "date": "10/02/2025"
-          },
-          {
-            "label": "Week 7 17/02/2025 - 23/02/2025",
-            "hours": 30.5,
-            "date": "17/02/2025"
-          },
-          {
-            "label": "Week 8 24/02/2025 - 02/03/2025",
-            "hours": 32,
-            "date": "24/02/2025"
-          },
-          {
-            "label": "Week 9 03/03/2025 - 09/03/2025",
-            "hours": 30.5,
-            "date": "03/03/2025"
-          },
-          {
-            "label": "Week 10 10/03/2025 - 16/03/2025",
-            "hours": 33,
-            "date": "10/03/2025"
-          },
-          {
-            "label": "Week 11 17/03/2025 - 23/03/2025",
-            "hours": 29.5,
-            "date": "17/03/2025"
-          },
-          {
-            "label": "Week 12 24/03/2025 - 30/03/2025",
-            "hours": 30.5,
-            "date": "24/03/2025"
-          },
-          {
-            "label": "Week 13 31/03/2025 - 06/04/2025",
-            "hours": 24.5,
-            "date": "31/03/2025"
-          },
-          {
-            "label": "Week 14 07/04/2025 - 13/04/2025",
-            "hours": 31.5,
-            "date": "07/04/2025"
-          },
-          {
-            "label": "Week 15 14/04/2025 - 20/04/2025",
-            "hours": 20,
-            "date": "14/04/2025"
-          },
-          {
-            "label": "Week 16 21/04/2025 - 27/04/2025",
-            "hours": 30.5,
-            "date": "21/04/2025"
-          },
-          {
-            "label": "Week 17 28/04/2025 - 04/05/2025",
-            "hours": 32,
-            "date": "28/04/2025"
-          },
-          {
-            "label": "Week 18 05/05/2025 - 11/05/2025",
-            "hours": 31.5,
-            "date": "05/05/2025"
-          },
-          {
-            "label": "Week 19 12/05/2025 - 18/05/2025",
-            "hours": 24.5,
-            "date": "12/05/2025"
-          },
-          {
-            "label": "Week 21 26/05/2025 - 01/06/2025",
-            "hours": 24.5,
-            "date": "26/05/2025"
-          },
-          {
-            "label": "Week 22 02/06/2025 - 08/06/2025",
-            "hours": 30.5,
-            "date": "02/06/2025"
-          },
-          {
-            "label": "Week 23 09/06/2025 - 15/06/2025",
-            "hours": 30.5,
-            "date": "09/06/2025"
-          },
-          {
-            "label": "Week 24 16/06/2025 - 22/06/2025",
-            "hours": 25.5,
-            "date": "16/06/2025"
-          },
-          {
-            "label": "Week 25 23/06/2025 - 29/06/2025",
-            "hours": 30.5,
-            "date": "23/06/2025"
-          },
-          {
-            "label": "Week 26 30/06/2025 - 06/07/2025",
-            "hours": 15,
-            "date": "30/06/2025"
-          },
-          {
-            "label": "Week 29 21/07/2025 - 27/07/2025",
-            "hours": 30.5,
-            "date": "21/07/2025"
-          },
-          {
-            "label": "Week 30 28/07/2025 - 03/08/2025",
-            "hours": 30.5,
-            "date": "28/07/2025"
-          },
-          {
-            "label": "Week 31 04/08/2025 - 10/08/2025",
-            "hours": 30.5,
-            "date": "04/08/2025"
-          },
-          {
-            "label": "Week 32 11/08/2025 - 17/08/2025",
-            "hours": 30.5,
-            "date": "11/08/2025"
-          },
-          {
-            "label": "Week 33 18/08/2025 - 24/08/2025",
-            "hours": 33,
-            "date": "18/08/2025"
-          },
-          {
-            "label": "Week 35 01/09/2025 - 07/09/2025",
-            "hours": 30.5,
-            "date": "01/09/2025"
-          },
-          {
-            "label": "Week 36 08/09/2025 - 14/09/2025",
-            "hours": 30.5,
-            "date": "08/09/2025"
-          },
-          {
-            "label": "Week 37 15/09/2025 - 21/09/2025",
-            "hours": 30.5,
-            "date": "15/09/2025"
-          },
-          {
-            "label": "Week 38 22/09/2025 - 28/09/2025",
-            "hours": 29.5,
-            "date": "22/09/2025"
-          },
-          {
-            "label": "Week 39 29/09/2025 - 05/10/2025",
-            "hours": 26.5,
-            "date": "29/09/2025"
-          },
-          {
-            "label": "Week 40 06/10/2025 - 12/10/2025",
-            "hours": 26.5,
-            "date": "06/10/2025"
-          },
-          {
-            "label": "Week 41 13/10/2025 - 19/10/2025",
-            "hours": 20,
-            "date": "13/10/2025"
-          },
-          {
-            "label": "Week 42 20/10/2025 - 26/10/2025",
-            "hours": 26.5,
-            "date": "20/10/2025"
-          },
-          {
-            "label": "Week 43 27/10/2025 - 02/11/2025",
-            "hours": 26.5,
-            "date": "27/10/2025"
-          },
-          {
-            "label": "Week 44 03/11/2025 - 09/11/2025",
-            "hours": 29.5,
-            "date": "03/11/2025"
-          },
-          {
-            "label": "Week 45 10/11/2025 - 16/11/2025",
-            "hours": 14,
-            "date": "10/11/2025"
-          },
-          {
-            "label": "Week 46 17/11/2025 - 23/11/2025",
-            "hours": 27,
-            "date": "17/11/2025"
-          },
-          {
-            "label": "Week 47 24/11/2025 - 30/11/2025",
-            "hours": 20,
-            "date": "24/11/2025"
-          },
-          {
-            "label": "Week 48 01/12/2025 - 07/12/2025",
-            "hours": 26.5,
-            "date": "01/12/2025"
-          },
-          {
-            "label": "Week 49 08/12/2025 - 14/12/2025",
-            "hours": 26.5,
-            "date": "08/12/2025"
-          },
-          {
-            "label": "Week 50 15/12/2025 - 21/12/2025",
-            "hours": 33,
-            "date": "15/12/2025"
-          },
-          {
-            "label": "Week 51 22/12/2025 - 28/12/2025",
-            "hours": 29,
-            "date": "22/12/2025"
-          },
-          {
-            "label": "Week 52 29/12/2025 - 04/12/2026",
-            "hours": 33.5,
-            "date": "29/12/2025"
-          }
-        ]
+        "weeks": []
       },
       "f4": {
         "opening": 0,
@@ -16522,6 +14828,11 @@
             "date": "07/07/2025"
           },
           {
+            "label": "Week 28 14/07/2025 - 20/07/2025",
+            "hours": 0,
+            "date": "14/07/2025"
+          },
+          {
             "label": "Week 29 21/07/2025 - 27/07/2025",
             "hours": 6.5,
             "date": "21/07/2025"
@@ -16540,6 +14851,11 @@
             "label": "Week 32 11/08/2025 - 17/08/2025",
             "hours": 6.5,
             "date": "11/08/2025"
+          },
+          {
+            "label": "Week 33 18/08/2025 - 24/08/2025",
+            "hours": 0,
+            "date": "18/08/2025"
           },
           {
             "label": "Week 34 25/08/2025 - 31/08/2025",
@@ -16665,6 +14981,11 @@
             "label": "Week 22 02/06/2025 - 08/06/2025",
             "hours": 31.5,
             "date": "02/06/2025"
+          },
+          {
+            "label": "Week 23 09/06/2025 - 15/06/2025",
+            "hours": 0,
+            "date": "09/06/2025"
           },
           {
             "label": "Week 24 16/06/2025 - 22/06/2025",
@@ -16815,108 +15136,7 @@
       },
       "f6": {
         "opening": 0,
-        "weeks": [
-          {
-            "label": "Week 17 28/04/2025 - 04/05/2025",
-            "hours": 25.5,
-            "date": "28/04/2025"
-          },
-          {
-            "label": "Week 18 05/05/2025 - 11/05/2025",
-            "hours": 30.8,
-            "date": "05/05/2025"
-          },
-          {
-            "label": "Week 19 12/05/2025 - 18/05/2025",
-            "hours": 25.5,
-            "date": "12/05/2025"
-          },
-          {
-            "label": "Week 20 19/05/2025 - 25/05/2025",
-            "hours": 25.5,
-            "date": "19/05/2025"
-          },
-          {
-            "label": "Week 21 26/05/2025 - 01/06/2025",
-            "hours": 26.5,
-            "date": "26/05/2025"
-          },
-          {
-            "label": "Week 22 02/06/2025 - 08/06/2025",
-            "hours": 25.5,
-            "date": "02/06/2025"
-          },
-          {
-            "label": "Week 23 09/06/2025 - 15/06/2025",
-            "hours": 25.5,
-            "date": "09/06/2025"
-          },
-          {
-            "label": "Week 24 16/06/2025 - 22/06/2025",
-            "hours": 25.5,
-            "date": "16/06/2025"
-          },
-          {
-            "label": "Week 25 23/06/2025 - 29/06/2025",
-            "hours": 25.5,
-            "date": "23/06/2025"
-          },
-          {
-            "label": "Week 26 30/06/2025 - 06/07/2025",
-            "hours": 25.5,
-            "date": "30/06/2025"
-          },
-          {
-            "label": "Week 27 07/07/2025 - 13/07/2025",
-            "hours": 25.5,
-            "date": "07/07/2025"
-          },
-          {
-            "label": "Week 28 14/07/2025 - 20/07/2025",
-            "hours": 25.5,
-            "date": "14/07/2025"
-          },
-          {
-            "label": "Week 29 21/07/2025 - 27/07/2025",
-            "hours": 25.5,
-            "date": "21/07/2025"
-          },
-          {
-            "label": "Week 30 28/07/2025 - 03/08/2025",
-            "hours": 25.5,
-            "date": "28/07/2025"
-          },
-          {
-            "label": "Week 31 04/08/2025 - 10/08/2025",
-            "hours": 25.5,
-            "date": "04/08/2025"
-          },
-          {
-            "label": "Week 32 11/08/2025 - 17/08/2025",
-            "hours": 18.8,
-            "date": "11/08/2025"
-          },
-          {
-            "label": "Week 33 18/08/2025 - 24/08/2025",
-            "hours": 25.5,
-            "date": "18/08/2025"
-          },
-          {
-            "label": "Week 34 25/08/2025 - 31/08/2025",
-            "hours": 25.5,
-            "date": "25/08/2025"
-          },
-          {
-            "label": "Week 35 01/09/2025 - 07/09/2025",
-            "hours": 25.5,
-            "date": "01/09/2025"
-          },
-          {
-            "label": "Week 36 08/09/2025 - 14/09/2025",
-            "hours": 25.5,
-            "date": "08/09/2025"
-          }
-        ]
+        "weeks": []
       },
       "f7": {
         "opening": 0,
@@ -17035,6 +15255,26 @@
             "label": "Week 7 17/02/2025 - 23/02/2025",
             "hours": 26.5,
             "date": "17/02/2025"
+          },
+          {
+            "label": "Week 8 24/02/2025 - 02/03/2025",
+            "hours": 0,
+            "date": "24/02/2025"
+          },
+          {
+            "label": "Week 9 03/03/2025 - 09/03/2025",
+            "hours": 0,
+            "date": "03/03/2025"
+          },
+          {
+            "label": "Week 10 10/03/2025 - 16/03/2025",
+            "hours": 0,
+            "date": "10/03/2025"
+          },
+          {
+            "label": "Week 11 17/03/2025 - 23/03/2025",
+            "hours": 0,
+            "date": "17/03/2025"
           },
           {
             "label": "Week 12 24/03/2025 - 30/03/2025",
@@ -22556,263 +20796,15 @@
       },
       "f1": {
         "opening": 0,
-        "weeks": [
-          {
-            "label": "Week 1 05/01/2026 - 11/01/2026",
-            "hours": 34.5,
-            "date": "05/01/2026"
-          },
-          {
-            "label": "Week 2 12/01/2026 - 18/01/2026",
-            "hours": 36,
-            "date": "12/01/2026"
-          },
-          {
-            "label": "Week 3 19/01/2026 - 25/01/2026",
-            "hours": 20.5,
-            "date": "19/01/2026"
-          },
-          {
-            "label": "Week 4 26/01/2026 - 01/02/2026",
-            "hours": 26,
-            "date": "26/01/2026"
-          },
-          {
-            "label": "Week 5 02/02/2026 - 08/02/2026",
-            "hours": 37,
-            "date": "02/02/2026"
-          },
-          {
-            "label": "Week 6 09/02/2026 - 15/02/2026",
-            "hours": 30.5,
-            "date": "09/02/2026"
-          },
-          {
-            "label": "Week 8 23/02/2026 - 01/03/2026",
-            "hours": 33,
-            "date": "23/02/2026"
-          }
-        ]
+        "weeks": []
       },
       "f2": {
         "opening": 0,
-        "weeks": [
-          {
-            "label": "Week 1 05/01/2026 - 11/01/2026",
-            "hours": 25,
-            "date": "05/01/2026"
-          },
-          {
-            "label": "Week 2 12/01/2026 - 18/01/2026",
-            "hours": 33,
-            "date": "12/01/2026"
-          },
-          {
-            "label": "Week 3 19/01/2026 - 25/01/2026",
-            "hours": 26,
-            "date": "19/01/2026"
-          },
-          {
-            "label": "Week 4 26/01/2026 - 01/02/2026",
-            "hours": 27.5,
-            "date": "26/01/2026"
-          },
-          {
-            "label": "Week 5 02/02/2026 - 08/02/2026",
-            "hours": 32,
-            "date": "02/02/2026"
-          },
-          {
-            "label": "Week 6 09/02/2026 - 15/02/2026",
-            "hours": 32.5,
-            "date": "09/02/2026"
-          },
-          {
-            "label": "Week 7 16/02/2026 - 22/02/2026",
-            "hours": 31.5,
-            "date": "16/02/2026"
-          },
-          {
-            "label": "Week 8 23/02/2026 - 01/03/2026",
-            "hours": 28,
-            "date": "23/02/2026"
-          },
-          {
-            "label": "Week 9 02/03/2026 - 08/03/2026",
-            "hours": 28,
-            "date": "02/03/2026"
-          },
-          {
-            "label": "Week 10 09/03/2026 - 15/03/2026",
-            "hours": 28,
-            "date": "09/03/2026"
-          },
-          {
-            "label": "Week 11 16/03/2026 - 22/03/2026",
-            "hours": 34,
-            "date": "16/03/2026"
-          },
-          {
-            "label": "Week 12 23/03/2026 - 29/03/2026",
-            "hours": 31,
-            "date": "23/03/2026"
-          },
-          {
-            "label": "Week 13 30/03/2026 - 05/04/2026",
-            "hours": 32,
-            "date": "30/03/2026"
-          },
-          {
-            "label": "Week 14 06/04/2026 - 12/04/2026",
-            "hours": 34.5,
-            "date": "06/04/2026"
-          },
-          {
-            "label": "Week 15 13/04/2026 - 19/04/2026",
-            "hours": 33.5,
-            "date": "13/04/2026"
-          },
-          {
-            "label": "Week 16 20/04/2026 - 26/04/2026",
-            "hours": 34.5,
-            "date": "20/04/2026"
-          },
-          {
-            "label": "Week 17 27/04/2026 - 03/05/2026",
-            "hours": 28,
-            "date": "27/04/2026"
-          },
-          {
-            "label": "Week 18 04/05/2026 - 10/05/2026",
-            "hours": 32,
-            "date": "04/05/2026"
-          },
-          {
-            "label": "Week 19 11/05/2026 - 17/05/2026",
-            "hours": 33.5,
-            "date": "11/05/2026"
-          },
-          {
-            "label": "Week 25 22/06/2026 - 28/06/2026",
-            "hours": 18.5,
-            "date": "22/06/2026"
-          }
-        ]
+        "weeks": []
       },
       "f3": {
         "opening": 0,
-        "weeks": [
-          {
-            "label": "Week 1 05/01/2026 - 11/01/2026",
-            "hours": 24.5,
-            "date": "05/01/2026"
-          },
-          {
-            "label": "Week 2 12/01/2026 - 18/01/2026",
-            "hours": 20,
-            "date": "12/01/2026"
-          },
-          {
-            "label": "Week 3 19/01/2026 - 25/01/2026",
-            "hours": 6,
-            "date": "19/01/2026"
-          },
-          {
-            "label": "Week 4 26/01/2026 - 01/02/2026",
-            "hours": 25,
-            "date": "26/01/2026"
-          },
-          {
-            "label": "Week 5 02/02/2026 - 08/02/2026",
-            "hours": 25,
-            "date": "02/02/2026"
-          },
-          {
-            "label": "Week 6 09/02/2026 - 15/02/2026",
-            "hours": 27.5,
-            "date": "09/02/2026"
-          },
-          {
-            "label": "Week 7 16/02/2026 - 22/02/2026",
-            "hours": 25,
-            "date": "16/02/2026"
-          },
-          {
-            "label": "Week 8 23/02/2026 - 01/03/2026",
-            "hours": 18.5,
-            "date": "23/02/2026"
-          },
-          {
-            "label": "Week 9 02/03/2026 - 08/03/2026",
-            "hours": 25,
-            "date": "02/03/2026"
-          },
-          {
-            "label": "Week 10 09/03/2026 - 15/03/2026",
-            "hours": 25,
-            "date": "09/03/2026"
-          },
-          {
-            "label": "Week 11 16/03/2026 - 22/03/2026",
-            "hours": 17,
-            "date": "16/03/2026"
-          },
-          {
-            "label": "Week 12 23/03/2026 - 29/03/2026",
-            "hours": 25,
-            "date": "23/03/2026"
-          },
-          {
-            "label": "Week 13 30/03/2026 - 05/04/2026",
-            "hours": 25,
-            "date": "30/03/2026"
-          },
-          {
-            "label": "Week 14 06/04/2026 - 12/04/2026",
-            "hours": 25,
-            "date": "06/04/2026"
-          },
-          {
-            "label": "Week 15 13/04/2026 - 19/04/2026",
-            "hours": 18.5,
-            "date": "13/04/2026"
-          },
-          {
-            "label": "Week 16 20/04/2026 - 26/04/2026",
-            "hours": 25,
-            "date": "20/04/2026"
-          },
-          {
-            "label": "Week 17 27/04/2026 - 03/05/2026",
-            "hours": 25,
-            "date": "27/04/2026"
-          },
-          {
-            "label": "Week 18 04/05/2026 - 10/05/2026",
-            "hours": 18,
-            "date": "04/05/2026"
-          },
-          {
-            "label": "Week 19 11/05/2026 - 17/05/2026",
-            "hours": 25,
-            "date": "11/05/2026"
-          },
-          {
-            "label": "Week 20 18/05/2026 - 24/05/2026",
-            "hours": 18.5,
-            "date": "18/05/2026"
-          },
-          {
-            "label": "Week 21 25/05/2026 - 31/05/2026",
-            "hours": 25,
-            "date": "25/05/2026"
-          },
-          {
-            "label": "Week 22 01/06/2026 - 07/06/2026",
-            "hours": 18.5,
-            "date": "01/06/2026"
-          }
-        ]
+        "weeks": []
       },
       "f4": {
         "opening": 0,
@@ -22840,6 +20832,11 @@
             "label": "Week 4 26/01/2026 - 01/02/2026",
             "hours": 20.5,
             "date": "26/01/2026"
+          },
+          {
+            "label": "Week 5 02/02/2026 - 08/02/2026",
+            "hours": 0,
+            "date": "02/02/2026"
           },
           {
             "label": "Week 6 09/02/2026 - 15/02/2026",
@@ -23438,28 +21435,28 @@
     {
       "id": "f4",
       "name": "Caithlin",
-      "shop": "Arklow",
-      "location": "Arklow",
-      "startDate": "01/08/2022",
+      "shop": "Thurles",
+      "location": "Thurles",
+      "startDate": "15/07/2024",
       "dailyHours": 7,
       "weeklyHours": 35,
       "sickAllowance": 35,
       "status": "inactive",
-      "leftDate": "15/07/2024",
-      "leftWeek": "Week 29 (2024)"
+      "leftDate": "01/09/2025",
+      "leftWeek": "Week 35 (2025)"
     },
     {
       "id": "f5",
       "name": "Vladislavs Gribuska",
-      "shop": "Mullingar",
-      "location": "Mullingar",
+      "shop": "Kilkenny",
+      "location": "Kilkenny",
       "startDate": "16/11/2023",
       "dailyHours": 7,
       "weeklyHours": 35,
       "sickAllowance": 35,
       "status": "inactive",
-      "leftDate": "16/09/2024",
-      "leftWeek": "Week 38 (2024)"
+      "leftDate": "09/02/2026",
+      "leftWeek": "Week 6 (2026)"
     },
     {
       "id": "f6",
@@ -23484,27 +21481,27 @@
       "weeklyHours": 35,
       "sickAllowance": 35,
       "status": "inactive",
-      "leftDate": "25/03/2024",
-      "leftWeek": "Week 13 (2024)"
+      "leftDate": "04/03/2024",
+      "leftWeek": "Week 10 (2024)"
     },
     {
       "id": "f8",
       "name": "MAREK NEMEC",
-      "shop": "Kilkenny",
-      "location": "Kilkenny",
+      "shop": "Thurles",
+      "location": "Thurles",
       "startDate": "26/10/2022",
       "dailyHours": 7,
       "weeklyHours": 35,
       "sickAllowance": 35,
       "status": "inactive",
-      "leftDate": "19/08/2024",
-      "leftWeek": "Week 34 (2024)"
+      "leftDate": "25/03/2024",
+      "leftWeek": "Week 13 (2024)"
     },
     {
       "id": "f9",
       "name": "Kiran Thokala",
-      "shop": "Portlaoise",
-      "location": "Portlaoise",
+      "shop": "Maynooth",
+      "location": "Maynooth",
       "startDate": "01/08/2022",
       "dailyHours": 7,
       "weeklyHours": 35,
@@ -23555,28 +21552,28 @@
     {
       "id": "f13",
       "name": "Jakub",
-      "shop": "Newbridge",
-      "location": "Newbridge",
+      "shop": "Tralee",
+      "location": "Tralee",
       "startDate": "01/08/2022",
       "dailyHours": 7,
       "weeklyHours": 35,
       "sickAllowance": 35,
       "status": "inactive",
-      "leftDate": "15/05/2023",
-      "leftWeek": "Week 20 (2023)"
+      "leftDate": "06/05/2024",
+      "leftWeek": "Week 19 (2024)"
     },
     {
       "id": "f14",
       "name": "Pathan Faisal Khan",
-      "shop": "Portlaoise",
-      "location": "Portlaoise",
+      "shop": "Maynooth",
+      "location": "Maynooth",
       "startDate": "26/08/2022",
       "dailyHours": 7,
       "weeklyHours": 35,
       "sickAllowance": 35,
       "status": "inactive",
-      "leftDate": "10/10/2022",
-      "leftWeek": "Week 41 (2022)"
+      "leftDate": "21/11/2022",
+      "leftWeek": "Week 47 (2022)"
     },
     {
       "id": "f15",
@@ -23607,15 +21604,15 @@
     {
       "id": "f17",
       "name": "Niza Nasri",
-      "shop": "Portlaoise",
-      "location": "Portlaoise",
+      "shop": "Kilkenny",
+      "location": "Kilkenny",
       "startDate": "01/07/2023",
       "dailyHours": 7,
       "weeklyHours": 35,
       "sickAllowance": 35,
       "status": "inactive",
-      "leftDate": "15/09/2023",
-      "leftWeek": "Week 37 (2023)"
+      "leftDate": "20/11/2023",
+      "leftWeek": "Week 47 (2023)"
     },
     {
       "id": "f18",
@@ -23672,28 +21669,28 @@
     {
       "id": "f22",
       "name": "Venu Chinmay Madhav",
-      "shop": "Maynooth",
-      "location": "Maynooth",
+      "shop": "Portlaoise",
+      "location": "Portlaoise",
       "startDate": "01/08/2019",
       "dailyHours": 7,
       "weeklyHours": 35,
       "sickAllowance": 35,
       "status": "inactive",
-      "leftDate": "02/02/2020",
-      "leftWeek": "Week 5 (2020)"
+      "leftDate": "09/07/2023",
+      "leftWeek": "Week 27 (2023)"
     },
     {
       "id": "f23",
       "name": "Anjali Kumari",
-      "shop": "Limerick",
-      "location": "Limerick",
+      "shop": "Maynooth",
+      "location": "Maynooth",
       "startDate": "01/08/2023",
       "dailyHours": 7,
       "weeklyHours": 35,
       "sickAllowance": 35,
       "status": "inactive",
-      "leftDate": "15/11/2023",
-      "leftWeek": "Week 46 (2023)"
+      "leftDate": "10/06/2024",
+      "leftWeek": "Week 24 (2024)"
     },
     {
       "id": "f24",
@@ -23705,27 +21702,27 @@
       "weeklyHours": 35,
       "sickAllowance": 35,
       "status": "inactive",
-      "leftDate": "20/11/2022",
-      "leftWeek": "Week 47 (2022)"
+      "leftDate": "19/02/2024",
+      "leftWeek": "Week 8 (2024)"
     },
     {
       "id": "f25",
       "name": "Zack O'Connor",
-      "shop": "Killarney",
-      "location": "Killarney",
+      "shop": "Tralee",
+      "location": "Tralee",
       "startDate": "01/08/2023",
       "dailyHours": 7,
       "weeklyHours": 35,
       "sickAllowance": 35,
       "status": "inactive",
-      "leftDate": "15/12/2023",
-      "leftWeek": "Week 50 (2023)"
+      "leftDate": "22/07/2024",
+      "leftWeek": "Week 30 (2024)"
     },
     {
       "id": "f26",
       "name": "Jeffun Thomas Varghese",
-      "shop": "Limerick",
-      "location": "Limerick",
+      "shop": "Letterkenny",
+      "location": "Letterkenny",
       "startDate": "18/01/2021",
       "dailyHours": 7,
       "weeklyHours": 35,
@@ -23737,34 +21734,34 @@
     {
       "id": "f27",
       "name": "Dishank",
-      "shop": "Letterkenny",
-      "location": "Letterkenny",
+      "shop": "Maynooth",
+      "location": "Maynooth",
       "startDate": "01/08/2023",
       "dailyHours": 7,
       "weeklyHours": 35,
       "sickAllowance": 35,
       "status": "inactive",
-      "leftDate": "25/06/2024",
-      "leftWeek": "Week 26 (2024)"
+      "leftDate": "25/08/2025",
+      "leftWeek": "Week 34 (2025)"
     },
     {
       "id": "f28",
       "name": "Paul Mac Sweeny",
-      "shop": "Arklow",
-      "location": "Arklow",
+      "shop": "Tralee",
+      "location": "Tralee",
       "startDate": "01/08/2023",
       "dailyHours": 7,
       "weeklyHours": 35,
       "sickAllowance": 35,
       "status": "inactive",
-      "leftDate": "18/09/2023",
-      "leftWeek": "Week 38 (2023)"
+      "leftDate": "09/10/2023",
+      "leftWeek": "Week 41 (2023)"
     },
     {
       "id": "f29",
       "name": "Brooke Lonergan",
-      "shop": "Tullamore",
-      "location": "Tullamore",
+      "shop": "Thurles",
+      "location": "Thurles",
       "startDate": "18/07/2022",
       "dailyHours": 7,
       "weeklyHours": 35,
@@ -23776,21 +21773,21 @@
     {
       "id": "f30",
       "name": "Daniel Kavanagh",
-      "shop": "Newbridge",
-      "location": "Newbridge",
+      "shop": "Thurles",
+      "location": "Thurles",
       "startDate": "19/06/2023",
       "dailyHours": 7,
       "weeklyHours": 35,
       "sickAllowance": 35,
       "status": "inactive",
-      "leftDate": "20/05/2024",
-      "leftWeek": "Week 21 (2024)"
+      "leftDate": "01/04/2024",
+      "leftWeek": "Week 14 (2024)"
     },
     {
       "id": "f31",
       "name": "Colm Vaughan",
-      "shop": "Thurles",
-      "location": "Thurles",
+      "shop": "Arklow",
+      "location": "Arklow",
       "startDate": "02/07/2021",
       "dailyHours": 7,
       "weeklyHours": 35,
@@ -23809,8 +21806,8 @@
       "weeklyHours": 35,
       "sickAllowance": 35,
       "status": "inactive",
-      "leftDate": "15/08/2023",
-      "leftWeek": "Week 33 (2023)"
+      "leftDate": "31/10/2022",
+      "leftWeek": "Week 44 (2022)"
     },
     {
       "id": "f33",
