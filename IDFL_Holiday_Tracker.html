@@ -24,7 +24,7 @@
 body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--tx);min-height:100vh;display:flex;flex-direction:column;font-size:14px;overflow-x:hidden}
 ::-webkit-scrollbar{width:6px;height:6px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:var(--bd);border-radius:3px}
 
-/* â”€â”€ HEADER â”€â”€ */
+/* ── HEADER ── */
 header{background:var(--sf);border-bottom:1px solid var(--bd);padding:10px 20px;display:flex;align-items:center;gap:10px;flex-shrink:0;box-shadow:var(--shadow);z-index:20;flex-wrap:wrap}
 .logo{font-weight:900;font-size:1.15rem;letter-spacing:-.5px;display:flex;align-items:center;gap:8px;flex-shrink:0;cursor:pointer;color:var(--tx)}
 .logo-mark{width:32px;height:32px;background:linear-gradient(135deg,var(--ac),#3b82f6);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:.76rem;color:#fff;font-weight:900;flex-shrink:0;box-shadow:0 2px 4px rgba(29,78,216,.25)}
@@ -42,7 +42,7 @@ header{background:var(--sf);border-bottom:1px solid var(--bd);padding:10px 20px;
 .hdr-stats{display:flex;gap:14px;font-size:.74rem;color:var(--tx3)}
 .hdr-stats strong{color:var(--tx);font-weight:800}
 
-/* â”€â”€ BUTTONS â”€â”€ */
+/* ── BUTTONS ── */
 .btn{font-family:'Outfit',sans-serif;font-size:.75rem;font-weight:700;padding:7px 13px;border-radius:8px;border:none;cursor:pointer;transition:all .15s;display:inline-flex;align-items:center;gap:6px}
 .btn-ac{background:var(--ac);color:#fff}.btn-ac:hover{filter:brightness(1.08)}
 .btn-rd{background:var(--rd2);color:var(--rd);border:1px solid #fca5a5}.btn-rd:hover{background:var(--rd);color:#fff}
@@ -52,7 +52,7 @@ header{background:var(--sf);border-bottom:1px solid var(--bd);padding:10px 20px;
 .btn-pk{background:var(--pk2);color:var(--pk);border:1px solid #fbcfe8}.btn-pk:hover{background:var(--pk);color:#fff}
 .btn-pu{background:var(--pu2);color:var(--pu);border:1px solid #c4b5fd}.btn-pu:hover{background:var(--pu);color:#fff}
 
-/* â”€â”€ LAYOUT â”€â”€ */
+/* ── LAYOUT ── */
 .body{flex:1;display:flex;min-height:0;position:relative}
 .sidebar{width:280px;flex-shrink:0;background:var(--sf);border-right:1px solid var(--bd);overflow-y:auto;display:flex;flex-direction:column}
 .sidebar-tabs{display:flex;border-bottom:1px solid var(--bd);background:var(--sf2);padding:4px 6px;gap:4px}
@@ -79,7 +79,7 @@ header{background:var(--sf);border-bottom:1px solid var(--bd);padding:10px 20px;
 .inactive-tag{font-size:.58rem;background:var(--rd2);color:var(--rd);border:1px solid #fca5a5;padding:1px 5px;border-radius:4px;font-weight:800;text-transform:uppercase}
 .main{flex:1;min-width:0;overflow-y:auto;padding:20px 24px}
 
-/* â”€â”€ STAFF PORTAL (WINDOW VIEW) â”€â”€ */
+/* ── STAFF PORTAL (WINDOW VIEW) ── */
 .portal-container{max-width:1120px;margin:0 auto;padding:16px;width:100%}
 .portal-header{background:var(--sf);border:1px solid var(--bd);border-radius:16px;padding:20px 24px;margin-bottom:20px;box-shadow:var(--shadow);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
 .portal-profile{display:flex;align-items:center;gap:16px}
@@ -92,7 +92,7 @@ header{background:var(--sf);border-bottom:1px solid var(--bd);padding:10px 20px;
 /* Inactive Staff Alert Banner */
 .inactive-banner{background:#fff1f2;border:1px solid #fecdd3;color:#9f1239;border-radius:12px;padding:12px 18px;margin-bottom:20px;display:flex;justify-content:space-between;align-items:center;font-size:.82rem;font-weight:700;flex-wrap:wrap;gap:8px}
 
-/* â”€â”€ HERO STATS (CENTERED BIG HOLIDAY + 2 SUB CARDS) â”€â”€ */
+/* ── HERO STATS (CENTERED BIG HOLIDAY + 2 SUB CARDS) ── */
 .hero-center-wrap{display:flex;flex-direction:column;gap:16px;margin-bottom:24px}
 .hero-card{background:var(--sf);border:1px solid var(--bd);border-radius:16px;padding:20px;box-shadow:var(--shadow);position:relative;overflow:hidden}
 
@@ -118,7 +118,7 @@ header{background:var(--sf);border-bottom:1px solid var(--bd);padding:10px 20px;
 .hero-breakdown-row{display:flex;justify-content:space-between;color:var(--tx2)}
 .hero-breakdown-row strong{font-family:'JetBrains Mono',monospace;color:var(--tx)}
 
-/* â”€â”€ PROGRESS BARS â”€â”€ */
+/* ── PROGRESS BARS ── */
 .progress-wrap{margin-top:12px}
 .progress-track{background:var(--sf3);border-radius:6px;height:8px;overflow:hidden;margin-top:6px}
 .progress-fill{height:100%;border-radius:6px;transition:width .4s ease}
@@ -127,7 +127,7 @@ header{background:var(--sf);border-bottom:1px solid var(--bd);padding:10px 20px;
 .progress-fill.gr{background:var(--gr)}
 .progress-labels{display:flex;justify-content:space-between;font-size:.7rem;color:var(--tx3);font-family:'JetBrains Mono',monospace}
 
-/* â”€â”€ CONTENT GRID (2-COLUMN BALANCED) â”€â”€ */
+/* ── CONTENT GRID (2-COLUMN BALANCED) ── */
 .detail-grid{display:grid;grid-template-columns:minmax(0, 1.15fr) minmax(0, 1fr);gap:20px;align-items:start;width:100%;margin-bottom:24px}
 @media(max-width:900px){.detail-grid{grid-template-columns:1fr}}
 
@@ -136,7 +136,7 @@ header{background:var(--sf);border-bottom:1px solid var(--bd);padding:10px 20px;
 .card-hd h3{font-size:.88rem;font-weight:800;color:var(--tx);display:flex;align-items:center;gap:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .card-sub{font-size:.72rem;color:var(--tx3);white-space:nowrap;flex-shrink:0;font-weight:700}
 
-/* â”€â”€ WEEKS TABLE (WITH FULL EDITING & CHRONOLOGICAL ORDER) â”€â”€ */
+/* ── WEEKS TABLE (WITH FULL EDITING & CHRONOLOGICAL ORDER) ── */
 .weeks-wrap{max-height:480px;overflow-y:auto;min-width:0}
 table.weeks{width:100%;border-collapse:collapse;font-size:.78rem}
 table.weeks thead th{position:sticky;top:0;background:var(--sf2);color:var(--tx2);font-size:.65rem;font-weight:800;text-transform:uppercase;letter-spacing:.5px;padding:9px 14px;text-align:left;border-bottom:1px solid var(--bd);z-index:2}
@@ -156,7 +156,7 @@ table.weeks td.act{text-align:right;width:56px}
 .add-week-form input.lbl{flex:1;min-width:180px}
 .add-week-form input.hrs{width:64px;font-family:'JetBrains Mono',monospace;text-align:right}
 
-/* â”€â”€ LOGS & INLINE EDITING â”€â”€ */
+/* ── LOGS & INLINE EDITING ── */
 .log-list{max-height:240px;overflow-y:auto;min-width:0}
 .log-item{display:flex;align-items:center;gap:8px;padding:9px 14px;border-bottom:1px solid var(--sf2);font-size:.76rem;min-width:0}
 .log-item:last-child{border-bottom:none}
@@ -183,7 +183,7 @@ table.weeks td.act{text-align:right;width:56px}
 .add-log-form input[type=number]{width:52px;flex-shrink:0}
 .add-log-form input[type=text]{flex:1;min-width:80px}
 
-/* â”€â”€ ðŸŒŸ BOTTOM SECONDARY: CALENDAR ESTIMATOR CARD ðŸŒŸ â”€â”€ */
+/* ── 🌟 BOTTOM SECONDARY: CALENDAR ESTIMATOR CARD 🌟 ── */
 .estimator-card{background:var(--sf);border:1px solid var(--bd);border-radius:16px;padding:20px;box-shadow:var(--shadow);margin-top:10px}
 .est-hd{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:8px}
 .est-title{font-size:.95rem;font-weight:900;color:var(--tx);display:flex;align-items:center;gap:8px}
@@ -210,7 +210,7 @@ table.est-cal-table tbody tr.selected td{font-weight:700}
 table.est-cal-table td{padding:8px 12px;border-bottom:1px solid var(--sf2);color:var(--tx)}
 table.est-cal-table td.num{text-align:right;font-family:'JetBrains Mono',monospace}
 
-/* â”€â”€ MODALS â”€â”€ */
+/* ── MODALS ── */
 .modal-bg{position:fixed;inset:0;background:rgba(15,23,42,.6);backdrop-filter:blur(3px);z-index:100;display:flex;align-items:center;justify-content:center;padding:16px}
 .modal-bg.hidden{display:none}
 .modal{background:var(--sf);border:1px solid var(--bd);border-radius:18px;box-shadow:var(--shadowL);width:100%;max-width:540px;max-height:85vh;overflow-y:auto}
@@ -225,7 +225,7 @@ table.est-cal-table td.num{text-align:right;font-family:'JetBrains Mono',monospa
 .modal-body input:focus,.modal-body textarea:focus,.modal-body select:focus{border-color:var(--ac);box-shadow:0 0 0 3px rgba(29,78,216,.12)}
 .modal-footer{padding:14px 22px;border-top:1px solid var(--bd);display:flex;justify-content:flex-end;gap:10px;flex-wrap:wrap;background:var(--sf2)}
 
-/* â”€â”€ BATCH WEEK TABLE â”€â”€ */
+/* ── BATCH WEEK TABLE ── */
 .batch-table-wrap{max-height:50vh;overflow-y:auto;border:1px solid var(--bd);border-radius:10px;margin-top:14px}
 table.batch-table{width:100%;border-collapse:collapse;font-size:.78rem}
 table.batch-table thead th{position:sticky;top:0;background:var(--sf2);color:var(--tx2);font-size:.65rem;font-weight:800;text-transform:uppercase;padding:8px 12px;text-align:left;border-bottom:1px solid var(--bd);z-index:2}
@@ -234,16 +234,16 @@ table.batch-table tr.shop-header td{background:var(--sf2);color:var(--ac);font-w
 table.batch-table input{background:var(--sf);border:1px solid var(--bd);border-radius:6px;color:var(--tx);font-family:'JetBrains Mono',monospace;font-size:.75rem;padding:5px 8px;outline:none;width:100%;margin-bottom:0}
 table.batch-table input:focus{border-color:var(--ac)}
 
-/* â”€â”€ SHARE LINK BOX â”€â”€ */
+/* ── SHARE LINK BOX ── */
 .share-link-box{background:var(--sf2);border:1px solid var(--bd);border-radius:10px;padding:12px 14px;display:flex;align-items:center;gap:10px;margin-bottom:16px}
 .share-link-input{flex:1;background:none;border:none;color:var(--ac);font-family:'JetBrains Mono',monospace;font-size:.78rem;outline:none;font-weight:700}
 .share-output{background:var(--sf2);border:1px solid var(--bd);border-radius:10px;padding:14px;font-family:'JetBrains Mono',monospace;font-size:.72rem;line-height:1.65;color:var(--tx);white-space:pre-wrap;max-height:220px;overflow-y:auto;margin-bottom:12px}
 
-/* â”€â”€ TOAST â”€â”€ */
+/* ── TOAST ── */
 .toast{position:fixed;bottom:20px;right:20px;z-index:999;padding:12px 20px;border-radius:10px;font-weight:800;font-size:.78rem;background:#0f172a;color:#ffffff;box-shadow:var(--shadowL);animation:pop .2s ease}
 @keyframes pop{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 
-/* â”€â”€ MOBILE ADAPTATIONS â”€â”€ */
+/* ── MOBILE ADAPTATIONS ── */
 .menu-btn{display:none;background:var(--sf2);border:1px solid var(--bd);color:var(--tx);width:34px;height:34px;border-radius:8px;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0}
 @media(max-width:700px){
   .sidebar{position:fixed;left:0;top:57px;bottom:0;z-index:30;transform:translateX(-100%);transition:transform .2s;box-shadow:var(--shadowL)}
@@ -292,7 +292,7 @@ table.batch-table input:focus{border-color:var(--ac)}
   <div class="main" id="main"></div>
 </div>
 
-<!-- ðŸŒŸ ADD NEW STAFF MODAL ðŸŒŸ -->
+<!-- 🌟 ADD NEW STAFF MODAL 🌟 -->
 <div class="modal-bg hidden" id="addStaffModal">
   <div class="modal">
     <div class="modal-hd">
@@ -340,7 +340,7 @@ table.batch-table input:focus{border-color:var(--ac)}
   </div>
 </div>
 
-<!-- ðŸŒŸ DEACTIVATE / SET AS FORMER STAFF MODAL ðŸŒŸ -->
+<!-- 🌟 DEACTIVATE / SET AS FORMER STAFF MODAL 🌟 -->
 <div class="modal-bg hidden" id="deactivateModal">
   <div class="modal">
     <div class="modal-hd">
@@ -366,7 +366,7 @@ table.batch-table input:focus{border-color:var(--ac)}
   </div>
 </div>
 
-<!-- ðŸŒŸ REACTIVATE FORMER STAFF MODAL ðŸŒŸ -->
+<!-- 🌟 REACTIVATE FORMER STAFF MODAL 🌟 -->
 <div class="modal-bg hidden" id="reactivateModal">
   <div class="modal">
     <div class="modal-hd">
@@ -410,7 +410,7 @@ table.batch-table input:focus{border-color:var(--ac)}
   </div>
 </div>
 
-<!-- ðŸŒŸ PDF EXPORT MODAL ðŸŒŸ -->
+<!-- 🌟 PDF EXPORT MODAL 🌟 -->
 <div class="modal-bg hidden" id="pdfModal">
   <div class="modal modal-large">
     <div class="modal-hd">
@@ -477,7 +477,7 @@ table.batch-table input:focus{border-color:var(--ac)}
   </div>
 </div>
 
-<!-- ðŸŒŸ FAST BATCH WEEK ENTRY MODAL (AUTO CONSECUTIVE DATES) ðŸŒŸ -->
+<!-- 🌟 FAST BATCH WEEK ENTRY MODAL (AUTO CONSECUTIVE DATES) 🌟 -->
 <div class="modal-bg hidden" id="batchModal">
   <div class="modal modal-large">
     <div class="modal-hd">
@@ -528,7 +528,7 @@ table.batch-table input:focus{border-color:var(--ac)}
   </div>
 </div>
 
-<!-- ðŸŒŸ SYNC & GITHUB CLOUD MODAL ðŸŒŸ -->
+<!-- 🌟 SYNC & GITHUB CLOUD MODAL 🌟 -->
 <div class="modal-bg hidden" id="syncModal">
   <div class="modal">
     <div class="modal-hd">
@@ -21717,6 +21717,57 @@ function saveOv(o){ localStorage.setItem(LS_KEY, JSON.stringify(o)); }
 
 let ov = loadOv();
 
+// Automatically purge duplicate or already committed logs in localStorage
+if(ov._holLog){
+  Object.keys(ov._holLog).forEach(function(sid){
+    const baseList = (BASE.baseHolLogs||{})[sid]||[];
+    const cleaned = [];
+    const seen = new Set();
+    (ov._holLog[sid]||[]).forEach(function(item){
+      const normDate = (item.date || '').replace(/\s+/g, '');
+      const normHrs = Math.round(parseFloat(item.hours || 0) * 10) / 10;
+      const key = normDate + '_' + normHrs;
+      const inBase = baseList.some(function(b){
+        const bDate = (b.date || '').replace(/\s+/g, '');
+        const bHrs = Math.round(parseFloat(b.hours || 0) * 10) / 10;
+        return b.id === item.id || (bDate === normDate && bHrs === normHrs);
+      });
+      if(!inBase && !seen.has(key)){
+        seen.add(key);
+        cleaned.push(item);
+      }
+    });
+    if(cleaned.length === 0) delete ov._holLog[sid];
+    else ov._holLog[sid] = cleaned;
+  });
+  saveOv(ov);
+}
+
+if(ov._sickLog){
+  Object.keys(ov._sickLog).forEach(function(sid){
+    const baseList = (BASE.baseSickLogs||{})[sid]||[];
+    const cleaned = [];
+    const seen = new Set();
+    (ov._sickLog[sid]||[]).forEach(function(item){
+      const normDate = (item.date || '').replace(/\s+/g, '');
+      const normHrs = Math.round(parseFloat(item.hours || 0) * 10) / 10;
+      const key = normDate + '_' + normHrs;
+      const inBase = baseList.some(function(b){
+        const bDate = (b.date || '').replace(/\s+/g, '');
+        const bHrs = Math.round(parseFloat(b.hours || 0) * 10) / 10;
+        return b.id === item.id || (bDate === normDate && bHrs === normHrs);
+      });
+      if(!inBase && !seen.has(key)){
+        seen.add(key);
+        cleaned.push(item);
+      }
+    });
+    if(cleaned.length === 0) delete ov._sickLog[sid];
+    else ov._sickLog[sid] = cleaned;
+  });
+  saveOv(ov);
+}
+
 // Automatically clean up any legacy "Week 35 (2026)" in localStorage
 if(ov['2026']){
   Object.keys(ov['2026']).forEach(function(sid){
@@ -21821,7 +21872,7 @@ function toast(msg,col){
   document.body.appendChild(t);setTimeout(function(){t.remove();},2600);
 }
 
-// â”€â”€â”€ Chronological Week Sorter â”€â”€â”€
+// ─── Chronological Week Sorter ───
 function sortWeeksChronologically(weeks){
   if(!weeks || !Array.isArray(weeks)) return [];
   return weeks.slice().sort(function(a, b){
@@ -21834,7 +21885,7 @@ function sortWeeksChronologically(weeks){
   });
 }
 
-// â”€â”€â”€ Find Week for any specific date (e.g. Employee Start Working Date) â”€â”€â”€
+// ─── Find Week for any specific date (e.g. Employee Start Working Date) ───
 function findWeekForDate(dateStr, year){
   if(!dateStr) return null;
   let targetDate = null;
@@ -21896,7 +21947,7 @@ function findWeekForDate(dateStr, year){
   };
 }
 
-// â”€â”€â”€ ðŸŒŸ SMART AUTOMATIC NEXT WEEK CALCULATOR ðŸŒŸ â”€â”€â”€
+// ─── 🌟 SMART AUTOMATIC NEXT WEEK CALCULATOR 🌟 ───
 function getNextWeekSuggestion(year, sid){
   const staff = sid ? BASE.staff.find(function(s){ return s.id === sid; }) : null;
   const rawWeeks = sid ? getStaffWeeks(sid, year) : [];
@@ -21996,7 +22047,7 @@ function getNextWeekSuggestion(year, sid){
   };
 }
 
-// â”€â”€â”€ Data Access â”€â”€â”€
+// ─── Data Access ───
 function getStaffWeeks(sid, year){
   const ovEntry = ((ov[year]||{})[sid])||{};
   let raw = [];
@@ -22014,10 +22065,36 @@ function getStaffHolidayLogs(sid, year){
   const ovDel = (ov._delHol||{})[sid]||[];
   const ovEdits = (ov._editHol||{});
   
-  const merged = baseLogs
-    .filter(function(b){ return !ovDel.includes(b.id); })
-    .map(function(b){ return ovEdits[b.id] ? Object.assign({}, b, ovEdits[b.id]) : b; })
-    .concat(ovLogs.map(function(l){ return ovEdits[l.id] ? Object.assign({}, l, ovEdits[l.id]) : l; }));
+  const seenIds = new Set();
+  const seenKeys = new Set();
+  const merged = [];
+
+  baseLogs.forEach(function(b){
+    if(ovDel.includes(b.id)) return;
+    const finalItem = ovEdits[b.id] ? Object.assign({}, b, ovEdits[b.id]) : b;
+    const normDate = (finalItem.date || '').replace(/\s+/g, '');
+    const normHrs = Math.round(parseFloat(finalItem.hours || 0) * 10) / 10;
+    const key = normDate + '_' + normHrs;
+    if(!seenIds.has(finalItem.id) && !seenKeys.has(key)){
+      seenIds.add(finalItem.id);
+      seenKeys.add(key);
+      merged.push(finalItem);
+    }
+  });
+
+  ovLogs.forEach(function(l){
+    if(ovDel.includes(l.id)) return;
+    const finalItem = ovEdits[l.id] ? Object.assign({}, l, ovEdits[l.id]) : l;
+    const normDate = (finalItem.date || '').replace(/\s+/g, '');
+    const normHrs = Math.round(parseFloat(finalItem.hours || 0) * 10) / 10;
+    const key = normDate + '_' + normHrs;
+    if(!seenIds.has(finalItem.id) && !seenKeys.has(key)){
+      seenIds.add(finalItem.id);
+      seenKeys.add(key);
+      merged.push(finalItem);
+    }
+  });
+
   return merged;
 }
 
@@ -22027,10 +22104,36 @@ function getStaffSickLogs(sid, year){
   const ovDel = (ov._delSick||{})[sid]||[];
   const ovEdits = (ov._editSick||{});
   
-  const merged = baseLogs
-    .filter(function(b){ return !ovDel.includes(b.id); })
-    .map(function(b){ return ovEdits[b.id] ? Object.assign({}, b, ovEdits[b.id]) : b; })
-    .concat(ovLogs.map(function(l){ return ovEdits[l.id] ? Object.assign({}, l, ovEdits[l.id]) : l; }));
+  const seenIds = new Set();
+  const seenKeys = new Set();
+  const merged = [];
+
+  baseLogs.forEach(function(b){
+    if(ovDel.includes(b.id)) return;
+    const finalItem = ovEdits[b.id] ? Object.assign({}, b, ovEdits[b.id]) : b;
+    const normDate = (finalItem.date || '').replace(/\s+/g, '');
+    const normHrs = Math.round(parseFloat(finalItem.hours || 0) * 10) / 10;
+    const key = normDate + '_' + normHrs;
+    if(!seenIds.has(finalItem.id) && !seenKeys.has(key)){
+      seenIds.add(finalItem.id);
+      seenKeys.add(key);
+      merged.push(finalItem);
+    }
+  });
+
+  ovLogs.forEach(function(l){
+    if(ovDel.includes(l.id)) return;
+    const finalItem = ovEdits[l.id] ? Object.assign({}, l, ovEdits[l.id]) : l;
+    const normDate = (finalItem.date || '').replace(/\s+/g, '');
+    const normHrs = Math.round(parseFloat(finalItem.hours || 0) * 10) / 10;
+    const key = normDate + '_' + normHrs;
+    if(!seenIds.has(finalItem.id) && !seenKeys.has(key)){
+      seenIds.add(finalItem.id);
+      seenKeys.add(key);
+      merged.push(finalItem);
+    }
+  });
+
   return merged;
 }
 
@@ -22086,7 +22189,7 @@ function getFullConnectedStats(sid){
   return { '2024': y24, '2025': y25, '2026': y26 };
 }
 
-// â”€â”€â”€ Mutations / Save helpers & Automatic Cloud Sync â”€â”€â”€
+// ─── Mutations / Save helpers & Automatic Cloud Sync ───
 function ensureOvYear(year,sid){
   if(!ov[year]) ov[year]={};
   if(!ov[year][sid]) ov[year][sid]={};
@@ -22170,7 +22273,7 @@ function delSickEntry(sid,id){
   triggerAutoSync();
 }
 
-// â”€â”€â”€ Header & Year Tabs â”€â”€â”€
+// ─── Header & Year Tabs ───
 function renderYearTabs(){
   const el=document.getElementById('yearTabs');
   el.innerHTML=years.map(function(y){return '<button class="year-tab'+(y===activeYear?' active':'')+'" data-y="'+y+'">'+y+'</button>';}).join('');
@@ -22193,7 +22296,7 @@ function renderHdrStats(){
   el.innerHTML='<span>Active staff: <strong>'+count+'</strong></span><span>Total balance: <strong>'+fmt1(tot)+' hrs</strong></span>';
 }
 
-// â”€â”€â”€ Sidebar Grouped by Shop Names & Active/Inactive Tabs â”€â”€â”€
+// ─── Sidebar Grouped by Shop Names & Active/Inactive Tabs ───
 function renderSidebar(){
   const el=document.getElementById('sidebar');
   if(isPortalMode){
@@ -22233,7 +22336,7 @@ function renderSidebar(){
     const hasData = stats.weeks.length > 0 || stats.opening !== 0 || stats.holLogs.length > 0;
     const weeklyHrs = getStaffWeeklyHours(s.id);
     
-    let badgeCls='zero', badgeTxt='â€“';
+    let badgeCls='zero', badgeTxt='–';
     if(hasData){
       if(stats.balance > 0){badgeCls='pos';badgeTxt=fmt1(stats.balance)+'h';}
       else if(stats.balance < 0){badgeCls='neg';badgeTxt=fmt1(stats.balance)+'h';}
@@ -22275,7 +22378,7 @@ document.getElementById('sbTabInactive').addEventListener('click', function(){
   renderSidebar();
 });
 
-// â”€â”€â”€ Main View â”€â”€â”€
+// ─── Main View ───
 function renderMain(){
   const el=document.getElementById('main');
   if(!activeSid){
@@ -22343,7 +22446,7 @@ function renderMain(){
     +'</div>'
     +'</div>'
     
-    // ðŸŒŸ HERO STATS: CENTERED BIG AVAILABLE HOLIDAYS (WITH EXACT WEEKS + DAYS + HOURS) ðŸŒŸ
+    // 🌟 HERO STATS: CENTERED BIG AVAILABLE HOLIDAYS (WITH EXACT WEEKS + DAYS + HOURS) 🌟
     +'<div class="hero-center-wrap">'
     // Center Big Card
     +'<div class="hero-card hero-primary-center">'
@@ -22390,7 +22493,7 @@ function renderMain(){
     +'</div>'
     +'</div>'
     
-    // ðŸŒŸ MAIN TWO-COLUMN WORKED HOURS & LOGS SECTION (ABOVE FUTURE ESTIMATOR) ðŸŒŸ
+    // 🌟 MAIN TWO-COLUMN WORKED HOURS & LOGS SECTION (ABOVE FUTURE ESTIMATOR) 🌟
     +'<div class="detail-grid">'
     // Left: Weeks Worked Breakdown (with auto-consecutive week calculation)
     +'<div class="card">'
@@ -22424,7 +22527,7 @@ function renderMain(){
     +'</div>'
     +'</div>'
     
-    // ðŸŒŸ BOTTOM SECONDARY: CALENDAR ESTIMATOR & FUTURE PROJECTION ðŸŒŸ
+    // 🌟 BOTTOM SECONDARY: CALENDAR ESTIMATOR & FUTURE PROJECTION 🌟
     +'<div class="estimator-card" id="holidayEstimatorWidget">'
     +'<div class="est-hd">'
     +'<div class="est-title">&#128197; Future Holiday Estimator &amp; Calendar Projection <span class="est-badge">Planning Tool</span></div>'
@@ -22617,7 +22720,7 @@ function renderMain(){
   });
 }
 
-// â”€â”€â”€ Render Calendar Projection Schedule & Target Highlight â”€â”€â”€
+// ─── Render Calendar Projection Schedule & Target Highlight ───
 function renderCalendarEstimatorSchedule(){
   const calTbody = document.getElementById('estCalTbody');
   const targetHighlight = document.getElementById('estTargetHighlight');
@@ -22701,7 +22804,7 @@ function renderCalendarEstimatorSchedule(){
   }
 }
 
-// â”€â”€â”€ Staff Deactivation Modal â”€â”€â”€
+// ─── Staff Deactivation Modal ───
 function openDeactivateModal(sid){
   const staff = BASE.staff.find(function(x){ return x.id === sid; });
   if(!staff) return;
@@ -22792,7 +22895,7 @@ function openReactivateModal(sid){
 document.getElementById('reactivateClose').addEventListener('click', function(){ document.getElementById('reactivateModal').classList.add('hidden'); });
 document.getElementById('reactivateCancelBtn').addEventListener('click', function(){ document.getElementById('reactivateModal').classList.add('hidden'); });
 
-// â”€â”€â”€ ðŸŒŸ ADD NEW STAFF FEATURE ðŸŒŸ â”€â”€â”€
+// ─── 🌟 ADD NEW STAFF FEATURE 🌟 ───
 document.getElementById('addNewStaffModalBtn').addEventListener('click', function(){
   if(isPortalMode) return;
   document.getElementById('newStaffName').value = '';
@@ -22877,7 +22980,7 @@ document.getElementById('saveNewStaffBtn').addEventListener('click', function(){
   renderAll();
 });
 
-// â”€â”€â”€ Full Week Inline Editing (Label & Hours) â”€â”€â”€
+// ─── Full Week Inline Editing (Label & Hours) ───
 window.startEditWeek=function(idx){
   if(isPortalMode) return;
   editingWeekIdx = idx;
@@ -22921,7 +23024,7 @@ window.delWeek=function(idx){
   }
 };
 
-// â”€â”€â”€ Edit Holiday Logs â”€â”€â”€
+// ─── Edit Holiday Logs ───
 window.startEditHol=function(id){ if(isPortalMode) return; editingHolId=id; renderAll(); };
 window.cancelEditHol=function(){ if(isPortalMode) return; editingHolId=null; renderAll(); };
 window.saveEditHol=function(id){
@@ -22936,7 +23039,7 @@ window.saveEditHol=function(id){
   renderAll();
 };
 
-// â”€â”€â”€ Edit Sick Logs â”€â”€â”€
+// ─── Edit Sick Logs ───
 window.startEditSick=function(id){ if(isPortalMode) return; editingSickId=id; renderAll(); };
 window.cancelEditSick=function(){ if(isPortalMode) return; editingSickId=null; renderAll(); };
 window.saveEditSick=function(id){
@@ -22954,7 +23057,7 @@ window.saveEditSick=function(id){
 window.delHol=function(id){ if(isPortalMode) return; delHolEntry(activeSid,id);toast('Entry removed');renderAll();};
 window.delSick=function(id){ if(isPortalMode) return; delSickEntry(activeSid,id);toast('Entry removed');renderAll();};
 
-// â”€â”€â”€ BATCH WEEK ENTRY MODAL (AUTO CONSECUTIVE DATES) â”€â”€â”€
+// ─── BATCH WEEK ENTRY MODAL (AUTO CONSECUTIVE DATES) ───
 function openBatchModal(){
   if(isPortalMode) return;
   
@@ -23064,7 +23167,7 @@ document.getElementById('batchSaveAllBtn').addEventListener('click', function(){
   renderAll();
 });
 
-// â”€â”€â”€ ðŸŒŸ SYNC & GITHUB CLOUD ACTIONS (WITH AUTOMATIC PUSH) â”€â”€â”€
+// ─── 🌟 SYNC & GITHUB CLOUD ACTIONS (WITH AUTOMATIC PUSH) ───
 function buildCurrentDatabaseState(){
   const exportData = JSON.parse(JSON.stringify(BASE));
   years.forEach(function(y){
@@ -23132,7 +23235,7 @@ async function autoPushToGitHub(silent){
     
     if(putRes.ok){
       if(silent){
-        toast('â˜ï¸ Auto-synced to GitHub & Cloudflare live!');
+        toast('☁️ Auto-synced to GitHub & Cloudflare live!');
       }
       const stEl = document.getElementById('ghStatusText');
       if(stEl) stEl.innerHTML = '<span style="color:var(--gr)">&#10004; Auto-synced to GitHub online: ' + new Date().toLocaleTimeString() + '</span>';
@@ -23147,14 +23250,14 @@ async function autoPushToGitHub(silent){
 document.getElementById('syncModalBtn').addEventListener('click', function(){
   if(isPortalMode) return;
   const savedTok = getActiveGitHubToken();
-  document.getElementById('ghTokenInput').value = savedTok ? 'â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢' : '';
+  document.getElementById('ghTokenInput').value = savedTok ? '••••••••••••••••••••••••••••••••••' : '';
   document.getElementById('ghStatusText').innerHTML = '<span style="color:var(--gr)">&#10004; Configured &amp; Auto-syncing on every edit to ' + GH_REPO + '</span>';
   document.getElementById('syncModal').classList.remove('hidden');
 });
 
 document.getElementById('ghSaveTokenBtn').addEventListener('click', function(){
   const tok = document.getElementById('ghTokenInput').value.trim();
-  if(tok && !tok.includes('â€¢â€¢â€¢')){
+  if(tok && !tok.includes('•••')){
     localStorage.setItem('idfl_gh_token', tok);
     toast('GitHub token saved!');
     document.getElementById('ghStatusText').innerHTML = '<span style="color:var(--gr)">&#10004; Token saved &amp; connected to ' + GH_REPO + '</span>';
@@ -23236,7 +23339,7 @@ document.getElementById('restoreFileInput').addEventListener('change', function(
   reader.readAsText(file);
 });
 
-// â”€â”€â”€ Share Modal with Personal Link & WhatsApp Share â”€â”€â”€
+// ─── Share Modal with Personal Link & WhatsApp Share ───
 function openShareModal(sid){
   const staff=BASE.staff.find(function(s){return s.id===sid;});
   if(!staff) return;
@@ -23311,7 +23414,7 @@ document.getElementById('shareCopyTextBtn').addEventListener('click',function(){
 });
 function fallbackCopy(txt){const ta=document.createElement('textarea');ta.value=txt;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();document.execCommand('copy');ta.remove();toast('Copied');}
 
-// â”€â”€â”€ ðŸŒŸ PDF EXPORT SYSTEM (INDIVIDUAL & ALL STAFF) â”€â”€â”€
+// ─── 🌟 PDF EXPORT SYSTEM (INDIVIDUAL & ALL STAFF) ───
 function populatePdfStaffDropdown(){
   const sel = document.getElementById('pdfStaffSelect');
   sel.innerHTML = '';
