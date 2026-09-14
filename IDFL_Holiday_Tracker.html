@@ -70,7 +70,7 @@ header{background:var(--sf);border-bottom:1px solid var(--bd);padding:10px 20px;
 .si-avatar{width:32px;height:32px;border-radius:50%;color:#fff;font-size:.68rem;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .si-info{flex:1;min-width:0}
 .si-name{font-weight:700;font-size:.82rem;color:var(--tx);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.si-sub{font-size:.66rem;color:var(--tx3);margin-top:1px;display:flex;align-items:center;gap:5px}
+.si-sub{font-size:.66rem;color:var(--tx3);margin-top:1px;display:flex;align-items:center;gap:5px;flex-wrap:wrap}
 .si-badge{font-size:.62rem;font-weight:800;padding:2px 7px;border-radius:9px;flex-shrink:0;font-family:'JetBrains Mono',monospace}
 .si-badge.pos{background:var(--gr2);color:var(--gr);border:1px solid #86efac}
 .si-badge.neg{background:var(--rd2);color:var(--rd);border:1px solid #fca5a5}
@@ -90,7 +90,7 @@ header{background:var(--sf);border-bottom:1px solid var(--bd);padding:10px 20px;
 .portal-shift-badge{background:var(--pu2);border:1px solid #c4b5fd;padding:2px 8px;border-radius:20px;font-size:.72rem;font-weight:800;color:var(--pu)}
 
 /* Inactive Staff Alert Banner */
-.inactive-banner{background:#fff1f2;border:1px solid #fecdd3;color:#9f1239;border-radius:12px;padding:12px 18px;margin-bottom:20px;display:flex;justify-content:space-between;align-items:center;font-size:.82rem;font-weight:700}
+.inactive-banner{background:#fff1f2;border:1px solid #fecdd3;color:#9f1239;border-radius:12px;padding:12px 18px;margin-bottom:20px;display:flex;justify-content:space-between;align-items:center;font-size:.82rem;font-weight:700;flex-wrap:wrap;gap:8px}
 
 /* â”€â”€ HERO STATS (CENTERED BIG HOLIDAY + 2 SUB CARDS) â”€â”€ */
 .hero-center-wrap{display:flex;flex-direction:column;gap:16px;margin-bottom:24px}
@@ -136,7 +136,7 @@ header{background:var(--sf);border-bottom:1px solid var(--bd);padding:10px 20px;
 .card-hd h3{font-size:.88rem;font-weight:800;color:var(--tx);display:flex;align-items:center;gap:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .card-sub{font-size:.72rem;color:var(--tx3);white-space:nowrap;flex-shrink:0;font-weight:700}
 
-/* â”€â”€ WEEKS TABLE (WITH FULL EDITING SUPPORT) â”€â”€ */
+/* â”€â”€ WEEKS TABLE (WITH FULL EDITING & CHRONOLOGICAL ORDER) â”€â”€ */
 .weeks-wrap{max-height:480px;overflow-y:auto;min-width:0}
 table.weeks{width:100%;border-collapse:collapse;font-size:.78rem}
 table.weeks thead th{position:sticky;top:0;background:var(--sf2);color:var(--tx2);font-size:.65rem;font-weight:800;text-transform:uppercase;letter-spacing:.5px;padding:9px 14px;text-align:left;border-bottom:1px solid var(--bd);z-index:2}
@@ -340,6 +340,32 @@ table.batch-table input:focus{border-color:var(--ac)}
   </div>
 </div>
 
+<!-- ðŸŒŸ DEACTIVATE / SET AS FORMER STAFF MODAL ðŸŒŸ -->
+<div class="modal-bg hidden" id="deactivateModal">
+  <div class="modal">
+    <div class="modal-hd">
+      <h2>&#128683; Set as Former Staff Member</h2>
+      <button class="modal-close" id="deactivateClose">&times;</button>
+    </div>
+    <div class="modal-body">
+      <p style="font-size:.78rem;color:var(--tx2);margin-bottom:12px">Move this employee to the <strong>Former / Inactive Staff</strong> tab. All hours, logs, and holiday balances are safely archived and preserved.</p>
+      
+      <label>Employee Name</label>
+      <input type="text" id="deactStaffName" readonly style="background:var(--sf2)">
+      
+      <label>Date Stopped Working / Left Job</label>
+      <input type="date" id="deactLeftDate">
+      
+      <label>Stop Week / Reason</label>
+      <input type="text" id="deactLeftWeek" placeholder="e.g. Week 35 (2026) - Left Job">
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" id="deactCancelBtn">Cancel</button>
+      <button class="btn btn-rd" id="confirmDeactivateBtn">&#10004; Move to Former Staff</button>
+    </div>
+  </div>
+</div>
+
 <!-- ðŸŒŸ REACTIVATE FORMER STAFF MODAL ðŸŒŸ -->
 <div class="modal-bg hidden" id="reactivateModal">
   <div class="modal">
@@ -462,7 +488,7 @@ table.batch-table input:focus{border-color:var(--ac)}
       <div style="display:grid;grid-template-columns:2fr 1.2fr 1.8fr;gap:12px;margin-bottom:12px">
         <div>
           <label>Period Label (Auto-Generated from Last Week)</label>
-          <input type="text" id="batchWkLabel" placeholder="e.g. Week 36 07/09/2026 - 13/09/2026">
+          <input type="text" id="batchWkLabel" placeholder="e.g. Week 37 14/09/2026 - 20/09/2026">
         </div>
         <div>
           <label>Period Start Date</label>
@@ -785,6 +811,20 @@ table.batch-table input:focus{border-color:var(--ac)}
                                         "date":  "2026-08-31",
                                         "hours":  28,
                                         "note":  "Holiday"
+                                    },
+                                    {
+                                        "id":  "mu16cm76n1c1",
+                                        "year":  "2026",
+                                        "date":  "2026-08-31",
+                                        "hours":  28,
+                                        "note":  "Holiday"
+                                    },
+                                    {
+                                        "id":  "mu17xo4gi82j",
+                                        "year":  "2026",
+                                        "date":  "2026-09-07",
+                                        "hours":  14,
+                                        "note":  "Holiday"
                                     }
                                 ],
                         "s13":  [
@@ -932,6 +972,20 @@ table.batch-table input:focus{border-color:var(--ac)}
                                         "id":  "mu16cm77cmwp",
                                         "year":  "2026",
                                         "date":  "2026-08-31",
+                                        "hours":  7.5,
+                                        "note":  "Holiday"
+                                    },
+                                    {
+                                        "id":  "mu16cm77cmwp",
+                                        "year":  "2026",
+                                        "date":  "2026-08-31",
+                                        "hours":  7.5,
+                                        "note":  "Holiday"
+                                    },
+                                    {
+                                        "id":  "mu17xo4iak1z",
+                                        "year":  "2026",
+                                        "date":  "2026-09-07",
                                         "hours":  7.5,
                                         "note":  "Holiday"
                                     }
@@ -2792,6 +2846,13 @@ table.batch-table input:focus{border-color:var(--ac)}
                                         "id":  "h_2026_s18_291",
                                         "year":  "2026",
                                         "note":  "Please pay 21 hours holiday pay"
+                                    },
+                                    {
+                                        "id":  "mu17xo4kx517",
+                                        "year":  "2026",
+                                        "date":  "2026-09-07",
+                                        "hours":  7,
+                                        "note":  "Holiday"
                                     }
                                 ],
                         "s9":  [
@@ -2885,6 +2946,9 @@ table.batch-table input:focus{border-color:var(--ac)}
                                         "year":  "2026",
                                         "note":  "Please pay 35 hours holiday pay"
                                     }
+                                ],
+                        "s32":  [
+
                                 ]
                     },
     "baseSickLogs":  {
@@ -2979,6 +3043,13 @@ table.batch-table input:focus{border-color:var(--ac)}
                                          "id":  "s_2024_s10_193",
                                          "year":  "2024",
                                          "note":  "Please pay sick pay Supposed to work 7.5 hrs on Saturday \u0026 Supposed to work 5.5 hrs on Sunday"
+                                     },
+                                     {
+                                         "id":  "mu16cm75475r",
+                                         "year":  "2026",
+                                         "date":  "2026-08-31",
+                                         "hours":  13.5,
+                                         "note":  "Sick"
                                      },
                                      {
                                          "id":  "mu16cm75475r",
@@ -3129,6 +3200,9 @@ table.batch-table input:focus{border-color:var(--ac)}
 
                                  ],
                          "s27":  [
+
+                                 ],
+                         "s32":  [
 
                                  ]
                      },
@@ -4666,23 +4740,28 @@ table.batch-table input:focus{border-color:var(--ac)}
                                                          },
                                                          {
                                                              "label":  "Week 44 04/11/2024 - 10/11/2024",
-                                                             "hours":  15.5,
-                                                             "date":  "04/11/2024"
-                                                         },
-                                                         {
-                                                             "label":  "Week 44 04/11/2024 - 10/11/2024",
                                                              "hours":  28,
                                                              "date":  "04/11/2024"
                                                          },
                                                          {
-                                                             "label":  "Week 45 11/11/2024 - 17/11/2024",
+                                                             "label":  "Week 44 04/11/2024 - 10/11/2024",
                                                              "hours":  15.5,
-                                                             "date":  "11/11/2024"
+                                                             "date":  "04/11/2024"
                                                          },
                                                          {
                                                              "label":  "Week 45 11/11/2024 - 17/11/2024",
                                                              "hours":  35,
                                                              "date":  "11/11/2024"
+                                                         },
+                                                         {
+                                                             "label":  "Week 45 11/11/2024 - 17/11/2024",
+                                                             "hours":  15.5,
+                                                             "date":  "11/11/2024"
+                                                         },
+                                                         {
+                                                             "label":  "Week 46 18/11/2024 - 24/11/2024",
+                                                             "hours":  35,
+                                                             "date":  "18/11/2024"
                                                          },
                                                          {
                                                              "label":  "Week 46 18/11/2024 - 24/11/2024",
@@ -4690,9 +4769,9 @@ table.batch-table input:focus{border-color:var(--ac)}
                                                              "date":  "18/11/2024"
                                                          },
                                                          {
-                                                             "label":  "Week 46 18/11/2024 - 24/11/2024",
+                                                             "label":  "Week 47 25/11/2024 - 01/12/2024",
                                                              "hours":  35,
-                                                             "date":  "18/11/2024"
+                                                             "date":  "25/11/2024"
                                                          },
                                                          {
                                                              "label":  "Week 47 25/11/2024 - 01/12/2024",
@@ -4700,9 +4779,9 @@ table.batch-table input:focus{border-color:var(--ac)}
                                                              "date":  "25/11/2024"
                                                          },
                                                          {
-                                                             "label":  "Week 47 25/11/2024 - 01/12/2024",
+                                                             "label":  "Week 48 02/12/2024 - 08/12/2024",
                                                              "hours":  35,
-                                                             "date":  "25/11/2024"
+                                                             "date":  "02/12/2024"
                                                          },
                                                          {
                                                              "label":  "Week 48 02/12/2024 - 08/12/2024",
@@ -4710,9 +4789,9 @@ table.batch-table input:focus{border-color:var(--ac)}
                                                              "date":  "02/12/2024"
                                                          },
                                                          {
-                                                             "label":  "Week 48 02/12/2024 - 08/12/2024",
+                                                             "label":  "Week 49 09/12/2024 - 15/12/2024",
                                                              "hours":  35,
-                                                             "date":  "02/12/2024"
+                                                             "date":  "09/12/2024"
                                                          },
                                                          {
                                                              "label":  "Week 49 09/12/2024 - 15/12/2024",
@@ -4720,9 +4799,9 @@ table.batch-table input:focus{border-color:var(--ac)}
                                                              "date":  "09/12/2024"
                                                          },
                                                          {
-                                                             "label":  "Week 49 09/12/2024 - 15/12/2024",
-                                                             "hours":  35,
-                                                             "date":  "09/12/2024"
+                                                             "label":  "Week 50 16/12/2024 - 22/12/2024",
+                                                             "hours":  47,
+                                                             "date":  "16/12/2024"
                                                          },
                                                          {
                                                              "label":  "Week 50 16/12/2024 - 22/12/2024",
@@ -4730,9 +4809,9 @@ table.batch-table input:focus{border-color:var(--ac)}
                                                              "date":  "16/12/2024"
                                                          },
                                                          {
-                                                             "label":  "Week 50 16/12/2024 - 22/12/2024",
-                                                             "hours":  47,
-                                                             "date":  "16/12/2024"
+                                                             "label":  "Week 51 23/12/2024 - 29/12/2024",
+                                                             "hours":  47.5,
+                                                             "date":  "23/12/2024"
                                                          },
                                                          {
                                                              "label":  "Week 51 23/12/2024 - 29/12/2024",
@@ -4740,18 +4819,13 @@ table.batch-table input:focus{border-color:var(--ac)}
                                                              "date":  "23/12/2024"
                                                          },
                                                          {
-                                                             "label":  "Week 51 23/12/2024 - 29/12/2024",
-                                                             "hours":  47.5,
-                                                             "date":  "23/12/2024"
-                                                         },
-                                                         {
                                                              "label":  "Week 52 30/12/2024 - 05/01/2025",
-                                                             "hours":  15.5,
+                                                             "hours":  0,
                                                              "date":  "30/12/2024"
                                                          },
                                                          {
                                                              "label":  "Week 52 30/12/2024 - 05/01/2025",
-                                                             "hours":  0,
+                                                             "hours":  15.5,
                                                              "date":  "30/12/2024"
                                                          }
                                                      ],
@@ -5047,18 +5121,13 @@ table.batch-table input:focus{border-color:var(--ac)}
                                            "weeks":  [
                                                          {
                                                              "label":  "Week 1 01/01/2024 - 07/01/2024",
-                                                             "hours":  26.5,
-                                                             "date":  "01/01/2024"
-                                                         },
-                                                         {
-                                                             "label":  "Week 1 01/01/2024 - 07/01/2024",
                                                              "hours":  26,
                                                              "date":  "01/01/2024"
                                                          },
                                                          {
-                                                             "label":  "Week 2 08/01/2024 - 14/01/2024",
-                                                             "hours":  13.5,
-                                                             "date":  "08/01/2024"
+                                                             "label":  "Week 1 01/01/2024 - 07/01/2024",
+                                                             "hours":  26.5,
+                                                             "date":  "01/01/2024"
                                                          },
                                                          {
                                                              "label":  "Week 2 08/01/2024 - 14/01/2024",
@@ -5066,9 +5135,9 @@ table.batch-table input:focus{border-color:var(--ac)}
                                                              "date":  "08/01/2024"
                                                          },
                                                          {
-                                                             "label":  "Week 3 15/01/2024 - 21/01/2024",
-                                                             "hours":  6,
-                                                             "date":  "15/01/2024"
+                                                             "label":  "Week 2 08/01/2024 - 14/01/2024",
+                                                             "hours":  13.5,
+                                                             "date":  "08/01/2024"
                                                          },
                                                          {
                                                              "label":  "Week 3 15/01/2024 - 21/01/2024",
@@ -5076,9 +5145,9 @@ table.batch-table input:focus{border-color:var(--ac)}
                                                              "date":  "15/01/2024"
                                                          },
                                                          {
-                                                             "label":  "Week 4 22/01/2024 - 28/01/2024",
-                                                             "hours":  13.5,
-                                                             "date":  "22/01/2024"
+                                                             "label":  "Week 3 15/01/2024 - 21/01/2024",
+                                                             "hours":  6,
+                                                             "date":  "15/01/2024"
                                                          },
                                                          {
                                                              "label":  "Week 4 22/01/2024 - 28/01/2024",
@@ -5086,9 +5155,9 @@ table.batch-table input:focus{border-color:var(--ac)}
                                                              "date":  "22/01/2024"
                                                          },
                                                          {
-                                                             "label":  "Week 5 29/01/2024 - 04/02/2024",
+                                                             "label":  "Week 4 22/01/2024 - 28/01/2024",
                                                              "hours":  13.5,
-                                                             "date":  "29/01/2024"
+                                                             "date":  "22/01/2024"
                                                          },
                                                          {
                                                              "label":  "Week 5 29/01/2024 - 04/02/2024",
@@ -5096,9 +5165,9 @@ table.batch-table input:focus{border-color:var(--ac)}
                                                              "date":  "29/01/2024"
                                                          },
                                                          {
-                                                             "label":  "Week 6 05/02/2024 - 11/02/2024",
-                                                             "hours":  5.5,
-                                                             "date":  "05/02/2024"
+                                                             "label":  "Week 5 29/01/2024 - 04/02/2024",
+                                                             "hours":  13.5,
+                                                             "date":  "29/01/2024"
                                                          },
                                                          {
                                                              "label":  "Week 6 05/02/2024 - 11/02/2024",
@@ -5106,9 +5175,9 @@ table.batch-table input:focus{border-color:var(--ac)}
                                                              "date":  "05/02/2024"
                                                          },
                                                          {
-                                                             "label":  "Week 7 12/02/2024 - 18/02/2024",
-                                                             "hours":  13.5,
-                                                             "date":  "12/02/2024"
+                                                             "label":  "Week 6 05/02/2024 - 11/02/2024",
+                                                             "hours":  5.5,
+                                                             "date":  "05/02/2024"
                                                          },
                                                          {
                                                              "label":  "Week 7 12/02/2024 - 18/02/2024",
@@ -5116,9 +5185,9 @@ table.batch-table input:focus{border-color:var(--ac)}
                                                              "date":  "12/02/2024"
                                                          },
                                                          {
-                                                             "label":  "Week 8 19/02/2024 - 25/02/2024",
+                                                             "label":  "Week 7 12/02/2024 - 18/02/2024",
                                                              "hours":  13.5,
-                                                             "date":  "19/02/2024"
+                                                             "date":  "12/02/2024"
                                                          },
                                                          {
                                                              "label":  "Week 8 19/02/2024 - 25/02/2024",
@@ -5126,9 +5195,9 @@ table.batch-table input:focus{border-color:var(--ac)}
                                                              "date":  "19/02/2024"
                                                          },
                                                          {
-                                                             "label":  "Week 9 26/02/2024 - 03/03/2024",
-                                                             "hours":  16.5,
-                                                             "date":  "26/02/2024"
+                                                             "label":  "Week 8 19/02/2024 - 25/02/2024",
+                                                             "hours":  13.5,
+                                                             "date":  "19/02/2024"
                                                          },
                                                          {
                                                              "label":  "Week 9 26/02/2024 - 03/03/2024",
@@ -5136,13 +5205,18 @@ table.batch-table input:focus{border-color:var(--ac)}
                                                              "date":  "26/02/2024"
                                                          },
                                                          {
-                                                             "label":  "Week 10 04/03/2024 - 10/03/2024",
-                                                             "hours":  12.5,
-                                                             "date":  "04/03/2024"
+                                                             "label":  "Week 9 26/02/2024 - 03/03/2024",
+                                                             "hours":  16.5,
+                                                             "date":  "26/02/2024"
                                                          },
                                                          {
                                                              "label":  "Week 10 04/03/2024 - 10/03/2024",
                                                              "hours":  33,
+                                                             "date":  "04/03/2024"
+                                                         },
+                                                         {
+                                                             "label":  "Week 10 04/03/2024 - 10/03/2024",
+                                                             "hours":  12.5,
                                                              "date":  "04/03/2024"
                                                          },
                                                          {
@@ -8813,6 +8887,12 @@ table.batch-table input:focus{border-color:var(--ac)}
                                            "currentAvailableHrs":  133.92,
                                            "calculatedHolidays":  133.92,
                                            "holidaysTaken":  0
+                                       },
+                               "s32":  {
+                                           "weeks":  [
+
+                                                     ],
+                                           "opening":  0
                                        }
                            },
                   "2025":  {
@@ -11087,18 +11167,13 @@ table.batch-table input:focus{border-color:var(--ac)}
                                            "weeks":  [
                                                          {
                                                              "label":  "Week 1 06/01/2025 - 12/01/2025",
-                                                             "hours":  19.5,
-                                                             "date":  "06/01/2025"
-                                                         },
-                                                         {
-                                                             "label":  "Week 1 06/01/2025 - 12/01/2025",
                                                              "hours":  42,
                                                              "date":  "06/01/2025"
                                                          },
                                                          {
-                                                             "label":  "Week 2 13/01/2025 - 19/01/2025",
-                                                             "hours":  27,
-                                                             "date":  "13/01/2025"
+                                                             "label":  "Week 1 06/01/2025 - 12/01/2025",
+                                                             "hours":  19.5,
+                                                             "date":  "06/01/2025"
                                                          },
                                                          {
                                                              "label":  "Week 2 13/01/2025 - 19/01/2025",
@@ -11106,13 +11181,18 @@ table.batch-table input:focus{border-color:var(--ac)}
                                                              "date":  "13/01/2025"
                                                          },
                                                          {
-                                                             "label":  "Week 3 20/01/2025 - 26/01/2025",
-                                                             "hours":  18,
-                                                             "date":  "20/01/2025"
+                                                             "label":  "Week 2 13/01/2025 - 19/01/2025",
+                                                             "hours":  27,
+                                                             "date":  "13/01/2025"
                                                          },
                                                          {
                                                              "label":  "Week 3 20/01/2025 - 26/01/2025",
                                                              "hours":  36.5,
+                                                             "date":  "20/01/2025"
+                                                         },
+                                                         {
+                                                             "label":  "Week 3 20/01/2025 - 26/01/2025",
+                                                             "hours":  18,
                                                              "date":  "20/01/2025"
                                                          },
                                                          {
@@ -15808,6 +15888,12 @@ table.batch-table input:focus{border-color:var(--ac)}
                                            "currentAvailableHrs":  66.4,
                                            "calculatedHolidays":  142.48,
                                            "holidaysTaken":  210
+                                       },
+                               "s32":  {
+                                           "weeks":  [
+
+                                                     ],
+                                           "opening":  0
                                        }
                            },
                   "2026":  {
@@ -15988,6 +16074,11 @@ table.batch-table input:focus{border-color:var(--ac)}
                                                             "label":  "Week 35 31/08/2026 - 06/09/2026",
                                                             "hours":  30,
                                                             "date":  "31/08/2026"
+                                                        },
+                                                        {
+                                                            "label":  "Week 36 07/09/2026 - 13/09/2026",
+                                                            "hours":  30,
+                                                            "date":  "2026-09-07"
                                                         }
                                                     ],
                                           "totalWorked":  893,
@@ -16173,6 +16264,11 @@ table.batch-table input:focus{border-color:var(--ac)}
                                                             "label":  "Week 35 31/08/2026 - 06/09/2026",
                                                             "hours":  0,
                                                             "date":  "31/08/2026"
+                                                        },
+                                                        {
+                                                            "label":  "Week 36 07/09/2026 - 13/09/2026",
+                                                            "hours":  0,
+                                                            "date":  "2026-09-07"
                                                         }
                                                     ],
                                           "totalWorked":  1037,
@@ -16358,6 +16454,11 @@ table.batch-table input:focus{border-color:var(--ac)}
                                                              "label":  "Week 35 31/08/2026 - 06/09/2026",
                                                              "hours":  29,
                                                              "date":  "31/08/2026"
+                                                         },
+                                                         {
+                                                             "label":  "Week 36 07/09/2026 - 13/09/2026",
+                                                             "hours":  29,
+                                                             "date":  "2026-09-07"
                                                          }
                                                      ],
                                            "totalWorked":  931,
@@ -16493,6 +16594,11 @@ table.batch-table input:focus{border-color:var(--ac)}
                                                              "label":  "Week 35 31/08/2026 - 06/09/2026",
                                                              "hours":  0,
                                                              "date":  "31/08/2026"
+                                                         },
+                                                         {
+                                                             "label":  "Week 36 07/09/2026 - 13/09/2026",
+                                                             "hours":  0,
+                                                             "date":  "2026-09-07"
                                                          }
                                                      ],
                                            "totalWorked":  560.5,
@@ -16678,6 +16784,11 @@ table.batch-table input:focus{border-color:var(--ac)}
                                                              "label":  "Week 35 31/08/2026 - 06/09/2026",
                                                              "hours":  32.5,
                                                              "date":  "31/08/2026"
+                                                         },
+                                                         {
+                                                             "label":  "Week 36 07/09/2026 - 13/09/2026",
+                                                             "hours":  32.5,
+                                                             "date":  "2026-09-07"
                                                          }
                                                      ],
                                            "totalWorked":  1305.5,
@@ -16863,6 +16974,11 @@ table.batch-table input:focus{border-color:var(--ac)}
                                                              "label":  "Week 35 31/08/2026 - 06/09/2026",
                                                              "hours":  30,
                                                              "date":  "31/08/2026"
+                                                         },
+                                                         {
+                                                             "label":  "Week 36 07/09/2026 - 13/09/2026",
+                                                             "hours":  23,
+                                                             "date":  "2026-09-07"
                                                          }
                                                      ],
                                            "totalWorked":  890.5,
@@ -17048,6 +17164,11 @@ table.batch-table input:focus{border-color:var(--ac)}
                                                             "label":  "Week 35 31/08/2026 - 06/09/2026",
                                                             "hours":  40,
                                                             "date":  "31/08/2026"
+                                                        },
+                                                        {
+                                                            "label":  "Week 36 07/09/2026 - 13/09/2026",
+                                                            "hours":  40,
+                                                            "date":  "2026-09-07"
                                                         }
                                                     ],
                                           "totalWorked":  1061,
@@ -17233,6 +17354,11 @@ table.batch-table input:focus{border-color:var(--ac)}
                                                              "label":  "Week 35 31/08/2026 - 06/09/2026",
                                                              "hours":  31,
                                                              "date":  "31/08/2026"
+                                                         },
+                                                         {
+                                                             "label":  "Week 36 07/09/2026 - 13/09/2026",
+                                                             "hours":  31,
+                                                             "date":  "2026-09-07"
                                                          }
                                                      ],
                                            "totalWorked":  975.5,
@@ -17418,6 +17544,11 @@ table.batch-table input:focus{border-color:var(--ac)}
                                                             "label":  "Week 35 31/08/2026 - 06/09/2026",
                                                             "hours":  40,
                                                             "date":  "31/08/2026"
+                                                        },
+                                                        {
+                                                            "label":  "Week 36 07/09/2026 - 13/09/2026",
+                                                            "hours":  40,
+                                                            "date":  "2026-09-07"
                                                         }
                                                     ],
                                           "totalWorked":  1344,
@@ -17603,6 +17734,11 @@ table.batch-table input:focus{border-color:var(--ac)}
                                                              "label":  "Week 35 31/08/2026 - 06/09/2026",
                                                              "hours":  8,
                                                              "date":  "31/08/2026"
+                                                         },
+                                                         {
+                                                             "label":  "Week 36 07/09/2026 - 13/09/2026",
+                                                             "hours":  8,
+                                                             "date":  "2026-09-07"
                                                          }
                                                      ],
                                            "totalWorked":  310,
@@ -17788,6 +17924,11 @@ table.batch-table input:focus{border-color:var(--ac)}
                                                              "label":  "Week 35 31/08/2026 - 06/09/2026",
                                                              "hours":  35,
                                                              "date":  "31/08/2026"
+                                                         },
+                                                         {
+                                                             "label":  "Week 36 07/09/2026 - 13/09/2026",
+                                                             "hours":  35,
+                                                             "date":  "2026-09-07"
                                                          }
                                                      ],
                                            "totalWorked":  905,
@@ -17973,6 +18114,11 @@ table.batch-table input:focus{border-color:var(--ac)}
                                                             "label":  "Week 35 31/08/2026 - 06/09/2026",
                                                             "hours":  19.5,
                                                             "date":  "31/08/2026"
+                                                        },
+                                                        {
+                                                            "label":  "Week 36 07/09/2026 - 13/09/2026",
+                                                            "hours":  12,
+                                                            "date":  "2026-09-07"
                                                         }
                                                     ],
                                           "totalWorked":  404,
@@ -18118,6 +18264,11 @@ table.batch-table input:focus{border-color:var(--ac)}
                                                              "label":  "Week 35 31/08/2026 - 06/09/2026",
                                                              "hours":  0,
                                                              "date":  "31/08/2026"
+                                                         },
+                                                         {
+                                                             "label":  "Week 36 07/09/2026 - 13/09/2026",
+                                                             "hours":  0,
+                                                             "date":  "2026-09-07"
                                                          }
                                                      ],
                                            "totalWorked":  603,
@@ -18303,6 +18454,11 @@ table.batch-table input:focus{border-color:var(--ac)}
                                                              "label":  "Week 35 31/08/2026 - 06/09/2026",
                                                              "hours":  33,
                                                              "date":  "31/08/2026"
+                                                         },
+                                                         {
+                                                             "label":  "Week 36 07/09/2026 - 13/09/2026",
+                                                             "hours":  13.5,
+                                                             "date":  "2026-09-07"
                                                          }
                                                      ],
                                            "totalWorked":  564.6,
@@ -18488,6 +18644,11 @@ table.batch-table input:focus{border-color:var(--ac)}
                                                              "label":  "Week 35 31/08/2026 - 06/09/2026",
                                                              "hours":  12.5,
                                                              "date":  "31/08/2026"
+                                                         },
+                                                         {
+                                                             "label":  "Week 36 07/09/2026 - 13/09/2026",
+                                                             "hours":  12.5,
+                                                             "date":  "2026-09-07"
                                                          }
                                                      ],
                                            "totalWorked":  818.5,
@@ -18673,6 +18834,11 @@ table.batch-table input:focus{border-color:var(--ac)}
                                                              "label":  "Week 35 31/08/2026 - 06/09/2026",
                                                              "hours":  0,
                                                              "date":  "31/08/2026"
+                                                         },
+                                                         {
+                                                             "label":  "Week 36 07/09/2026 - 13/09/2026",
+                                                             "hours":  0,
+                                                             "date":  "2026-09-07"
                                                          }
                                                      ],
                                            "totalWorked":  767.5,
@@ -18858,6 +19024,11 @@ table.batch-table input:focus{border-color:var(--ac)}
                                                              "label":  "Week 35 31/08/2026 - 06/09/2026",
                                                              "hours":  45,
                                                              "date":  "31/08/2026"
+                                                         },
+                                                         {
+                                                             "label":  "Week 36 07/09/2026 - 13/09/2026",
+                                                             "hours":  44,
+                                                             "date":  "2026-09-07"
                                                          }
                                                      ],
                                            "totalWorked":  1516.5,
@@ -19043,6 +19214,11 @@ table.batch-table input:focus{border-color:var(--ac)}
                                                              "label":  "Week 35 31/08/2026 - 06/09/2026",
                                                              "hours":  7.5,
                                                              "date":  "31/08/2026"
+                                                         },
+                                                         {
+                                                             "label":  "Week 36 07/09/2026 - 13/09/2026",
+                                                             "hours":  0,
+                                                             "date":  "2026-09-07"
                                                          }
                                                      ],
                                            "totalWorked":  393,
@@ -19228,6 +19404,11 @@ table.batch-table input:focus{border-color:var(--ac)}
                                                             "label":  "Week 35 31/08/2026 - 06/09/2026",
                                                             "hours":  40,
                                                             "date":  "31/08/2026"
+                                                        },
+                                                        {
+                                                            "label":  "Week 36 07/09/2026 - 13/09/2026",
+                                                            "hours":  40,
+                                                            "date":  "2026-09-07"
                                                         }
                                                     ],
                                           "totalWorked":  1331,
@@ -19413,6 +19594,11 @@ table.batch-table input:focus{border-color:var(--ac)}
                                                              "label":  "Week 35 31/08/2026 - 06/09/2026",
                                                              "hours":  35.55,
                                                              "date":  "31/08/2026"
+                                                         },
+                                                         {
+                                                             "label":  "Week 36 07/09/2026 - 13/09/2026",
+                                                             "hours":  37.5,
+                                                             "date":  "2026-09-07"
                                                          }
                                                      ],
                                            "totalWorked":  1141,
@@ -19598,6 +19784,11 @@ table.batch-table input:focus{border-color:var(--ac)}
                                                              "label":  "Week 35 31/08/2026 - 06/09/2026",
                                                              "hours":  22.5,
                                                              "date":  "31/08/2026"
+                                                         },
+                                                         {
+                                                             "label":  "Week 36 07/09/2026 - 13/09/2026",
+                                                             "hours":  35,
+                                                             "date":  "2026-09-07"
                                                          }
                                                      ],
                                            "totalWorked":  1009.5,
@@ -19783,6 +19974,11 @@ table.batch-table input:focus{border-color:var(--ac)}
                                                             "label":  "Week 35 31/08/2026 - 06/09/2026",
                                                             "hours":  35,
                                                             "date":  "31/08/2026"
+                                                        },
+                                                        {
+                                                            "label":  "Week 36 07/09/2026 - 13/09/2026",
+                                                            "hours":  35,
+                                                            "date":  "2026-09-07"
                                                         }
                                                     ],
                                           "totalWorked":  1176,
@@ -19968,6 +20164,11 @@ table.batch-table input:focus{border-color:var(--ac)}
                                                              "label":  "Week 35 31/08/2026 - 06/09/2026",
                                                              "hours":  43,
                                                              "date":  "31/08/2026"
+                                                         },
+                                                         {
+                                                             "label":  "Week 36 07/09/2026 - 13/09/2026",
+                                                             "hours":  44,
+                                                             "date":  "2026-09-07"
                                                          }
                                                      ],
                                            "totalWorked":  1138.5,
@@ -20153,6 +20354,11 @@ table.batch-table input:focus{border-color:var(--ac)}
                                                              "label":  "Week 35 31/08/2026 - 06/09/2026",
                                                              "hours":  6,
                                                              "date":  "31/08/2026"
+                                                         },
+                                                         {
+                                                             "label":  "Week 36 07/09/2026 - 13/09/2026",
+                                                             "hours":  34.5,
+                                                             "date":  "2026-09-07"
                                                          }
                                                      ],
                                            "totalWorked":  1034,
@@ -20198,6 +20404,11 @@ table.batch-table input:focus{border-color:var(--ac)}
                                                              "label":  "Week 35 31/08/2026 - 06/09/2026",
                                                              "hours":  28.5,
                                                              "date":  "31/08/2026"
+                                                         },
+                                                         {
+                                                             "label":  "Week 36 07/09/2026 - 13/09/2026",
+                                                             "hours":  26.5,
+                                                             "date":  "2026-09-07"
                                                          }
                                                      ],
                                            "totalWorked":  149,
@@ -20383,6 +20594,11 @@ table.batch-table input:focus{border-color:var(--ac)}
                                                             "label":  "Week 35 31/08/2026 - 06/09/2026",
                                                             "hours":  35,
                                                             "date":  "31/08/2026"
+                                                        },
+                                                        {
+                                                            "label":  "Week 36 07/09/2026 - 13/09/2026",
+                                                            "hours":  35,
+                                                            "date":  "2026-09-07"
                                                         }
                                                     ],
                                           "totalWorked":  1143,
@@ -20568,6 +20784,11 @@ table.batch-table input:focus{border-color:var(--ac)}
                                                              "label":  "Week 35 31/08/2026 - 06/09/2026",
                                                              "hours":  26.5,
                                                              "date":  "31/08/2026"
+                                                         },
+                                                         {
+                                                             "label":  "Week 36 07/09/2026 - 13/09/2026",
+                                                             "hours":  19,
+                                                             "date":  "2026-09-07"
                                                          }
                                                      ],
                                            "totalWorked":  813.5,
@@ -20753,6 +20974,11 @@ table.batch-table input:focus{border-color:var(--ac)}
                                                             "label":  "Week 35 31/08/2026 - 06/09/2026",
                                                             "hours":  28.5,
                                                             "date":  "31/08/2026"
+                                                        },
+                                                        {
+                                                            "label":  "Week 36 07/09/2026 - 13/09/2026",
+                                                            "hours":  27.5,
+                                                            "date":  "2026-09-07"
                                                         }
                                                     ],
                                           "totalWorked":  830.5,
@@ -20838,6 +21064,11 @@ table.batch-table input:focus{border-color:var(--ac)}
                                                              "label":  "Week 35 31/08/2026 - 06/09/2026",
                                                              "hours":  24.5,
                                                              "date":  "31/08/2026"
+                                                         },
+                                                         {
+                                                             "label":  "Week 36 07/09/2026 - 13/09/2026",
+                                                             "hours":  27,
+                                                             "date":  "2026-09-07"
                                                          }
                                                      ],
                                            "totalWorked":  155.5,
@@ -21023,6 +21254,11 @@ table.batch-table input:focus{border-color:var(--ac)}
                                                              "label":  "Week 35 31/08/2026 - 06/09/2026",
                                                              "hours":  38,
                                                              "date":  "31/08/2026"
+                                                         },
+                                                         {
+                                                             "label":  "Week 36 07/09/2026 - 13/09/2026",
+                                                             "hours":  38,
+                                                             "date":  "2026-09-07"
                                                          }
                                                      ],
                                            "totalWorked":  881,
@@ -21030,6 +21266,21 @@ table.batch-table input:focus{border-color:var(--ac)}
                                            "currentAvailableHrs":  -73.12,
                                            "calculatedHolidays":  70.48,
                                            "holidaysTaken":  210
+                                       },
+                               "s32":  {
+                                           "weeks":  [
+                                                         {
+                                                             "label":  "Week 35 31/08/2026 - 06/09/2026",
+                                                             "hours":  23.5,
+                                                             "date":  "Week 35 31/08/2026 - 06/09/2026"
+                                                         },
+                                                         {
+                                                             "label":  "Week 36 07/09/2026 - 13/09/2026",
+                                                             "hours":  29.5,
+                                                             "date":  "2026-09-07"
+                                                         }
+                                                     ],
+                                           "opening":  0
                                        }
                            }
               },
@@ -21043,7 +21294,10 @@ table.batch-table input:focus{border-color:var(--ac)}
                       "location":  "Mullingar",
                       "sickAllowance":  35,
                       "dailyHours":  8,
-                      "weeklyHours":  40
+                      "weeklyHours":  40,
+                      "status":  "active",
+                      "leftDate":  "",
+                      "leftWeek":  ""
                   },
                   {
                       "id":  "s2",
@@ -21054,7 +21308,10 @@ table.batch-table input:focus{border-color:var(--ac)}
                       "location":  "Portlaoise",
                       "sickAllowance":  35,
                       "dailyHours":  8,
-                      "weeklyHours":  40
+                      "weeklyHours":  40,
+                      "status":  "active",
+                      "leftDate":  "",
+                      "leftWeek":  ""
                   },
                   {
                       "id":  "s3",
@@ -21065,7 +21322,10 @@ table.batch-table input:focus{border-color:var(--ac)}
                       "location":  "Portlaoise",
                       "sickAllowance":  35,
                       "dailyHours":  7,
-                      "weeklyHours":  35
+                      "weeklyHours":  35,
+                      "status":  "active",
+                      "leftDate":  "",
+                      "leftWeek":  ""
                   },
                   {
                       "id":  "s4",
@@ -21076,7 +21336,10 @@ table.batch-table input:focus{border-color:var(--ac)}
                       "location":  "Tullamore",
                       "sickAllowance":  35,
                       "dailyHours":  7,
-                      "weeklyHours":  35
+                      "weeklyHours":  35,
+                      "status":  "active",
+                      "leftDate":  "",
+                      "leftWeek":  ""
                   },
                   {
                       "id":  "s5",
@@ -21087,7 +21350,10 @@ table.batch-table input:focus{border-color:var(--ac)}
                       "location":  "Maynooth",
                       "sickAllowance":  35,
                       "dailyHours":  7,
-                      "weeklyHours":  35
+                      "weeklyHours":  35,
+                      "status":  "active",
+                      "leftDate":  "",
+                      "leftWeek":  ""
                   },
                   {
                       "id":  "s6",
@@ -21098,7 +21364,10 @@ table.batch-table input:focus{border-color:var(--ac)}
                       "location":  "Maynooth",
                       "sickAllowance":  35,
                       "dailyHours":  7,
-                      "weeklyHours":  35
+                      "weeklyHours":  35,
+                      "status":  "active",
+                      "leftDate":  "",
+                      "leftWeek":  ""
                   },
                   {
                       "id":  "s7",
@@ -21109,7 +21378,10 @@ table.batch-table input:focus{border-color:var(--ac)}
                       "location":  "Maynooth",
                       "sickAllowance":  35,
                       "dailyHours":  7,
-                      "weeklyHours":  35
+                      "weeklyHours":  35,
+                      "status":  "active",
+                      "leftDate":  "",
+                      "leftWeek":  ""
                   },
                   {
                       "id":  "s8",
@@ -21120,7 +21392,10 @@ table.batch-table input:focus{border-color:var(--ac)}
                       "location":  "Maynooth",
                       "sickAllowance":  35,
                       "dailyHours":  8,
-                      "weeklyHours":  40
+                      "weeklyHours":  40,
+                      "status":  "active",
+                      "leftDate":  "",
+                      "leftWeek":  ""
                   },
                   {
                       "id":  "s30",
@@ -21131,7 +21406,10 @@ table.batch-table input:focus{border-color:var(--ac)}
                       "location":  "Maynooth",
                       "sickAllowance":  35,
                       "dailyHours":  7,
-                      "weeklyHours":  35
+                      "weeklyHours":  35,
+                      "status":  "active",
+                      "leftDate":  "",
+                      "leftWeek":  ""
                   },
                   {
                       "id":  "s9",
@@ -21142,7 +21420,10 @@ table.batch-table input:focus{border-color:var(--ac)}
                       "location":  "Thurles",
                       "sickAllowance":  35,
                       "dailyHours":  7,
-                      "weeklyHours":  35
+                      "weeklyHours":  35,
+                      "status":  "active",
+                      "leftDate":  "",
+                      "leftWeek":  ""
                   },
                   {
                       "id":  "s16",
@@ -21153,7 +21434,10 @@ table.batch-table input:focus{border-color:var(--ac)}
                       "location":  "Thurles",
                       "sickAllowance":  35,
                       "dailyHours":  7,
-                      "weeklyHours":  35
+                      "weeklyHours":  35,
+                      "status":  "active",
+                      "leftDate":  "",
+                      "leftWeek":  ""
                   },
                   {
                       "id":  "s10",
@@ -21164,7 +21448,10 @@ table.batch-table input:focus{border-color:var(--ac)}
                       "location":  "Kilkenny",
                       "sickAllowance":  35,
                       "dailyHours":  7,
-                      "weeklyHours":  35
+                      "weeklyHours":  35,
+                      "status":  "active",
+                      "leftDate":  "",
+                      "leftWeek":  ""
                   },
                   {
                       "id":  "s14",
@@ -21175,7 +21462,10 @@ table.batch-table input:focus{border-color:var(--ac)}
                       "location":  "Kilkenny",
                       "sickAllowance":  35,
                       "dailyHours":  7,
-                      "weeklyHours":  35
+                      "weeklyHours":  35,
+                      "status":  "active",
+                      "leftDate":  "",
+                      "leftWeek":  ""
                   },
                   {
                       "id":  "s11",
@@ -21186,7 +21476,10 @@ table.batch-table input:focus{border-color:var(--ac)}
                       "location":  "Newbridge",
                       "sickAllowance":  35,
                       "dailyHours":  7,
-                      "weeklyHours":  35
+                      "weeklyHours":  35,
+                      "status":  "active",
+                      "leftDate":  "",
+                      "leftWeek":  ""
                   },
                   {
                       "id":  "s12",
@@ -21197,7 +21490,10 @@ table.batch-table input:focus{border-color:var(--ac)}
                       "location":  "Newbridge",
                       "sickAllowance":  35,
                       "dailyHours":  7,
-                      "weeklyHours":  35
+                      "weeklyHours":  35,
+                      "status":  "active",
+                      "leftDate":  "",
+                      "leftWeek":  ""
                   },
                   {
                       "id":  "s13",
@@ -21208,7 +21504,10 @@ table.batch-table input:focus{border-color:var(--ac)}
                       "location":  "Newbridge",
                       "sickAllowance":  35,
                       "dailyHours":  8,
-                      "weeklyHours":  40
+                      "weeklyHours":  40,
+                      "status":  "active",
+                      "leftDate":  "",
+                      "leftWeek":  ""
                   },
                   {
                       "id":  "s15",
@@ -21219,7 +21518,10 @@ table.batch-table input:focus{border-color:var(--ac)}
                       "location":  "Newbridge",
                       "sickAllowance":  35,
                       "dailyHours":  7,
-                      "weeklyHours":  35
+                      "weeklyHours":  35,
+                      "status":  "active",
+                      "leftDate":  "",
+                      "leftWeek":  ""
                   },
                   {
                       "id":  "s17",
@@ -21230,7 +21532,10 @@ table.batch-table input:focus{border-color:var(--ac)}
                       "location":  "Arklow",
                       "sickAllowance":  35,
                       "dailyHours":  7,
-                      "weeklyHours":  35
+                      "weeklyHours":  35,
+                      "status":  "active",
+                      "leftDate":  "",
+                      "leftWeek":  ""
                   },
                   {
                       "id":  "s18",
@@ -21241,7 +21546,10 @@ table.batch-table input:focus{border-color:var(--ac)}
                       "location":  "Arklow",
                       "sickAllowance":  35,
                       "dailyHours":  7,
-                      "weeklyHours":  35
+                      "weeklyHours":  35,
+                      "status":  "active",
+                      "leftDate":  "",
+                      "leftWeek":  ""
                   },
                   {
                       "id":  "s20",
@@ -21252,7 +21560,10 @@ table.batch-table input:focus{border-color:var(--ac)}
                       "location":  "Limerick",
                       "sickAllowance":  35,
                       "dailyHours":  7,
-                      "weeklyHours":  35
+                      "weeklyHours":  35,
+                      "status":  "active",
+                      "leftDate":  "",
+                      "leftWeek":  ""
                   },
                   {
                       "id":  "s21",
@@ -21263,7 +21574,10 @@ table.batch-table input:focus{border-color:var(--ac)}
                       "location":  "Tralee",
                       "sickAllowance":  35,
                       "dailyHours":  7,
-                      "weeklyHours":  35
+                      "weeklyHours":  35,
+                      "status":  "active",
+                      "leftDate":  "",
+                      "leftWeek":  ""
                   },
                   {
                       "id":  "s22",
@@ -21274,7 +21588,10 @@ table.batch-table input:focus{border-color:var(--ac)}
                       "location":  "Tralee",
                       "sickAllowance":  35,
                       "dailyHours":  7,
-                      "weeklyHours":  35
+                      "weeklyHours":  35,
+                      "status":  "active",
+                      "leftDate":  "",
+                      "leftWeek":  ""
                   },
                   {
                       "id":  "s23",
@@ -21285,7 +21602,10 @@ table.batch-table input:focus{border-color:var(--ac)}
                       "location":  "Tralee",
                       "sickAllowance":  35,
                       "dailyHours":  7,
-                      "weeklyHours":  35
+                      "weeklyHours":  35,
+                      "status":  "active",
+                      "leftDate":  "",
+                      "leftWeek":  ""
                   },
                   {
                       "id":  "s24",
@@ -21296,7 +21616,10 @@ table.batch-table input:focus{border-color:var(--ac)}
                       "location":  "Tralee",
                       "sickAllowance":  35,
                       "dailyHours":  7,
-                      "weeklyHours":  35
+                      "weeklyHours":  35,
+                      "status":  "active",
+                      "leftDate":  "",
+                      "leftWeek":  ""
                   },
                   {
                       "id":  "s25",
@@ -21307,7 +21630,10 @@ table.batch-table input:focus{border-color:var(--ac)}
                       "location":  "Tralee",
                       "sickAllowance":  35,
                       "dailyHours":  7,
-                      "weeklyHours":  35
+                      "weeklyHours":  35,
+                      "status":  "active",
+                      "leftDate":  "",
+                      "leftWeek":  ""
                   },
                   {
                       "id":  "s31",
@@ -21318,7 +21644,10 @@ table.batch-table input:focus{border-color:var(--ac)}
                       "location":  "Tralee",
                       "sickAllowance":  35,
                       "dailyHours":  7,
-                      "weeklyHours":  35
+                      "weeklyHours":  35,
+                      "status":  "active",
+                      "leftDate":  "",
+                      "leftWeek":  ""
                   },
                   {
                       "id":  "s26",
@@ -21329,7 +21658,10 @@ table.batch-table input:focus{border-color:var(--ac)}
                       "location":  "Killarney",
                       "sickAllowance":  35,
                       "dailyHours":  7,
-                      "weeklyHours":  35
+                      "weeklyHours":  35,
+                      "status":  "active",
+                      "leftDate":  "",
+                      "leftWeek":  ""
                   },
                   {
                       "id":  "s27",
@@ -21340,7 +21672,10 @@ table.batch-table input:focus{border-color:var(--ac)}
                       "location":  "Letterkenny",
                       "sickAllowance":  35,
                       "dailyHours":  7,
-                      "weeklyHours":  35
+                      "weeklyHours":  35,
+                      "status":  "active",
+                      "leftDate":  "",
+                      "leftWeek":  ""
                   },
                   {
                       "id":  "s28",
@@ -21351,7 +21686,10 @@ table.batch-table input:focus{border-color:var(--ac)}
                       "location":  "Letterkenny",
                       "sickAllowance":  35,
                       "dailyHours":  7,
-                      "weeklyHours":  35
+                      "weeklyHours":  35,
+                      "status":  "active",
+                      "leftDate":  "",
+                      "leftWeek":  ""
                   },
                   {
                       "id":  "s29",
@@ -21362,7 +21700,23 @@ table.batch-table input:focus{border-color:var(--ac)}
                       "location":  "Letterkenny",
                       "sickAllowance":  35,
                       "dailyHours":  7,
-                      "weeklyHours":  35
+                      "weeklyHours":  35,
+                      "status":  "inactive",
+                      "leftDate":  "22/03/2026",
+                      "leftWeek":  "Week 11 (2026)"
+                  },
+                  {
+                      "id":  "s32",
+                      "name":  "Ilona Shytova",
+                      "shop":  "Kilkenny",
+                      "location":  "Kilkenny",
+                      "startDate":  "2026-08-31",
+                      "dailyHours":  7,
+                      "weeklyHours":  35,
+                      "sickAllowance":  35,
+                      "status":  "active",
+                      "leftDate":  "",
+                      "leftWeek":  ""
                   }
               ]
 }</script>
@@ -21394,6 +21748,7 @@ if(ov['2026']){
           w.date = '31/08/2026';
         }
       });
+      ov['2026'][sid].weeks = sortWeeksChronologically(ov['2026'][sid].weeks);
     }
   });
   saveOv(ov);
@@ -21487,23 +21842,107 @@ function toast(msg,col){
   document.body.appendChild(t);setTimeout(function(){t.remove();},2600);
 }
 
+// â”€â”€â”€ Chronological Week Sorter â”€â”€â”€
+function sortWeeksChronologically(weeks){
+  if(!weeks || !Array.isArray(weeks)) return [];
+  return weeks.slice().sort(function(a, b){
+    const matchA = (a.label||'').match(/Week\s*(\d+)/i);
+    const matchB = (b.label||'').match(/Week\s*(\d+)/i);
+    const numA = matchA ? parseInt(matchA[1], 10) : 0;
+    const numB = matchB ? parseInt(matchB[1], 10) : 0;
+    if(numA !== numB) return numA - numB;
+    return (a.date || '').localeCompare(b.date || '');
+  });
+}
+
+// â”€â”€â”€ Find Week for any specific date (e.g. Employee Start Working Date) â”€â”€â”€
+function findWeekForDate(dateStr, year){
+  if(!dateStr) return null;
+  let targetDate = null;
+  if(dateStr.includes('-')){
+    const parts = dateStr.split('-');
+    targetDate = new Date(parseInt(parts[0], 10), parseInt(parts[1], 10) - 1, parseInt(parts[2], 10));
+  } else if(dateStr.includes('/')){
+    const parts = dateStr.split('/');
+    targetDate = new Date(parseInt(parts[2], 10), parseInt(parts[1], 10) - 1, parseInt(parts[0], 10));
+  }
+  if(!targetDate || isNaN(targetDate.getTime())) return null;
+
+  let allCompanyWeeks = [];
+  BASE.staff.forEach(function(s){
+    const w = getStaffWeeks(s.id, year);
+    if(w.length > allCompanyWeeks.length) allCompanyWeeks = w;
+  });
+
+  for(let i = 0; i < allCompanyWeeks.length; i++){
+    const w = allCompanyWeeks[i];
+    const dateMatches = (w.label||'').match(/(\d{1,2})[\/\-\.](\d{1,2})[\/\-\.](\d{4})/g);
+    if(dateMatches && dateMatches.length >= 2){
+      const p1 = dateMatches[0].split(/[\/\-\.]/);
+      const startWk = new Date(parseInt(p1[2], 10), parseInt(p1[1], 10) - 1, parseInt(p1[0], 10));
+      const p2 = dateMatches[1].split(/[\/\-\.]/);
+      const endWk = new Date(parseInt(p2[2], 10), parseInt(p2[1], 10) - 1, parseInt(p2[0], 10), 23, 59, 59);
+      
+      if(targetDate >= startWk && targetDate <= endWk){
+        const matchWk = (w.label||'').match(/Week\s*(\d+)/i);
+        const wNum = matchWk ? parseInt(matchWk[1], 10) : (i + 1);
+        const isoStart = p1[2] + '-' + (p1[1].length===1?'0'+p1[1]:p1[1]) + '-' + (p1[0].length===1?'0'+p1[0]:p1[0]);
+        return {
+          weekNum: wNum,
+          label: w.label,
+          startDate: isoStart
+        };
+      }
+    }
+  }
+
+  // Fallback calculated week
+  const day = targetDate.getDay();
+  const diffToMonday = targetDate.getDate() - day + (day === 0 ? -6 : 1);
+  const mon = new Date(targetDate.setDate(diffToMonday));
+  const sun = new Date(mon.getTime() + (6 * 24 * 60 * 60 * 1000));
+  
+  function pad2(n){ return n < 10 ? '0' + n : '' + n; }
+  const startFormatted = pad2(mon.getDate()) + '/' + pad2(mon.getMonth() + 1) + '/' + mon.getFullYear();
+  const endFormatted = pad2(sun.getDate()) + '/' + pad2(sun.getMonth() + 1) + '/' + sun.getFullYear();
+  const isoStart = mon.getFullYear() + '-' + pad2(mon.getMonth() + 1) + '-' + pad2(mon.getDate());
+
+  const firstJan = new Date(mon.getFullYear(), 0, 1);
+  const weekNum = Math.ceil((((mon - firstJan) / 86400000) + firstJan.getDay() + 1) / 7);
+
+  return {
+    weekNum: weekNum,
+    label: 'Week ' + weekNum + ' ' + startFormatted + ' - ' + endFormatted,
+    startDate: isoStart
+  };
+}
+
 // â”€â”€â”€ ðŸŒŸ SMART AUTOMATIC NEXT WEEK CALCULATOR ðŸŒŸ â”€â”€â”€
 function getNextWeekSuggestion(year, sid){
-  let weeks = [];
-  if (sid) {
-    weeks = getStaffWeeks(sid, year);
-  } else {
+  const staff = sid ? BASE.staff.find(function(s){ return s.id === sid; }) : null;
+  const rawWeeks = sid ? getStaffWeeks(sid, year) : [];
+  const weeks = sortWeeksChronologically(rawWeeks);
+
+  if(staff && (!weeks || weeks.length === 0)){
+    if(staff.startDate){
+      const startWkMatch = findWeekForDate(staff.startDate, year);
+      if(startWkMatch) return startWkMatch;
+    }
+  }
+
+  let baseWeeks = weeks;
+  if(!baseWeeks || baseWeeks.length === 0){
     BASE.staff.forEach(function(s) {
       if (s.status !== 'inactive') {
         const w = getStaffWeeks(s.id, year);
-        if (w.length > weeks.length) weeks = w;
+        if (w.length > baseWeeks.length) baseWeeks = w;
       }
     });
   }
 
   const yInt = parseInt(year, 10) || 2026;
 
-  if (!weeks || weeks.length === 0) {
+  if (!baseWeeks || baseWeeks.length === 0) {
     return {
       weekNum: 1,
       label: 'Week 1 05/01/' + yInt + ' - 11/01/' + yInt,
@@ -21512,10 +21951,11 @@ function getNextWeekSuggestion(year, sid){
     };
   }
 
-  const lastWk = weeks[weeks.length - 1];
+  const sortedBase = sortWeeksChronologically(baseWeeks);
+  const lastWk = sortedBase[sortedBase.length - 1];
   const lastLabel = lastWk.label || '';
   
-  let nextWkNum = weeks.length + 1;
+  let nextWkNum = sortedBase.length + 1;
   const matchWk = lastLabel.match(/Week\s*(\d+)/i);
   if (matchWk) {
     nextWkNum = parseInt(matchWk[1], 10) + 1;
@@ -21580,9 +22020,13 @@ function getNextWeekSuggestion(year, sid){
 // â”€â”€â”€ Data Access â”€â”€â”€
 function getStaffWeeks(sid, year){
   const ovEntry = ((ov[year]||{})[sid])||{};
-  if(ovEntry.weeks) return ovEntry.weeks;
-  const base = ((BASE.years[year]||{})[sid])||{};
-  return base.weeks || [];
+  let raw = [];
+  if(ovEntry.weeks) raw = ovEntry.weeks;
+  else {
+    const base = ((BASE.years[year]||{})[sid])||{};
+    raw = base.weeks || [];
+  }
+  return sortWeeksChronologically(raw);
 }
 
 function getStaffHolidayLogs(sid, year){
@@ -21631,7 +22075,7 @@ function computeYearStats(sid, year){
   const sickUsed = sickLogs.reduce(function(s,e){ return s + (e.hours||0); }, 0);
   
   const dailyHours = getStaffDailyHours(sid);
-  const sickAllowance = SICK_ALLOWANCE_ANNUAL; // 35.0 hrs for everyone
+  const sickAllowance = SICK_ALLOWANCE_ANNUAL;
   const sickRemaining = Math.max(0, Math.round((sickAllowance - sickUsed) * 100) / 100);
   
   const balance = Math.round((opening + earned - holTaken) * 100) / 100;
@@ -21679,18 +22123,18 @@ function triggerAutoSync(){
 
 function setWeekHours(sid,year,idx,hours){
   ensureOvYear(year,sid);
-  const weeks = JSON.parse(JSON.stringify(getStaffWeeks(sid,year)));
+  const weeks = sortWeeksChronologically(getStaffWeeks(sid,year));
   weeks[idx].hours = hours;
-  ov[year][sid].weeks = weeks;
+  ov[year][sid].weeks = sortWeeksChronologically(weeks);
   saveOv(ov);
   triggerAutoSync();
 }
 
 function addWeek(sid,year,label,hours,sDate){
   ensureOvYear(year,sid);
-  const weeks = JSON.parse(JSON.stringify(getStaffWeeks(sid,year)));
+  const weeks = sortWeeksChronologically(getStaffWeeks(sid,year));
   weeks.push({label:label,hours:hours,date:sDate||label});
-  ov[year][sid].weeks = weeks;
+  ov[year][sid].weeks = sortWeeksChronologically(weeks);
   saveOv(ov);
   triggerAutoSync();
 }
@@ -21821,7 +22265,7 @@ function renderSidebar(){
     div.className='staff-item'+(s.id===activeSid?' active':'');
     div.innerHTML='<div class="si-avatar" style="background:'+avatarColor(s.id)+'">' + initials(s.name) + '</div>'
       +'<div class="si-info"><div class="si-name">'+s.name+'</div><div class="si-sub"><span>'+shopName+'</span><span class="shift-tag">'+weeklyHrs+'h/wk</span>'
-      +(s.status==='inactive'?'<span class="inactive-tag">Former</span>':'')
+      +(s.status==='inactive'?'<span class="inactive-tag">'+(s.leftWeek ? s.leftWeek.split(' ')[0] + ' ' + s.leftWeek.split(' ')[1] : 'Former')+'</span>':'')
       +'</div></div>'
       +(hasData?'<span class="si-badge '+badgeCls+'">'+badgeTxt+'</span>':'');
     div.addEventListener('click',function(){activeSid=s.id;editingWeekIdx=null;editingHolId=null;editingSickId=null;renderAll();});
@@ -21866,7 +22310,7 @@ function renderMain(){
   const curStats = connectedStats[activeYear];
   const dailyHrs = curStats.dailyHours;
   const weeklyHrs = dailyHrs * 5;
-  const sickAllowance = curStats.sickAllowance; // 35.0 hrs
+  const sickAllowance = curStats.sickAllowance;
   
   const balance = curStats.balance;
   const balDays = curStats.days;
@@ -21888,7 +22332,10 @@ function renderMain(){
     // Inactive banner if staff is marked former/inactive
     +(isInactive ? 
       '<div class="inactive-banner">'
-      +'<div>&#9888; <strong>Former Staff Member (Inactive)</strong> &bull; All historical records &amp; balances are preserved.</div>'
+      +'<div>&#9888; <strong>Former Staff Member (Inactive)</strong> &bull; '
+      +(staff.leftWeek ? 'Stopped Working: <strong>' + staff.leftWeek + '</strong> ' : '')
+      +(staff.leftDate ? ' (Date: ' + staff.leftDate + ') &bull; ' : '&bull; ')
+      +'All historical records &amp; balances are preserved.</div>'
       +(!isPortalMode ? '<button class="btn btn-gr" id="reactivateStaffBtn">&#128260; Reactivate Staff Member</button>' : '')
       +'</div>' : '')
     
@@ -21905,6 +22352,7 @@ function renderMain(){
     +'<span class="portal-shift-badge">&#9200; '+weeklyHrs+' hrs/week ('+dailyHrs+'h/day)</span>'
     +'<span>Started: <strong id="startDisplay">'+(staff.startDate||'<em style="color:var(--am)">On Record</em>')+'</strong></span>'
     +(!isPortalMode ? ' <button class="start-edit-btn" id="startEditBtn" style="background:none;border:none;color:var(--ac);cursor:pointer;font-weight:700;font-size:.74rem">Edit</button>' : '')
+    +(staff.leftDate ? '<span>&bull; Stopped: <strong style="color:var(--rd)">'+staff.leftDate+'</strong></span>' : '')
     +'</div>'
     +'</div>'
     +'</div>'
@@ -22042,7 +22490,7 @@ function renderMain(){
         tr.style.background='var(--sf3)';
         tr.innerHTML = 
           '<td style="padding:6px 10px"><input type="text" id="editWkLbl_'+i+'" value="'+(w.label||'').replace(/"/g, '&quot;')+'" style="width:100%;padding:5px 8px;font-size:.76rem;border:1px solid var(--ac);border-radius:6px;font-family:\'Outfit\',sans-serif;font-weight:700;background:#fff;color:var(--tx)"></td>'
-          + '<td style="padding:6px 10px;text-align:right"><input type="number" id="editWkHrs_'+i+'" value="'+w.hours+'" min="0" step="0.5" style="width:60px;padding:5px 6px;font-size:.76rem;border:1px solid var(--ac);border-radius:6px;font-family:\'JetBrains Mono\',monospace;text-align:right;font-weight:700;background:#fff;color:var(--tx)"></td>'
+          + '<td style="padding:6px 10px;text-align:right"><input type="number" id="editWkHrs_'+i+'" value="' + w.hours + '" min="0" step="0.5" style="width:60px;padding:5px 6px;font-size:.76rem;border:1px solid var(--ac);border-radius:6px;font-family:\'JetBrains Mono\',monospace;text-align:right;font-weight:700;background:#fff;color:var(--tx)"></td>'
           + '<td style="padding:6px 10px;text-align:right;white-space:nowrap">'
           + '<button class="btn btn-gr" style="padding:4px 7px;font-size:.72rem" onclick="saveEditWeek('+i+')">&#10004;</button> '
           + '<button class="btn btn-ghost" style="padding:4px 7px;font-size:.72rem" onclick="cancelEditWeek()">&#10006;</button> '
@@ -22161,9 +22609,7 @@ function renderMain(){
     const deactBtn = document.getElementById('deactivateStaffBtn');
     if(deactBtn){
       deactBtn.addEventListener('click', function(){
-        if(confirm('Are you sure you want to mark ' + staff.name + ' as a former / inactive employee? All records will be preserved in the Inactive tab.')){
-          setStaffActiveStatus(staff.id, false);
-        }
+        openDeactivateModal(staff.id);
       });
     }
 
@@ -22206,7 +22652,7 @@ function renderCalendarEstimatorSchedule(){
   
   const weeklyAccrual = Math.round(weeklyHrs * 0.08 * 100) / 100;
   
-  const startDate = new Date(2026, 8, 7); // 07 Sep 2026 (Week 36)
+  const startDate = new Date(2026, 8, 14); // 14 Sep 2026 (Week 37)
   const totalFutureWeeksToRender = 26;
   
   calTbody.innerHTML = '';
@@ -22215,7 +22661,7 @@ function renderCalendarEstimatorSchedule(){
   let runningProjectedBalance = curBalance;
   
   for(let w = 1; w <= totalFutureWeeksToRender; w++){
-    const wkNum = currentWeeksCount + w;
+    const wkNum = (currentWeeksCount >= 36 ? currentWeeksCount : 36) + w;
     const weekStart = new Date(startDate.getTime() + ((w - 1) * 7 * 24 * 60 * 60 * 1000));
     const weekEnd = new Date(weekStart.getTime() + (6 * 24 * 60 * 60 * 1000));
     
@@ -22276,21 +22722,47 @@ function renderCalendarEstimatorSchedule(){
   }
 }
 
-// â”€â”€â”€ Staff Activation / Inactivation Helpers â”€â”€â”€
-function setStaffActiveStatus(sid, isActive){
+// â”€â”€â”€ Staff Deactivation Modal â”€â”€â”€
+function openDeactivateModal(sid){
   const staff = BASE.staff.find(function(x){ return x.id === sid; });
   if(!staff) return;
   
-  staff.status = isActive ? 'active' : 'inactive';
-  if(!ov._staffUpdates) ov._staffUpdates = {};
-  if(!ov._staffUpdates[sid]) ov._staffUpdates[sid] = {};
-  ov._staffUpdates[sid].status = staff.status;
+  document.getElementById('deactStaffName').value = staff.name;
+  document.getElementById('deactLeftDate').value = new Date().toISOString().split('T')[0];
   
-  saveOv(ov);
-  toast(staff.name + ' set as ' + (isActive ? 'Active' : 'Former/Inactive'));
-  triggerAutoSync();
-  renderAll();
+  const currentWeeks = getStaffWeeks(sid, activeYear);
+  const lastWkNum = currentWeeks.length > 0 ? currentWeeks.length : 35;
+  document.getElementById('deactLeftWeek').value = 'Week ' + lastWkNum + ' (' + activeYear + ')';
+  
+  document.getElementById('confirmDeactivateBtn').onclick = function(){
+    const leftDate = document.getElementById('deactLeftDate').value;
+    const leftWeek = document.getElementById('deactLeftWeek').value.trim();
+    
+    staff.status = 'inactive';
+    staff.leftDate = leftDate;
+    staff.leftWeek = leftWeek;
+    
+    if(!ov._staffUpdates) ov._staffUpdates = {};
+    if(!ov._staffUpdates[sid]) ov._staffUpdates[sid] = {};
+    ov._staffUpdates[sid].status = 'inactive';
+    ov._staffUpdates[sid].leftDate = leftDate;
+    ov._staffUpdates[sid].leftWeek = leftWeek;
+    
+    saveOv(ov);
+    document.getElementById('deactivateModal').classList.add('hidden');
+    toast(staff.name + ' moved to Former/Inactive staff');
+    currentSidebarTab = 'inactive';
+    document.getElementById('sbTabInactive').classList.add('active');
+    document.getElementById('sbTabActive').classList.remove('active');
+    triggerAutoSync();
+    renderAll();
+  };
+  
+  document.getElementById('deactivateModal').classList.remove('hidden');
 }
+
+document.getElementById('deactivateClose').addEventListener('click', function(){ document.getElementById('deactivateModal').classList.add('hidden'); });
+document.getElementById('deactCancelBtn').addEventListener('click', function(){ document.getElementById('deactivateModal').classList.add('hidden'); });
 
 function openReactivateModal(sid){
   const staff = BASE.staff.find(function(x){ return x.id === sid; });
@@ -22308,12 +22780,16 @@ function openReactivateModal(sid){
     
     staff.status = 'active';
     staff.shop = newShop;
+    staff.leftDate = '';
+    staff.leftWeek = '';
     if(newStart) staff.startDate = newStart;
     
     if(!ov._staffUpdates) ov._staffUpdates = {};
     if(!ov._staffUpdates[sid]) ov._staffUpdates[sid] = {};
     ov._staffUpdates[sid].status = 'active';
     ov._staffUpdates[sid].shop = newShop;
+    ov._staffUpdates[sid].leftDate = '';
+    ov._staffUpdates[sid].leftWeek = '';
     if(newStart) ov._staffUpdates[sid].startDate = newStart;
     
     if(!carryBal){
@@ -22440,10 +22916,10 @@ window.saveEditWeek=function(idx){
   const hrs=parseFloat(document.getElementById('editWkHrs_'+idx).value);
   if(!lbl||isNaN(hrs)){toast('Enter valid label and hours','var(--rd)');return;}
   ensureOvYear(activeYear,activeSid);
-  const weeks=JSON.parse(JSON.stringify(getStaffWeeks(activeSid,activeYear)));
+  const weeks=sortWeeksChronologically(getStaffWeeks(activeSid,activeYear));
   weeks[idx].label=lbl;
   weeks[idx].hours=hrs;
-  ov[activeYear][activeSid].weeks=weeks;
+  ov[activeYear][activeSid].weeks=sortWeeksChronologically(weeks);
   saveOv(ov);
   editingWeekIdx=null;
   toast('Week updated');
@@ -22455,9 +22931,9 @@ window.delWeek=function(idx){
   if(isPortalMode) return;
   if(confirm('Are you sure you want to delete this week entry?')){
     ensureOvYear(activeYear,activeSid);
-    const weeks=JSON.parse(JSON.stringify(getStaffWeeks(activeSid,activeYear)));
+    const weeks=sortWeeksChronologically(getStaffWeeks(activeSid,activeYear));
     weeks.splice(idx,1);
-    ov[activeYear][activeSid].weeks=weeks;
+    ov[activeYear][activeSid].weeks=sortWeeksChronologically(weeks);
     saveOv(ov);
     editingWeekIdx=null;
     toast('Week entry deleted');
@@ -22616,7 +23092,7 @@ function buildCurrentDatabaseState(){
     if(ov[y]){
       Object.keys(ov[y]).forEach(function(sid){
         if(!exportData.years[y][sid]) exportData.years[y][sid] = {};
-        if(ov[y][sid].weeks) exportData.years[y][sid].weeks = ov[y][sid].weeks;
+        if(ov[y][sid].weeks) exportData.years[y][sid].weeks = sortWeeksChronologically(ov[y][sid].weeks);
         if(ov[y][sid].opening !== undefined) exportData.years[y][sid].opening = ov[y][sid].opening;
       });
     }
@@ -23189,6 +23665,7 @@ document.getElementById('batchModal').addEventListener('click',function(e){if(e.
 document.getElementById('syncModal').addEventListener('click',function(e){if(e.target===document.getElementById('syncModal'))document.getElementById('syncModal').classList.add('hidden');});
 document.getElementById('pdfModal').addEventListener('click',function(e){if(e.target===document.getElementById('pdfModal'))document.getElementById('pdfModal').classList.add('hidden');});
 document.getElementById('addStaffModal').addEventListener('click',function(e){if(e.target===document.getElementById('addStaffModal'))document.getElementById('addStaffModal').classList.add('hidden');});
+document.getElementById('deactivateModal').addEventListener('click',function(e){if(e.target===document.getElementById('deactivateModal'))document.getElementById('deactivateModal').classList.add('hidden');});
 document.getElementById('reactivateModal').addEventListener('click',function(e){if(e.target===document.getElementById('reactivateModal'))document.getElementById('reactivateModal').classList.add('hidden');});
 
 document.getElementById('searchBox').addEventListener('input',function(){renderSidebar();});
