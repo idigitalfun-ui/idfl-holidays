@@ -635,7 +635,57 @@
         "note": "Please pay 7 hours holiday pay"
       }
     ],
-    "s22": [],
+    "s22": [
+      {
+        "id": "h_2025_s22_1",
+        "year": "2025",
+        "date": "22/09/2025",
+        "hours": 35,
+        "note": "Please pay 35 hours holiday pay"
+      },
+      {
+        "id": "h_2025_s22_2",
+        "year": "2025",
+        "date": "29/09/2025",
+        "hours": 35,
+        "note": "Please pay 35 hours holiday pay"
+      },
+      {
+        "id": "h_2025_s22_3",
+        "year": "2025",
+        "date": "06/10/2025",
+        "hours": 35,
+        "note": "Please pay 35 hours holiday pay"
+      },
+      {
+        "id": "h_2025_s22_4",
+        "year": "2025",
+        "date": "13/10/2025",
+        "hours": 35,
+        "note": "Please pay 35 hours holiday pay"
+      },
+      {
+        "id": "h_2026_s22_1",
+        "year": "2026",
+        "date": "13/07/2026",
+        "hours": 21,
+        "note": "Please pay 21 hours holiday pay"
+      },
+      {
+        "id": "h_2026_s22_2",
+        "year": "2026",
+        "date": "10/08/2026",
+        "hours": 21,
+        "note": "Please pay 21 hours holiday pay"
+      },
+      {
+        "id": "h_2026_s22_3",
+        "year": "2026",
+        "date": "17/08/2026",
+        "hours": 21,
+        "note": "Please pay 21 hours holiday pay"
+      }
+    ],
     "s6": [
       {
         "id": "h_2024_s6_217",
@@ -1926,9 +1976,72 @@
     ],
     "s18": [
       {
-        "id": "mu17xo4kx517",
+        "id": "h_2025_s18_1",
+        "year": "2025",
+        "date": "18/08/2025",
+        "hours": 14,
+        "note": "Please pay 14 hours holiday pay"
+      },
+      {
+        "id": "h_2025_s18_2",
+        "year": "2025",
+        "date": "29/09/2025",
+        "hours": 35,
+        "note": "Please pay 35 hours holiday pay"
+      },
+      {
+        "id": "h_2025_s18_3",
+        "year": "2025",
+        "date": "03/11/2025",
+        "hours": 7,
+        "note": "Please pay 7 hours holiday pay"
+      },
+      {
+        "id": "h_2025_s18_4",
+        "year": "2025",
+        "date": "24/11/2025",
+        "hours": 14,
+        "note": "Please pay 14 hours holiday pay"
+      },
+      {
+        "id": "h_2026_s18_1",
         "year": "2026",
-        "date": "2026-09-07",
+        "date": "12/01/2026",
+        "hours": 21,
+        "note": "Please pay 21 hrs holiday pay"
+      },
+      {
+        "id": "h_2026_s18_2",
+        "year": "2026",
+        "date": "30/03/2026",
+        "hours": 7,
+        "note": "Please pay 7 hrs holiday pay"
+      },
+      {
+        "id": "h_2026_s18_3",
+        "year": "2026",
+        "date": "20/04/2026",
+        "hours": 7,
+        "note": "Please pay 7 hrs holiday pay"
+      },
+      {
+        "id": "h_2026_s18_4",
+        "year": "2026",
+        "date": "27/07/2026",
+        "hours": 7,
+        "note": "Please pay 7 hrs holiday pay"
+      },
+      {
+        "id": "h_2026_s18_5",
+        "year": "2026",
+        "date": "17/08/2026",
+        "hours": 21,
+        "note": "Please pay 21 hours holiday pay"
+      },
+      {
+        "id": "h_2026_s18_6",
+        "year": "2026",
+        "date": "07/09/2026",
         "hours": 7,
         "note": "Holiday"
       }
@@ -18910,7 +19023,7 @@
         "holidaysTaken": 21
       },
       "s22": {
-        "opening": 1.96,
+        "opening": 7.56,
         "weeks": [
           {
             "label": "Week 1 05/01/2026 - 11/01/2026",
@@ -23259,9 +23372,9 @@
       "sickAllowance": 35,
       "dailyHours": 7,
       "weeklyHours": 35,
-      "status": "inactive",
-      "leftDate": "22/03/2026",
-      "leftWeek": "Week 11 (2026)"
+      "status": "active",
+      "leftDate": "",
+      "leftWeek": ""
     },
     {
       "id": "s32",
