@@ -216,6 +216,13 @@
         "date": "2026-08-31",
         "hours": 28,
         "note": "Holiday"
+      },
+      {
+        "id": "mu16cm76n1c1",
+        "year": "2026",
+        "date": "2026-08-31",
+        "hours": 28,
+        "note": "Holiday"
       }
     ],
     "s13": [
@@ -358,6 +365,13 @@
         "id": "h_2026_s13_292",
         "year": "2026",
         "note": "Please pay 7.5 hours holiday pay"
+      },
+      {
+        "id": "mu16cm77cmwp",
+        "year": "2026",
+        "date": "2026-08-31",
+        "hours": 7.5,
+        "note": "Holiday"
       },
       {
         "id": "mu16cm77cmwp",
@@ -2310,7 +2324,8 @@
         "year": "2026",
         "note": "Please pay 35 hours holiday pay"
       }
-    ]
+    ],
+    "s32": []
   },
   "baseSickLogs": {
     "s5": [],
@@ -2374,6 +2389,13 @@
         "id": "s_2024_s10_193",
         "year": "2024",
         "note": "Please pay sick pay Supposed to work 7.5 hrs on Saturday & Supposed to work 5.5 hrs on Sunday"
+      },
+      {
+        "id": "mu16cm75475r",
+        "year": "2026",
+        "date": "2026-08-31",
+        "hours": 13.5,
+        "note": "Sick"
       },
       {
         "id": "mu16cm75475r",
@@ -2511,7 +2533,8 @@
     ],
     "s9": [],
     "s30": [],
-    "s27": []
+    "s27": [],
+    "s32": []
   },
   "years": {
     "2024": {
@@ -8184,6 +8207,10 @@
         "currentAvailableHrs": 133.92,
         "calculatedHolidays": 133.92,
         "holidaysTaken": 0
+      },
+      "s32": {
+        "weeks": [],
+        "opening": 0
       }
     },
     "2025": {
@@ -15173,6 +15200,10 @@
         "currentAvailableHrs": 66.4,
         "calculatedHolidays": 142.48,
         "holidaysTaken": 210
+      },
+      "s32": {
+        "weeks": [],
+        "opening": 0
       }
     },
     "2026": {
@@ -20395,6 +20426,10 @@
         "currentAvailableHrs": -73.12,
         "calculatedHolidays": 70.48,
         "holidaysTaken": 210
+      },
+      "s32": {
+        "weeks": [],
+        "opening": 0
       }
     }
   },
@@ -20728,6 +20763,17 @@
       "sickAllowance": 35,
       "dailyHours": 7,
       "weeklyHours": 35
+    },
+    {
+      "id": "s32",
+      "name": "Ilona Shytova",
+      "shop": "Kilkenny",
+      "location": "Kilkenny",
+      "startDate": "2026-08-31",
+      "dailyHours": 7,
+      "weeklyHours": 35,
+      "sickAllowance": 35,
+      "status": "active"
     }
   ]
 }
