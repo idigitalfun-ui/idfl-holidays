@@ -339,46 +339,53 @@
         "note": "Please pay 20 hours holiday pay"
       },
       {
-        "id": "h_2026_s13_327",
+        "id": "h_2026_s13_1",
         "year": "2026",
         "date": "04/05/2026",
         "hours": 7.5,
-        "note": "Please pay 7.5 hrs holiday pay 5.5"
+        "note": "Please pay 7.5 hrs holiday pay"
       },
       {
-        "id": "h_2026_s13_332",
+        "id": "h_2026_s13_2",
         "year": "2026",
         "date": "08/06/2026",
         "hours": 7.5,
         "note": "Please pay 7.5 hours holiday pay"
       },
       {
-        "id": "h_2026_s13_334",
+        "id": "h_2026_s13_3",
         "year": "2026",
         "date": "22/06/2026",
         "hours": 7,
         "note": "Please pay 7 hours holiday pay"
       },
       {
-        "id": "h_2026_s13_340",
+        "id": "h_2026_s13_4",
         "year": "2026",
         "date": "03/08/2026",
         "hours": 7.5,
-        "note": "Please pay 7.5 hours holiday pay  5.5"
+        "note": "Please pay 7.5 hours holiday pay"
       },
       {
-        "id": "h_2026_s13_342",
+        "id": "h_2026_s13_5",
         "year": "2026",
         "date": "17/08/2026",
         "hours": 15,
         "note": "Please pay 15 hours holiday pay"
       },
       {
-        "id": "h_2026_s13_343",
+        "id": "h_2026_s13_6",
         "year": "2026",
         "date": "24/08/2026",
         "hours": 7.5,
         "note": "Please pay 7.5 hours holiday pay"
+      },
+      {
+        "id": "h_2026_s13_7",
+        "year": "2026",
+        "date": "31/08/2026",
+        "hours": 15,
+        "note": "Please pay 15 hours holiday pay"
       }
     ],
     "s28": [],
