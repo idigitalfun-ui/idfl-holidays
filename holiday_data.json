@@ -21863,9 +21863,9 @@
       "sickAllowance": 35,
       "dailyHours": 7,
       "weeklyHours": 35,
-      "status": "active",
-      "leftDate": "",
-      "leftWeek": ""
+      "status": "inactive",
+      "leftDate": "2026-09-10",
+      "leftWeek": "Week 36 (2026)"
     },
     {
       "id": "s14",
