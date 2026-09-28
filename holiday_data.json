@@ -2575,7 +2575,8 @@
     ],
     "f31": [],
     "f32": [],
-    "f33": []
+    "f33": [],
+    "s33": []
   },
   "baseSickLogs": {
     "s5": [],
@@ -2898,7 +2899,8 @@
     "f30": [],
     "f31": [],
     "f32": [],
-    "f33": []
+    "f33": [],
+    "s33": []
   },
   "years": {
     "2024": {
@@ -9602,6 +9604,10 @@
       "f33": {
         "opening": 0,
         "weeks": []
+      },
+      "s33": {
+        "weeks": [],
+        "opening": 0
       }
     },
     "2025": {
@@ -16118,6 +16124,10 @@
       "f33": {
         "opening": 0,
         "weeks": []
+      },
+      "s33": {
+        "weeks": [],
+        "opening": 0
       }
     },
     "2026": {
@@ -22009,6 +22019,10 @@
       "f33": {
         "opening": 0,
         "weeks": []
+      },
+      "s33": {
+        "weeks": [],
+        "opening": 0
       }
     }
   },
@@ -22874,6 +22888,17 @@
       "status": "inactive",
       "leftDate": "07/08/2022",
       "leftWeek": "Week 32 (2022)"
+    },
+    {
+      "id": "s33",
+      "name": "Keelin",
+      "shop": "Arklow",
+      "location": "Arklow",
+      "startDate": "2026-09-21",
+      "dailyHours": 7,
+      "weeklyHours": 35,
+      "sickAllowance": 35,
+      "status": "active"
     }
   ]
 }
