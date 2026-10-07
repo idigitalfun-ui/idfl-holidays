@@ -23411,17 +23411,23 @@ function updateStaffRecord(staff, changes){
   if(!ov._staffUpdates[staff.id]) ov._staffUpdates[staff.id] = {};
   Object.assign(ov._staffUpdates[staff.id], changes);
 }
-function noteRequestsFinalHolidayPay(note){
+function noteRequestsHolidayPayReview(note){
   const text = normaliseStaffPart(note);
   return /(?:remaining\s+(?:holiday|annual leave)|(?:holiday|annual leave)\s+pay.*\bremaining\b|\bpay\b.*\bremaining\b.*(?:holiday|annual leave)|final\s+(?:holiday|annual leave)\s+pay)/i.test(text);
 }
-function flagFinalHolidayPayReview(staff, note){
-  if(!staff || !noteRequestsFinalHolidayPay(note)) return false;
-  updateStaffRecord(staff, {
+function flagHolidayPayReview(staff, note){
+  if(!staff || !noteRequestsHolidayPayReview(note)) return false;
+  const isFormerStaff = staff.status === 'inactive';
+  const changes = isFormerStaff ? {
     finalHolidayPayStatus: 'review',
     finalHolidayPayNote: String(note || '').trim(),
     finalHolidayPayRequestedOn: new Date().toISOString().slice(0,10)
-  });
+  } : {
+    holidayPayStatus: 'review',
+    holidayPayNote: String(note || '').trim(),
+    holidayPayRequestedOn: new Date().toISOString().slice(0,10)
+  };
+  updateStaffRecord(staff, changes);
   return true;
 }
 
@@ -23940,6 +23946,9 @@ function renderMain(){
   
   const isInactive = staff.status === 'inactive';
   const finalPayNeedsReview = staff.finalHolidayPayStatus === 'review';
+  const holidayPayNeedsReview = staff.holidayPayStatus === 'review';
+  const payReviewText = finalPayNeedsReview ? 'Final holiday pay' : 'Holiday pay';
+  const payReviewNote = finalPayNeedsReview ? staff.finalHolidayPayNote : staff.holidayPayNote;
   
   // Smart next week auto-suggestion for this employee
   const nextWk = getNextWeekSuggestion(activeYear, activeSid);
@@ -23956,12 +23965,12 @@ function renderMain(){
       +'All historical records &amp; balances are preserved.</div>'
       +(!isPortalMode ? '<button class="btn btn-gr" id="reactivateStaffBtn">&#128260; Reactivate Staff Member</button>' : '')
       +'</div>' : '')
-    +(finalPayNeedsReview ?
+    +((finalPayNeedsReview || holidayPayNeedsReview) ?
       '<div class="inactive-banner" style="background:#fffbeb;border-color:#fde68a;color:#92400e">'
-      +'<div>&#128176; <strong>Final holiday pay review required.</strong> Remaining '+activeYear+' balance: <strong>'+fmt1(balance)+' hrs</strong>'
-      +(staff.finalHolidayPayNote ? ' &bull; '+staff.finalHolidayPayNote : '')
+      +'<div>&#128176; <strong>'+payReviewText+' review required.</strong> Remaining '+activeYear+' balance: <strong>'+fmt1(balance)+' hrs</strong>'
+      +(payReviewNote ? ' &bull; '+payReviewNote : '')
       +'</div>'
-      +(!isPortalMode ? '<button class="btn btn-am" id="markFinalHolidayPayPaidBtn">Mark reviewed / paid</button>' : '')
+      +(!isPortalMode ? '<button class="btn btn-am" id="markHolidayPayPaidBtn">Mark reviewed / paid</button>' : '')
       +'</div>' : '')
     
     // Portal Header Banner
@@ -24266,16 +24275,21 @@ function renderMain(){
       });
     }
 
-    const finalPayPaidBtn = document.getElementById('markFinalHolidayPayPaidBtn');
-    if(finalPayPaidBtn){
-      finalPayPaidBtn.addEventListener('click', function(){
-        updateStaffRecord(staff, {
+    const holidayPayPaidBtn = document.getElementById('markHolidayPayPaidBtn');
+    if(holidayPayPaidBtn){
+      holidayPayPaidBtn.addEventListener('click', function(){
+        const isFinalPay = staff.finalHolidayPayStatus === 'review';
+        const changes = isFinalPay ? {
           finalHolidayPayStatus: 'paid',
           finalHolidayPayPaidOn: new Date().toISOString().slice(0,10)
-        });
+        } : {
+          holidayPayStatus: 'paid',
+          holidayPayPaidOn: new Date().toISOString().slice(0,10)
+        };
+        updateStaffRecord(staff, changes);
         saveOv(ov);
         triggerAutoSync();
-        toast('Final holiday pay marked as reviewed / paid');
+        toast((isFinalPay ? 'Final holiday pay' : 'Holiday pay') + ' marked as reviewed / paid');
         renderAll();
       });
     }
@@ -24758,7 +24772,7 @@ document.getElementById('batchSaveAllBtn').addEventListener('click', function(){
     if(!isNaN(sick) && sick > 0){
       addSickEntry(s.id, targetYear, period.startDate, sick, note || 'Sick');
     }
-    flagFinalHolidayPayReview(s, note);
+    flagHolidayPayReview(s, note);
   });
   
   saveOv(ov);
@@ -25390,11 +25404,13 @@ function renderAll(){
 function mergeUnsentLocalRecord(shared, local){
   let hasLocalAdditions = false;
   const sharedStaffByKey = {};
+  const localStaffById = {};
   (shared.staff || []).forEach(function(staff){
     sharedStaffByKey[staff.id] = staff;
     sharedStaffByKey[staffIdentityKey(staff)] = staff;
   });
   (local.staff || []).forEach(function(localStaff){
+    localStaffById[localStaff.id] = localStaff;
     const sharedStaff = sharedStaffByKey[localStaff.id] || sharedStaffByKey[staffIdentityKey(localStaff)];
     if(!sharedStaff){
       const copy = JSON.parse(JSON.stringify(localStaff));
@@ -25414,8 +25430,11 @@ function mergeUnsentLocalRecord(shared, local){
     if(!shared.years[year]) shared.years[year] = {};
     Object.keys(local.years[year] || {}).forEach(function(sid){
       const localRecord = local.years[year][sid] || {};
-      if(!shared.years[year][sid]) shared.years[year][sid] = {};
-      const sharedRecord = shared.years[year][sid];
+      const localStaff = localStaffById[sid];
+      const sharedStaff = sharedStaffByKey[sid] || (localStaff && sharedStaffByKey[staffIdentityKey(localStaff)]);
+      const targetSid = sharedStaff ? sharedStaff.id : sid;
+      if(!shared.years[year][targetSid]) shared.years[year][targetSid] = {};
+      const sharedRecord = shared.years[year][targetSid];
       const existingPeriods = {};
       (sharedRecord.weeks || []).forEach(function(week){
         const period = periodFromWeekRecord(week);
@@ -25424,6 +25443,9 @@ function mergeUnsentLocalRecord(shared, local){
       (localRecord.weeks || []).forEach(function(week){
         const period = periodFromWeekRecord(week);
         const key = period ? period.startDate : (week.date || week.label);
+        const departurePeriod = sharedStaff && sharedStaff.status === 'inactive' && sharedStaff.leftDate
+          ? periodFromStartDate(sharedStaff.leftDate) : null;
+        if(departurePeriod && period && period.startDate > departurePeriod.startDate) return;
         if(!existingPeriods[key]){
           if(!sharedRecord.weeks) sharedRecord.weeks = [];
           sharedRecord.weeks.push(JSON.parse(JSON.stringify(week)));
@@ -25438,6 +25460,28 @@ function mergeUnsentLocalRecord(shared, local){
   return hasLocalAdditions;
 }
 
+// Keep saved current and future periods tied to their Monday date.  Older
+// records retain their original labels because they used the previous calendar
+// convention before the tracker was corrected.
+function normaliseCurrentPeriodLabels(database){
+  let changed = false;
+  Object.keys(database.years || {}).forEach(function(year){
+    if(parseInt(year, 10) < 2026) return;
+    Object.keys(database.years[year] || {}).forEach(function(sid){
+      const record = database.years[year][sid] || {};
+      (record.weeks || []).forEach(function(week){
+        const period = periodFromWeekRecord(week);
+        if(period && week.label !== period.label){
+          week.label = period.label;
+          changed = true;
+        }
+      });
+      if(record.weeks) record.weeks = sortWeeksChronologically(record.weeks);
+    });
+  });
+  return changed;
+}
+
 async function loadSharedCompanyRecord(){
   if(isPortalMode) return;
   try {
@@ -25448,6 +25492,7 @@ async function loadSharedCompanyRecord(){
 
     const local = buildCurrentDatabaseState();
     const hasUnsentLocalAdditions = mergeUnsentLocalRecord(shared, local);
+    const hasNormalisedPeriodLabels = normaliseCurrentPeriodLabels(shared);
     Object.keys(BASE).forEach(function(key){ delete BASE[key]; });
     Object.assign(BASE, shared);
     ov = {};
@@ -25458,7 +25503,7 @@ async function loadSharedCompanyRecord(){
       activeSid = firstActive ? firstActive.id : (BASE.staff[0] || {}).id;
     }
     renderAll();
-    if(hasUnsentLocalAdditions) triggerAutoSync();
+    if(hasUnsentLocalAdditions || hasNormalisedPeriodLabels) triggerAutoSync();
   } catch(error) {
     console.warn('Shared company record unavailable; using this device\'s local copy.', error);
   }
@@ -25492,6 +25537,7 @@ function checkUrlParams(){
 }
 
 applyStartDates();
+normaliseCurrentPeriodLabels(BASE);
 checkUrlParams();
 if(!activeSid){
   const firstActive = BASE.staff.find(function(s){ return s.status !== 'inactive'; });
