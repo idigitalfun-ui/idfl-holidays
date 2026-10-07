@@ -21652,6 +21652,16 @@
         ],
         "opening": 0
       },
+      "s33": {
+        "weeks": [
+          {
+            "label": "Week 38 21/09/2026 - 27/09/2026",
+            "hours": 13,
+            "date": "2026-09-21"
+          }
+        ],
+        "opening": 0
+      },
       "f1": {
         "opening": 0,
         "weeks": [
@@ -22023,9 +22033,11 @@
       "sickAllowance": 35,
       "dailyHours": 7,
       "weeklyHours": 35,
-      "status": "active",
-      "leftDate": "",
-      "leftWeek": ""
+      "status": "inactive",
+      "leftDate": "2026-09-10",
+      "leftWeek": "Week 36 (2026)",
+      "finalHolidayPayStatus": "review",
+      "finalHolidayPayNote": "Please pay remaining holiday pay"
     },
     {
       "id": "s14",
@@ -22285,6 +22297,19 @@
       "shop": "Kilkenny",
       "location": "Kilkenny",
       "startDate": "2026-08-31",
+      "dailyHours": 7,
+      "weeklyHours": 35,
+      "sickAllowance": 35,
+      "status": "active",
+      "leftDate": "",
+      "leftWeek": ""
+    },
+    {
+      "id": "s33",
+      "name": "Keelin",
+      "shop": "Arklow",
+      "location": "Arklow",
+      "startDate": "2026-09-21",
       "dailyHours": 7,
       "weeklyHours": 35,
       "sickAllowance": 35,

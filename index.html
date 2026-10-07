@@ -284,8 +284,9 @@ table.batch-table input:focus{border-color:var(--ac)}
 <div class="body">
   <div class="sidebar" id="sidebar">
     <div class="sidebar-tabs" id="sidebarTabs">
-      <button class="sb-tab active" id="sbTabActive" data-tab="active">Active Staff (<span id="sbActiveCount">0</span>)</button>
-      <button class="sb-tab" id="sbTabInactive" data-tab="inactive">Past Employees (<span id="sbInactiveCount">0</span>)</button>
+      <button class="sb-tab active" id="sbTabActive" data-tab="active">Active (<span id="sbActiveCount">0</span>)</button>
+      <button class="sb-tab" id="sbTabNew" data-tab="new">New (<span id="sbNewCount">0</span>)</button>
+      <button class="sb-tab" id="sbTabInactive" data-tab="inactive">Past (<span id="sbInactiveCount">0</span>)</button>
     </div>
     <div class="sidebar-content" id="sidebarContent"></div>
   </div>
@@ -358,6 +359,12 @@ table.batch-table input:focus{border-color:var(--ac)}
       
       <label>Stop Week / Reason</label>
       <input type="text" id="deactLeftWeek" placeholder="e.g. Week 35 (2026) - Left Job">
+
+      <label style="display:flex;align-items:center;gap:8px;cursor:pointer;margin-top:10px">
+        <input type="checkbox" id="deactFinalHolidayPay" style="width:auto;margin-bottom:0">
+        <span>Final holiday pay needs review</span>
+      </label>
+      <input type="text" id="deactFinalHolidayPayNote" placeholder="e.g. Please pay remaining holiday pay">
     </div>
     <div class="modal-footer">
       <button class="btn btn-ghost" id="deactCancelBtn">Cancel</button>
@@ -23247,9 +23254,10 @@ if(ov._staffUpdates){
 
 let activeSid = null;
 let activeYear = '2026';
-const years = ['2024', '2025', '2026'];
+const years = Array.from(new Set(['2024', '2025', '2026'].concat(Object.keys(BASE.years || {}))))
+  .sort(function(a,b){ return parseInt(a,10) - parseInt(b,10); });
 let isPortalMode = false;
-let currentSidebarTab = 'active'; // 'active' or 'inactive'
+let currentSidebarTab = 'active'; // 'active', 'new', or 'inactive'
 
 let editingWeekIdx = null;
 let editingHolId = null;
@@ -23314,195 +23322,140 @@ function toast(msg,col){
   document.body.appendChild(t);setTimeout(function(){t.remove();},2600);
 }
 
-// â”€â”€â”€ Chronological Week Sorter â”€â”€â”€
+// â”€â”€â”€ Canonical calendar periods (Monday to Sunday) â”€â”€â”€
+// A week number is derived from its start date.  The first Monday of each
+// calendar year is Week 1, so the number automatically restarts every January.
+function pad2(n){ return n < 10 ? '0' + n : '' + n; }
+function parseLocalDate(value){
+  if(value instanceof Date) return new Date(value.getFullYear(), value.getMonth(), value.getDate());
+  const text = String(value || '').trim();
+  let m = text.match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/);
+  if(m) return new Date(parseInt(m[1],10), parseInt(m[2],10)-1, parseInt(m[3],10));
+  m = text.match(/(\d{1,2})[\/\-.](\d{1,2})[\/\-.](\d{4})/);
+  return m ? new Date(parseInt(m[3],10), parseInt(m[2],10)-1, parseInt(m[1],10)) : null;
+}
+function addDays(date, days){
+  const out = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+  out.setDate(out.getDate() + days);
+  return out;
+}
+function mondayFor(date){
+  const out = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+  const offset = out.getDay() === 0 ? -6 : 1 - out.getDay();
+  out.setDate(out.getDate() + offset);
+  return out;
+}
+function firstMondayOfYear(year){
+  const first = new Date(parseInt(year,10), 0, 1);
+  while(first.getDay() !== 1) first.setDate(first.getDate() + 1);
+  return first;
+}
+function calendarDayStamp(date){ return Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()) / 86400000; }
+function formatLocalDate(date){ return pad2(date.getDate()) + '/' + pad2(date.getMonth()+1) + '/' + date.getFullYear(); }
+function formatIsoDate(date){ return date.getFullYear() + '-' + pad2(date.getMonth()+1) + '-' + pad2(date.getDate()); }
+function periodFromStartDate(value){
+  const parsed = parseLocalDate(value);
+  if(!parsed || isNaN(parsed.getTime())) return null;
+  const start = mondayFor(parsed);
+  let periodYear = start.getFullYear();
+  let firstMonday = firstMondayOfYear(periodYear);
+  if(start < firstMonday){
+    periodYear -= 1;
+    firstMonday = firstMondayOfYear(periodYear);
+  }
+  const weekNum = Math.floor((calendarDayStamp(start) - calendarDayStamp(firstMonday)) / 7) + 1;
+  const end = addDays(start, 6);
+  const startFormatted = formatLocalDate(start);
+  const endFormatted = formatLocalDate(end);
+  return {
+    weekNum: weekNum,
+    periodYear: String(periodYear),
+    trackingYear: String(start.getFullYear()),
+    label: 'Week ' + weekNum + ' ' + startFormatted + ' - ' + endFormatted,
+    startDate: formatIsoDate(start),
+    startFormatted: startFormatted,
+    endFormatted: endFormatted
+  };
+}
+function periodFromWeekRecord(week){
+  if(!week) return null;
+  return periodFromStartDate(week.date) || periodFromStartDate(week.label);
+}
 function sortWeeksChronologically(weeks){
   if(!weeks || !Array.isArray(weeks)) return [];
   return weeks.slice().sort(function(a, b){
-    const matchA = (a.label||'').match(/Week\s*(\d+)/i);
-    const matchB = (b.label||'').match(/Week\s*(\d+)/i);
-    const numA = matchA ? parseInt(matchA[1], 10) : 0;
-    const numB = matchB ? parseInt(matchB[1], 10) : 0;
-    if(numA !== numB) return numA - numB;
-    return (a.date || '').localeCompare(b.date || '');
+    const periodA = periodFromWeekRecord(a);
+    const periodB = periodFromWeekRecord(b);
+    if(periodA && periodB && periodA.startDate !== periodB.startDate) return periodA.startDate.localeCompare(periodB.startDate);
+    if(periodA && !periodB) return -1;
+    if(!periodA && periodB) return 1;
+    const numA = parseInt(((a.label||'').match(/Week\s*(\d+)/i)||[])[1],10) || 0;
+    const numB = parseInt(((b.label||'').match(/Week\s*(\d+)/i)||[])[1],10) || 0;
+    return numA - numB;
   });
 }
 
-// â”€â”€â”€ Find Week for any specific date (e.g. Employee Start Working Date) â”€â”€â”€
-function findWeekForDate(dateStr, year){
-  if(!dateStr) return null;
-  let targetDate = null;
-  if(dateStr.includes('-')){
-    const parts = dateStr.split('-');
-    targetDate = new Date(parseInt(parts[0], 10), parseInt(parts[1], 10) - 1, parseInt(parts[2], 10));
-  } else if(dateStr.includes('/')){
-    const parts = dateStr.split('/');
-    targetDate = new Date(parseInt(parts[2], 10), parseInt(parts[1], 10) - 1, parseInt(parts[0], 10));
-  }
-  if(!targetDate || isNaN(targetDate.getTime())) return null;
+function findWeekForDate(dateStr){ return periodFromStartDate(dateStr); }
 
-  let allCompanyWeeks = [];
-  BASE.staff.forEach(function(s){
-    const w = getStaffWeeks(s.id, year);
-    if(w.length > allCompanyWeeks.length) allCompanyWeeks = w;
+function normaliseStaffPart(value){
+  return String(value || '').trim().toLowerCase().replace(/\s+/g, ' ');
+}
+function staffIdentityKey(staffOrName, shop){
+  const name = typeof staffOrName === 'object' ? staffOrName.name : staffOrName;
+  const location = typeof staffOrName === 'object' ? (staffOrName.shop || staffOrName.location) : shop;
+  return normaliseStaffPart(name) + '|' + normaliseStaffPart(location);
+}
+function updateStaffRecord(staff, changes){
+  Object.assign(staff, changes);
+  if(!ov._staffUpdates) ov._staffUpdates = {};
+  if(!ov._staffUpdates[staff.id]) ov._staffUpdates[staff.id] = {};
+  Object.assign(ov._staffUpdates[staff.id], changes);
+}
+function noteRequestsFinalHolidayPay(note){
+  const text = normaliseStaffPart(note);
+  return /(?:remaining\s+(?:holiday|annual leave)|(?:holiday|annual leave)\s+pay.*\bremaining\b|\bpay\b.*\bremaining\b.*(?:holiday|annual leave)|final\s+(?:holiday|annual leave)\s+pay)/i.test(text);
+}
+function flagFinalHolidayPayReview(staff, note){
+  if(!staff || !noteRequestsFinalHolidayPay(note)) return false;
+  updateStaffRecord(staff, {
+    finalHolidayPayStatus: 'review',
+    finalHolidayPayNote: String(note || '').trim(),
+    finalHolidayPayRequestedOn: new Date().toISOString().slice(0,10)
   });
-
-  for(let i = 0; i < allCompanyWeeks.length; i++){
-    const w = allCompanyWeeks[i];
-    const dateMatches = (w.label||'').match(/(\d{1,2})[\/\-\.](\d{1,2})[\/\-\.](\d{4})/g);
-    if(dateMatches && dateMatches.length >= 2){
-      const p1 = dateMatches[0].split(/[\/\-\.]/);
-      const startWk = new Date(parseInt(p1[2], 10), parseInt(p1[1], 10) - 1, parseInt(p1[0], 10));
-      const p2 = dateMatches[1].split(/[\/\-\.]/);
-      const endWk = new Date(parseInt(p2[2], 10), parseInt(p2[1], 10) - 1, parseInt(p2[0], 10), 23, 59, 59);
-      
-      if(targetDate >= startWk && targetDate <= endWk){
-        const matchWk = (w.label||'').match(/Week\s*(\d+)/i);
-        const wNum = matchWk ? parseInt(matchWk[1], 10) : (i + 1);
-        const isoStart = p1[2] + '-' + (p1[1].length===1?'0'+p1[1]:p1[1]) + '-' + (p1[0].length===1?'0'+p1[0]:p1[0]);
-        return {
-          weekNum: wNum,
-          label: w.label,
-          startDate: isoStart
-        };
-      }
-    }
-  }
-
-  // Fallback calculated week
-  const day = targetDate.getDay();
-  const diffToMonday = targetDate.getDate() - day + (day === 0 ? -6 : 1);
-  const mon = new Date(targetDate.setDate(diffToMonday));
-  const sun = new Date(mon.getTime() + (6 * 24 * 60 * 60 * 1000));
-  
-  function pad2(n){ return n < 10 ? '0' + n : '' + n; }
-  const startFormatted = pad2(mon.getDate()) + '/' + pad2(mon.getMonth() + 1) + '/' + mon.getFullYear();
-  const endFormatted = pad2(sun.getDate()) + '/' + pad2(sun.getMonth() + 1) + '/' + sun.getFullYear();
-  const isoStart = mon.getFullYear() + '-' + pad2(mon.getMonth() + 1) + '-' + pad2(mon.getDate());
-
-  const firstJan = new Date(mon.getFullYear(), 0, 1);
-  const weekNum = Math.ceil((((mon - firstJan) / 86400000) + firstJan.getDay() + 1) / 7);
-
-  return {
-    weekNum: weekNum,
-    label: 'Week ' + weekNum + ' ' + startFormatted + ' - ' + endFormatted,
-    startDate: isoStart
-  };
+  return true;
 }
 
-// â”€â”€â”€ ðŸŒŸ SMART AUTOMATIC NEXT WEEK CALCULATOR ðŸŒŸ â”€â”€â”€
+function getLatestRecordedPeriod(year, sid){
+  const staffList = sid ? BASE.staff.filter(function(s){ return s.id === sid; }) : BASE.staff.filter(function(s){ return s.status !== 'inactive'; });
+  let latest = null;
+  staffList.forEach(function(staff){
+    getStaffWeeks(staff.id, year).forEach(function(week){
+      const period = periodFromWeekRecord(week);
+      if(!period || period.trackingYear !== String(year)) return;
+      if(!latest || period.startDate > latest.startDate) latest = period;
+    });
+  });
+  return latest;
+}
+
+// â”€â”€â”€ Smart next week calculator, shared by staff and batch entry â”€â”€â”€
 function getNextWeekSuggestion(year, sid){
+  const yInt = parseInt(year, 10) || new Date().getFullYear();
+  const companyLatest = getLatestRecordedPeriod(yInt, null);
+  const staffLatest = sid ? getLatestRecordedPeriod(yInt, sid) : null;
+  const latest = !staffLatest || (companyLatest && companyLatest.startDate >= staffLatest.startDate) ? companyLatest : staffLatest;
+  if(latest){
+    const nextCompanyPeriod = periodFromStartDate(addDays(parseLocalDate(latest.startDate), 7));
+    const staff = sid ? BASE.staff.find(function(s){ return s.id === sid; }) : null;
+    const staffStart = staff && staff.startDate ? parseLocalDate(staff.startDate) : null;
+    if(staffStart && staffStart > parseLocalDate(nextCompanyPeriod.startDate)) return periodFromStartDate(staffStart);
+    return nextCompanyPeriod;
+  }
+
   const staff = sid ? BASE.staff.find(function(s){ return s.id === sid; }) : null;
-  const rawWeeks = sid ? getStaffWeeks(sid, year) : [];
-  const weeks = sortWeeksChronologically(rawWeeks);
-  const yInt = parseInt(year, 10) || 2026;
-
-  // 1. If this staff member already has weeks recorded in this year, suggest (last week + 1)
-  if (weeks && weeks.length > 0) {
-    const lastWk = weeks[weeks.length - 1];
-    const lastLabel = lastWk.label || '';
-    
-    let nextWkNum = weeks.length + 1;
-    const matchWk = lastLabel.match(/Week\s*(\d+)/i);
-    if (matchWk) {
-      nextWkNum = parseInt(matchWk[1], 10) + 1;
-    }
-
-    const dateMatches = lastLabel.match(/(\d{1,2})[\/\-\.](\d{1,2})[\/\-\.](\d{4})/g);
-    let nextStart = null;
-    let nextEnd = null;
-    
-    if (dateMatches && dateMatches.length >= 2) {
-      const lastEndStr = dateMatches[1];
-      const parts = lastEndStr.split(/[\/\-\.]/);
-      const day = parseInt(parts[0], 10);
-      const month = parseInt(parts[1], 10) - 1;
-      const yr = parseInt(parts[2], 10);
-      
-      const lastEndDate = new Date(yr, month, day);
-      nextStart = new Date(lastEndDate.getTime() + (24 * 60 * 60 * 1000));
-      nextEnd = new Date(nextStart.getTime() + (6 * 24 * 60 * 60 * 1000));
-    } else if (dateMatches && dateMatches.length === 1) {
-      const parts = dateMatches[0].split(/[\/\-\.]/);
-      const day = parseInt(parts[0], 10);
-      const month = parseInt(parts[1], 10) - 1;
-      const yr = parseInt(parts[2], 10);
-      const lastStartDate = new Date(yr, month, day);
-      nextStart = new Date(lastStartDate.getTime() + (7 * 24 * 60 * 60 * 1000));
-      nextEnd = new Date(nextStart.getTime() + (6 * 24 * 60 * 60 * 1000));
-    }
-
-    function pad2(n){ return n < 10 ? '0' + n : '' + n; }
-    
-    if (nextStart && nextEnd) {
-      const startStr = pad2(nextStart.getDate()) + '/' + pad2(nextStart.getMonth() + 1) + '/' + nextStart.getFullYear();
-      const endStr = pad2(nextEnd.getDate()) + '/' + pad2(nextEnd.getMonth() + 1) + '/' + nextEnd.getFullYear();
-      const isoStart = nextStart.getFullYear() + '-' + pad2(nextStart.getMonth() + 1) + '-' + pad2(nextStart.getDate());
-      return {
-        weekNum: nextWkNum,
-        label: 'Week ' + nextWkNum + ' ' + startStr + ' - ' + endStr,
-        startDate: isoStart,
-        startFormatted: startStr,
-        endFormatted: endStr
-      };
-    }
-
-    return {
-      weekNum: nextWkNum,
-      label: 'Week ' + nextWkNum + ' (' + year + ')',
-      startDate: new Date().toISOString().split('T')[0]
-    };
-  }
-
-  // 2. If this staff member has NO weeks in this year, but started IN THIS EXACT YEAR:
-  if(staff && staff.startDate){
-    const sParts = staff.startDate.split(/[\/\-\.]/);
-    let sYr = sParts.length === 3 ? parseInt(sParts[2], 10) : 0;
-    if (sYr < 100) sYr += 2000;
-    if (sYr === yInt) {
-      const startWkMatch = findWeekForDate(staff.startDate, year);
-      if(startWkMatch) return startWkMatch;
-    }
-  }
-
-  // 3. Fallback: Week 1 of this year
-  let companyWk1 = null;
-  BASE.staff.forEach(function(s) {
-    if (companyWk1) return;
-    const wList = getStaffWeeks(s.id, year);
-    if (wList && wList.length > 0) {
-      const first = wList[0];
-      if ((first.label || '').includes('Week 1')) {
-        companyWk1 = first;
-      }
-    }
-  });
-
-  if (companyWk1 && companyWk1.label) {
-    const dm = companyWk1.label.match(/(\d{1,2}[\/\-\.]\d{1,2}[\/\-\.]\d{4})\s*-\s*(\d{1,2}[\/\-\.]\d{1,2}[\/\-\.]\d{4})/);
-    return {
-      weekNum: 1,
-      label: companyWk1.label,
-      startDate: dm ? dm[1] : (yInt + '-01-01'),
-      startFormatted: dm ? dm[1] : ('01/01/' + yInt),
-      endFormatted: dm ? dm[2] : ('07/01/' + yInt)
-    };
-  }
-
-  // Otherwise compute first Monday of the year
-  let firstMon = new Date(yInt, 0, 1);
-  while(firstMon.getDay() !== 1) { firstMon.setDate(firstMon.getDate() + 1); }
-  const monSun = new Date(firstMon.getTime() + (6 * 24 * 60 * 60 * 1000));
-  function pad2(n){ return n < 10 ? '0' + n : '' + n; }
-  const sStr = pad2(firstMon.getDate()) + '/' + pad2(firstMon.getMonth() + 1) + '/' + yInt;
-  const eStr = pad2(monSun.getDate()) + '/' + pad2(monSun.getMonth() + 1) + '/' + yInt;
-  const isoStart = yInt + '-' + pad2(firstMon.getMonth() + 1) + '-' + pad2(firstMon.getDate());
-  return {
-    weekNum: 1,
-    label: 'Week 1 ' + sStr + ' - ' + eStr,
-    startDate: isoStart,
-    startFormatted: sStr,
-    endFormatted: eStr
-  };
+  const staffStart = staff && staff.startDate ? parseLocalDate(staff.startDate) : null;
+  if(staffStart && staffStart.getFullYear() === yInt) return periodFromStartDate(staffStart);
+  return periodFromStartDate(firstMondayOfYear(yInt));
 }
 
 // â”€â”€â”€ Data Access â”€â”€â”€
@@ -23641,14 +23594,23 @@ function computeYearStats(sid, year){
 }
 
 function getFullConnectedStats(sid){
-  const y24 = computeYearStats(sid, '2024');
-  const y25 = computeYearStats(sid, '2025');
-  const y26 = computeYearStats(sid, '2026');
-  return { '2024': y24, '2025': y25, '2026': y26 };
+  const result = {};
+  years.forEach(function(year){ result[year] = computeYearStats(sid, year); });
+  return result;
 }
 
 // â”€â”€â”€ Mutations / Save helpers & Automatic Cloud Sync â”€â”€â”€
+function ensureTrackingYear(year){
+  const value = String(year);
+  if(years.indexOf(value) === -1){
+    years.push(value);
+    years.sort(function(a,b){ return parseInt(a,10) - parseInt(b,10); });
+  }
+  if(!BASE.years[value]) BASE.years[value] = {};
+  return value;
+}
 function ensureOvYear(year,sid){
+  ensureTrackingYear(year);
   if(!ov[year]) ov[year]={};
   if(!ov[year][sid]) ov[year][sid]={};
 }
@@ -23671,12 +23633,27 @@ function setWeekHours(sid,year,idx,hours){
 }
 
 function addWeek(sid,year,label,hours,sDate){
-  ensureOvYear(year,sid);
-  const weeks = sortWeeksChronologically(getStaffWeeks(sid,year));
-  weeks.push({label:label,hours:hours,date:sDate||label});
-  ov[year][sid].weeks = sortWeeksChronologically(weeks);
+  const period = periodFromStartDate(sDate) || periodFromStartDate(label);
+  const targetYear = ensureTrackingYear(period ? period.trackingYear : year);
+  ensureOvYear(targetYear,sid);
+  const weeks = sortWeeksChronologically(getStaffWeeks(sid,targetYear));
+  const savedLabel = period ? period.label : label;
+  const savedDate = period ? period.startDate : (sDate || label);
+  const existing = weeks.find(function(week){
+    const existingPeriod = periodFromWeekRecord(week);
+    return existingPeriod && period && existingPeriod.startDate === period.startDate;
+  });
+  if(existing){
+    existing.label = savedLabel;
+    existing.hours = hours;
+    existing.date = savedDate;
+  } else {
+    weeks.push({label:savedLabel,hours:hours,date:savedDate});
+  }
+  ov[targetYear][sid].weeks = sortWeeksChronologically(weeks);
   saveOv(ov);
   triggerAutoSync();
+  return { year: targetYear, period: period };
 }
 
 function addHolEntry(sid,year,date,hours,note){
@@ -23803,17 +23780,23 @@ function renderSidebar(){
   
   const activeStaffList = BASE.staff.filter(function(s){ return s.status !== 'inactive'; });
   const inactiveStaffList = BASE.staff.filter(function(s){ return s.status === 'inactive'; });
+  const newStaffList = activeStaffList.filter(function(s){
+    const start = parseLocalDate(s.startDate);
+    return start && String(start.getFullYear()) === String(activeYear);
+  });
   
   document.getElementById('sbActiveCount').textContent = activeStaffList.length;
+  document.getElementById('sbNewCount').textContent = newStaffList.length;
   document.getElementById('sbInactiveCount').textContent = inactiveStaffList.length;
   
   const contentEl = document.getElementById('sidebarContent');
   contentEl.innerHTML = '';
   
-  if(currentSidebarTab === 'active'){
-    // ACTIVE STAFF: Grouped by Shop Location
-    if(!activeStaffList.length){
-      contentEl.innerHTML = '<div style="padding:24px 16px;text-align:center;color:var(--tx3);font-size:.76rem">No active staff</div>';
+  if(currentSidebarTab === 'active' || currentSidebarTab === 'new'){
+    const shownStaff = currentSidebarTab === 'new' ? newStaffList : activeStaffList;
+    // ACTIVE / NEW STAFF: grouped by store, so same names in different stores stay distinct.
+    if(!shownStaff.length){
+      contentEl.innerHTML = '<div style="padding:24px 16px;text-align:center;color:var(--tx3);font-size:.76rem">No '+(currentSidebarTab === 'new' ? 'new staff for '+activeYear : 'active staff')+'</div>';
       return;
     }
     
@@ -23821,7 +23804,7 @@ function renderSidebar(){
     const shopGroups = {};
     shopOrder.forEach(function(sh){ shopGroups[sh] = []; });
     
-    activeStaffList.forEach(function(s){
+    shownStaff.forEach(function(s){
       const shopName = s.shop || s.location || 'Other';
       if(!shopGroups[shopName]) shopGroups[shopName] = [];
       if(q && !s.name.toLowerCase().includes(q) && !shopName.toLowerCase().includes(q)) return;
@@ -23840,7 +23823,7 @@ function renderSidebar(){
       const div=document.createElement('div');
       div.className='staff-item'+(s.id===activeSid?' active':'');
       div.innerHTML='<div class="si-avatar" style="background:'+avatarColor(s.id)+'">' + initials(s.name) + '</div>'
-        +'<div class="si-info"><div class="si-name">'+s.name+'</div><div class="si-sub"><span>'+shopName+'</span><span class="shift-tag">'+weeklyHrs+'h/wk</span></div></div>'
+        +'<div class="si-info"><div class="si-name">'+s.name+'</div><div class="si-sub"><span>'+shopName+'</span><span class="shift-tag">'+weeklyHrs+'h/wk</span>'+(currentSidebarTab === 'new' ? '<span class="shift-tag">New: '+formatLocalDate(parseLocalDate(s.startDate))+'</span>' : '')+'</div></div>'
         +(hasData?'<span class="si-badge '+badgeCls+'">'+badgeTxt+'</span>':'');
       div.addEventListener('click',function(){activeSid=s.id;editingWeekIdx=null;editingHolId=null;editingSickId=null;renderAll();});
       shopGroups[shopName].push(div);
@@ -23911,6 +23894,14 @@ function renderSidebar(){
 document.getElementById('sbTabActive').addEventListener('click', function(){
   currentSidebarTab = 'active';
   document.getElementById('sbTabActive').classList.add('active');
+  document.getElementById('sbTabNew').classList.remove('active');
+  document.getElementById('sbTabInactive').classList.remove('active');
+  renderSidebar();
+});
+document.getElementById('sbTabNew').addEventListener('click', function(){
+  currentSidebarTab = 'new';
+  document.getElementById('sbTabNew').classList.add('active');
+  document.getElementById('sbTabActive').classList.remove('active');
   document.getElementById('sbTabInactive').classList.remove('active');
   renderSidebar();
 });
@@ -23918,6 +23909,7 @@ document.getElementById('sbTabInactive').addEventListener('click', function(){
   currentSidebarTab = 'inactive';
   document.getElementById('sbTabInactive').classList.add('active');
   document.getElementById('sbTabActive').classList.remove('active');
+  document.getElementById('sbTabNew').classList.remove('active');
   renderSidebar();
 });
 
@@ -23947,6 +23939,7 @@ function renderMain(){
   else if(balance< (dailyHrs * 2)) balColor='var(--am)';
   
   const isInactive = staff.status === 'inactive';
+  const finalPayNeedsReview = staff.finalHolidayPayStatus === 'review';
   
   // Smart next week auto-suggestion for this employee
   const nextWk = getNextWeekSuggestion(activeYear, activeSid);
@@ -23962,6 +23955,13 @@ function renderMain(){
       +(staff.leftDate ? ' (Date: ' + staff.leftDate + ') &bull; ' : '&bull; ')
       +'All historical records &amp; balances are preserved.</div>'
       +(!isPortalMode ? '<button class="btn btn-gr" id="reactivateStaffBtn">&#128260; Reactivate Staff Member</button>' : '')
+      +'</div>' : '')
+    +(finalPayNeedsReview ?
+      '<div class="inactive-banner" style="background:#fffbeb;border-color:#fde68a;color:#92400e">'
+      +'<div>&#128176; <strong>Final holiday pay review required.</strong> Remaining '+activeYear+' balance: <strong>'+fmt1(balance)+' hrs</strong>'
+      +(staff.finalHolidayPayNote ? ' &bull; '+staff.finalHolidayPayNote : '')
+      +'</div>'
+      +(!isPortalMode ? '<button class="btn btn-am" id="markFinalHolidayPayPaidBtn">Mark reviewed / paid</button>' : '')
       +'</div>' : '')
     
     // Portal Header Banner
@@ -24042,7 +24042,7 @@ function renderMain(){
     +'<div class="card">'
     +'<div class="card-hd"><h3>&#128197; Hours Worked Breakdown ('+activeYear+')</h3><span class="card-sub">'+curStats.weeks.length+' periods &bull; '+fmt1(curStats.totalWorked)+' hrs</span></div>'
     +'<div class="weeks-wrap"><table class="weeks"><thead><tr><th>Week Number &amp; Date Range</th><th class="num">Hours Worked</th>'+(!isPortalMode?'<th class="act"></th>':'')+'</tr></thead><tbody id="weeksTbody"></tbody></table></div>'
-    +(!isPortalMode ? '<div class="add-week-form">'
+    +(!isPortalMode && !isInactive ? '<div class="add-week-form">'
     +'<input class="lbl" type="text" id="newWkLabel" value="'+nextWk.label+'" placeholder="Period label">'
     +'<input class="hrs" type="number" id="newWkHrs" min="0" step="0.5" value="'+weeklyHrs+'" placeholder="Hrs">'
     +'<button class="btn btn-ac" id="addWkBtn">&#43; Add Week '+nextWk.weekNum+'</button></div>' : '')
@@ -24210,7 +24210,8 @@ function renderMain(){
         const lbl = (newWkInp ? newWkInp.value : document.getElementById('newWkLabel').value).trim();
         const hrs = parseFloat(document.getElementById('newWkHrs').value);
         if(!lbl||isNaN(hrs)){toast('Enter a label and hours','var(--rd)');return;}
-        addWeek(activeSid,activeYear,lbl,hrs);
+        const saved = addWeek(activeSid,activeYear,lbl,hrs);
+        if(saved && saved.year) activeYear = saved.year;
         toast('Week added');renderAll();
       });
     }
@@ -24264,6 +24265,20 @@ function renderMain(){
         openReactivateModal(staff.id);
       });
     }
+
+    const finalPayPaidBtn = document.getElementById('markFinalHolidayPayPaidBtn');
+    if(finalPayPaidBtn){
+      finalPayPaidBtn.addEventListener('click', function(){
+        updateStaffRecord(staff, {
+          finalHolidayPayStatus: 'paid',
+          finalHolidayPayPaidOn: new Date().toISOString().slice(0,10)
+        });
+        saveOv(ov);
+        triggerAutoSync();
+        toast('Final holiday pay marked as reviewed / paid');
+        renderAll();
+      });
+    }
   }
 
   const bMark = document.getElementById('bookmarkBtn');
@@ -24293,11 +24308,9 @@ function renderCalendarEstimatorSchedule(){
   const curBalance = curStats.balance;
   const dailyHrs = curStats.dailyHours;
   const weeklyHrs = dailyHrs * 5;
-  const currentWeeksCount = curStats.weeks.length;
-  
   const weeklyAccrual = Math.round(weeklyHrs * 0.08 * 100) / 100;
-  
-  const startDate = new Date(2026, 8, 14); // 14 Sep 2026 (Week 37)
+  const nextPeriod = getNextWeekSuggestion(activeYear, activeSid);
+  const startDate = parseLocalDate(nextPeriod.startDate);
   const totalFutureWeeksToRender = 26;
   
   calTbody.innerHTML = '';
@@ -24306,9 +24319,9 @@ function renderCalendarEstimatorSchedule(){
   let runningProjectedBalance = curBalance;
   
   for(let w = 1; w <= totalFutureWeeksToRender; w++){
-    const wkNum = (currentWeeksCount >= 36 ? currentWeeksCount : 36) + w;
-    const weekStart = new Date(startDate.getTime() + ((w - 1) * 7 * 24 * 60 * 60 * 1000));
-    const weekEnd = new Date(weekStart.getTime() + (6 * 24 * 60 * 60 * 1000));
+    const weekStart = addDays(startDate, (w - 1) * 7);
+    const weekEnd = addDays(weekStart, 6);
+    const period = periodFromStartDate(weekStart);
     
     const dStr = weekStart.toLocaleDateString('en-GB', { day: '2-digit', month: 'short' }) + ' - ' + weekEnd.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
     
@@ -24320,7 +24333,8 @@ function renderCalendarEstimatorSchedule(){
     if(isSelected){
       targetForecast = {
         weeksAhead: w,
-        wkNum: wkNum,
+        wkNum: period.weekNum,
+        periodYear: period.periodYear,
         dateRange: dStr,
         futureWorked: w * weeklyHrs,
         futureEarned: Math.round(w * weeklyAccrual * 100) / 100,
@@ -24333,7 +24347,7 @@ function renderCalendarEstimatorSchedule(){
     const tr = document.createElement('tr');
     tr.className = isSelected ? 'selected' : '';
     tr.innerHTML = 
-      '<td><strong>Week ' + wkNum + '</strong> <span style="color:var(--tx3);font-size:.7rem">(' + dStr + ')</span>' + (isSelected ? ' <span style="background:var(--ac);color:#fff;padding:1px 6px;border-radius:4px;font-size:.62rem;font-weight:800">TARGET</span>' : '') + '</td>'
+      '<td><strong>Week ' + period.weekNum + '</strong> <span style="color:var(--tx3);font-size:.7rem">(' + dStr + ')</span>' + (isSelected ? ' <span style="background:var(--ac);color:#fff;padding:1px 6px;border-radius:4px;font-size:.62rem;font-weight:800">TARGET</span>' : '') + '</td>'
       +'<td>' + weeklyHrs + ' hrs</td>'
       +'<td style="color:var(--gr);font-weight:700">+' + fmt1(weeklyAccrual) + ' hrs</td>'
       +'<td class="num"><strong style="color:var(--tx)">' + fmt1(runningProjectedBalance) + ' hrs</strong> <span style="font-size:.7rem;color:var(--tx3)">(' + runningBreakdown.weeksText + ')</span></td>';
@@ -24355,7 +24369,7 @@ function renderCalendarEstimatorSchedule(){
   if(targetForecast){
     targetHighlight.innerHTML = 
       '<div class="est-target-left">'
-      +'<div class="est-target-tag">&#128302; Target Milestone: In ' + targetForecast.weeksAhead + ' Weeks (Week ' + targetForecast.wkNum + ' &bull; ' + targetForecast.dateRange + ')</div>'
+      +'<div class="est-target-tag">&#128302; Target Milestone: In ' + targetForecast.weeksAhead + ' Weeks (Week ' + targetForecast.wkNum + ' of ' + targetForecast.periodYear + ' &bull; ' + targetForecast.dateRange + ')</div>'
       +'<div class="est-target-val">' + fmt1(targetForecast.projectedBalance) + ' Hours Available</div>'
       +'<div class="est-target-sub">&#128197; Equivalent to: <strong>' + targetForecast.projectedBreakdown.weeksText + '</strong> (' + targetForecast.projectedDays + ' Working Days)</div>'
       +'</div>'
@@ -24374,24 +24388,23 @@ function openDeactivateModal(sid){
   
   document.getElementById('deactStaffName').value = staff.name;
   document.getElementById('deactLeftDate').value = new Date().toISOString().split('T')[0];
-  
-  const currentWeeks = getStaffWeeks(sid, activeYear);
-  const lastWkNum = currentWeeks.length > 0 ? currentWeeks.length : 35;
-  document.getElementById('deactLeftWeek').value = 'Week ' + lastWkNum + ' (' + activeYear + ')';
+  const departurePeriod = periodFromStartDate(document.getElementById('deactLeftDate').value);
+  document.getElementById('deactLeftWeek').value = 'Week ' + departurePeriod.weekNum + ' (' + departurePeriod.periodYear + ') - Left Job';
+  document.getElementById('deactFinalHolidayPay').checked = staff.finalHolidayPayStatus === 'review';
+  document.getElementById('deactFinalHolidayPayNote').value = staff.finalHolidayPayNote || '';
   
   document.getElementById('confirmDeactivateBtn').onclick = function(){
     const leftDate = document.getElementById('deactLeftDate').value;
     const leftWeek = document.getElementById('deactLeftWeek').value.trim();
-    
-    staff.status = 'inactive';
-    staff.leftDate = leftDate;
-    staff.leftWeek = leftWeek;
-    
-    if(!ov._staffUpdates) ov._staffUpdates = {};
-    if(!ov._staffUpdates[sid]) ov._staffUpdates[sid] = {};
-    ov._staffUpdates[sid].status = 'inactive';
-    ov._staffUpdates[sid].leftDate = leftDate;
-    ov._staffUpdates[sid].leftWeek = leftWeek;
+    const finalPayNeeded = document.getElementById('deactFinalHolidayPay').checked;
+    const finalPayNote = document.getElementById('deactFinalHolidayPayNote').value.trim();
+    const changes = { status: 'inactive', leftDate: leftDate, leftWeek: leftWeek };
+    if(finalPayNeeded){
+      changes.finalHolidayPayStatus = 'review';
+      changes.finalHolidayPayNote = finalPayNote || 'Please pay remaining holiday pay';
+      changes.finalHolidayPayRequestedOn = new Date().toISOString().slice(0,10);
+    }
+    updateStaffRecord(staff, changes);
     
     saveOv(ov);
     document.getElementById('deactivateModal').classList.add('hidden');
@@ -24399,6 +24412,7 @@ function openDeactivateModal(sid){
     currentSidebarTab = 'inactive';
     document.getElementById('sbTabInactive').classList.add('active');
     document.getElementById('sbTabActive').classList.remove('active');
+    document.getElementById('sbTabNew').classList.remove('active');
     triggerAutoSync();
     renderAll();
   };
@@ -24423,19 +24437,9 @@ function openReactivateModal(sid){
     const newStart = document.getElementById('reactivateStartDate').value;
     const carryBal = document.getElementById('reactivateCarryBal').checked;
     
-    staff.status = 'active';
-    staff.shop = newShop;
-    staff.leftDate = '';
-    staff.leftWeek = '';
-    if(newStart) staff.startDate = newStart;
-    
-    if(!ov._staffUpdates) ov._staffUpdates = {};
-    if(!ov._staffUpdates[sid]) ov._staffUpdates[sid] = {};
-    ov._staffUpdates[sid].status = 'active';
-    ov._staffUpdates[sid].shop = newShop;
-    ov._staffUpdates[sid].leftDate = '';
-    ov._staffUpdates[sid].leftWeek = '';
-    if(newStart) ov._staffUpdates[sid].startDate = newStart;
+    const changes = { status: 'active', shop: newShop, location: newShop, leftDate: '', leftWeek: '' };
+    if(newStart) changes.startDate = newStart;
+    updateStaffRecord(staff, changes);
     
     if(!carryBal){
       ensureOvYear(activeYear, sid);
@@ -24448,6 +24452,7 @@ function openReactivateModal(sid){
     currentSidebarTab = 'active';
     document.getElementById('sbTabActive').classList.add('active');
     document.getElementById('sbTabInactive').classList.remove('active');
+    document.getElementById('sbTabNew').classList.remove('active');
     triggerAutoSync();
     renderAll();
   };
@@ -24497,6 +24502,18 @@ document.getElementById('saveNewStaffBtn').addEventListener('click', function(){
     toast('Please enter the staff member full name', 'var(--rd)');
     return;
   }
+  const sameNameAndStore = BASE.staff.find(function(s){ return staffIdentityKey(s) === staffIdentityKey(name, shop); });
+  if(sameNameAndStore){
+    activeSid = sameNameAndStore.id;
+    currentSidebarTab = sameNameAndStore.status === 'inactive' ? 'inactive' : 'active';
+    document.getElementById('sbTabActive').classList.toggle('active', currentSidebarTab === 'active');
+    document.getElementById('sbTabNew').classList.remove('active');
+    document.getElementById('sbTabInactive').classList.toggle('active', currentSidebarTab === 'inactive');
+    document.getElementById('addStaffModal').classList.add('hidden');
+    toast(name + ' already exists at ' + shop + '. Opened the existing staff record instead.', 'var(--am)');
+    renderAll();
+    return;
+  }
   
   let maxIdNum = 0;
   BASE.staff.forEach(function(s){
@@ -24516,7 +24533,9 @@ document.getElementById('saveNewStaffBtn').addEventListener('click', function(){
     dailyHours: dailyHours,
     weeklyHours: shiftVal,
     sickAllowance: SICK_ALLOWANCE_ANNUAL,
-    status: 'active'
+    status: 'active',
+    leftDate: '',
+    leftWeek: ''
   };
   
   BASE.staff.push(newStaffObj);
@@ -24537,6 +24556,7 @@ document.getElementById('saveNewStaffBtn').addEventListener('click', function(){
   currentSidebarTab = 'active';
   document.getElementById('sbTabActive').classList.add('active');
   document.getElementById('sbTabInactive').classList.remove('active');
+  document.getElementById('sbTabNew').classList.remove('active');
   
   activeSid = newSid;
   triggerAutoSync();
@@ -24636,7 +24656,14 @@ function openBatchModal(){
   const shopGroups = {};
   shopOrder.forEach(function(sh){ shopGroups[sh] = []; });
   
-  const activeStaffOnly = BASE.staff.filter(function(s){ return s.status !== 'inactive'; });
+  const uniqueStaffKeys = {};
+  const activeStaffOnly = BASE.staff.filter(function(s){
+    if(s.status === 'inactive') return false;
+    const key = staffIdentityKey(s);
+    if(uniqueStaffKeys[key]) return false;
+    uniqueStaffKeys[key] = true;
+    return true;
+  });
   
   activeStaffOnly.forEach(function(s){
     const sh = s.shop || s.location || 'Other';
@@ -24692,12 +24719,21 @@ document.getElementById('batchClearBtn').addEventListener('click', function(){
 document.getElementById('batchClose').addEventListener('click', function(){ document.getElementById('batchModal').classList.add('hidden'); });
 document.getElementById('batchCancelBtn').addEventListener('click', function(){ document.getElementById('batchModal').classList.add('hidden'); });
 document.getElementById('batchWeekBtn').addEventListener('click', openBatchModal);
+document.getElementById('batchWkDate').addEventListener('change', function(){
+  const period = periodFromStartDate(this.value);
+  if(!period) return;
+  this.value = period.startDate;
+  document.getElementById('batchWkLabel').value = period.label;
+});
 
 document.getElementById('batchSaveAllBtn').addEventListener('click', function(){
   if(isPortalMode) return;
   const label = document.getElementById('batchWkLabel').value.trim();
   const dateVal = document.getElementById('batchWkDate').value;
-  if(!label){ toast('Enter a week label', 'var(--rd)'); return; }
+  const period = periodFromStartDate(dateVal) || periodFromStartDate(label);
+  if(!period){ toast('Enter a valid Monday start date', 'var(--rd)'); return; }
+  const targetYear = ensureTrackingYear(period.trackingYear);
+  activeYear = targetYear;
   
   let savedCount = 0;
   BASE.staff.forEach(function(s){
@@ -24713,17 +24749,19 @@ document.getElementById('batchSaveAllBtn').addEventListener('click', function(){
     const note = noteInp ? noteInp.value.trim() : '';
     
     if(!isNaN(hrs)){
-      addWeek(s.id, activeYear, label, hrs, dateVal);
+      addWeek(s.id, targetYear, period.label, hrs, period.startDate);
       savedCount++;
     }
     if(!isNaN(hol) && hol > 0){
-      addHolEntry(s.id, activeYear, dateVal || label, hol, note || 'Holiday');
+      addHolEntry(s.id, targetYear, period.startDate, hol, note || 'Holiday');
     }
     if(!isNaN(sick) && sick > 0){
-      addSickEntry(s.id, activeYear, dateVal || label, sick, note || 'Sick');
+      addSickEntry(s.id, targetYear, period.startDate, sick, note || 'Sick');
     }
+    flagFinalHolidayPayReview(s, note);
   });
   
+  saveOv(ov);
   document.getElementById('batchModal').classList.add('hidden');
   toast('Saved week for ' + savedCount + ' staff! Auto-syncing...');
   triggerAutoSync();
@@ -24735,6 +24773,7 @@ function buildCurrentDatabaseState(){
   const exportData = JSON.parse(JSON.stringify(BASE));
   years.forEach(function(y){
     if(ov[y]){
+      if(!exportData.years[y]) exportData.years[y] = {};
       Object.keys(ov[y]).forEach(function(sid){
         if(!exportData.years[y][sid]) exportData.years[y][sid] = {};
         if(ov[y][sid].weeks) exportData.years[y][sid].weeks = sortWeeksChronologically(ov[y][sid].weeks);
@@ -24743,8 +24782,8 @@ function buildCurrentDatabaseState(){
     }
   });
   BASE.staff.forEach(function(s){
-    exportData.baseHolLogs[s.id] = getStaffHolidayLogs(s.id, '2024').concat(getStaffHolidayLogs(s.id, '2025')).concat(getStaffHolidayLogs(s.id, '2026'));
-    exportData.baseSickLogs[s.id] = getStaffSickLogs(s.id, '2024').concat(getStaffSickLogs(s.id, '2025')).concat(getStaffSickLogs(s.id, '2026'));
+    exportData.baseHolLogs[s.id] = years.reduce(function(all, year){ return all.concat(getStaffHolidayLogs(s.id, year)); }, []);
+    exportData.baseSickLogs[s.id] = years.reduce(function(all, year){ return all.concat(getStaffSickLogs(s.id, year)); }, []);
   });
   return exportData;
 }
@@ -25345,6 +25384,86 @@ function renderAll(){
   renderMain();
 }
 
+// The JSON file is the shared company record. When a manager has newer local
+// entries, keep only additions that the shared record has not received yet.
+// A shared former-staff status always wins over an older local active status.
+function mergeUnsentLocalRecord(shared, local){
+  let hasLocalAdditions = false;
+  const sharedStaffByKey = {};
+  (shared.staff || []).forEach(function(staff){
+    sharedStaffByKey[staff.id] = staff;
+    sharedStaffByKey[staffIdentityKey(staff)] = staff;
+  });
+  (local.staff || []).forEach(function(localStaff){
+    const sharedStaff = sharedStaffByKey[localStaff.id] || sharedStaffByKey[staffIdentityKey(localStaff)];
+    if(!sharedStaff){
+      const copy = JSON.parse(JSON.stringify(localStaff));
+      shared.staff.push(copy);
+      sharedStaffByKey[copy.id] = copy;
+      sharedStaffByKey[staffIdentityKey(copy)] = copy;
+      hasLocalAdditions = true;
+    } else if(localStaff.status === 'inactive' && sharedStaff.status !== 'inactive'){
+      sharedStaff.status = 'inactive';
+      sharedStaff.leftDate = localStaff.leftDate || sharedStaff.leftDate || '';
+      sharedStaff.leftWeek = localStaff.leftWeek || sharedStaff.leftWeek || '';
+      hasLocalAdditions = true;
+    }
+  });
+
+  Object.keys(local.years || {}).forEach(function(year){
+    if(!shared.years[year]) shared.years[year] = {};
+    Object.keys(local.years[year] || {}).forEach(function(sid){
+      const localRecord = local.years[year][sid] || {};
+      if(!shared.years[year][sid]) shared.years[year][sid] = {};
+      const sharedRecord = shared.years[year][sid];
+      const existingPeriods = {};
+      (sharedRecord.weeks || []).forEach(function(week){
+        const period = periodFromWeekRecord(week);
+        if(period) existingPeriods[period.startDate] = true;
+      });
+      (localRecord.weeks || []).forEach(function(week){
+        const period = periodFromWeekRecord(week);
+        const key = period ? period.startDate : (week.date || week.label);
+        if(!existingPeriods[key]){
+          if(!sharedRecord.weeks) sharedRecord.weeks = [];
+          sharedRecord.weeks.push(JSON.parse(JSON.stringify(week)));
+          existingPeriods[key] = true;
+          hasLocalAdditions = true;
+        }
+      });
+      if(sharedRecord.weeks) sharedRecord.weeks = sortWeeksChronologically(sharedRecord.weeks);
+      if(sharedRecord.opening === undefined && localRecord.opening !== undefined) sharedRecord.opening = localRecord.opening;
+    });
+  });
+  return hasLocalAdditions;
+}
+
+async function loadSharedCompanyRecord(){
+  if(isPortalMode) return;
+  try {
+    const response = await fetch('./holiday_data.json', { cache: 'no-store' });
+    if(!response.ok) return;
+    const shared = await response.json();
+    if(!shared || !Array.isArray(shared.staff) || !shared.years) return;
+
+    const local = buildCurrentDatabaseState();
+    const hasUnsentLocalAdditions = mergeUnsentLocalRecord(shared, local);
+    Object.keys(BASE).forEach(function(key){ delete BASE[key]; });
+    Object.assign(BASE, shared);
+    ov = {};
+    Object.keys(BASE.years).forEach(ensureTrackingYear);
+
+    if(!BASE.staff.some(function(staff){ return staff.id === activeSid; })){
+      const firstActive = BASE.staff.find(function(staff){ return staff.status !== 'inactive'; });
+      activeSid = firstActive ? firstActive.id : (BASE.staff[0] || {}).id;
+    }
+    renderAll();
+    if(hasUnsentLocalAdditions) triggerAutoSync();
+  } catch(error) {
+    console.warn('Shared company record unavailable; using this device\'s local copy.', error);
+  }
+}
+
 function checkUrlParams(){
   const params = new URLSearchParams(window.location.search);
   const staffParam = params.get('staff') || params.get('id') || params.get('name');
@@ -25379,6 +25498,7 @@ if(!activeSid){
   activeSid = firstActive ? firstActive.id : 's13';
 }
 renderAll();
+loadSharedCompanyRecord();
 </script>
 </body>
 </html>
