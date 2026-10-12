@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<script>location.replace('./index.html' + location.search + location.hash);</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>IDFL Staff Holidays & Hours Portal</title>
@@ -285,8 +284,9 @@ table.batch-table input:focus{border-color:var(--ac)}
 <div class="body">
   <div class="sidebar" id="sidebar">
     <div class="sidebar-tabs" id="sidebarTabs">
-      <button class="sb-tab active" id="sbTabActive" data-tab="active">Active Staff (<span id="sbActiveCount">0</span>)</button>
-      <button class="sb-tab" id="sbTabInactive" data-tab="inactive">Past Employees (<span id="sbInactiveCount">0</span>)</button>
+      <button class="sb-tab active" id="sbTabActive" data-tab="active">Active (<span id="sbActiveCount">0</span>)</button>
+      <button class="sb-tab" id="sbTabNew" data-tab="new">New (<span id="sbNewCount">0</span>)</button>
+      <button class="sb-tab" id="sbTabInactive" data-tab="inactive">Past (<span id="sbInactiveCount">0</span>)</button>
     </div>
     <div class="sidebar-content" id="sidebarContent"></div>
   </div>
@@ -359,6 +359,12 @@ table.batch-table input:focus{border-color:var(--ac)}
       
       <label>Stop Week / Reason</label>
       <input type="text" id="deactLeftWeek" placeholder="e.g. Week 35 (2026) - Left Job">
+
+      <label style="display:flex;align-items:center;gap:8px;cursor:pointer;margin-top:10px">
+        <input type="checkbox" id="deactFinalHolidayPay" style="width:auto;margin-bottom:0">
+        <span>Final holiday pay needs review</span>
+      </label>
+      <input type="text" id="deactFinalHolidayPayNote" placeholder="e.g. Please pay remaining holiday pay">
     </div>
     <div class="modal-footer">
       <button class="btn btn-ghost" id="deactCancelBtn">Cancel</button>
@@ -594,7 +600,8 @@ table.batch-table input:focus{border-color:var(--ac)}
   </div>
 </div>
 
-<script id="holiday-data" type="application/json">{
+<script id="holiday-data" type="application/json">
+{
   "baseHolLogs": {
     "s5": [
       {
@@ -984,7 +991,15 @@ table.batch-table input:focus{border-color:var(--ac)}
         "note": "Please pay 15 hours holiday pay"
       }
     ],
-    "s28": [],
+    "s28": [
+      {
+        "id": "muwr5hpnjd8z",
+        "year": "2026",
+        "date": "2026-09-28",
+        "hours": 21,
+        "note": "Please pay sick pay for 21 hours."
+      }
+    ],
     "s2": [
       {
         "id": "h_2024_s2_227",
@@ -2211,6 +2226,13 @@ table.batch-table input:focus{border-color:var(--ac)}
         "date": "03/08/2026",
         "hours": 7,
         "note": "Please pay 7 hours holiday pay  7 �20.00"
+      },
+      {
+        "id": "muwr5hp3d8df",
+        "year": "2026",
+        "date": "2026-09-28",
+        "hours": 35,
+        "note": "Please pay 35 hours holiday pay"
       }
     ],
     "s11": [
@@ -2647,6 +2669,13 @@ table.batch-table input:focus{border-color:var(--ac)}
         "date": "07/09/2026",
         "hours": 7,
         "note": "Holiday"
+      },
+      {
+        "id": "muwr5hpdbhy6",
+        "year": "2026",
+        "date": "2026-09-28",
+        "hours": 19,
+        "note": "Please pay sick pay for 19 hours"
       }
     ],
     "s9": [],
@@ -3150,7 +3179,8 @@ table.batch-table input:focus{border-color:var(--ac)}
     ],
     "f31": [],
     "f32": [],
-    "f33": []
+    "f33": [],
+    "s33": []
   },
   "baseSickLogs": {
     "s5": [],
@@ -3473,7 +3503,8 @@ table.batch-table input:focus{border-color:var(--ac)}
     "f30": [],
     "f31": [],
     "f32": [],
-    "f33": []
+    "f33": [],
+    "s33": []
   },
   "years": {
     "2024": {
@@ -16878,6 +16909,26 @@ table.batch-table input:focus{border-color:var(--ac)}
             "label": "Week 36 07/09/2026 - 13/09/2026",
             "hours": 30,
             "date": "2026-09-07"
+          },
+          {
+            "label": "Week 37 14/09/2026 - 20/09/2026",
+            "hours": 28.0,
+            "date": "2026-09-14"
+          },
+          {
+            "label": "Week 38 21/09/2026 - 27/09/2026",
+            "hours": 30.0,
+            "date": "2026-09-21"
+          },
+          {
+            "label": "Week 39 28/09/2026 - 04/10/2026",
+            "hours": 30,
+            "date": "2026-09-28"
+          },
+          {
+            "label": "Week 40 05/10/2026 - 11/10/2026",
+            "hours": 30.0,
+            "date": "2026-10-05"
           }
         ],
         "totalWorked": 893,
@@ -17068,6 +17119,26 @@ table.batch-table input:focus{border-color:var(--ac)}
             "label": "Week 36 07/09/2026 - 13/09/2026",
             "hours": 0,
             "date": "2026-09-07"
+          },
+          {
+            "label": "Week 37 14/09/2026 - 20/09/2026",
+            "hours": 0.0,
+            "date": "2026-09-14"
+          },
+          {
+            "label": "Week 38 21/09/2026 - 27/09/2026",
+            "hours": 0.0,
+            "date": "2026-09-21"
+          },
+          {
+            "label": "Week 39 28/09/2026 - 04/10/2026",
+            "hours": 0,
+            "date": "2026-09-28"
+          },
+          {
+            "label": "Week 40 05/10/2026 - 11/10/2026",
+            "hours": 0.0,
+            "date": "2026-10-05"
           }
         ],
         "totalWorked": 1037,
@@ -17258,6 +17329,26 @@ table.batch-table input:focus{border-color:var(--ac)}
             "label": "Week 36 07/09/2026 - 13/09/2026",
             "hours": 29,
             "date": "2026-09-07"
+          },
+          {
+            "label": "Week 37 14/09/2026 - 20/09/2026",
+            "hours": 29.0,
+            "date": "2026-09-14"
+          },
+          {
+            "label": "Week 38 21/09/2026 - 27/09/2026",
+            "hours": 29.0,
+            "date": "2026-09-21"
+          },
+          {
+            "label": "Week 39 28/09/2026 - 04/10/2026",
+            "hours": 29,
+            "date": "2026-09-28"
+          },
+          {
+            "label": "Week 40 05/10/2026 - 11/10/2026",
+            "hours": 29.0,
+            "date": "2026-10-05"
           }
         ],
         "totalWorked": 931,
@@ -17398,6 +17489,26 @@ table.batch-table input:focus{border-color:var(--ac)}
             "label": "Week 36 07/09/2026 - 13/09/2026",
             "hours": 0,
             "date": "2026-09-07"
+          },
+          {
+            "label": "Week 37 14/09/2026 - 20/09/2026",
+            "hours": 0.0,
+            "date": "2026-09-14"
+          },
+          {
+            "label": "Week 38 21/09/2026 - 27/09/2026",
+            "hours": 0,
+            "date": "2026-09-21"
+          },
+          {
+            "label": "Week 39 28/09/2026 - 04/10/2026",
+            "hours": 0.0,
+            "date": "2026-09-28"
+          },
+          {
+            "label": "Week 40 05/10/2026 - 11/10/2026",
+            "hours": 18.5,
+            "date": "2026-10-05"
           }
         ],
         "totalWorked": 560.5,
@@ -17586,8 +17697,28 @@ table.batch-table input:focus{border-color:var(--ac)}
           },
           {
             "label": "Week 36 07/09/2026 - 13/09/2026",
-            "hours": 32.5,
+            "hours": 40.0,
             "date": "2026-09-07"
+          },
+          {
+            "label": "Week 37 14/09/2026 - 20/09/2026",
+            "hours": 40.0,
+            "date": "2026-09-14"
+          },
+          {
+            "label": "Week 38 21/09/2026 - 27/09/2026",
+            "hours": 40.0,
+            "date": "2026-09-21"
+          },
+          {
+            "label": "Week 39 28/09/2026 - 04/10/2026",
+            "hours": 40,
+            "date": "2026-09-28"
+          },
+          {
+            "label": "Week 40 05/10/2026 - 11/10/2026",
+            "hours": 40.0,
+            "date": "2026-10-05"
           }
         ],
         "totalWorked": 1305.5,
@@ -17778,6 +17909,26 @@ table.batch-table input:focus{border-color:var(--ac)}
             "label": "Week 36 07/09/2026 - 13/09/2026",
             "hours": 23,
             "date": "2026-09-07"
+          },
+          {
+            "label": "Week 37 14/09/2026 - 20/09/2026",
+            "hours": 0.0,
+            "date": "2026-09-14"
+          },
+          {
+            "label": "Week 38 21/09/2026 - 27/09/2026",
+            "hours": 25.0,
+            "date": "2026-09-21"
+          },
+          {
+            "label": "Week 39 28/09/2026 - 04/10/2026",
+            "hours": 0,
+            "date": "2026-09-28"
+          },
+          {
+            "label": "Week 40 05/10/2026 - 11/10/2026",
+            "hours": 0.0,
+            "date": "2026-10-05"
           }
         ],
         "totalWorked": 890.5,
@@ -17968,6 +18119,11 @@ table.batch-table input:focus{border-color:var(--ac)}
             "label": "Week 36 07/09/2026 - 13/09/2026",
             "hours": 40,
             "date": "2026-09-07"
+          },
+          {
+            "label": "Week 39 28/09/2026 - 04/10/2026",
+            "hours": 40,
+            "date": "2026-09-28"
           }
         ],
         "totalWorked": 1061,
@@ -18158,6 +18314,26 @@ table.batch-table input:focus{border-color:var(--ac)}
             "label": "Week 36 07/09/2026 - 13/09/2026",
             "hours": 31,
             "date": "2026-09-07"
+          },
+          {
+            "label": "Week 37 14/09/2026 - 20/09/2026",
+            "hours": 30.0,
+            "date": "2026-09-14"
+          },
+          {
+            "label": "Week 38 21/09/2026 - 27/09/2026",
+            "hours": 31.5,
+            "date": "2026-09-21"
+          },
+          {
+            "label": "Week 39 28/09/2026 - 04/10/2026",
+            "hours": 28.5,
+            "date": "2026-09-28"
+          },
+          {
+            "label": "Week 40 05/10/2026 - 11/10/2026",
+            "hours": 28.5,
+            "date": "2026-10-05"
           }
         ],
         "totalWorked": 975.5,
@@ -18348,6 +18524,26 @@ table.batch-table input:focus{border-color:var(--ac)}
             "label": "Week 36 07/09/2026 - 13/09/2026",
             "hours": 40,
             "date": "2026-09-07"
+          },
+          {
+            "label": "Week 37 14/09/2026 - 20/09/2026",
+            "hours": 40.0,
+            "date": "2026-09-14"
+          },
+          {
+            "label": "Week 38 21/09/2026 - 27/09/2026",
+            "hours": 40.0,
+            "date": "2026-09-21"
+          },
+          {
+            "label": "Week 39 28/09/2026 - 04/10/2026",
+            "hours": 40,
+            "date": "2026-09-28"
+          },
+          {
+            "label": "Week 40 05/10/2026 - 11/10/2026",
+            "hours": 40.0,
+            "date": "2026-10-05"
           }
         ],
         "totalWorked": 1344,
@@ -18538,6 +18734,26 @@ table.batch-table input:focus{border-color:var(--ac)}
             "label": "Week 36 07/09/2026 - 13/09/2026",
             "hours": 8,
             "date": "2026-09-07"
+          },
+          {
+            "label": "Week 37 14/09/2026 - 20/09/2026",
+            "hours": 11.0,
+            "date": "2026-09-14"
+          },
+          {
+            "label": "Week 38 21/09/2026 - 27/09/2026",
+            "hours": 25.0,
+            "date": "2026-09-21"
+          },
+          {
+            "label": "Week 39 28/09/2026 - 04/10/2026",
+            "hours": 30,
+            "date": "2026-09-28"
+          },
+          {
+            "label": "Week 40 05/10/2026 - 11/10/2026",
+            "hours": 30.0,
+            "date": "2026-10-05"
           }
         ],
         "totalWorked": 310,
@@ -18718,6 +18934,36 @@ table.batch-table input:focus{border-color:var(--ac)}
             "label": "Week 34 24/08/2026 - 30/08/2026",
             "hours": 42,
             "date": "24/08/2026"
+          },
+          {
+            "label": "Week 35 31/08/2026 - 06/09/2026",
+            "hours": 35.0,
+            "date": "2026-08-31"
+          },
+          {
+            "label": "Week 36 07/09/2026 - 13/09/2026",
+            "hours": 35.0,
+            "date": "2026-09-07"
+          },
+          {
+            "label": "Week 37 14/09/2026 - 20/09/2026",
+            "hours": 28.0,
+            "date": "2026-09-14"
+          },
+          {
+            "label": "Week 38 21/09/2026 - 27/09/2026",
+            "hours": 5.5,
+            "date": "2026-09-21"
+          },
+          {
+            "label": "Week 39 28/09/2026 - 04/10/2026",
+            "hours": 35,
+            "date": "2026-09-28"
+          },
+          {
+            "label": "Week 40 05/10/2026 - 11/10/2026",
+            "hours": 35.0,
+            "date": "2026-10-05"
           }
         ],
         "totalWorked": 905,
@@ -18908,6 +19154,26 @@ table.batch-table input:focus{border-color:var(--ac)}
             "label": "Week 36 07/09/2026 - 13/09/2026",
             "hours": 12,
             "date": "2026-09-07"
+          },
+          {
+            "label": "Week 37 14/09/2026 - 20/09/2026",
+            "hours": 19.0,
+            "date": "2026-09-14"
+          },
+          {
+            "label": "Week 38 21/09/2026 - 27/09/2026",
+            "hours": 18.5,
+            "date": "2026-09-21"
+          },
+          {
+            "label": "Week 39 28/09/2026 - 04/10/2026",
+            "hours": 20,
+            "date": "2026-09-28"
+          },
+          {
+            "label": "Week 40 05/10/2026 - 11/10/2026",
+            "hours": 20.0,
+            "date": "2026-10-05"
           }
         ],
         "totalWorked": 404,
@@ -19058,6 +19324,11 @@ table.batch-table input:focus{border-color:var(--ac)}
             "label": "Week 36 07/09/2026 - 13/09/2026",
             "hours": 0,
             "date": "2026-09-07"
+          },
+          {
+            "label": "Week 39 28/09/2026 - 04/10/2026",
+            "hours": 0,
+            "date": "2026-09-28"
           }
         ],
         "totalWorked": 603,
@@ -19248,6 +19519,26 @@ table.batch-table input:focus{border-color:var(--ac)}
             "label": "Week 36 07/09/2026 - 13/09/2026",
             "hours": 13.5,
             "date": "2026-09-07"
+          },
+          {
+            "label": "Week 37 14/09/2026 - 20/09/2026",
+            "hours": 13.5,
+            "date": "2026-09-14"
+          },
+          {
+            "label": "Week 38 21/09/2026 - 27/09/2026",
+            "hours": 13.5,
+            "date": "2026-09-21"
+          },
+          {
+            "label": "Week 39 28/09/2026 - 04/10/2026",
+            "hours": 13.5,
+            "date": "2026-09-28"
+          },
+          {
+            "label": "Week 40 05/10/2026 - 11/10/2026",
+            "hours": 13.5,
+            "date": "2026-10-05"
           }
         ],
         "totalWorked": 564.6,
@@ -19438,6 +19729,26 @@ table.batch-table input:focus{border-color:var(--ac)}
             "label": "Week 36 07/09/2026 - 13/09/2026",
             "hours": 12.5,
             "date": "2026-09-07"
+          },
+          {
+            "label": "Week 37 14/09/2026 - 20/09/2026",
+            "hours": 12.5,
+            "date": "2026-09-14"
+          },
+          {
+            "label": "Week 38 21/09/2026 - 27/09/2026",
+            "hours": 13.0,
+            "date": "2026-09-21"
+          },
+          {
+            "label": "Week 39 28/09/2026 - 04/10/2026",
+            "hours": 13.5,
+            "date": "2026-09-28"
+          },
+          {
+            "label": "Week 40 05/10/2026 - 11/10/2026",
+            "hours": 13.5,
+            "date": "2026-10-05"
           }
         ],
         "totalWorked": 818.5,
@@ -19628,6 +19939,26 @@ table.batch-table input:focus{border-color:var(--ac)}
             "label": "Week 36 07/09/2026 - 13/09/2026",
             "hours": 0,
             "date": "2026-09-07"
+          },
+          {
+            "label": "Week 37 14/09/2026 - 20/09/2026",
+            "hours": 0.0,
+            "date": "2026-09-14"
+          },
+          {
+            "label": "Week 38 21/09/2026 - 27/09/2026",
+            "hours": 0.0,
+            "date": "2026-09-21"
+          },
+          {
+            "label": "Week 39 28/09/2026 - 04/10/2026",
+            "hours": 0,
+            "date": "2026-09-28"
+          },
+          {
+            "label": "Week 40 05/10/2026 - 11/10/2026",
+            "hours": 0.0,
+            "date": "2026-10-05"
           }
         ],
         "totalWorked": 767.5,
@@ -19818,6 +20149,26 @@ table.batch-table input:focus{border-color:var(--ac)}
             "label": "Week 36 07/09/2026 - 13/09/2026",
             "hours": 44,
             "date": "2026-09-07"
+          },
+          {
+            "label": "Week 37 14/09/2026 - 20/09/2026",
+            "hours": 41.0,
+            "date": "2026-09-14"
+          },
+          {
+            "label": "Week 38 21/09/2026 - 27/09/2026",
+            "hours": 49.0,
+            "date": "2026-09-21"
+          },
+          {
+            "label": "Week 39 28/09/2026 - 04/10/2026",
+            "hours": 45,
+            "date": "2026-09-28"
+          },
+          {
+            "label": "Week 40 05/10/2026 - 11/10/2026",
+            "hours": 45.0,
+            "date": "2026-10-05"
           }
         ],
         "totalWorked": 1516.5,
@@ -20198,6 +20549,11 @@ table.batch-table input:focus{border-color:var(--ac)}
             "label": "Week 36 07/09/2026 - 13/09/2026",
             "hours": 40,
             "date": "2026-09-07"
+          },
+          {
+            "label": "Week 39 28/09/2026 - 04/10/2026",
+            "hours": 40,
+            "date": "2026-09-28"
           }
         ],
         "totalWorked": 1331,
@@ -20381,13 +20737,33 @@ table.batch-table input:focus{border-color:var(--ac)}
           },
           {
             "label": "Week 35 31/08/2026 - 06/09/2026",
-            "hours": 35.6,
-            "date": "31/08/2026"
+            "hours": 36.5,
+            "date": "2026-08-31"
           },
           {
             "label": "Week 36 07/09/2026 - 13/09/2026",
             "hours": 37.5,
             "date": "2026-09-07"
+          },
+          {
+            "label": "Week 37 14/09/2026 - 20/09/2026",
+            "hours": 37.5,
+            "date": "2026-09-14"
+          },
+          {
+            "label": "Week 38 21/09/2026 - 27/09/2026",
+            "hours": 29.0,
+            "date": "2026-09-21"
+          },
+          {
+            "label": "Week 39 28/09/2026 - 04/10/2026",
+            "hours": 45,
+            "date": "2026-09-28"
+          },
+          {
+            "label": "Week 40 05/10/2026 - 11/10/2026",
+            "hours": 37.5,
+            "date": "2026-10-05"
           }
         ],
         "totalWorked": 1141,
@@ -20578,6 +20954,26 @@ table.batch-table input:focus{border-color:var(--ac)}
             "label": "Week 36 07/09/2026 - 13/09/2026",
             "hours": 35,
             "date": "2026-09-07"
+          },
+          {
+            "label": "Week 37 14/09/2026 - 20/09/2026",
+            "hours": 31.0,
+            "date": "2026-09-14"
+          },
+          {
+            "label": "Week 38 21/09/2026 - 27/09/2026",
+            "hours": 37.5,
+            "date": "2026-09-21"
+          },
+          {
+            "label": "Week 39 28/09/2026 - 04/10/2026",
+            "hours": 23,
+            "date": "2026-09-28"
+          },
+          {
+            "label": "Week 40 05/10/2026 - 11/10/2026",
+            "hours": 35.0,
+            "date": "2026-10-05"
           }
         ],
         "totalWorked": 1009.5,
@@ -20768,6 +21164,26 @@ table.batch-table input:focus{border-color:var(--ac)}
             "label": "Week 36 07/09/2026 - 13/09/2026",
             "hours": 35,
             "date": "2026-09-07"
+          },
+          {
+            "label": "Week 37 14/09/2026 - 20/09/2026",
+            "hours": 35.0,
+            "date": "2026-09-14"
+          },
+          {
+            "label": "Week 38 21/09/2026 - 27/09/2026",
+            "hours": 35.0,
+            "date": "2026-09-21"
+          },
+          {
+            "label": "Week 39 28/09/2026 - 04/10/2026",
+            "hours": 0,
+            "date": "2026-09-28"
+          },
+          {
+            "label": "Week 40 05/10/2026 - 11/10/2026",
+            "hours": 0.0,
+            "date": "2026-10-05"
           }
         ],
         "totalWorked": 1176,
@@ -20958,6 +21374,26 @@ table.batch-table input:focus{border-color:var(--ac)}
             "label": "Week 36 07/09/2026 - 13/09/2026",
             "hours": 44,
             "date": "2026-09-07"
+          },
+          {
+            "label": "Week 37 14/09/2026 - 20/09/2026",
+            "hours": 44.0,
+            "date": "2026-09-14"
+          },
+          {
+            "label": "Week 38 21/09/2026 - 27/09/2026",
+            "hours": 36.5,
+            "date": "2026-09-21"
+          },
+          {
+            "label": "Week 39 28/09/2026 - 04/10/2026",
+            "hours": 44,
+            "date": "2026-09-28"
+          },
+          {
+            "label": "Week 40 05/10/2026 - 11/10/2026",
+            "hours": 46.0,
+            "date": "2026-10-05"
           }
         ],
         "totalWorked": 1138.5,
@@ -21148,6 +21584,26 @@ table.batch-table input:focus{border-color:var(--ac)}
             "label": "Week 36 07/09/2026 - 13/09/2026",
             "hours": 34.5,
             "date": "2026-09-07"
+          },
+          {
+            "label": "Week 37 14/09/2026 - 20/09/2026",
+            "hours": 34.0,
+            "date": "2026-09-14"
+          },
+          {
+            "label": "Week 38 21/09/2026 - 27/09/2026",
+            "hours": 36.0,
+            "date": "2026-09-21"
+          },
+          {
+            "label": "Week 39 28/09/2026 - 04/10/2026",
+            "hours": 35,
+            "date": "2026-09-28"
+          },
+          {
+            "label": "Week 40 05/10/2026 - 11/10/2026",
+            "hours": 35.5,
+            "date": "2026-10-05"
           }
         ],
         "totalWorked": 1034,
@@ -21198,6 +21654,26 @@ table.batch-table input:focus{border-color:var(--ac)}
             "label": "Week 36 07/09/2026 - 13/09/2026",
             "hours": 26.5,
             "date": "2026-09-07"
+          },
+          {
+            "label": "Week 37 14/09/2026 - 20/09/2026",
+            "hours": 38.0,
+            "date": "2026-09-14"
+          },
+          {
+            "label": "Week 38 21/09/2026 - 27/09/2026",
+            "hours": 29.0,
+            "date": "2026-09-21"
+          },
+          {
+            "label": "Week 39 28/09/2026 - 04/10/2026",
+            "hours": 32,
+            "date": "2026-09-28"
+          },
+          {
+            "label": "Week 40 05/10/2026 - 11/10/2026",
+            "hours": 24.0,
+            "date": "2026-10-05"
           }
         ],
         "totalWorked": 149,
@@ -21388,6 +21864,26 @@ table.batch-table input:focus{border-color:var(--ac)}
             "label": "Week 36 07/09/2026 - 13/09/2026",
             "hours": 35,
             "date": "2026-09-07"
+          },
+          {
+            "label": "Week 37 14/09/2026 - 20/09/2026",
+            "hours": 35.0,
+            "date": "2026-09-14"
+          },
+          {
+            "label": "Week 38 21/09/2026 - 27/09/2026",
+            "hours": 35.0,
+            "date": "2026-09-21"
+          },
+          {
+            "label": "Week 39 28/09/2026 - 04/10/2026",
+            "hours": 35,
+            "date": "2026-09-28"
+          },
+          {
+            "label": "Week 40 05/10/2026 - 11/10/2026",
+            "hours": 37.0,
+            "date": "2026-10-05"
           }
         ],
         "totalWorked": 1143,
@@ -21578,6 +22074,26 @@ table.batch-table input:focus{border-color:var(--ac)}
             "label": "Week 36 07/09/2026 - 13/09/2026",
             "hours": 19,
             "date": "2026-09-07"
+          },
+          {
+            "label": "Week 37 14/09/2026 - 20/09/2026",
+            "hours": 19.0,
+            "date": "2026-09-14"
+          },
+          {
+            "label": "Week 38 21/09/2026 - 27/09/2026",
+            "hours": 27.5,
+            "date": "2026-09-21"
+          },
+          {
+            "label": "Week 39 28/09/2026 - 04/10/2026",
+            "hours": 7.5,
+            "date": "2026-09-28"
+          },
+          {
+            "label": "Week 40 05/10/2026 - 11/10/2026",
+            "hours": 22.5,
+            "date": "2026-10-05"
           }
         ],
         "totalWorked": 813.5,
@@ -21768,6 +22284,26 @@ table.batch-table input:focus{border-color:var(--ac)}
             "label": "Week 36 07/09/2026 - 13/09/2026",
             "hours": 27.5,
             "date": "2026-09-07"
+          },
+          {
+            "label": "Week 37 14/09/2026 - 20/09/2026",
+            "hours": 29.5,
+            "date": "2026-09-14"
+          },
+          {
+            "label": "Week 38 21/09/2026 - 27/09/2026",
+            "hours": 27.5,
+            "date": "2026-09-21"
+          },
+          {
+            "label": "Week 39 28/09/2026 - 04/10/2026",
+            "hours": 27,
+            "date": "2026-09-28"
+          },
+          {
+            "label": "Week 40 05/10/2026 - 11/10/2026",
+            "hours": 27.0,
+            "date": "2026-10-05"
           }
         ],
         "totalWorked": 830.5,
@@ -21858,6 +22394,26 @@ table.batch-table input:focus{border-color:var(--ac)}
             "label": "Week 36 07/09/2026 - 13/09/2026",
             "hours": 27,
             "date": "2026-09-07"
+          },
+          {
+            "label": "Week 37 14/09/2026 - 20/09/2026",
+            "hours": 28.0,
+            "date": "2026-09-14"
+          },
+          {
+            "label": "Week 38 21/09/2026 - 27/09/2026",
+            "hours": 25.5,
+            "date": "2026-09-21"
+          },
+          {
+            "label": "Week 39 28/09/2026 - 04/10/2026",
+            "hours": 27,
+            "date": "2026-09-28"
+          },
+          {
+            "label": "Week 40 05/10/2026 - 11/10/2026",
+            "hours": 20.5,
+            "date": "2026-10-05"
           }
         ],
         "totalWorked": 155.5,
@@ -22048,6 +22604,26 @@ table.batch-table input:focus{border-color:var(--ac)}
             "label": "Week 36 07/09/2026 - 13/09/2026",
             "hours": 38,
             "date": "2026-09-07"
+          },
+          {
+            "label": "Week 37 14/09/2026 - 20/09/2026",
+            "hours": 38.0,
+            "date": "2026-09-14"
+          },
+          {
+            "label": "Week 38 21/09/2026 - 27/09/2026",
+            "hours": 38.0,
+            "date": "2026-09-21"
+          },
+          {
+            "label": "Week 39 28/09/2026 - 04/10/2026",
+            "hours": 38,
+            "date": "2026-09-28"
+          },
+          {
+            "label": "Week 40 05/10/2026 - 11/10/2026",
+            "hours": 38.0,
+            "date": "2026-10-05"
           }
         ],
         "totalWorked": 881,
@@ -22067,6 +22643,46 @@ table.batch-table input:focus{border-color:var(--ac)}
             "label": "Week 36 07/09/2026 - 13/09/2026",
             "hours": 29.5,
             "date": "2026-09-07"
+          },
+          {
+            "label": "Week 37 14/09/2026 - 20/09/2026",
+            "hours": 16.5,
+            "date": "2026-09-14"
+          },
+          {
+            "label": "Week 38 21/09/2026 - 27/09/2026",
+            "hours": 25.0,
+            "date": "2026-09-21"
+          },
+          {
+            "label": "Week 39 28/09/2026 - 04/10/2026",
+            "hours": 24,
+            "date": "2026-09-28"
+          },
+          {
+            "label": "Week 40 05/10/2026 - 11/10/2026",
+            "hours": 14.0,
+            "date": "2026-10-05"
+          }
+        ],
+        "opening": 0
+      },
+      "s33": {
+        "weeks": [
+          {
+            "label": "Week 38 21/09/2026 - 27/09/2026",
+            "hours": 13,
+            "date": "2026-09-21"
+          },
+          {
+            "label": "Week 39 28/09/2026 - 04/10/2026",
+            "hours": 13.0,
+            "date": "2026-09-28"
+          },
+          {
+            "label": "Week 40 05/10/2026 - 11/10/2026",
+            "hours": 5.5,
+            "date": "2026-10-05"
           }
         ],
         "opening": 0
@@ -22442,13 +23058,15 @@ table.batch-table input:focus{border-color:var(--ac)}
       "sickAllowance": 35,
       "dailyHours": 7,
       "weeklyHours": 35,
-      "status": "active",
-      "leftDate": "",
-      "leftWeek": ""
+      "status": "inactive",
+      "leftDate": "2026-09-10",
+      "leftWeek": "Week 36 (2026)",
+      "finalHolidayPayStatus": "review",
+      "finalHolidayPayNote": "Please pay remaining holiday pay"
     },
     {
       "id": "s14",
-      "name": "Siddhesh Parab",
+      "name": "Siddesh Gajanan",
       "shop": "Kilkenny",
       "startStatus": "confirmed",
       "startDate": "17/03/2026",
@@ -22458,7 +23076,9 @@ table.batch-table input:focus{border-color:var(--ac)}
       "weeklyHours": 35,
       "status": "active",
       "leftDate": "",
-      "leftWeek": ""
+      "leftWeek": "",
+      "holidayPayStatus": "review",
+      "holidayPayNote": "Please pay remaining holidays"
     },
     {
       "id": "s11",
@@ -22704,6 +23324,19 @@ table.batch-table input:focus{border-color:var(--ac)}
       "shop": "Kilkenny",
       "location": "Kilkenny",
       "startDate": "2026-08-31",
+      "dailyHours": 7,
+      "weeklyHours": 35,
+      "sickAllowance": 35,
+      "status": "active",
+      "leftDate": "",
+      "leftWeek": ""
+    },
+    {
+      "id": "s33",
+      "name": "Keelin",
+      "shop": "Arklow",
+      "location": "Arklow",
+      "startDate": "2026-09-21",
       "dailyHours": 7,
       "weeklyHours": 35,
       "sickAllowance": 35,
@@ -23141,22 +23774,52 @@ table.batch-table input:focus{border-color:var(--ac)}
       "leftWeek": "Week 32 (2022)"
     }
   ]
-}</script>
+}
+</script>
 <script>
 const SICK_ALLOWANCE_ANNUAL = 35.0; // Everyone has 35 hrs sick pay allowance per year
 const LS_KEY = 'idfl_tracker_db';
 const GH_REPO = 'idigitalfun-ui/idfl-holidays';
-
-function getEmbeddedToken(){
-  const c = [103,104,112,95,80,98,113,57,122,66,50,112,67,120,89,57,82,117,48,76,78,52,78,97,88,112,88,79,110,69,112,111,118,71,52,56,104,87,69,122];
-  return String.fromCharCode.apply(null, c);
-}
+const SYNC_STATE_KEY = 'idfl_tracker_sync_state';
+const MAX_TRACKED_HOURS = 80;
 
 const BASE = JSON.parse(document.getElementById('holiday-data').textContent);
+let sharedDataFingerprint = '';
+let sharedDataLoaded = false;
+let syncBlockedByConflict = false;
+let lastSyncMessage = 'Saved on this device';
 
 // Merge any dynamically added staff or status updates from localStorage
 function loadOv(){ try{ return JSON.parse(localStorage.getItem(LS_KEY)||'{}'); }catch(e){ return {}; } }
-function saveOv(o){ localStorage.setItem(LS_KEY, JSON.stringify(o)); }
+function setCloudStatus(state, message){
+  lastSyncMessage = message;
+  try{ localStorage.setItem(SYNC_STATE_KEY, JSON.stringify({state:state, message:message, at:new Date().toISOString()})); }catch(e){}
+  const badge = document.getElementById('cloudBadge');
+  if(!badge) return;
+  const labels = {
+    synced: '&#9729; Saved to shared record', saving: '&#9729; Saving to shared record...',
+    local: '&#128190; Saved on this device', pending: '&#128336; Waiting to sync',
+    conflict: '&#9888; Sync paused — newer shared data', error: '&#9888; Cloud sync needs attention'
+  };
+  badge.innerHTML = labels[state] || labels.local;
+  badge.title = message;
+  badge.style.background = state === 'synced' ? '#ecfdf5' : state === 'conflict' || state === 'error' ? '#fef2f2' : '#eff6ff';
+  badge.style.color = state === 'synced' ? '#047857' : state === 'conflict' || state === 'error' ? '#b91c1c' : '#1d4ed8';
+}
+function saveOv(o){
+  try{
+    localStorage.setItem(LS_KEY, JSON.stringify(o));
+    setCloudStatus('local', 'Saved on this device. It will sync when the shared connection is available.');
+    return true;
+  }catch(error){
+    setCloudStatus('error', 'This browser could not save the change locally. No cloud update was attempted.');
+    toast('Could not save this change on this device', 'var(--rd)');
+    return false;
+  }
+}
+function dataFingerprint(data){
+  try{ return JSON.stringify(data); }catch(error){ return ''; }
+}
 
 let ov = loadOv();
 
@@ -23248,9 +23911,10 @@ if(ov._staffUpdates){
 
 let activeSid = null;
 let activeYear = '2026';
-const years = ['2024', '2025', '2026'];
+const years = Array.from(new Set(['2024', '2025', '2026'].concat(Object.keys(BASE.years || {}))))
+  .sort(function(a,b){ return parseInt(a,10) - parseInt(b,10); });
 let isPortalMode = false;
-let currentSidebarTab = 'active'; // 'active' or 'inactive'
+let currentSidebarTab = 'active'; // 'active', 'new', or 'inactive'
 
 let editingWeekIdx = null;
 let editingHolId = null;
@@ -23315,195 +23979,176 @@ function toast(msg,col){
   document.body.appendChild(t);setTimeout(function(){t.remove();},2600);
 }
 
-// â”€â”€â”€ Chronological Week Sorter â”€â”€â”€
+// â”€â”€â”€ Canonical calendar periods (Monday to Sunday) â”€â”€â”€
+// A week number is derived from its start date.  The first Monday of each
+// calendar year is Week 1, so the number automatically restarts every January.
+function pad2(n){ return n < 10 ? '0' + n : '' + n; }
+function parseLocalDate(value){
+  if(value instanceof Date) return new Date(value.getFullYear(), value.getMonth(), value.getDate());
+  const text = String(value || '').trim();
+  let m = text.match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/);
+  if(m) return new Date(parseInt(m[1],10), parseInt(m[2],10)-1, parseInt(m[3],10));
+  m = text.match(/(\d{1,2})[\/\-.](\d{1,2})[\/\-.](\d{4})/);
+  return m ? new Date(parseInt(m[3],10), parseInt(m[2],10)-1, parseInt(m[1],10)) : null;
+}
+function addDays(date, days){
+  const out = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+  out.setDate(out.getDate() + days);
+  return out;
+}
+function mondayFor(date){
+  const out = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+  const offset = out.getDay() === 0 ? -6 : 1 - out.getDay();
+  out.setDate(out.getDate() + offset);
+  return out;
+}
+function firstMondayOfYear(year){
+  const first = new Date(parseInt(year,10), 0, 1);
+  while(first.getDay() !== 1) first.setDate(first.getDate() + 1);
+  return first;
+}
+function calendarDayStamp(date){ return Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()) / 86400000; }
+function formatLocalDate(date){ return pad2(date.getDate()) + '/' + pad2(date.getMonth()+1) + '/' + date.getFullYear(); }
+function formatIsoDate(date){ return date.getFullYear() + '-' + pad2(date.getMonth()+1) + '-' + pad2(date.getDate()); }
+function periodFromStartDate(value){
+  const parsed = parseLocalDate(value);
+  if(!parsed || isNaN(parsed.getTime())) return null;
+  const start = mondayFor(parsed);
+  let periodYear = start.getFullYear();
+  let firstMonday = firstMondayOfYear(periodYear);
+  if(start < firstMonday){
+    periodYear -= 1;
+    firstMonday = firstMondayOfYear(periodYear);
+  }
+  const weekNum = Math.floor((calendarDayStamp(start) - calendarDayStamp(firstMonday)) / 7) + 1;
+  const end = addDays(start, 6);
+  const startFormatted = formatLocalDate(start);
+  const endFormatted = formatLocalDate(end);
+  return {
+    weekNum: weekNum,
+    periodYear: String(periodYear),
+    trackingYear: String(start.getFullYear()),
+    label: 'Week ' + weekNum + ' ' + startFormatted + ' - ' + endFormatted,
+    startDate: formatIsoDate(start),
+    startFormatted: startFormatted,
+    endFormatted: endFormatted
+  };
+}
+function periodFromWeekRecord(week){
+  if(!week) return null;
+  return periodFromStartDate(week.date) || periodFromStartDate(week.label);
+}
 function sortWeeksChronologically(weeks){
   if(!weeks || !Array.isArray(weeks)) return [];
   return weeks.slice().sort(function(a, b){
-    const matchA = (a.label||'').match(/Week\s*(\d+)/i);
-    const matchB = (b.label||'').match(/Week\s*(\d+)/i);
-    const numA = matchA ? parseInt(matchA[1], 10) : 0;
-    const numB = matchB ? parseInt(matchB[1], 10) : 0;
-    if(numA !== numB) return numA - numB;
-    return (a.date || '').localeCompare(b.date || '');
+    const periodA = periodFromWeekRecord(a);
+    const periodB = periodFromWeekRecord(b);
+    if(periodA && periodB && periodA.startDate !== periodB.startDate) return periodA.startDate.localeCompare(periodB.startDate);
+    if(periodA && !periodB) return -1;
+    if(!periodA && periodB) return 1;
+    const numA = parseInt(((a.label||'').match(/Week\s*(\d+)/i)||[])[1],10) || 0;
+    const numB = parseInt(((b.label||'').match(/Week\s*(\d+)/i)||[])[1],10) || 0;
+    return numA - numB;
   });
 }
 
-// â”€â”€â”€ Find Week for any specific date (e.g. Employee Start Working Date) â”€â”€â”€
-function findWeekForDate(dateStr, year){
-  if(!dateStr) return null;
-  let targetDate = null;
-  if(dateStr.includes('-')){
-    const parts = dateStr.split('-');
-    targetDate = new Date(parseInt(parts[0], 10), parseInt(parts[1], 10) - 1, parseInt(parts[2], 10));
-  } else if(dateStr.includes('/')){
-    const parts = dateStr.split('/');
-    targetDate = new Date(parseInt(parts[2], 10), parseInt(parts[1], 10) - 1, parseInt(parts[0], 10));
+function normaliseTrackedHours(value, allowZero){
+  const hours = Number(value);
+  if(!Number.isFinite(hours) || (allowZero ? hours < 0 : hours <= 0)) return {error:'Enter valid hours'};
+  if(hours > MAX_TRACKED_HOURS) return {error:'Hours must be between 0 and '+MAX_TRACKED_HOURS};
+  if(Math.abs(hours * 2 - Math.round(hours * 2)) > 0.00001) return {error:'Use whole or half hours (for example 7, 7.5 or 35)'};
+  return {hours:Math.round(hours * 2) / 2};
+}
+function getMissingRecordedPeriods(sid, year){
+  const staff = BASE.staff.find(function(s){ return s.id === sid; });
+  const latest = getLatestRecordedPeriod(year);
+  if(!staff || !latest) return [];
+  const first = firstMondayOfYear(parseInt(year,10));
+  const started = parseLocalDate(staff.startDate);
+  let cursor = started && mondayFor(started) > first ? mondayFor(started) : first;
+  let last = parseLocalDate(latest.startDate);
+  const left = parseLocalDate(staff.leftDate);
+  if(left && mondayFor(left) < last) last = mondayFor(left);
+  const recorded = new Set(getStaffWeeks(sid, year).map(function(week){
+    const period = periodFromWeekRecord(week);
+    return period ? period.startDate : '';
+  }));
+  const missing = [];
+  while(cursor && last && cursor <= last){
+    const key = formatIsoDate(cursor);
+    if(!recorded.has(key)) missing.push(periodFromStartDate(key));
+    cursor = addDays(cursor, 7);
   }
-  if(!targetDate || isNaN(targetDate.getTime())) return null;
+  return missing;
+}
 
-  let allCompanyWeeks = [];
-  BASE.staff.forEach(function(s){
-    const w = getStaffWeeks(s.id, year);
-    if(w.length > allCompanyWeeks.length) allCompanyWeeks = w;
-  });
+function findWeekForDate(dateStr){ return periodFromStartDate(dateStr); }
 
-  for(let i = 0; i < allCompanyWeeks.length; i++){
-    const w = allCompanyWeeks[i];
-    const dateMatches = (w.label||'').match(/(\d{1,2})[\/\-\.](\d{1,2})[\/\-\.](\d{4})/g);
-    if(dateMatches && dateMatches.length >= 2){
-      const p1 = dateMatches[0].split(/[\/\-\.]/);
-      const startWk = new Date(parseInt(p1[2], 10), parseInt(p1[1], 10) - 1, parseInt(p1[0], 10));
-      const p2 = dateMatches[1].split(/[\/\-\.]/);
-      const endWk = new Date(parseInt(p2[2], 10), parseInt(p2[1], 10) - 1, parseInt(p2[0], 10), 23, 59, 59);
-      
-      if(targetDate >= startWk && targetDate <= endWk){
-        const matchWk = (w.label||'').match(/Week\s*(\d+)/i);
-        const wNum = matchWk ? parseInt(matchWk[1], 10) : (i + 1);
-        const isoStart = p1[2] + '-' + (p1[1].length===1?'0'+p1[1]:p1[1]) + '-' + (p1[0].length===1?'0'+p1[0]:p1[0]);
-        return {
-          weekNum: wNum,
-          label: w.label,
-          startDate: isoStart
-        };
-      }
-    }
-  }
-
-  // Fallback calculated week
-  const day = targetDate.getDay();
-  const diffToMonday = targetDate.getDate() - day + (day === 0 ? -6 : 1);
-  const mon = new Date(targetDate.setDate(diffToMonday));
-  const sun = new Date(mon.getTime() + (6 * 24 * 60 * 60 * 1000));
-  
-  function pad2(n){ return n < 10 ? '0' + n : '' + n; }
-  const startFormatted = pad2(mon.getDate()) + '/' + pad2(mon.getMonth() + 1) + '/' + mon.getFullYear();
-  const endFormatted = pad2(sun.getDate()) + '/' + pad2(sun.getMonth() + 1) + '/' + sun.getFullYear();
-  const isoStart = mon.getFullYear() + '-' + pad2(mon.getMonth() + 1) + '-' + pad2(mon.getDate());
-
-  const firstJan = new Date(mon.getFullYear(), 0, 1);
-  const weekNum = Math.ceil((((mon - firstJan) / 86400000) + firstJan.getDay() + 1) / 7);
-
-  return {
-    weekNum: weekNum,
-    label: 'Week ' + weekNum + ' ' + startFormatted + ' - ' + endFormatted,
-    startDate: isoStart
+function normaliseStaffPart(value){
+  return String(value || '').trim().toLowerCase().replace(/\s+/g, ' ');
+}
+function staffIdentityKey(staffOrName, shop){
+  const name = typeof staffOrName === 'object' ? staffOrName.name : staffOrName;
+  const location = typeof staffOrName === 'object' ? (staffOrName.shop || staffOrName.location) : shop;
+  return normaliseStaffPart(name) + '|' + normaliseStaffPart(location);
+}
+function updateStaffRecord(staff, changes){
+  Object.assign(staff, changes);
+  if(!ov._staffUpdates) ov._staffUpdates = {};
+  if(!ov._staffUpdates[staff.id]) ov._staffUpdates[staff.id] = {};
+  Object.assign(ov._staffUpdates[staff.id], changes);
+}
+function noteRequestsHolidayPayReview(note){
+  const text = normaliseStaffPart(note);
+  return /(?:remaining\s+(?:holiday|annual leave)|(?:holiday|annual leave)\s+pay.*\bremaining\b|\bpay\b.*\bremaining\b.*(?:holiday|annual leave)|final\s+(?:holiday|annual leave)\s+pay)/i.test(text);
+}
+function flagHolidayPayReview(staff, note){
+  if(!staff || !noteRequestsHolidayPayReview(note)) return false;
+  const isFormerStaff = staff.status === 'inactive';
+  const changes = isFormerStaff ? {
+    finalHolidayPayStatus: 'review',
+    finalHolidayPayNote: String(note || '').trim(),
+    finalHolidayPayRequestedOn: new Date().toISOString().slice(0,10)
+  } : {
+    holidayPayStatus: 'review',
+    holidayPayNote: String(note || '').trim(),
+    holidayPayRequestedOn: new Date().toISOString().slice(0,10)
   };
+  updateStaffRecord(staff, changes);
+  return true;
 }
 
-// â”€â”€â”€ ðŸŒŸ SMART AUTOMATIC NEXT WEEK CALCULATOR ðŸŒŸ â”€â”€â”€
+function getLatestRecordedPeriod(year, sid){
+  const staffList = sid ? BASE.staff.filter(function(s){ return s.id === sid; }) : BASE.staff.filter(function(s){ return s.status !== 'inactive'; });
+  let latest = null;
+  staffList.forEach(function(staff){
+    getStaffWeeks(staff.id, year).forEach(function(week){
+      const period = periodFromWeekRecord(week);
+      if(!period || period.trackingYear !== String(year)) return;
+      if(!latest || period.startDate > latest.startDate) latest = period;
+    });
+  });
+  return latest;
+}
+
+// â”€â”€â”€ Smart next week calculator, shared by staff and batch entry â”€â”€â”€
 function getNextWeekSuggestion(year, sid){
+  const yInt = parseInt(year, 10) || new Date().getFullYear();
+  const companyLatest = getLatestRecordedPeriod(yInt, null);
+  const staffLatest = sid ? getLatestRecordedPeriod(yInt, sid) : null;
+  const latest = !staffLatest || (companyLatest && companyLatest.startDate >= staffLatest.startDate) ? companyLatest : staffLatest;
+  if(latest){
+    const nextCompanyPeriod = periodFromStartDate(addDays(parseLocalDate(latest.startDate), 7));
+    const staff = sid ? BASE.staff.find(function(s){ return s.id === sid; }) : null;
+    const staffStart = staff && staff.startDate ? parseLocalDate(staff.startDate) : null;
+    if(staffStart && staffStart > parseLocalDate(nextCompanyPeriod.startDate)) return periodFromStartDate(staffStart);
+    return nextCompanyPeriod;
+  }
+
   const staff = sid ? BASE.staff.find(function(s){ return s.id === sid; }) : null;
-  const rawWeeks = sid ? getStaffWeeks(sid, year) : [];
-  const weeks = sortWeeksChronologically(rawWeeks);
-  const yInt = parseInt(year, 10) || 2026;
-
-  // 1. If this staff member already has weeks recorded in this year, suggest (last week + 1)
-  if (weeks && weeks.length > 0) {
-    const lastWk = weeks[weeks.length - 1];
-    const lastLabel = lastWk.label || '';
-    
-    let nextWkNum = weeks.length + 1;
-    const matchWk = lastLabel.match(/Week\s*(\d+)/i);
-    if (matchWk) {
-      nextWkNum = parseInt(matchWk[1], 10) + 1;
-    }
-
-    const dateMatches = lastLabel.match(/(\d{1,2})[\/\-\.](\d{1,2})[\/\-\.](\d{4})/g);
-    let nextStart = null;
-    let nextEnd = null;
-    
-    if (dateMatches && dateMatches.length >= 2) {
-      const lastEndStr = dateMatches[1];
-      const parts = lastEndStr.split(/[\/\-\.]/);
-      const day = parseInt(parts[0], 10);
-      const month = parseInt(parts[1], 10) - 1;
-      const yr = parseInt(parts[2], 10);
-      
-      const lastEndDate = new Date(yr, month, day);
-      nextStart = new Date(lastEndDate.getTime() + (24 * 60 * 60 * 1000));
-      nextEnd = new Date(nextStart.getTime() + (6 * 24 * 60 * 60 * 1000));
-    } else if (dateMatches && dateMatches.length === 1) {
-      const parts = dateMatches[0].split(/[\/\-\.]/);
-      const day = parseInt(parts[0], 10);
-      const month = parseInt(parts[1], 10) - 1;
-      const yr = parseInt(parts[2], 10);
-      const lastStartDate = new Date(yr, month, day);
-      nextStart = new Date(lastStartDate.getTime() + (7 * 24 * 60 * 60 * 1000));
-      nextEnd = new Date(nextStart.getTime() + (6 * 24 * 60 * 60 * 1000));
-    }
-
-    function pad2(n){ return n < 10 ? '0' + n : '' + n; }
-    
-    if (nextStart && nextEnd) {
-      const startStr = pad2(nextStart.getDate()) + '/' + pad2(nextStart.getMonth() + 1) + '/' + nextStart.getFullYear();
-      const endStr = pad2(nextEnd.getDate()) + '/' + pad2(nextEnd.getMonth() + 1) + '/' + nextEnd.getFullYear();
-      const isoStart = nextStart.getFullYear() + '-' + pad2(nextStart.getMonth() + 1) + '-' + pad2(nextStart.getDate());
-      return {
-        weekNum: nextWkNum,
-        label: 'Week ' + nextWkNum + ' ' + startStr + ' - ' + endStr,
-        startDate: isoStart,
-        startFormatted: startStr,
-        endFormatted: endStr
-      };
-    }
-
-    return {
-      weekNum: nextWkNum,
-      label: 'Week ' + nextWkNum + ' (' + year + ')',
-      startDate: new Date().toISOString().split('T')[0]
-    };
-  }
-
-  // 2. If this staff member has NO weeks in this year, but started IN THIS EXACT YEAR:
-  if(staff && staff.startDate){
-    const sParts = staff.startDate.split(/[\/\-\.]/);
-    let sYr = sParts.length === 3 ? parseInt(sParts[2], 10) : 0;
-    if (sYr < 100) sYr += 2000;
-    if (sYr === yInt) {
-      const startWkMatch = findWeekForDate(staff.startDate, year);
-      if(startWkMatch) return startWkMatch;
-    }
-  }
-
-  // 3. Fallback: Week 1 of this year
-  let companyWk1 = null;
-  BASE.staff.forEach(function(s) {
-    if (companyWk1) return;
-    const wList = getStaffWeeks(s.id, year);
-    if (wList && wList.length > 0) {
-      const first = wList[0];
-      if ((first.label || '').includes('Week 1')) {
-        companyWk1 = first;
-      }
-    }
-  });
-
-  if (companyWk1 && companyWk1.label) {
-    const dm = companyWk1.label.match(/(\d{1,2}[\/\-\.]\d{1,2}[\/\-\.]\d{4})\s*-\s*(\d{1,2}[\/\-\.]\d{1,2}[\/\-\.]\d{4})/);
-    return {
-      weekNum: 1,
-      label: companyWk1.label,
-      startDate: dm ? dm[1] : (yInt + '-01-01'),
-      startFormatted: dm ? dm[1] : ('01/01/' + yInt),
-      endFormatted: dm ? dm[2] : ('07/01/' + yInt)
-    };
-  }
-
-  // Otherwise compute first Monday of the year
-  let firstMon = new Date(yInt, 0, 1);
-  while(firstMon.getDay() !== 1) { firstMon.setDate(firstMon.getDate() + 1); }
-  const monSun = new Date(firstMon.getTime() + (6 * 24 * 60 * 60 * 1000));
-  function pad2(n){ return n < 10 ? '0' + n : '' + n; }
-  const sStr = pad2(firstMon.getDate()) + '/' + pad2(firstMon.getMonth() + 1) + '/' + yInt;
-  const eStr = pad2(monSun.getDate()) + '/' + pad2(monSun.getMonth() + 1) + '/' + yInt;
-  const isoStart = yInt + '-' + pad2(firstMon.getMonth() + 1) + '-' + pad2(firstMon.getDate());
-  return {
-    weekNum: 1,
-    label: 'Week 1 ' + sStr + ' - ' + eStr,
-    startDate: isoStart,
-    startFormatted: sStr,
-    endFormatted: eStr
-  };
+  const staffStart = staff && staff.startDate ? parseLocalDate(staff.startDate) : null;
+  if(staffStart && staffStart.getFullYear() === yInt) return periodFromStartDate(staffStart);
+  return periodFromStartDate(firstMondayOfYear(yInt));
 }
 
 // â”€â”€â”€ Data Access â”€â”€â”€
@@ -23642,14 +24287,23 @@ function computeYearStats(sid, year){
 }
 
 function getFullConnectedStats(sid){
-  const y24 = computeYearStats(sid, '2024');
-  const y25 = computeYearStats(sid, '2025');
-  const y26 = computeYearStats(sid, '2026');
-  return { '2024': y24, '2025': y25, '2026': y26 };
+  const result = {};
+  years.forEach(function(year){ result[year] = computeYearStats(sid, year); });
+  return result;
 }
 
 // â”€â”€â”€ Mutations / Save helpers & Automatic Cloud Sync â”€â”€â”€
+function ensureTrackingYear(year){
+  const value = String(year);
+  if(years.indexOf(value) === -1){
+    years.push(value);
+    years.sort(function(a,b){ return parseInt(a,10) - parseInt(b,10); });
+  }
+  if(!BASE.years[value]) BASE.years[value] = {};
+  return value;
+}
 function ensureOvYear(year,sid){
+  ensureTrackingYear(year);
   if(!ov[year]) ov[year]={};
   if(!ov[year][sid]) ov[year][sid]={};
 }
@@ -23657,35 +24311,69 @@ function ensureOvYear(year,sid){
 let syncTimeout = null;
 function triggerAutoSync(){
   clearTimeout(syncTimeout);
+  setCloudStatus('pending', 'Saved on this device. Checking the shared record before cloud sync.');
   syncTimeout = setTimeout(function(){
     autoPushToGitHub(true);
   }, 1200);
 }
 
 function setWeekHours(sid,year,idx,hours){
+  const normalised = normaliseTrackedHours(hours, true);
+  if(normalised.error) return {error:normalised.error};
   ensureOvYear(year,sid);
   const weeks = sortWeeksChronologically(getStaffWeeks(sid,year));
-  weeks[idx].hours = hours;
+  if(!weeks[idx]) return {error:'Week record was not found'};
+  weeks[idx].hours = normalised.hours;
   ov[year][sid].weeks = sortWeeksChronologically(weeks);
   saveOv(ov);
   triggerAutoSync();
+  return {ok:true};
 }
 
-function addWeek(sid,year,label,hours,sDate){
-  ensureOvYear(year,sid);
-  const weeks = sortWeeksChronologically(getStaffWeeks(sid,year));
-  weeks.push({label:label,hours:hours,date:sDate||label});
-  ov[year][sid].weeks = sortWeeksChronologically(weeks);
+function addWeek(sid,year,label,hours,sDate,allowOverwrite){
+  const normalised = normaliseTrackedHours(hours, true);
+  if(normalised.error) return {error:normalised.error};
+  const period = periodFromStartDate(sDate) || periodFromStartDate(label);
+  if(!period) return {error:'Enter a valid week start date'};
+  const targetYear = ensureTrackingYear(period ? period.trackingYear : year);
+  ensureOvYear(targetYear,sid);
+  const weeks = sortWeeksChronologically(getStaffWeeks(sid,targetYear));
+  const savedLabel = period ? period.label : label;
+  const savedDate = period ? period.startDate : (sDate || label);
+  const existing = weeks.find(function(week){
+    const existingPeriod = periodFromWeekRecord(week);
+    return existingPeriod && period && existingPeriod.startDate === period.startDate;
+  });
+  if(existing){
+    if(!allowOverwrite && Number(existing.hours) !== normalised.hours){
+      return {needsConfirmation:true, year:targetYear, period:period, previousHours:Number(existing.hours), nextHours:normalised.hours};
+    }
+    existing.label = savedLabel;
+    existing.hours = normalised.hours;
+    existing.date = savedDate;
+  } else {
+    weeks.push({label:savedLabel,hours:normalised.hours,date:savedDate});
+  }
+  ov[targetYear][sid].weeks = sortWeeksChronologically(weeks);
   saveOv(ov);
   triggerAutoSync();
+  return {ok:true, year:targetYear, period:period, updated:!!existing};
 }
 
 function addHolEntry(sid,year,date,hours,note){
+  const normalised = normaliseTrackedHours(hours, false);
+  if(normalised.error) return {error:normalised.error};
+  if(!parseLocalDate(date)) return {error:'Enter a valid holiday date'};
+  const duplicate = getStaffHolidayLogs(sid,year).some(function(entry){
+    return entry.date === date && Number(entry.hours) === normalised.hours && String(entry.note || '').trim() === String(note || '').trim();
+  });
+  if(duplicate) return {error:'This holiday entry already exists'};
   if(!ov._holLog) ov._holLog={};
   if(!ov._holLog[sid]) ov._holLog[sid]=[];
-  ov._holLog[sid].push({id:uid(),year:year,date:date,hours:hours,note:note});
+  ov._holLog[sid].push({id:uid(),year:year,date:date,hours:normalised.hours,note:note});
   saveOv(ov);
   triggerAutoSync();
+  return {ok:true};
 }
 
 function updateHolEntry(id, date, hours, note){
@@ -23707,11 +24395,19 @@ function delHolEntry(sid,id){
 }
 
 function addSickEntry(sid,year,date,hours,note){
+  const normalised = normaliseTrackedHours(hours, false);
+  if(normalised.error) return {error:normalised.error};
+  if(!parseLocalDate(date)) return {error:'Enter a valid sick-leave date'};
+  const duplicate = getStaffSickLogs(sid,year).some(function(entry){
+    return entry.date === date && Number(entry.hours) === normalised.hours && String(entry.note || '').trim() === String(note || '').trim();
+  });
+  if(duplicate) return {error:'This sick-leave entry already exists'};
   if(!ov._sickLog) ov._sickLog={};
   if(!ov._sickLog[sid]) ov._sickLog[sid]=[];
-  ov._sickLog[sid].push({id:uid(),year:year,date:date,hours:hours,note:note});
+  ov._sickLog[sid].push({id:uid(),year:year,date:date,hours:normalised.hours,note:note});
   saveOv(ov);
   triggerAutoSync();
+  return {ok:true};
 }
 
 function updateSickEntry(id, date, hours, note){
@@ -23804,17 +24500,23 @@ function renderSidebar(){
   
   const activeStaffList = BASE.staff.filter(function(s){ return s.status !== 'inactive'; });
   const inactiveStaffList = BASE.staff.filter(function(s){ return s.status === 'inactive'; });
+  const newStaffList = activeStaffList.filter(function(s){
+    const start = parseLocalDate(s.startDate);
+    return start && String(start.getFullYear()) === String(activeYear);
+  });
   
   document.getElementById('sbActiveCount').textContent = activeStaffList.length;
+  document.getElementById('sbNewCount').textContent = newStaffList.length;
   document.getElementById('sbInactiveCount').textContent = inactiveStaffList.length;
   
   const contentEl = document.getElementById('sidebarContent');
   contentEl.innerHTML = '';
   
-  if(currentSidebarTab === 'active'){
-    // ACTIVE STAFF: Grouped by Shop Location
-    if(!activeStaffList.length){
-      contentEl.innerHTML = '<div style="padding:24px 16px;text-align:center;color:var(--tx3);font-size:.76rem">No active staff</div>';
+  if(currentSidebarTab === 'active' || currentSidebarTab === 'new'){
+    const shownStaff = currentSidebarTab === 'new' ? newStaffList : activeStaffList;
+    // ACTIVE / NEW STAFF: grouped by store, so same names in different stores stay distinct.
+    if(!shownStaff.length){
+      contentEl.innerHTML = '<div style="padding:24px 16px;text-align:center;color:var(--tx3);font-size:.76rem">No '+(currentSidebarTab === 'new' ? 'new staff for '+activeYear : 'active staff')+'</div>';
       return;
     }
     
@@ -23822,7 +24524,7 @@ function renderSidebar(){
     const shopGroups = {};
     shopOrder.forEach(function(sh){ shopGroups[sh] = []; });
     
-    activeStaffList.forEach(function(s){
+    shownStaff.forEach(function(s){
       const shopName = s.shop || s.location || 'Other';
       if(!shopGroups[shopName]) shopGroups[shopName] = [];
       if(q && !s.name.toLowerCase().includes(q) && !shopName.toLowerCase().includes(q)) return;
@@ -23841,7 +24543,7 @@ function renderSidebar(){
       const div=document.createElement('div');
       div.className='staff-item'+(s.id===activeSid?' active':'');
       div.innerHTML='<div class="si-avatar" style="background:'+avatarColor(s.id)+'">' + initials(s.name) + '</div>'
-        +'<div class="si-info"><div class="si-name">'+s.name+'</div><div class="si-sub"><span>'+shopName+'</span><span class="shift-tag">'+weeklyHrs+'h/wk</span></div></div>'
+        +'<div class="si-info"><div class="si-name">'+s.name+'</div><div class="si-sub"><span>'+shopName+'</span><span class="shift-tag">'+weeklyHrs+'h/wk</span>'+(currentSidebarTab === 'new' ? '<span class="shift-tag">New: '+formatLocalDate(parseLocalDate(s.startDate))+'</span>' : '')+'</div></div>'
         +(hasData?'<span class="si-badge '+badgeCls+'">'+badgeTxt+'</span>':'');
       div.addEventListener('click',function(){activeSid=s.id;editingWeekIdx=null;editingHolId=null;editingSickId=null;renderAll();});
       shopGroups[shopName].push(div);
@@ -23912,6 +24614,14 @@ function renderSidebar(){
 document.getElementById('sbTabActive').addEventListener('click', function(){
   currentSidebarTab = 'active';
   document.getElementById('sbTabActive').classList.add('active');
+  document.getElementById('sbTabNew').classList.remove('active');
+  document.getElementById('sbTabInactive').classList.remove('active');
+  renderSidebar();
+});
+document.getElementById('sbTabNew').addEventListener('click', function(){
+  currentSidebarTab = 'new';
+  document.getElementById('sbTabNew').classList.add('active');
+  document.getElementById('sbTabActive').classList.remove('active');
   document.getElementById('sbTabInactive').classList.remove('active');
   renderSidebar();
 });
@@ -23919,6 +24629,7 @@ document.getElementById('sbTabInactive').addEventListener('click', function(){
   currentSidebarTab = 'inactive';
   document.getElementById('sbTabInactive').classList.add('active');
   document.getElementById('sbTabActive').classList.remove('active');
+  document.getElementById('sbTabNew').classList.remove('active');
   renderSidebar();
 });
 
@@ -23948,6 +24659,12 @@ function renderMain(){
   else if(balance< (dailyHrs * 2)) balColor='var(--am)';
   
   const isInactive = staff.status === 'inactive';
+  const finalPayNeedsReview = staff.finalHolidayPayStatus === 'review';
+  const holidayPayNeedsReview = staff.holidayPayStatus === 'review';
+  const payReviewText = finalPayNeedsReview ? 'Final holiday pay' : 'Holiday pay';
+  const payReviewNote = finalPayNeedsReview ? staff.finalHolidayPayNote : staff.holidayPayNote;
+  const missingPeriods = isInactive ? [] : getMissingRecordedPeriods(activeSid, activeYear);
+  const missingPeriodText = missingPeriods.slice(0, 3).map(function(period){ return period.label; }).join(' • ');
   
   // Smart next week auto-suggestion for this employee
   const nextWk = getNextWeekSuggestion(activeYear, activeSid);
@@ -23963,6 +24680,19 @@ function renderMain(){
       +(staff.leftDate ? ' (Date: ' + staff.leftDate + ') &bull; ' : '&bull; ')
       +'All historical records &amp; balances are preserved.</div>'
       +(!isPortalMode ? '<button class="btn btn-gr" id="reactivateStaffBtn">&#128260; Reactivate Staff Member</button>' : '')
+      +'</div>' : '')
+    +((finalPayNeedsReview || holidayPayNeedsReview) ?
+      '<div class="inactive-banner" style="background:#fffbeb;border-color:#fde68a;color:#92400e">'
+      +'<div>&#128176; <strong>'+payReviewText+' review required.</strong> Remaining '+activeYear+' balance: <strong>'+fmt1(balance)+' hrs</strong>'
+      +(payReviewNote ? ' &bull; '+payReviewNote : '')
+      +'</div>'
+      +(!isPortalMode ? '<button class="btn btn-am" id="markHolidayPayPaidBtn">Mark reviewed / paid</button>' : '')
+      +'</div>' : '')
+    +(missingPeriods.length ?
+      '<div class="inactive-banner" style="background:#fff7ed;border-color:#fdba74;color:#9a3412">'
+      +'<div>&#9888; <strong>'+missingPeriods.length+' worked-hours period'+(missingPeriods.length===1?' is':'s are')+' missing.</strong> '
+      +missingPeriodText+(missingPeriods.length>3?' • and '+(missingPeriods.length-3)+' more':'')
+      +'. Add the correct hours, or record 0 hours when no work was done.</div>'
       +'</div>' : '')
     
     // Portal Header Banner
@@ -24043,7 +24773,7 @@ function renderMain(){
     +'<div class="card">'
     +'<div class="card-hd"><h3>&#128197; Hours Worked Breakdown ('+activeYear+')</h3><span class="card-sub">'+curStats.weeks.length+' periods &bull; '+fmt1(curStats.totalWorked)+' hrs</span></div>'
     +'<div class="weeks-wrap"><table class="weeks"><thead><tr><th>Week Number &amp; Date Range</th><th class="num">Hours Worked</th>'+(!isPortalMode?'<th class="act"></th>':'')+'</tr></thead><tbody id="weeksTbody"></tbody></table></div>'
-    +(!isPortalMode ? '<div class="add-week-form">'
+    +(!isPortalMode && !isInactive ? '<div class="add-week-form">'
     +'<input class="lbl" type="text" id="newWkLabel" value="'+nextWk.label+'" placeholder="Period label">'
     +'<input class="hrs" type="number" id="newWkHrs" min="0" step="0.5" value="'+weeklyHrs+'" placeholder="Hrs">'
     +'<button class="btn btn-ac" id="addWkBtn">&#43; Add Week '+nextWk.weekNum+'</button></div>' : '')
@@ -24210,9 +24940,20 @@ function renderMain(){
       addWkBtn.addEventListener('click',function(){
         const lbl = (newWkInp ? newWkInp.value : document.getElementById('newWkLabel').value).trim();
         const hrs = parseFloat(document.getElementById('newWkHrs').value);
-        if(!lbl||isNaN(hrs)){toast('Enter a label and hours','var(--rd)');return;}
-        addWeek(activeSid,activeYear,lbl,hrs);
-        toast('Week added');renderAll();
+        if(!lbl||isNaN(hrs)){toast('Enter a week date and hours','var(--rd)');return;}
+        const saved = addWeek(activeSid,activeYear,lbl,hrs);
+        if(saved.needsConfirmation){
+          const answer = window.confirm(saved.period.label+' already has '+fmt1(saved.previousHours)+' hours. Replace it with '+fmt1(saved.nextHours)+' hours?');
+          if(!answer) return;
+          const confirmed = addWeek(activeSid,activeYear,lbl,hrs,undefined,true);
+          if(confirmed.error){ toast(confirmed.error,'var(--rd)'); return; }
+          activeYear = confirmed.year;
+          toast('Existing week safely updated');renderAll();
+          return;
+        }
+        if(saved.error){toast(saved.error,'var(--rd)');return;}
+        if(saved && saved.year) activeYear = saved.year;
+        toast(saved.updated ? 'Existing week safely updated' : 'Week added');renderAll();
       });
     }
 
@@ -24221,7 +24962,8 @@ function renderMain(){
       const hrs=parseFloat(document.getElementById('holHrs').value);
       const note=document.getElementById('holNote').value.trim()||'Holiday';
       if(!date||isNaN(hrs)||hrs<=0){toast('Enter date & hours','var(--rd)');return;}
-      addHolEntry(activeSid,activeYear,date,hrs,note);
+      const saved = addHolEntry(activeSid,activeYear,date,hrs,note);
+      if(saved.error){toast(saved.error,'var(--rd)');return;}
       document.getElementById('holDate').value='';document.getElementById('holHrs').value='';document.getElementById('holNote').value='';
       toast('Holiday logged');renderAll();
     });
@@ -24231,7 +24973,8 @@ function renderMain(){
       const hrs=parseFloat(document.getElementById('sickHrs').value);
       const note=document.getElementById('sickNote').value.trim()||'Sick';
       if(!date||isNaN(hrs)||hrs<=0){toast('Enter date & hours','var(--rd)');return;}
-      addSickEntry(activeSid,activeYear,date,hrs,note);
+      const saved = addSickEntry(activeSid,activeYear,date,hrs,note);
+      if(saved.error){toast(saved.error,'var(--rd)');return;}
       document.getElementById('sickDate').value='';document.getElementById('sickHrs').value='';document.getElementById('sickNote').value='';
       toast('Sick day logged');renderAll();
     });
@@ -24265,6 +25008,25 @@ function renderMain(){
         openReactivateModal(staff.id);
       });
     }
+
+    const holidayPayPaidBtn = document.getElementById('markHolidayPayPaidBtn');
+    if(holidayPayPaidBtn){
+      holidayPayPaidBtn.addEventListener('click', function(){
+        const isFinalPay = staff.finalHolidayPayStatus === 'review';
+        const changes = isFinalPay ? {
+          finalHolidayPayStatus: 'paid',
+          finalHolidayPayPaidOn: new Date().toISOString().slice(0,10)
+        } : {
+          holidayPayStatus: 'paid',
+          holidayPayPaidOn: new Date().toISOString().slice(0,10)
+        };
+        updateStaffRecord(staff, changes);
+        saveOv(ov);
+        triggerAutoSync();
+        toast((isFinalPay ? 'Final holiday pay' : 'Holiday pay') + ' marked as reviewed / paid');
+        renderAll();
+      });
+    }
   }
 
   const bMark = document.getElementById('bookmarkBtn');
@@ -24294,11 +25056,9 @@ function renderCalendarEstimatorSchedule(){
   const curBalance = curStats.balance;
   const dailyHrs = curStats.dailyHours;
   const weeklyHrs = dailyHrs * 5;
-  const currentWeeksCount = curStats.weeks.length;
-  
   const weeklyAccrual = Math.round(weeklyHrs * 0.08 * 100) / 100;
-  
-  const startDate = new Date(2026, 8, 14); // 14 Sep 2026 (Week 37)
+  const nextPeriod = getNextWeekSuggestion(activeYear, activeSid);
+  const startDate = parseLocalDate(nextPeriod.startDate);
   const totalFutureWeeksToRender = 26;
   
   calTbody.innerHTML = '';
@@ -24307,9 +25067,9 @@ function renderCalendarEstimatorSchedule(){
   let runningProjectedBalance = curBalance;
   
   for(let w = 1; w <= totalFutureWeeksToRender; w++){
-    const wkNum = (currentWeeksCount >= 36 ? currentWeeksCount : 36) + w;
-    const weekStart = new Date(startDate.getTime() + ((w - 1) * 7 * 24 * 60 * 60 * 1000));
-    const weekEnd = new Date(weekStart.getTime() + (6 * 24 * 60 * 60 * 1000));
+    const weekStart = addDays(startDate, (w - 1) * 7);
+    const weekEnd = addDays(weekStart, 6);
+    const period = periodFromStartDate(weekStart);
     
     const dStr = weekStart.toLocaleDateString('en-GB', { day: '2-digit', month: 'short' }) + ' - ' + weekEnd.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
     
@@ -24321,7 +25081,8 @@ function renderCalendarEstimatorSchedule(){
     if(isSelected){
       targetForecast = {
         weeksAhead: w,
-        wkNum: wkNum,
+        wkNum: period.weekNum,
+        periodYear: period.periodYear,
         dateRange: dStr,
         futureWorked: w * weeklyHrs,
         futureEarned: Math.round(w * weeklyAccrual * 100) / 100,
@@ -24334,7 +25095,7 @@ function renderCalendarEstimatorSchedule(){
     const tr = document.createElement('tr');
     tr.className = isSelected ? 'selected' : '';
     tr.innerHTML = 
-      '<td><strong>Week ' + wkNum + '</strong> <span style="color:var(--tx3);font-size:.7rem">(' + dStr + ')</span>' + (isSelected ? ' <span style="background:var(--ac);color:#fff;padding:1px 6px;border-radius:4px;font-size:.62rem;font-weight:800">TARGET</span>' : '') + '</td>'
+      '<td><strong>Week ' + period.weekNum + '</strong> <span style="color:var(--tx3);font-size:.7rem">(' + dStr + ')</span>' + (isSelected ? ' <span style="background:var(--ac);color:#fff;padding:1px 6px;border-radius:4px;font-size:.62rem;font-weight:800">TARGET</span>' : '') + '</td>'
       +'<td>' + weeklyHrs + ' hrs</td>'
       +'<td style="color:var(--gr);font-weight:700">+' + fmt1(weeklyAccrual) + ' hrs</td>'
       +'<td class="num"><strong style="color:var(--tx)">' + fmt1(runningProjectedBalance) + ' hrs</strong> <span style="font-size:.7rem;color:var(--tx3)">(' + runningBreakdown.weeksText + ')</span></td>';
@@ -24356,7 +25117,7 @@ function renderCalendarEstimatorSchedule(){
   if(targetForecast){
     targetHighlight.innerHTML = 
       '<div class="est-target-left">'
-      +'<div class="est-target-tag">&#128302; Target Milestone: In ' + targetForecast.weeksAhead + ' Weeks (Week ' + targetForecast.wkNum + ' &bull; ' + targetForecast.dateRange + ')</div>'
+      +'<div class="est-target-tag">&#128302; Target Milestone: In ' + targetForecast.weeksAhead + ' Weeks (Week ' + targetForecast.wkNum + ' of ' + targetForecast.periodYear + ' &bull; ' + targetForecast.dateRange + ')</div>'
       +'<div class="est-target-val">' + fmt1(targetForecast.projectedBalance) + ' Hours Available</div>'
       +'<div class="est-target-sub">&#128197; Equivalent to: <strong>' + targetForecast.projectedBreakdown.weeksText + '</strong> (' + targetForecast.projectedDays + ' Working Days)</div>'
       +'</div>'
@@ -24375,24 +25136,23 @@ function openDeactivateModal(sid){
   
   document.getElementById('deactStaffName').value = staff.name;
   document.getElementById('deactLeftDate').value = new Date().toISOString().split('T')[0];
-  
-  const currentWeeks = getStaffWeeks(sid, activeYear);
-  const lastWkNum = currentWeeks.length > 0 ? currentWeeks.length : 35;
-  document.getElementById('deactLeftWeek').value = 'Week ' + lastWkNum + ' (' + activeYear + ')';
+  const departurePeriod = periodFromStartDate(document.getElementById('deactLeftDate').value);
+  document.getElementById('deactLeftWeek').value = 'Week ' + departurePeriod.weekNum + ' (' + departurePeriod.periodYear + ') - Left Job';
+  document.getElementById('deactFinalHolidayPay').checked = staff.finalHolidayPayStatus === 'review';
+  document.getElementById('deactFinalHolidayPayNote').value = staff.finalHolidayPayNote || '';
   
   document.getElementById('confirmDeactivateBtn').onclick = function(){
     const leftDate = document.getElementById('deactLeftDate').value;
     const leftWeek = document.getElementById('deactLeftWeek').value.trim();
-    
-    staff.status = 'inactive';
-    staff.leftDate = leftDate;
-    staff.leftWeek = leftWeek;
-    
-    if(!ov._staffUpdates) ov._staffUpdates = {};
-    if(!ov._staffUpdates[sid]) ov._staffUpdates[sid] = {};
-    ov._staffUpdates[sid].status = 'inactive';
-    ov._staffUpdates[sid].leftDate = leftDate;
-    ov._staffUpdates[sid].leftWeek = leftWeek;
+    const finalPayNeeded = document.getElementById('deactFinalHolidayPay').checked;
+    const finalPayNote = document.getElementById('deactFinalHolidayPayNote').value.trim();
+    const changes = { status: 'inactive', leftDate: leftDate, leftWeek: leftWeek };
+    if(finalPayNeeded){
+      changes.finalHolidayPayStatus = 'review';
+      changes.finalHolidayPayNote = finalPayNote || 'Please pay remaining holiday pay';
+      changes.finalHolidayPayRequestedOn = new Date().toISOString().slice(0,10);
+    }
+    updateStaffRecord(staff, changes);
     
     saveOv(ov);
     document.getElementById('deactivateModal').classList.add('hidden');
@@ -24400,6 +25160,7 @@ function openDeactivateModal(sid){
     currentSidebarTab = 'inactive';
     document.getElementById('sbTabInactive').classList.add('active');
     document.getElementById('sbTabActive').classList.remove('active');
+    document.getElementById('sbTabNew').classList.remove('active');
     triggerAutoSync();
     renderAll();
   };
@@ -24424,19 +25185,9 @@ function openReactivateModal(sid){
     const newStart = document.getElementById('reactivateStartDate').value;
     const carryBal = document.getElementById('reactivateCarryBal').checked;
     
-    staff.status = 'active';
-    staff.shop = newShop;
-    staff.leftDate = '';
-    staff.leftWeek = '';
-    if(newStart) staff.startDate = newStart;
-    
-    if(!ov._staffUpdates) ov._staffUpdates = {};
-    if(!ov._staffUpdates[sid]) ov._staffUpdates[sid] = {};
-    ov._staffUpdates[sid].status = 'active';
-    ov._staffUpdates[sid].shop = newShop;
-    ov._staffUpdates[sid].leftDate = '';
-    ov._staffUpdates[sid].leftWeek = '';
-    if(newStart) ov._staffUpdates[sid].startDate = newStart;
+    const changes = { status: 'active', shop: newShop, location: newShop, leftDate: '', leftWeek: '' };
+    if(newStart) changes.startDate = newStart;
+    updateStaffRecord(staff, changes);
     
     if(!carryBal){
       ensureOvYear(activeYear, sid);
@@ -24449,6 +25200,7 @@ function openReactivateModal(sid){
     currentSidebarTab = 'active';
     document.getElementById('sbTabActive').classList.add('active');
     document.getElementById('sbTabInactive').classList.remove('active');
+    document.getElementById('sbTabNew').classList.remove('active');
     triggerAutoSync();
     renderAll();
   };
@@ -24498,6 +25250,18 @@ document.getElementById('saveNewStaffBtn').addEventListener('click', function(){
     toast('Please enter the staff member full name', 'var(--rd)');
     return;
   }
+  const sameNameAndStore = BASE.staff.find(function(s){ return staffIdentityKey(s) === staffIdentityKey(name, shop); });
+  if(sameNameAndStore){
+    activeSid = sameNameAndStore.id;
+    currentSidebarTab = sameNameAndStore.status === 'inactive' ? 'inactive' : 'active';
+    document.getElementById('sbTabActive').classList.toggle('active', currentSidebarTab === 'active');
+    document.getElementById('sbTabNew').classList.remove('active');
+    document.getElementById('sbTabInactive').classList.toggle('active', currentSidebarTab === 'inactive');
+    document.getElementById('addStaffModal').classList.add('hidden');
+    toast(name + ' already exists at ' + shop + '. Opened the existing staff record instead.', 'var(--am)');
+    renderAll();
+    return;
+  }
   
   let maxIdNum = 0;
   BASE.staff.forEach(function(s){
@@ -24517,7 +25281,9 @@ document.getElementById('saveNewStaffBtn').addEventListener('click', function(){
     dailyHours: dailyHours,
     weeklyHours: shiftVal,
     sickAllowance: SICK_ALLOWANCE_ANNUAL,
-    status: 'active'
+    status: 'active',
+    leftDate: '',
+    leftWeek: ''
   };
   
   BASE.staff.push(newStaffObj);
@@ -24538,6 +25304,7 @@ document.getElementById('saveNewStaffBtn').addEventListener('click', function(){
   currentSidebarTab = 'active';
   document.getElementById('sbTabActive').classList.add('active');
   document.getElementById('sbTabInactive').classList.remove('active');
+  document.getElementById('sbTabNew').classList.remove('active');
   
   activeSid = newSid;
   triggerAutoSync();
@@ -24560,11 +25327,22 @@ window.saveEditWeek=function(idx){
   if(isPortalMode) return;
   const lbl=document.getElementById('editWkLbl_'+idx).value.trim();
   const hrs=parseFloat(document.getElementById('editWkHrs_'+idx).value);
-  if(!lbl||isNaN(hrs)){toast('Enter valid label and hours','var(--rd)');return;}
+  const period=periodFromStartDate(lbl);
+  const normalised=normaliseTrackedHours(hrs,true);
+  if(!period){toast('Enter a valid week date','var(--rd)');return;}
+  if(normalised.error){toast(normalised.error,'var(--rd)');return;}
   ensureOvYear(activeYear,activeSid);
   const weeks=sortWeeksChronologically(getStaffWeeks(activeSid,activeYear));
-  weeks[idx].label=lbl;
-  weeks[idx].hours=hrs;
+  if(!weeks[idx]){toast('Week record was not found','var(--rd)');return;}
+  const duplicate=weeks.some(function(week, otherIdx){
+    if(otherIdx===idx) return false;
+    const otherPeriod=periodFromWeekRecord(week);
+    return otherPeriod && otherPeriod.startDate===period.startDate;
+  });
+  if(duplicate){toast('This week already exists. Edit that record instead.','var(--rd)');return;}
+  weeks[idx].label=period.label;
+  weeks[idx].date=period.startDate;
+  weeks[idx].hours=normalised.hours;
   ov[activeYear][activeSid].weeks=sortWeeksChronologically(weeks);
   saveOv(ov);
   editingWeekIdx=null;
@@ -24596,8 +25374,10 @@ window.saveEditHol=function(id){
   const d=document.getElementById('editHolDate_'+id).value.trim();
   const h=parseFloat(document.getElementById('editHolHrs_'+id).value);
   const n=document.getElementById('editHolNote_'+id).value.trim();
-  if(isNaN(h)||h<=0){toast('Enter valid hours','var(--rd)');return;}
-  updateHolEntry(id, d, h, n);
+  const checked=normaliseTrackedHours(h,false);
+  if(!parseLocalDate(d)){toast('Enter a valid holiday date','var(--rd)');return;}
+  if(checked.error){toast(checked.error,'var(--rd)');return;}
+  updateHolEntry(id, d, checked.hours, n);
   editingHolId=null;
   toast('Holiday entry updated');
   renderAll();
@@ -24611,8 +25391,10 @@ window.saveEditSick=function(id){
   const d=document.getElementById('editSickDate_'+id).value.trim();
   const h=parseFloat(document.getElementById('editSickHrs_'+id).value);
   const n=document.getElementById('editSickNote_'+id).value.trim();
-  if(isNaN(h)||h<=0){toast('Enter valid hours','var(--rd)');return;}
-  updateSickEntry(id, d, h, n);
+  const checked=normaliseTrackedHours(h,false);
+  if(!parseLocalDate(d)){toast('Enter a valid sick-leave date','var(--rd)');return;}
+  if(checked.error){toast(checked.error,'var(--rd)');return;}
+  updateSickEntry(id, d, checked.hours, n);
   editingSickId=null;
   toast('Sick day updated');
   renderAll();
@@ -24637,7 +25419,14 @@ function openBatchModal(){
   const shopGroups = {};
   shopOrder.forEach(function(sh){ shopGroups[sh] = []; });
   
-  const activeStaffOnly = BASE.staff.filter(function(s){ return s.status !== 'inactive'; });
+  const uniqueStaffKeys = {};
+  const activeStaffOnly = BASE.staff.filter(function(s){
+    if(s.status === 'inactive') return false;
+    const key = staffIdentityKey(s);
+    if(uniqueStaffKeys[key]) return false;
+    uniqueStaffKeys[key] = true;
+    return true;
+  });
   
   activeStaffOnly.forEach(function(s){
     const sh = s.shop || s.location || 'Other';
@@ -24693,16 +25482,24 @@ document.getElementById('batchClearBtn').addEventListener('click', function(){
 document.getElementById('batchClose').addEventListener('click', function(){ document.getElementById('batchModal').classList.add('hidden'); });
 document.getElementById('batchCancelBtn').addEventListener('click', function(){ document.getElementById('batchModal').classList.add('hidden'); });
 document.getElementById('batchWeekBtn').addEventListener('click', openBatchModal);
+document.getElementById('batchWkDate').addEventListener('change', function(){
+  const period = periodFromStartDate(this.value);
+  if(!period) return;
+  this.value = period.startDate;
+  document.getElementById('batchWkLabel').value = period.label;
+});
 
 document.getElementById('batchSaveAllBtn').addEventListener('click', function(){
   if(isPortalMode) return;
   const label = document.getElementById('batchWkLabel').value.trim();
   const dateVal = document.getElementById('batchWkDate').value;
-  if(!label){ toast('Enter a week label', 'var(--rd)'); return; }
-  
-  let savedCount = 0;
-  BASE.staff.forEach(function(s){
-    if(s.status === 'inactive') return;
+  const period = periodFromStartDate(dateVal) || periodFromStartDate(label);
+  if(!period){ toast('Enter a valid Monday start date', 'var(--rd)'); return; }
+  const targetYear = ensureTrackingYear(period.trackingYear);
+  const rows = [];
+  const updates = [];
+  for(const s of BASE.staff){
+    if(s.status === 'inactive') continue;
     const hrsInp = document.querySelector('.batch-hrs[data-sid="' + s.id + '"]');
     const holInp = document.querySelector('.batch-hol[data-sid="' + s.id + '"]');
     const sickInp = document.querySelector('.batch-sick[data-sid="' + s.id + '"]');
@@ -24712,19 +25509,49 @@ document.getElementById('batchSaveAllBtn').addEventListener('click', function(){
     const hol = holInp ? parseFloat(holInp.value) : NaN;
     const sick = sickInp ? parseFloat(sickInp.value) : NaN;
     const note = noteInp ? noteInp.value.trim() : '';
-    
     if(!isNaN(hrs)){
-      addWeek(s.id, activeYear, label, hrs, dateVal);
-      savedCount++;
+      const checked = normaliseTrackedHours(hrs, true);
+      if(checked.error){ toast(s.name+': '+checked.error, 'var(--rd)'); return; }
+      const existing = getStaffWeeks(s.id, targetYear).find(function(week){
+        const existingPeriod = periodFromWeekRecord(week);
+        return existingPeriod && existingPeriod.startDate === period.startDate;
+      });
+      if(existing && Number(existing.hours) !== checked.hours) updates.push(s.name);
     }
     if(!isNaN(hol) && hol > 0){
-      addHolEntry(s.id, activeYear, dateVal || label, hol, note || 'Holiday');
+      const checked = normaliseTrackedHours(hol, false);
+      if(checked.error){ toast(s.name+': '+checked.error, 'var(--rd)'); return; }
     }
     if(!isNaN(sick) && sick > 0){
-      addSickEntry(s.id, activeYear, dateVal || label, sick, note || 'Sick');
+      const checked = normaliseTrackedHours(sick, false);
+      if(checked.error){ toast(s.name+': '+checked.error, 'var(--rd)'); return; }
     }
+    rows.push({staff:s, hours:hrs, holiday:hol, sick:sick, note:note});
+  }
+  if(updates.length && !window.confirm(period.label+' already has hours for '+updates.length+' staff member'+(updates.length===1?'':'s')+'. Replace those recorded hours?')) return;
+
+  activeYear = targetYear;
+  let savedCount = 0;
+  rows.forEach(function(row){
+    const s = row.staff;
+    const hrs = row.hours;
+    const hol = row.holiday;
+    const sick = row.sick;
+    const note = row.note;
+    if(!isNaN(hrs)){
+      const saved = addWeek(s.id, targetYear, period.label, hrs, period.startDate, true);
+      if(saved.ok) savedCount++;
+    }
+    if(!isNaN(hol) && hol > 0){
+      addHolEntry(s.id, targetYear, period.startDate, hol, note || 'Holiday');
+    }
+    if(!isNaN(sick) && sick > 0){
+      addSickEntry(s.id, targetYear, period.startDate, sick, note || 'Sick');
+    }
+    flagHolidayPayReview(s, note);
   });
   
+  saveOv(ov);
   document.getElementById('batchModal').classList.add('hidden');
   toast('Saved week for ' + savedCount + ' staff! Auto-syncing...');
   triggerAutoSync();
@@ -24736,6 +25563,7 @@ function buildCurrentDatabaseState(){
   const exportData = JSON.parse(JSON.stringify(BASE));
   years.forEach(function(y){
     if(ov[y]){
+      if(!exportData.years[y]) exportData.years[y] = {};
       Object.keys(ov[y]).forEach(function(sid){
         if(!exportData.years[y][sid]) exportData.years[y][sid] = {};
         if(ov[y][sid].weeks) exportData.years[y][sid].weeks = sortWeeksChronologically(ov[y][sid].weeks);
@@ -24744,8 +25572,16 @@ function buildCurrentDatabaseState(){
     }
   });
   BASE.staff.forEach(function(s){
-    exportData.baseHolLogs[s.id] = getStaffHolidayLogs(s.id, '2024').concat(getStaffHolidayLogs(s.id, '2025')).concat(getStaffHolidayLogs(s.id, '2026'));
-    exportData.baseSickLogs[s.id] = getStaffSickLogs(s.id, '2024').concat(getStaffSickLogs(s.id, '2025')).concat(getStaffSickLogs(s.id, '2026'));
+    exportData.baseHolLogs[s.id] = years.reduce(function(all, year){ return all.concat(getStaffHolidayLogs(s.id, year)); }, []);
+    exportData.baseSickLogs[s.id] = years.reduce(function(all, year){ return all.concat(getStaffSickLogs(s.id, year)); }, []);
+  });
+  Object.keys(exportData.years || {}).forEach(function(year){
+    Object.keys(exportData.years[year] || {}).forEach(function(sid){
+      const record = exportData.years[year][sid];
+      if(Array.isArray(record.weeks)){
+        record.totalWorked = Math.round(record.weeks.reduce(function(total, week){ return total + Number(week.hours || 0); }, 0) * 100) / 100;
+      }
+    });
   });
   return exportData;
 }
@@ -24755,16 +25591,34 @@ function utf8ToBase64(str){
     return String.fromCharCode('0x' + p1);
   }));
 }
+function base64ToUtf8(value){
+  const binary = atob(value);
+  let escaped = '';
+  for(let i=0; i<binary.length; i++) escaped += '%' + ('00' + binary.charCodeAt(i).toString(16)).slice(-2);
+  return decodeURIComponent(escaped);
+}
 
 function getActiveGitHubToken(){
-  return localStorage.getItem('idfl_gh_token') || getEmbeddedToken();
+  return localStorage.getItem('idfl_gh_token') || '';
 }
 
 async function autoPushToGitHub(silent){
   const tok = getActiveGitHubToken();
-  if(!tok) return;
+  if(syncBlockedByConflict){
+    setCloudStatus('conflict', 'Cloud sync is paused because this device has unsent changes from an older shared record. Export a backup and refresh before applying them again.');
+    return false;
+  }
+  if(!tok){
+    setCloudStatus('local', 'Saved on this device. Add a GitHub save token in Sync & Backup to share it with other devices.');
+    return false;
+  }
+  if(!sharedDataLoaded){
+    setCloudStatus('pending', 'Saved on this device. The shared record has not loaded yet, so cloud saving is paused to prevent overwriting newer data.');
+    return false;
+  }
   
   try {
+    setCloudStatus('saving', 'Checking the shared record before saving your change.');
     const exportData = buildCurrentDatabaseState();
     const jsonContent = JSON.stringify(exportData, null, 2);
     const encodedContent = utf8ToBase64(jsonContent);
@@ -24776,10 +25630,19 @@ async function autoPushToGitHub(silent){
       }
     });
     
-    let currentSha = null;
-    if(getRes.ok){
-      const fileData = await getRes.json();
-      currentSha = fileData.sha;
+    if(!getRes.ok){
+      setCloudStatus('error', 'Cloud sync could not read the shared record. Check the save token and connection. Your local change is safe on this device.');
+      return false;
+    }
+    const fileData = await getRes.json();
+    let remoteData;
+    try{ remoteData = JSON.parse(base64ToUtf8(fileData.content || '')); }catch(error){
+      setCloudStatus('error', 'The shared record could not be checked safely. Your local change was not uploaded.');
+      return false;
+    }
+    if(sharedDataFingerprint && dataFingerprint(remoteData) !== sharedDataFingerprint){
+      setCloudStatus('conflict', 'The shared record changed on another device. Refresh before saving so no one\'s work is overwritten.');
+      return false;
     }
     
     const putRes = await fetch('https://api.github.com/repos/' + GH_REPO + '/contents/holiday_data.json', {
@@ -24792,21 +25655,28 @@ async function autoPushToGitHub(silent){
       body: JSON.stringify({
         message: 'Auto-update holiday tracker database [skip ci]',
         content: encodedContent,
-        sha: currentSha || undefined,
+        sha: fileData.sha,
         branch: 'main'
       })
     });
     
     if(putRes.ok){
-      if(silent){
-        toast('â˜ï¸ Auto-synced to GitHub & Cloudflare live!');
-      }
+      Object.keys(BASE).forEach(function(key){ delete BASE[key]; });
+      Object.assign(BASE, exportData);
+      ov = {};
+      try{ localStorage.setItem(LS_KEY, JSON.stringify(ov)); }catch(error){}
+      sharedDataFingerprint = dataFingerprint(exportData);
+      sharedDataLoaded = true;
+      setCloudStatus('synced', 'Saved to the shared company record at ' + new Date().toLocaleTimeString() + '.');
+      if(silent) toast('Saved to the shared company record');
       const stEl = document.getElementById('ghStatusText');
       if(stEl) stEl.innerHTML = '<span style="color:var(--gr)">&#10004; Auto-synced to GitHub online: ' + new Date().toLocaleTimeString() + '</span>';
       return true;
     }
+    setCloudStatus('error', 'Cloud sync was refused. Your change remains safely stored on this device.');
   } catch(e) {
     console.error('GitHub auto-push error:', e);
+    setCloudStatus('error', 'Cloud sync could not finish. Your change remains safely stored on this device.');
   }
   return false;
 }
@@ -24815,7 +25685,9 @@ document.getElementById('syncModalBtn').addEventListener('click', function(){
   if(isPortalMode) return;
   const savedTok = getActiveGitHubToken();
   document.getElementById('ghTokenInput').value = savedTok ? 'â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢' : '';
-  document.getElementById('ghStatusText').innerHTML = '<span style="color:var(--gr)">&#10004; Configured &amp; Auto-syncing on every edit to ' + GH_REPO + '</span>';
+  document.getElementById('ghStatusText').innerHTML = savedTok
+    ? '<span style="color:var(--gr)">&#10004; Save token configured. Every edit is checked before it is shared.</span>'
+    : '<span style="color:var(--am)">&#9888; No save token on this device. Changes are stored only in this browser until one is added.</span>';
   document.getElementById('syncModal').classList.remove('hidden');
 });
 
@@ -24826,8 +25698,8 @@ document.getElementById('ghSaveTokenBtn').addEventListener('click', function(){
     toast('GitHub token saved!');
     document.getElementById('ghStatusText').innerHTML = '<span style="color:var(--gr)">&#10004; Token saved &amp; connected to ' + GH_REPO + '</span>';
   } else {
-    toast('Using default configured token');
-    document.getElementById('ghStatusText').innerHTML = '<span style="color:var(--gr)">&#10004; Using default token</span>';
+    toast('Enter a save token to enable shared cloud saving', 'var(--am)');
+    document.getElementById('ghStatusText').innerHTML = '<span style="color:var(--am)">&#9888; No shared-save token is configured on this device.</span>';
   }
 });
 
@@ -24849,7 +25721,7 @@ document.getElementById('ghPushBtn').addEventListener('click', async function(){
   } else {
     btn.innerHTML = origText;
     btn.disabled = false;
-    toast('Error pushing to GitHub. Please check connection', 'var(--rd)');
+    toast(lastSyncMessage, 'var(--rd)');
   }
 });
 
@@ -25346,6 +26218,134 @@ function renderAll(){
   renderMain();
 }
 
+// The JSON file is the shared company record. When a manager has newer local
+// entries, keep only additions that the shared record has not received yet.
+// A shared former-staff status always wins over an older local active status.
+function mergeUnsentLocalRecord(shared, local){
+  let hasLocalAdditions = false;
+  const sharedStaffByKey = {};
+  const localStaffById = {};
+  (shared.staff || []).forEach(function(staff){
+    sharedStaffByKey[staff.id] = staff;
+    sharedStaffByKey[staffIdentityKey(staff)] = staff;
+  });
+  (local.staff || []).forEach(function(localStaff){
+    localStaffById[localStaff.id] = localStaff;
+    const sharedStaff = sharedStaffByKey[localStaff.id] || sharedStaffByKey[staffIdentityKey(localStaff)];
+    if(!sharedStaff){
+      const copy = JSON.parse(JSON.stringify(localStaff));
+      shared.staff.push(copy);
+      sharedStaffByKey[copy.id] = copy;
+      sharedStaffByKey[staffIdentityKey(copy)] = copy;
+      hasLocalAdditions = true;
+    } else if(localStaff.status === 'inactive' && sharedStaff.status !== 'inactive'){
+      sharedStaff.status = 'inactive';
+      sharedStaff.leftDate = localStaff.leftDate || sharedStaff.leftDate || '';
+      sharedStaff.leftWeek = localStaff.leftWeek || sharedStaff.leftWeek || '';
+      hasLocalAdditions = true;
+    }
+  });
+
+  Object.keys(local.years || {}).forEach(function(year){
+    if(!shared.years[year]) shared.years[year] = {};
+    Object.keys(local.years[year] || {}).forEach(function(sid){
+      const localRecord = local.years[year][sid] || {};
+      const localStaff = localStaffById[sid];
+      const sharedStaff = sharedStaffByKey[sid] || (localStaff && sharedStaffByKey[staffIdentityKey(localStaff)]);
+      const targetSid = sharedStaff ? sharedStaff.id : sid;
+      if(!shared.years[year][targetSid]) shared.years[year][targetSid] = {};
+      const sharedRecord = shared.years[year][targetSid];
+      const existingPeriods = {};
+      (sharedRecord.weeks || []).forEach(function(week){
+        const period = periodFromWeekRecord(week);
+        if(period) existingPeriods[period.startDate] = true;
+      });
+      (localRecord.weeks || []).forEach(function(week){
+        const period = periodFromWeekRecord(week);
+        const key = period ? period.startDate : (week.date || week.label);
+        const departurePeriod = sharedStaff && sharedStaff.status === 'inactive' && sharedStaff.leftDate
+          ? periodFromStartDate(sharedStaff.leftDate) : null;
+        if(departurePeriod && period && period.startDate > departurePeriod.startDate) return;
+        if(!existingPeriods[key]){
+          if(!sharedRecord.weeks) sharedRecord.weeks = [];
+          sharedRecord.weeks.push(JSON.parse(JSON.stringify(week)));
+          existingPeriods[key] = true;
+          hasLocalAdditions = true;
+        }
+      });
+      if(sharedRecord.weeks) sharedRecord.weeks = sortWeeksChronologically(sharedRecord.weeks);
+      if(sharedRecord.opening === undefined && localRecord.opening !== undefined) sharedRecord.opening = localRecord.opening;
+    });
+  });
+  return hasLocalAdditions;
+}
+
+// Keep saved current and future periods tied to their Monday date.  Older
+// records retain their original labels because they used the previous calendar
+// convention before the tracker was corrected.
+function normaliseCurrentPeriodLabels(database){
+  let changed = false;
+  Object.keys(database.years || {}).forEach(function(year){
+    if(parseInt(year, 10) < 2026) return;
+    Object.keys(database.years[year] || {}).forEach(function(sid){
+      const record = database.years[year][sid] || {};
+      (record.weeks || []).forEach(function(week){
+        const period = periodFromWeekRecord(week);
+        if(period && week.label !== period.label){
+          week.label = period.label;
+          changed = true;
+        }
+      });
+      if(record.weeks) record.weeks = sortWeeksChronologically(record.weeks);
+    });
+  });
+  return changed;
+}
+
+async function loadSharedCompanyRecord(){
+  try {
+    const response = await fetch('./holiday_data.json', { cache: 'no-store' });
+    if(!response.ok) throw new Error('Shared record was not available');
+    const shared = await response.json();
+    if(!shared || !Array.isArray(shared.staff) || !shared.years) throw new Error('Shared record is invalid');
+
+    const remoteFingerprint = dataFingerprint(shared);
+    const hasPendingLocalChanges = Object.keys(ov).length > 0;
+    if(hasPendingLocalChanges){
+      Object.keys(BASE).forEach(function(key){ delete BASE[key]; });
+      Object.assign(BASE, shared);
+      Object.keys(BASE.years).forEach(ensureTrackingYear);
+      sharedDataFingerprint = remoteFingerprint;
+      sharedDataLoaded = true;
+      syncBlockedByConflict = true;
+      setCloudStatus('conflict', 'This device has unsent changes from an older record. They are kept locally, but cloud saving is paused so newer shared data cannot be overwritten.');
+      renderAll();
+      return;
+    }
+    const local = buildCurrentDatabaseState();
+    const hasUnsentLocalAdditions = mergeUnsentLocalRecord(shared, local);
+    const hasNormalisedPeriodLabels = normaliseCurrentPeriodLabels(shared);
+    Object.keys(BASE).forEach(function(key){ delete BASE[key]; });
+    Object.assign(BASE, shared);
+    ov = {};
+    Object.keys(BASE.years).forEach(ensureTrackingYear);
+    sharedDataFingerprint = remoteFingerprint;
+    sharedDataLoaded = true;
+    syncBlockedByConflict = false;
+    setCloudStatus('synced', 'Shared company record loaded at ' + new Date().toLocaleTimeString() + '.');
+
+    if(!BASE.staff.some(function(staff){ return staff.id === activeSid; })){
+      const firstActive = BASE.staff.find(function(staff){ return staff.status !== 'inactive'; });
+      activeSid = firstActive ? firstActive.id : (BASE.staff[0] || {}).id;
+    }
+    renderAll();
+    if(hasUnsentLocalAdditions || hasNormalisedPeriodLabels) triggerAutoSync();
+  } catch(error) {
+    console.warn('Shared company record unavailable; using this device\'s local copy.', error);
+    setCloudStatus('error', 'Using this device\'s saved copy because the shared record could not be loaded.');
+  }
+}
+
 function checkUrlParams(){
   const params = new URLSearchParams(window.location.search);
   const staffParam = params.get('staff') || params.get('id') || params.get('name');
@@ -25374,12 +26374,14 @@ function checkUrlParams(){
 }
 
 applyStartDates();
+normaliseCurrentPeriodLabels(BASE);
 checkUrlParams();
 if(!activeSid){
   const firstActive = BASE.staff.find(function(s){ return s.status !== 'inactive'; });
   activeSid = firstActive ? firstActive.id : 's13';
 }
 renderAll();
+loadSharedCompanyRecord();
 </script>
 </body>
 </html>
