@@ -2,4 +2,6 @@
 compatibility_date = "2024-08-31"
 
 [assets]
-directory = "."
+# Publish only the browser files. Keeping this separate prevents source records,
+# Git history, and deployment files from being available as web assets.
+directory = "./public"
