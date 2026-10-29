@@ -104,6 +104,8 @@ header{background:var(--sf);border-bottom:1px solid var(--bd);padding:10px 20px;
 .hero-desc{font-size:.74rem;color:var(--tx3);margin-top:6px}
 
 .hero-breakdown-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:20px;padding-top:16px;border-top:1px solid var(--bd);max-width:720px;margin-left:auto;margin-right:auto}
+.hero-breakdown-grid.with-bank-holidays{grid-template-columns:repeat(4,1fr);max-width:920px}
+@media(max-width:850px){.hero-breakdown-grid.with-bank-holidays{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:650px){.hero-breakdown-grid{grid-template-columns:1fr;gap:8px}}
 .hero-b-col{background:var(--sf2);border:1px solid var(--bd);border-radius:10px;padding:10px 14px;display:flex;flex-direction:column;gap:3px;align-items:center}
 .hero-b-col span{font-size:.68rem;color:var(--tx3);font-weight:700;text-transform:uppercase}
@@ -28064,6 +28066,7 @@ function includeBankHolidaysInTotal(sid){
   }, {});
   if(!saveOv(ov)) return;
   triggerAutoSync();
+  renderAll();
   renderBankHolidayTotals();
   toast('Bank holidays added to '+staff.name+'\'s total for 2024, 2025 and 2026.');
 }
@@ -28364,6 +28367,11 @@ function renderMain(){
   const isInactive = staff.status === 'inactive';
   const hasProfileBankHolidays = PROFILE_BANK_HOLIDAY_STAFF_IDS.has(staff.id) && profileBankHolidayRows(staff.id).length > 0;
   const profileBankHolidaysVisible = !!profileBankHolidayVisibility[staff.id];
+  const bankHolidayDates = hasProfileBankHolidays ? profileBankHolidayRows(staff.id) : [];
+  const bankHolidayDatesThisYear = bankHolidayDates.filter(function(row){ return row.year === activeYear; }).length;
+  const bankHolidayInclusions = hasProfileBankHolidays ? getBankHolidayInclusions(staff.id) : {};
+  const bankHolidayDatesIncluded = bankHolidayDates.filter(function(row){ return bankHolidayInclusions[row.year]; }).length;
+  const allBankHolidayYearsIncluded = hasProfileBankHolidays && BANK_HOLIDAY_SUMMARY_YEARS.every(function(year){ return bankHolidayInclusions[year]; });
   const finalPayNeedsReview = staff.finalHolidayPayStatus === 'review';
   const holidayPayNeedsReview = staff.holidayPayStatus === 'review';
   const payReviewText = finalPayNeedsReview ? 'Final holiday pay' : 'Holiday pay';
@@ -28436,10 +28444,13 @@ function renderMain(){
     +'<div class="hero-sub-big" style="color:'+balColor+'">'+fmt1(balDays)+' working days</div>'
     +(balance > 0 ? '<div class="hero-weeks-badge">&#128197; Equivalent to: <strong>'+breakdown.weeksText+'</strong></div>' : '')
     +'<div class="hero-desc">Calculated at '+weeklyHrs+' hrs / full week ('+dailyHrs+' hrs / working day)</div>'
-    +'<div class="hero-breakdown-grid">'
+    +'<div class="hero-breakdown-grid'+(hasProfileBankHolidays ? ' with-bank-holidays' : '')+'">'
     +'<div class="hero-b-col"><span>Opening Carry-over</span><strong>'+fmt1(curStats.opening)+' hrs</strong></div>'
     +'<div class="hero-b-col"><span>Earned (8% of '+fmt1(curStats.totalWorked)+'h)</span><strong style="color:var(--gr)">+'+fmt1(curStats.earned)+' hrs</strong></div>'
     +'<div class="hero-b-col"><span>Holidays taken ('+activeYear+')</span><strong style="color:var(--am)">-'+fmt1(curStats.holTaken)+' hrs</strong></div>'
+    +(hasProfileBankHolidays ? '<div class="hero-b-col"><span>Bank Holidays ('+activeYear+')</span><strong style="color:'+(allBankHolidayYearsIncluded ? 'var(--gr)' : 'var(--rd)')+'">'+bankHolidayDatesThisYear+' date'+(bankHolidayDatesThisYear===1?'':'s')+'</strong><small style="font-size:.68rem;font-weight:700;color:'+(allBankHolidayYearsIncluded ? 'var(--gr)' : 'var(--rd)')+'">'+bankHolidayDatesIncluded+' of '+bankHolidayDates.length+' included from 2024</small>'
+      +(!isPortalMode ? '<button class="btn '+(allBankHolidayYearsIncluded ? 'btn-gr' : 'btn-rd')+'" id="profileBankHolidayTotalBtn" style="margin-top:5px;padding:5px 8px;font-size:.67rem" '+(allBankHolidayYearsIncluded ? 'disabled' : '')+'>'+(allBankHolidayYearsIncluded ? '&#10004; Bank Holidays Added' : '&#43; Add Bank Holidays')+'</button>' : '<span style="font-size:.67rem;font-weight:700;color:'+(allBankHolidayYearsIncluded ? 'var(--gr)' : 'var(--rd)')+'">'+(allBankHolidayYearsIncluded ? 'Including bank holidays' : 'Not included')+'</span>')
+      +'</div>' : '')
     +'</div>'
     +'</div>'
     
@@ -28552,6 +28563,11 @@ function renderMain(){
       renderMain();
     });
     renderProfileBankHolidayPanel(staff.id);
+    if(!isPortalMode && !allBankHolidayYearsIncluded){
+      document.getElementById('profileBankHolidayTotalBtn').addEventListener('click',function(){
+        includeBankHolidaysInTotal(staff.id);
+      });
+    }
   }
 
   // Weeks Table with Full Label & Hours Editing
