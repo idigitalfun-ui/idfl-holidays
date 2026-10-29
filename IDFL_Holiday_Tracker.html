@@ -28064,6 +28064,18 @@ function queueBankHolidayInclusionSync(sid, year, included){
     return false;
   });
 }
+function pendingBankHolidayInclusionChanges(){
+  const changes=[];
+  Object.keys(ov._bankHolidayInclusions || {}).forEach(function(sid){
+    const yearsForStaff=ov._bankHolidayInclusions[sid] || {};
+    BANK_HOLIDAY_SUMMARY_YEARS.forEach(function(year){
+      if(yearsForStaff[year] !== undefined){
+        changes.push({sid:sid,year:year,included:Boolean(yearsForStaff[year])});
+      }
+    });
+  });
+  return changes;
+}
 async function syncBankHolidayInclusion(sid, year, included){
   const token=getActiveGitHubToken();
   if(!token || !sharedDataLoaded){
@@ -30303,6 +30315,7 @@ async function loadSharedCompanyRecord(){
     }
     const hasPendingLocalChanges = Object.keys(ov).length > 0;
     if(hasPendingLocalChanges){
+      const pendingBankHolidayChanges=pendingBankHolidayInclusionChanges();
       Object.keys(BASE).forEach(function(key){ delete BASE[key]; });
       Object.assign(BASE, shared);
       Object.keys(BASE.years).forEach(ensureTrackingYear);
@@ -30311,6 +30324,11 @@ async function loadSharedCompanyRecord(){
       syncBlockedByConflict = true;
       setCloudStatus('conflict', 'This device has unsent changes that differ from the current shared record. They are kept locally, and cloud saving is paused so nothing is overwritten.');
       renderAll();
+      // Bank-holiday switches are isolated one-year settings. They can be
+      // saved safely without risking any unrelated hours or holiday records.
+      pendingBankHolidayChanges.forEach(function(change){
+        queueBankHolidayInclusionSync(change.sid,change.year,change.included);
+      });
       return;
     }
     const local = buildCurrentDatabaseState();
