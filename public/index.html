@@ -29467,12 +29467,12 @@ function getActiveGitHubToken(){
 
 async function autoPushToGitHub(silent){
   const tok = getActiveGitHubToken();
-  if(syncBlockedByConflict){
-    setCloudStatus('conflict', 'Cloud sync is paused because this device has unsent changes from an older shared record. Export a backup and refresh before applying them again.');
-    return false;
-  }
   if(!tok){
     setCloudStatus('local', 'Saved on this device. Add a GitHub save token in Sync & Backup to share it with other devices.');
+    return false;
+  }
+  if(syncBlockedByConflict){
+    setCloudStatus('conflict', 'Cloud sync is paused because this device has unsent changes from an older shared record. Export a backup and refresh before applying them again.');
     return false;
   }
   if(!sharedDataLoaded){
