@@ -305,7 +305,7 @@ table.batch-table input:focus{border-color:var(--ac)}
       <button class="modal-close" id="bankHolidaysClose">&times;</button>
     </div>
     <div class="modal-body">
-      <p style="font-size:.78rem;color:var(--tx2);margin-bottom:14px;line-height:1.45">This date-only register is separate from annual holiday leave. It lists the ten Irish public-holiday dates for Rana Abdullah, Osama Saleem, and Ibrar Tufail, without entering payment or working hours.</p>
+      <p style="font-size:.78rem;color:var(--tx2);margin-bottom:14px;line-height:1.45">This register lists the ten Irish public-holiday dates for Rana Abdullah, Osama Saleem, and Ibrar Tufail. Each eligible selected date adds 1.0 hour to the holiday balance; a date already listed in Holidays Taken is excluded automatically.</p>
       <div style="display:flex;gap:10px;align-items:end;flex-wrap:wrap;margin-bottom:14px">
         <div style="min-width:150px;flex:0 1 170px">
           <label for="bankHolidayYearFilter">Year</label>
@@ -325,7 +325,7 @@ table.batch-table input:focus{border-color:var(--ac)}
           <tbody id="bankHolidayTbody"></tbody>
         </table>
       </div>
-      <p style="font-size:.72rem;color:var(--tx3);margin:10px 0 0;line-height:1.4">These dates do not change an employee's annual holiday balance.</p>
+      <p style="font-size:.72rem;color:var(--tx3);margin:10px 0 0;line-height:1.4">Use Bank Holiday Totals to include a year. Only eligible selected dates add to the annual holiday balance.</p>
     </div>
     <div class="modal-footer">
       <button class="btn btn-ghost" id="bankHolidaysCloseBtn">Close</button>
@@ -341,7 +341,7 @@ table.batch-table input:focus{border-color:var(--ac)}
       <button class="modal-close" id="bankHolidayTotalsClose">&times;</button>
     </div>
     <div class="modal-body">
-      <p style="font-size:.78rem;color:var(--tx2);margin-bottom:14px;line-height:1.45">Choose each year separately. A green year is included in the bank-holiday date total; a red year is not included. The setting is saved to the shared record and affects this date count only — never paid hours or annual holiday balances.</p>
+      <p style="font-size:.78rem;color:var(--tx2);margin-bottom:14px;line-height:1.45">Choose each year separately. A green year adds 1.0 holiday-balance hour for every eligible bank-holiday date; a red year adds none. Dates recorded in Holidays Taken are excluded. The setting is saved to the shared record.</p>
       <div style="overflow:auto;border:1px solid var(--bd);border-radius:10px">
         <table class="weeks" style="min-width:780px">
           <thead><tr><th>Staff</th><th>Store</th><th class="num">2024</th><th class="num">2025</th><th class="num">2026</th><th class="num">Included Total</th><th>Status</th></tr></thead>
@@ -27764,6 +27764,34 @@ function getStaffSickLogs(sid, year){
   return merged;
 }
 
+// Each eligible bank-holiday date credits one hour to the holiday balance.
+// A date already recorded in Holidays Taken is excluded automatically.
+const BANK_HOLIDAY_BALANCE_CREDIT_HOURS = 1;
+function bankHolidayDateKey(value){
+  const date=parseLocalDate(value);
+  return date && !isNaN(date.getTime()) ? formatIsoDate(date) : String(value || '').trim();
+}
+function getBankHolidayYearCredit(sid, year){
+  const value=String(year);
+  const rows=(BASE.baseBankHolidays && BASE.baseBankHolidays[sid] ? BASE.baseBankHolidays[sid] : []).filter(function(row){
+    return String(row.year || String(row.date || '').slice(0,4))===value;
+  });
+  const holidayDates=new Set(getStaffHolidayLogs(sid,value).map(function(entry){ return bankHolidayDateKey(entry.date); }));
+  const eligibleRows=rows.filter(function(row){ return !holidayDates.has(bankHolidayDateKey(row.date)); });
+  const included=Boolean(getBankHolidayInclusions(sid)[value]);
+  const eligibleCount=eligibleRows.length;
+  return {
+    year:value,
+    rows:rows,
+    total:rows.length,
+    excluded:rows.length-eligibleCount,
+    eligible:eligibleCount,
+    included:included,
+    creditedDates:included ? eligibleCount : 0,
+    creditHours:included ? eligibleCount * BANK_HOLIDAY_BALANCE_CREDIT_HOURS : 0
+  };
+}
+
 function computeYearStats(sid, year, inheritedOpening){
   const weeks = getStaffWeeks(sid, year);
   const totalWorked = weeks.reduce(function(s,w){ return s + (w.hours||0); }, 0);
@@ -27788,8 +27816,9 @@ function computeYearStats(sid, year, inheritedOpening){
   const dailyHours = getStaffDailyHours(sid);
   const sickAllowance = SICK_ALLOWANCE_ANNUAL;
   const sickRemaining = Math.max(0, Math.round((sickAllowance - sickUsed) * 100) / 100);
+  const bankHolidayCredit=getBankHolidayYearCredit(sid,year);
   
-  const balance = Math.round((opening + earned - holTaken) * 100) / 100;
+  const balance = Math.round((opening + earned - holTaken + bankHolidayCredit.creditHours) * 100) / 100;
   const days = balance / dailyHours;
   const breakdown = formatHumanBalanceBreakdown(balance, sid);
   
@@ -27798,6 +27827,9 @@ function computeYearStats(sid, year, inheritedOpening){
     totalWorked: totalWorked,
     earned: earned,
     holTaken: holTaken,
+    bankHolidayCredit: bankHolidayCredit.creditHours,
+    bankHolidayDatesCredited: bankHolidayCredit.creditedDates,
+    bankHolidayDatesExcluded: bankHolidayCredit.excluded,
     balance: balance,
     days: days,
     breakdown: breakdown,
@@ -27815,7 +27847,7 @@ function getFullConnectedStats(sid){
   const result = {};
   let previous = null;
   years.forEach(function(year){
-    const hasPriorActivity = previous && (previous.weeks.length > 0 || previous.holLogs.length > 0 || Math.abs(previous.opening) > 0.001);
+    const hasPriorActivity = previous && (previous.weeks.length > 0 || previous.holLogs.length > 0 || previous.bankHolidayCredit > 0 || Math.abs(previous.opening) > 0.001);
     result[year] = computeYearStats(sid, year, hasPriorActivity ? previous.balance : undefined);
     previous = result[year];
   });
@@ -27981,8 +28013,8 @@ function renderHdrStats(){
   el.innerHTML='<span>Active staff: <strong>'+count+'</strong></span><span>Total balance: <strong>'+fmt1(tot)+' hrs</strong></span>';
 }
 
-// Bank holidays are shown independently from annual leave.  This is a
-// date-only register, intentionally without payment or working-hour values.
+// Bank holidays are tracked separately and, when selected, award one holiday
+// balance hour per eligible date. Actual worked-hour records remain unchanged.
 let bankHolidayYearFilter = 'ALL';
 function bankHolidayRows(){
   const rows=[];
@@ -28147,16 +28179,10 @@ function bankHolidaySummaryRows(){
   return Object.keys(BASE.baseBankHolidays || {}).map(function(sid){
     const staff=BASE.staff.find(function(person){ return person.id===sid; });
     if(!staff) return null;
-    const rows=profileBankHolidayRows(sid);
-    const counts=BANK_HOLIDAY_SUMMARY_YEARS.map(function(year){
-      return rows.filter(function(row){ return row.year===year; }).length;
-    });
-    const inclusions=getBankHolidayInclusions(sid);
-    const includedTotal=counts.reduce(function(total, count, index){
-      return total + (inclusions[BANK_HOLIDAY_SUMMARY_YEARS[index]] ? count : 0);
-    }, 0);
-    const total=counts.reduce(function(sum,count){ return sum+count; },0);
-    return {id:sid,staff:staff.name,shop:staff.shop || staff.location || '',counts:counts,inclusions:inclusions,includedTotal:includedTotal,total:total};
+    const credits=BANK_HOLIDAY_SUMMARY_YEARS.map(function(year){ return getBankHolidayYearCredit(sid,year); });
+    const includedTotal=credits.reduce(function(total,credit){ return total+credit.creditedDates; },0);
+    const total=credits.reduce(function(sum,credit){ return sum+credit.eligible; },0);
+    return {id:sid,staff:staff.name,shop:staff.shop || staff.location || '',credits:credits,includedTotal:includedTotal,total:total};
   }).filter(Boolean).sort(function(left,right){ return left.staff.localeCompare(right.staff); });
 }
 function renderBankHolidayTotals(){
@@ -28169,12 +28195,12 @@ function renderBankHolidayTotals(){
   }
   body.innerHTML=rows.map(function(row){
     return '<tr><td><strong>'+bankHolidayEscape(row.staff)+'</strong></td><td>'+bankHolidayEscape(row.shop)+'</td>'
-      +row.counts.map(function(count,index){
+      +row.credits.map(function(credit,index){
         const year=BANK_HOLIDAY_SUMMARY_YEARS[index];
-        const included=Boolean(row.inclusions[year]);
-        return '<td class="num"><button class="btn '+(included ? 'btn-gr' : 'btn-rd')+'" data-bank-toggle-sid="'+row.id+'" data-bank-toggle-year="'+year+'" title="'+(included ? 'Remove' : 'Add')+' '+year+' bank holidays from the total" style="padding:4px 7px;font-size:.68rem">'+(included ? '&#10004; ' : '&#43; ')+count+'</button></td>';
+        const excludedText=credit.excluded ? ' ('+credit.excluded+' on holiday)' : '';
+        return '<td class="num"><button class="btn '+(credit.included ? 'btn-gr' : 'btn-rd')+'" data-bank-toggle-sid="'+row.id+'" data-bank-toggle-year="'+year+'" title="'+(credit.included ? 'Remove' : 'Add')+' '+year+' bank holidays from the total" style="padding:4px 7px;font-size:.68rem">'+(credit.included ? '&#10004; ' : '&#43; ')+credit.eligible+'</button><span style="display:block;font-size:.58rem;color:var(--tx3);margin-top:2px">'+credit.eligible+' eligible'+excludedText+'</span></td>';
       }).join('')
-      +'<td class="num"><strong>'+row.includedTotal+' of '+row.total+'</strong></td>'
+      +'<td class="num"><strong>'+row.includedTotal+' of '+row.total+'</strong><span style="display:block;font-size:.62rem;color:var(--gr);margin-top:2px">+'+fmt1(row.includedTotal*BANK_HOLIDAY_BALANCE_CREDIT_HOURS)+' hrs</span></td>'
       +'<td><span style="font-size:.7rem;color:'+(row.includedTotal ? 'var(--gr)' : 'var(--rd)')+';font-weight:700">'+(row.includedTotal ? 'Selected years included' : 'No years included')+'</span></td></tr>';
   }).join('');
   body.querySelectorAll('[data-bank-toggle-sid]').forEach(function(button){
@@ -28189,9 +28215,8 @@ function openBankHolidayTotals(){
   document.getElementById('bankHolidayTotalsModal').classList.remove('hidden');
 }
 
-// The three requested profiles have a personal, read-only view of their
-// bank-holiday dates. The switch only changes visibility; it never adds
-// hours, payment, or annual-leave deductions.
+// The three requested profiles use bank-holiday credits: one balance hour
+// for each eligible date, excluding dates already logged as holiday taken.
 const PROFILE_BANK_HOLIDAY_STAFF_IDS = new Set(['s1','s2','s8']);
 let profileBankHolidayVisibility = {};
 let profileBankHolidayYearFilter = 'ALL';
@@ -28207,18 +28232,33 @@ function renderProfileBankHolidayPanel(sid){
   }
   const allRows = profileBankHolidayRows(sid);
   const rows = allRows.filter(function(row){ return profileBankHolidayYearFilter === 'ALL' || row.year === profileBankHolidayYearFilter; });
+  const excludedDates=new Set();
+  BANK_HOLIDAY_SUMMARY_YEARS.forEach(function(year){
+    const credit=getBankHolidayYearCredit(sid,year);
+    const eligibleDates=new Set(credit.rows.filter(function(row){
+      return credit.rows.length && credit.eligible && !getStaffHolidayLogs(sid,year).some(function(entry){
+        return bankHolidayDateKey(entry.date)===bankHolidayDateKey(row.date);
+      });
+    }).map(function(row){ return bankHolidayDateKey(row.date); }));
+    credit.rows.forEach(function(row){
+      if(!eligibleDates.has(bankHolidayDateKey(row.date))) excludedDates.add(bankHolidayDateKey(row.date));
+    });
+  });
   const filters = [['ALL','All dates'],['2024','2024'],['2025','2025'],['2026','2026']];
   panel.innerHTML = '<div class="card" style="margin:0 0 16px;border-color:#86efac;background:linear-gradient(135deg,#f0fdf4,#fff)">'
-    +'<div class="card-hd" style="align-items:center;gap:10px;flex-wrap:wrap"><h3>&#127974; Bank Holidays</h3><span class="card-sub">'+rows.length+' date'+(rows.length===1?'':'s')+' shown &bull; no hours added</span>'
+    +'<div class="card-hd" style="align-items:center;gap:10px;flex-wrap:wrap"><h3>&#127974; Bank Holidays</h3><span class="card-sub">'+rows.length+' date'+(rows.length===1?'':'s')+' shown &bull; 1.0 hr for every eligible selected date</span>'
     +'<button class="btn btn-ghost" id="hideStaffBankHolidaysBtn" style="margin-left:auto">Hide Bank Holidays</button></div>'
     +'<div style="display:flex;gap:7px;flex-wrap:wrap;padding:0 14px 12px">'+filters.map(function(filter){
       const selected = profileBankHolidayYearFilter === filter[0];
       return '<button class="btn '+(selected?'btn-gr':'btn-ghost')+'" data-profile-bank-year="'+filter[0]+'" style="padding:5px 10px;font-size:.72rem">'+filter[1]+'</button>';
     }).join('')+'</div>'
-    +'<div style="max-height:270px;overflow:auto;border-top:1px solid var(--bd)"><table class="weeks" style="min-width:390px"><thead><tr><th>Date</th><th>Bank Holiday</th></tr></thead><tbody>'
-    +(rows.length ? rows.map(function(row){ return '<tr><td>'+bankHolidayEscape(formatLocalDate(parseLocalDate(row.date)))+'</td><td><strong>'+bankHolidayEscape(row.name)+'</strong></td></tr>'; }).join('') : '<tr><td colspan="2" style="padding:18px;text-align:center;color:var(--tx3)">No dates for this year.</td></tr>')
+    +'<div style="max-height:270px;overflow:auto;border-top:1px solid var(--bd)"><table class="weeks" style="min-width:490px"><thead><tr><th>Date</th><th>Bank Holiday</th><th>Status</th></tr></thead><tbody>'
+    +(rows.length ? rows.map(function(row){
+      const excluded=excludedDates.has(bankHolidayDateKey(row.date));
+      return '<tr><td>'+bankHolidayEscape(formatLocalDate(parseLocalDate(row.date)))+'</td><td><strong>'+bankHolidayEscape(row.name)+'</strong></td><td><span style="font-size:.68rem;font-weight:700;color:'+(excluded ? 'var(--rd)' : 'var(--gr)')+'">'+(excluded ? 'Holiday taken — not added' : 'Eligible — +1.0 hr')+'</span></td></tr>';
+    }).join('') : '<tr><td colspan="3" style="padding:18px;text-align:center;color:var(--tx3)">No dates for this year.</td></tr>')
     +'</tbody></table></div>'
-    +'<div style="padding:10px 14px;font-size:.72rem;color:var(--tx3)">These are date-only records and do not change annual holiday balances.</div>'
+    +'<div style="padding:10px 14px;font-size:.72rem;color:var(--tx3)">A bank-holiday date is excluded automatically when the same date appears in Holidays Taken.</div>'
     +'</div>';
   document.getElementById('hideStaffBankHolidaysBtn').addEventListener('click',function(){
     profileBankHolidayVisibility[sid]=false;
@@ -28443,16 +28483,19 @@ function renderMain(){
   const hasProfileBankHolidays = PROFILE_BANK_HOLIDAY_STAFF_IDS.has(staff.id) && profileBankHolidayRows(staff.id).length > 0;
   const profileBankHolidaysVisible = !!profileBankHolidayVisibility[staff.id];
   const bankHolidayDates = hasProfileBankHolidays ? profileBankHolidayRows(staff.id) : [];
-  const bankHolidayDatesThisYear = bankHolidayDates.filter(function(row){ return row.year === activeYear; }).length;
   const bankHolidayInclusions = hasProfileBankHolidays ? getBankHolidayInclusions(staff.id) : {};
   const bankHolidayYearsThroughActive = hasProfileBankHolidays ? BANK_HOLIDAY_SUMMARY_YEARS.filter(function(year){ return year<=activeYear; }) : [];
-  const bankHolidayDatesThroughActive = bankHolidayDates.filter(function(row){ return bankHolidayYearsThroughActive.indexOf(row.year)!==-1; });
-  const bankHolidayDatesIncluded = bankHolidayDatesThroughActive.filter(function(row){ return bankHolidayInclusions[row.year]; }).length;
+  const bankHolidayCreditsByYear = bankHolidayYearsThroughActive.map(function(year){ return getBankHolidayYearCredit(staff.id,year); });
+  const bankHolidayDatesEligible = bankHolidayCreditsByYear.reduce(function(total,credit){ return total+credit.eligible; },0);
+  const bankHolidayDatesIncluded = bankHolidayCreditsByYear.reduce(function(total,credit){ return total+credit.creditedDates; },0);
+  const bankHolidayCreditHours = bankHolidayCreditsByYear.reduce(function(total,credit){ return total+credit.creditHours; },0);
+  const bankHolidayDatesExcluded = bankHolidayCreditsByYear.reduce(function(total,credit){ return total+credit.excluded; },0);
   const bankHolidayToggleButtons = bankHolidayYearsThroughActive.map(function(year){
     const included=Boolean(bankHolidayInclusions[year]);
-    const count=bankHolidayDates.filter(function(row){ return row.year===year; }).length;
+    const credit=getBankHolidayYearCredit(staff.id,year);
     const disabled=isPortalMode ? ' disabled' : '';
-    return '<button class="btn '+(included ? 'btn-gr' : 'btn-rd')+'" data-profile-bank-year-toggle="'+year+'" title="'+(included ? 'Remove' : 'Add')+' '+year+' bank holidays from the total" style="padding:4px 7px;font-size:.65rem"'+disabled+'>'+(included ? '&#10004; ' : '&#43; ')+year+' · '+count+'</button>';
+    const excludedText=credit.excluded ? ' ('+credit.excluded+' taken)' : '';
+    return '<button class="btn '+(included ? 'btn-gr' : 'btn-rd')+'" data-profile-bank-year-toggle="'+year+'" title="'+(included ? 'Remove' : 'Add')+' '+year+' eligible bank holidays from the balance" style="padding:4px 7px;font-size:.65rem"'+disabled+'>'+(included ? '&#10004; ' : '&#43; ')+year+' · '+credit.eligible+'</button>'+(excludedText ? '<span style="font-size:.58rem;color:var(--rd);font-weight:700">'+excludedText+'</span>' : '');
   }).join('');
   const finalPayNeedsReview = staff.finalHolidayPayStatus === 'review';
   const holidayPayNeedsReview = staff.holidayPayStatus === 'review';
@@ -28530,7 +28573,7 @@ function renderMain(){
     +'<div class="hero-b-col"><span>Opening Carry-over</span><strong>'+fmt1(curStats.opening)+' hrs</strong></div>'
     +'<div class="hero-b-col"><span>Earned (8% of '+fmt1(curStats.totalWorked)+'h)</span><strong style="color:var(--gr)">+'+fmt1(curStats.earned)+' hrs</strong></div>'
     +'<div class="hero-b-col"><span>Holidays taken ('+activeYear+')</span><strong style="color:var(--am)">-'+fmt1(curStats.holTaken)+' hrs</strong></div>'
-    +(hasProfileBankHolidays ? '<div class="hero-b-col"><span>Bank Holidays ('+activeYear+')</span><strong style="color:'+(bankHolidayDatesIncluded===bankHolidayDatesThroughActive.length ? 'var(--gr)' : 'var(--rd)')+'">'+bankHolidayDatesThisYear+' date'+(bankHolidayDatesThisYear===1?'':'s')+'</strong><small style="font-size:.68rem;font-weight:700;color:'+(bankHolidayDatesIncluded ? 'var(--gr)' : 'var(--rd)')+'">'+bankHolidayDatesIncluded+' of '+bankHolidayDatesThroughActive.length+' included from 2024</small>'
+    +(hasProfileBankHolidays ? '<div class="hero-b-col"><span>Bank Holidays ('+activeYear+')</span><strong style="color:'+(bankHolidayDatesIncluded ? 'var(--gr)' : 'var(--rd)')+'">'+bankHolidayDatesIncluded+' day'+(bankHolidayDatesIncluded===1?'':'s')+'</strong><small style="font-size:.68rem;font-weight:700;color:'+(bankHolidayDatesIncluded ? 'var(--gr)' : 'var(--rd)')+'">+'+fmt1(bankHolidayCreditHours)+' hrs &bull; '+bankHolidayDatesIncluded+' of '+bankHolidayDatesEligible+' eligible from 2024'+(bankHolidayDatesExcluded ? ' ('+bankHolidayDatesExcluded+' taken)' : '')+'</small>'
       +'<div style="display:flex;justify-content:center;gap:4px;flex-wrap:wrap;margin-top:5px">'+bankHolidayToggleButtons+'</div>'
       +'</div>' : '')
     +'</div>'
@@ -29657,6 +29700,7 @@ function openShareModal(sid){
     txt += '  Worked Hours:       ' + fmt1(st.totalWorked) + ' hrs (' + st.weeks.length + ' periods)\n';
     txt += '  Accrued (8%):       +' + fmt1(st.earned) + ' hrs\n';
     txt += '  Holidays Taken:     -' + fmt1(st.holTaken) + ' hrs (' + st.holLogs.length + ' dates)\n';
+    txt += '  Bank Holiday Credit: +' + fmt1(st.bankHolidayCredit) + ' hrs (' + st.bankHolidayDatesCredited + ' eligible dates' + (st.bankHolidayDatesExcluded ? ', ' + st.bankHolidayDatesExcluded + ' taken' : '') + ')\n';
     txt += '  Balance Available:  ' + fmt1(st.balance) + ' hrs (' + st.breakdown.weeksText + ' / ' + fmt1(st.days) + ' days)\n';
     txt += '  Sick Days Used:     ' + fmt1(st.sickUsed) + ' hrs (Remaining: ' + fmt1(st.sickRemaining) + ' hrs of 35h)\n';
     if(st.holLogs.length > 0){
@@ -29782,10 +29826,11 @@ function generateSingleStaffPdfHtml(sid, yearChoice){
     html += '</div>';
     
     // KPI Cards
-    html += '<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;background:#f8fafc;padding:12px;border:1px solid #cbd5e1;border-top:none;margin-bottom:12px">';
+    html += '<div style="display:grid;grid-template-columns:repeat(5,1fr);gap:10px;background:#f8fafc;padding:12px;border:1px solid #cbd5e1;border-top:none;margin-bottom:12px">';
     html += '<div style="background:#fff;padding:8px 10px;border-radius:6px;border:1px solid #cbd5e1;text-align:center"><div style="font-size:10px;color:#64748b;font-weight:700">OPENING CARRY</div><div style="font-size:15px;font-weight:800;color:#0f172a">' + fmt1(st.opening) + ' hrs</div></div>';
     html += '<div style="background:#fff;padding:8px 10px;border-radius:6px;border:1px solid #cbd5e1;text-align:center"><div style="font-size:10px;color:#64748b;font-weight:700">WORKED &amp; EARNED</div><div style="font-size:15px;font-weight:800;color:#1d4ed8">' + fmt1(st.totalWorked) + 'h <span style="font-size:11px;color:#15803d">(+' + fmt1(st.earned) + 'h)</span></div></div>';
     html += '<div style="background:#fff;padding:8px 10px;border-radius:6px;border:1px solid #cbd5e1;text-align:center"><div style="font-size:10px;color:#64748b;font-weight:700">HOLIDAYS TAKEN</div><div style="font-size:15px;font-weight:800;color:#b45309">-' + fmt1(st.holTaken) + ' hrs</div></div>';
+    html += '<div style="background:#fff;padding:8px 10px;border-radius:6px;border:1px solid #cbd5e1;text-align:center"><div style="font-size:10px;color:#64748b;font-weight:700">BANK HOLIDAYS</div><div style="font-size:15px;font-weight:800;color:#15803d">+' + fmt1(st.bankHolidayCredit) + 'h <span style="font-size:11px;color:#64748b">(' + st.bankHolidayDatesCredited + ' days)</span></div></div>';
     html += '<div style="background:#fff;padding:8px 10px;border-radius:6px;border:1px solid #cbd5e1;text-align:center"><div style="font-size:10px;color:#64748b;font-weight:700">SICK USED / REMAIN</div><div style="font-size:15px;font-weight:800;color:#be185d">' + fmt1(st.sickUsed) + 'h / ' + fmt1(st.sickRemaining) + 'h</div></div>';
     html += '</div>';
     
