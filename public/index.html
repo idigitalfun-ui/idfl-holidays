@@ -274,6 +274,7 @@ table.batch-table input:focus{border-color:var(--ac)}
   </div>
   <div class="hdr-stats" id="hdrStats"></div>
   <div style="margin-left:auto;display:flex;gap:8px;align-items:center">
+    <button class="btn btn-ghost" id="bankHolidaysBtn" title="View bank-holiday records for selected staff">Bank Holidays</button>
     <button class="btn btn-ac" id="addNewStaffModalBtn" title="Add a new employee to the company">&#43; Add New Staff</button>
     <button class="btn btn-pk" id="pdfExportModalBtn" title="Export reports as PDF">&#128196; Export PDF</button>
     <button class="btn btn-gr" id="batchWeekBtn">&#128197; Add New Week (All Staff)</button>
@@ -291,6 +292,42 @@ table.batch-table input:focus{border-color:var(--ac)}
     <div class="sidebar-content" id="sidebarContent"></div>
   </div>
   <div class="main" id="main"></div>
+</div>
+
+<!-- BANK HOLIDAY REGISTER -->
+<div class="modal-bg hidden" id="bankHolidaysModal">
+  <div class="modal modal-large">
+    <div class="modal-hd">
+      <h2>Bank Holidays</h2>
+      <button class="modal-close" id="bankHolidaysClose">&times;</button>
+    </div>
+    <div class="modal-body">
+      <p style="font-size:.78rem;color:var(--tx2);margin-bottom:14px;line-height:1.45">This register is separate from annual holiday leave. It lists the ten Irish public-holiday dates for Rana Abdullah, Osama Saleem, and Ibrar Tufail. Source working hours are shown only where they were recorded in the weekly-hours workbook; a blank amount is not treated as paid holiday leave.</p>
+      <div style="display:flex;gap:10px;align-items:end;flex-wrap:wrap;margin-bottom:14px">
+        <div style="min-width:150px;flex:0 1 170px">
+          <label for="bankHolidayYearFilter">Year</label>
+          <select id="bankHolidayYearFilter" style="margin-bottom:0">
+            <option value="ALL">All years</option>
+            <option value="2024">2024</option>
+            <option value="2025">2025</option>
+            <option value="2026">2026</option>
+          </select>
+        </div>
+        <div id="bankHolidayStats" style="font-size:.76rem;color:var(--tx2);font-weight:700;padding:9px 0;flex:1"></div>
+        <button class="btn btn-ac" id="bankHolidayCsvBtn" style="margin-bottom:0">Download CSV</button>
+      </div>
+      <div style="max-height:54vh;overflow:auto;border:1px solid var(--bd);border-radius:10px">
+        <table class="weeks" style="min-width:720px">
+          <thead><tr><th>Staff</th><th>Store</th><th>Date</th><th>Public Holiday</th><th class="num">Recorded Hours</th><th>Status</th></tr></thead>
+          <tbody id="bankHolidayTbody"></tbody>
+        </table>
+      </div>
+      <p style="font-size:.72rem;color:var(--tx3);margin:10px 0 0;line-height:1.4">Recorded hours are bank-holiday working hours from the source workbook. They do not reduce the employee's annual holiday balance.</p>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" id="bankHolidaysCloseBtn">Close</button>
+    </div>
+  </div>
 </div>
 
 <!-- ðŸŒŸ ADD NEW STAFF MODAL ðŸŒŸ -->
@@ -4044,24 +4081,24 @@ table.batch-table input:focus{border-color:var(--ac)}
         "days": 2.0,
         "currentAvailableHrs": 14.0,
         "calculatedHolidays": 14.0,
-        "holidaysTaken": 0.0
+        "holidaysTaken": 0
       },
       "s26": {
-        "opening": 0,
+        "opening": 0.0,
         "weeks": [],
         "totalWorked": 0,
-        "days": 0,
-        "currentAvailableHrs": 0,
-        "calculatedHolidays": 0,
+        "days": 0.0,
+        "currentAvailableHrs": 0.0,
+        "calculatedHolidays": 0.0,
         "holidaysTaken": 0
       },
       "s14": {
-        "opening": 0,
+        "opening": 0.0,
         "weeks": [],
         "totalWorked": 0,
-        "days": 0,
-        "currentAvailableHrs": 0,
-        "calculatedHolidays": 0,
+        "days": 0.0,
+        "currentAvailableHrs": 0.0,
+        "calculatedHolidays": 0.0,
         "holidaysTaken": 0
       },
       "s13": {
@@ -4335,7 +4372,7 @@ table.batch-table input:focus{border-color:var(--ac)}
         "holidaysTaken": 229.0
       },
       "s28": {
-        "opening": 0,
+        "opening": 0.0,
         "weeks": [
           {
             "label": "Week 47 18/11/2024 - 24/11/2024",
@@ -4373,10 +4410,10 @@ table.batch-table input:focus{border-color:var(--ac)}
             "date": "2024-12-30"
           }
         ],
-        "totalWorked": 200,
+        "totalWorked": 200.0,
         "days": 2.29,
-        "currentAvailableHrs": 16,
-        "calculatedHolidays": 16,
+        "currentAvailableHrs": 16.0,
+        "calculatedHolidays": 16.0,
         "holidaysTaken": 0
       },
       "s2": {
@@ -4640,7 +4677,7 @@ table.batch-table input:focus{border-color:var(--ac)}
         "holidaysTaken": 49.0
       },
       "s23": {
-        "opening": 0,
+        "opening": 0.0,
         "weeks": [
           {
             "label": "Week 25 17/06/2024 - 23/06/2024",
@@ -4788,7 +4825,7 @@ table.batch-table input:focus{border-color:var(--ac)}
             "date": "30/12/2024"
           }
         ],
-        "totalWorked": 968,
+        "totalWorked": 968.0,
         "days": 11.06,
         "currentAvailableHrs": 77.44,
         "calculatedHolidays": 77.44,
@@ -5065,7 +5102,7 @@ table.batch-table input:focus{border-color:var(--ac)}
         "holidaysTaken": 8.0
       },
       "s29": {
-        "opening": 0,
+        "opening": 0.0,
         "weeks": [
           {
             "label": "Week 49 02/12/2024 - 08/12/2024",
@@ -5093,10 +5130,10 @@ table.batch-table input:focus{border-color:var(--ac)}
             "date": "30/12/2024"
           }
         ],
-        "totalWorked": 75,
+        "totalWorked": 75.0,
         "days": 0.86,
-        "currentAvailableHrs": 6,
-        "calculatedHolidays": 6,
+        "currentAvailableHrs": 6.0,
+        "calculatedHolidays": 6.0,
         "holidaysTaken": 0
       },
       "s22": {
@@ -5287,7 +5324,7 @@ table.batch-table input:focus{border-color:var(--ac)}
         "days": 11.42,
         "currentAvailableHrs": 79.92,
         "calculatedHolidays": 79.92,
-        "holidaysTaken": 0.0
+        "holidaysTaken": 0
       },
       "s6": {
         "opening": 40.4,
@@ -5677,7 +5714,7 @@ table.batch-table input:focus{border-color:var(--ac)}
         "days": 4.26,
         "currentAvailableHrs": 29.84,
         "calculatedHolidays": 29.84,
-        "holidaysTaken": 0.0
+        "holidaysTaken": 0
       },
       "s15": {
         "opening": 1.94,
@@ -5950,7 +5987,7 @@ table.batch-table input:focus{border-color:var(--ac)}
         "holidaysTaken": 35.0
       },
       "s24": {
-        "opening": 0,
+        "opening": 0.0,
         "weeks": [
           {
             "label": "Week 32 05/08/2024 - 11/08/2024",
@@ -6063,14 +6100,14 @@ table.batch-table input:focus{border-color:var(--ac)}
             "date": "30/12/2024"
           }
         ],
-        "totalWorked": 373,
+        "totalWorked": 373.0,
         "days": 2.83,
         "currentAvailableHrs": 19.84,
         "calculatedHolidays": 29.84,
         "holidaysTaken": 10.0
       },
       "s16": {
-        "opening": 0,
+        "opening": 0.0,
         "weeks": [
           {
             "label": "Week 19 06/05/2024 - 12/05/2024",
@@ -6243,7 +6280,7 @@ table.batch-table input:focus{border-color:var(--ac)}
             "date": "30/12/2024"
           }
         ],
-        "totalWorked": 1011,
+        "totalWorked": 1011.0,
         "days": 11.55,
         "currentAvailableHrs": 80.88,
         "calculatedHolidays": 80.88,
@@ -8410,12 +8447,12 @@ table.batch-table input:focus{border-color:var(--ac)}
         "holidaysTaken": 140.0
       },
       "s31": {
-        "opening": 0,
+        "opening": 0.0,
         "weeks": [],
         "totalWorked": 0,
-        "days": 0,
-        "currentAvailableHrs": 0,
-        "calculatedHolidays": 0,
+        "days": 0.0,
+        "currentAvailableHrs": 0.0,
+        "calculatedHolidays": 0.0,
         "holidaysTaken": 0
       },
       "s3": {
@@ -8959,7 +8996,7 @@ table.batch-table input:focus{border-color:var(--ac)}
         "holidaysTaken": 105.0
       },
       "s9": {
-        "opening": 0,
+        "opening": 0.0,
         "weeks": [
           {
             "label": "Week 24 10/06/2024 - 16/06/2024",
@@ -8974,16 +9011,16 @@ table.batch-table input:focus{border-color:var(--ac)}
         "holidaysTaken": 0
       },
       "s30": {
-        "opening": 0,
+        "opening": 0.0,
         "weeks": [],
         "totalWorked": 0,
-        "days": 0,
-        "currentAvailableHrs": 0,
-        "calculatedHolidays": 0,
+        "days": 0.0,
+        "currentAvailableHrs": 0.0,
+        "calculatedHolidays": 0.0,
         "holidaysTaken": 0
       },
       "s27": {
-        "opening": 0,
+        "opening": 0.0,
         "weeks": [
           {
             "label": "Week 1 01/01/2024 - 07/01/2024",
@@ -9246,7 +9283,7 @@ table.batch-table input:focus{border-color:var(--ac)}
             "date": "30/12/2024"
           }
         ],
-        "totalWorked": 1674,
+        "totalWorked": 1674.0,
         "days": 19.13,
         "currentAvailableHrs": 133.92,
         "calculatedHolidays": 133.92,
@@ -9254,8 +9291,12 @@ table.batch-table input:focus{border-color:var(--ac)}
       },
       "s32": {
         "weeks": [],
-        "opening": 0,
-        "holidaysTaken": 0
+        "opening": 0.0,
+        "holidaysTaken": 0,
+        "totalWorked": 0,
+        "calculatedHolidays": 0.0,
+        "currentAvailableHrs": 0.0,
+        "days": 0.0
       },
       "f1": {
         "opening": 104.4,
@@ -9528,15 +9569,19 @@ table.batch-table input:focus{border-color:var(--ac)}
         "days": 10.75
       },
       "f2": {
-        "opening": 0,
+        "opening": 0.0,
         "weeks": [],
-        "holidaysTaken": 0
+        "holidaysTaken": 0,
+        "totalWorked": 0,
+        "calculatedHolidays": 0.0,
+        "currentAvailableHrs": 0.0,
+        "days": 0.0
       },
       "f3": {
         "opening": 44.04,
         "weeks": [],
-        "holidaysTaken": 0.0,
-        "totalWorked": 0.0,
+        "holidaysTaken": 0,
+        "totalWorked": 0,
         "calculatedHolidays": 0.0,
         "currentAvailableHrs": 44.04,
         "days": 6.29
@@ -9740,7 +9785,7 @@ table.batch-table input:focus{border-color:var(--ac)}
             "date": "30/12/2024"
           }
         ],
-        "holidaysTaken": 0.0,
+        "holidaysTaken": 0,
         "totalWorked": 502.0,
         "calculatedHolidays": 40.16,
         "currentAvailableHrs": 87.16,
@@ -10017,9 +10062,13 @@ table.batch-table input:focus{border-color:var(--ac)}
         "days": 13.33
       },
       "f6": {
-        "opening": 0,
+        "opening": 0.0,
         "weeks": [],
-        "holidaysTaken": 0
+        "holidaysTaken": 0,
+        "totalWorked": 0,
+        "calculatedHolidays": 0.0,
+        "currentAvailableHrs": 0.0,
+        "days": 0.0
       },
       "f7": {
         "opening": 41.12,
@@ -10150,7 +10199,7 @@ table.batch-table input:focus{border-color:var(--ac)}
             "date": "25/03/2024"
           }
         ],
-        "holidaysTaken": 0.0,
+        "holidaysTaken": 0,
         "totalWorked": 321.5,
         "calculatedHolidays": 25.72,
         "currentAvailableHrs": 50.94,
@@ -10159,8 +10208,8 @@ table.batch-table input:focus{border-color:var(--ac)}
       "f9": {
         "opening": 21.08,
         "weeks": [],
-        "holidaysTaken": 0.0,
-        "totalWorked": 0.0,
+        "holidaysTaken": 0,
+        "totalWorked": 0,
         "calculatedHolidays": 0.0,
         "currentAvailableHrs": 21.08,
         "days": 3.01
@@ -10168,22 +10217,26 @@ table.batch-table input:focus{border-color:var(--ac)}
       "f10": {
         "opening": 47.8,
         "weeks": [],
-        "holidaysTaken": 0.0,
-        "totalWorked": 0.0,
+        "holidaysTaken": 0,
+        "totalWorked": 0,
         "calculatedHolidays": 0.0,
         "currentAvailableHrs": 47.8,
         "days": 6.83
       },
       "f11": {
-        "opening": 0,
+        "opening": 0.0,
         "weeks": [],
-        "holidaysTaken": 0
+        "holidaysTaken": 0,
+        "totalWorked": 0,
+        "calculatedHolidays": 0.0,
+        "currentAvailableHrs": 0.0,
+        "days": 0.0
       },
       "f12": {
         "opening": 125.4,
         "weeks": [],
-        "holidaysTaken": 0.0,
-        "totalWorked": 0.0,
+        "holidaysTaken": 0,
+        "totalWorked": 0,
         "calculatedHolidays": 0.0,
         "currentAvailableHrs": 125.4,
         "days": 17.91
@@ -10296,8 +10349,8 @@ table.batch-table input:focus{border-color:var(--ac)}
       "f14": {
         "opening": 8.52,
         "weeks": [],
-        "holidaysTaken": 0.0,
-        "totalWorked": 0.0,
+        "holidaysTaken": 0,
+        "totalWorked": 0,
         "calculatedHolidays": 0.0,
         "currentAvailableHrs": 8.52,
         "days": 1.22
@@ -10305,22 +10358,26 @@ table.batch-table input:focus{border-color:var(--ac)}
       "f15": {
         "opening": 46.86,
         "weeks": [],
-        "holidaysTaken": 0.0,
-        "totalWorked": 0.0,
+        "holidaysTaken": 0,
+        "totalWorked": 0,
         "calculatedHolidays": 0.0,
         "currentAvailableHrs": 46.86,
         "days": 6.69
       },
       "f16": {
-        "opening": 0,
+        "opening": 0.0,
         "weeks": [],
-        "holidaysTaken": 0
+        "holidaysTaken": 0,
+        "totalWorked": 0,
+        "calculatedHolidays": 0.0,
+        "currentAvailableHrs": 0.0,
+        "days": 0.0
       },
       "f17": {
         "opening": 0.44,
         "weeks": [],
-        "holidaysTaken": 0.0,
-        "totalWorked": 0.0,
+        "holidaysTaken": 0,
+        "totalWorked": 0,
         "calculatedHolidays": 0.0,
         "currentAvailableHrs": 0.44,
         "days": 0.06
@@ -10328,8 +10385,8 @@ table.batch-table input:focus{border-color:var(--ac)}
       "f18": {
         "opening": 56.27,
         "weeks": [],
-        "holidaysTaken": 0.0,
-        "totalWorked": 0.0,
+        "holidaysTaken": 0,
+        "totalWorked": 0,
         "calculatedHolidays": 0.0,
         "currentAvailableHrs": 56.27,
         "days": 8.04
@@ -10337,8 +10394,8 @@ table.batch-table input:focus{border-color:var(--ac)}
       "f19": {
         "opening": 22.04,
         "weeks": [],
-        "holidaysTaken": 0.0,
-        "totalWorked": 0.0,
+        "holidaysTaken": 0,
+        "totalWorked": 0,
         "calculatedHolidays": 0.0,
         "currentAvailableHrs": 22.04,
         "days": 3.15
@@ -10346,8 +10403,8 @@ table.batch-table input:focus{border-color:var(--ac)}
       "f20": {
         "opening": 37.32,
         "weeks": [],
-        "holidaysTaken": 0.0,
-        "totalWorked": 0.0,
+        "holidaysTaken": 0,
+        "totalWorked": 0,
         "calculatedHolidays": 0.0,
         "currentAvailableHrs": 37.32,
         "days": 5.33
@@ -10355,8 +10412,8 @@ table.batch-table input:focus{border-color:var(--ac)}
       "f21": {
         "opening": 5.28,
         "weeks": [],
-        "holidaysTaken": 0.0,
-        "totalWorked": 0.0,
+        "holidaysTaken": 0,
+        "totalWorked": 0,
         "calculatedHolidays": 0.0,
         "currentAvailableHrs": 5.28,
         "days": 0.75
@@ -10364,8 +10421,8 @@ table.batch-table input:focus{border-color:var(--ac)}
       "f22": {
         "opening": 117.72,
         "weeks": [],
-        "holidaysTaken": 0.0,
-        "totalWorked": 0.0,
+        "holidaysTaken": 0,
+        "totalWorked": 0,
         "calculatedHolidays": 0.0,
         "currentAvailableHrs": 117.72,
         "days": 16.82
@@ -10489,7 +10546,7 @@ table.batch-table input:focus{border-color:var(--ac)}
             "date": "10/06/2024"
           }
         ],
-        "holidaysTaken": 0.0,
+        "holidaysTaken": 0,
         "totalWorked": 713.0,
         "calculatedHolidays": 57.04,
         "currentAvailableHrs": 88.68,
@@ -10929,7 +10986,7 @@ table.batch-table input:focus{border-color:var(--ac)}
             "date": "11/11/2024"
           }
         ],
-        "holidaysTaken": 0.0,
+        "holidaysTaken": 0,
         "totalWorked": 1059.0,
         "calculatedHolidays": 84.72,
         "currentAvailableHrs": 130.56,
@@ -11094,7 +11151,7 @@ table.batch-table input:focus{border-color:var(--ac)}
             "date": "30/12/2024"
           }
         ],
-        "holidaysTaken": 0.0,
+        "holidaysTaken": 0,
         "totalWorked": 923.5,
         "calculatedHolidays": 73.88,
         "currentAvailableHrs": 73.88,
@@ -11103,8 +11160,8 @@ table.batch-table input:focus{border-color:var(--ac)}
       "f28": {
         "opening": 17.52,
         "weeks": [],
-        "holidaysTaken": 0.0,
-        "totalWorked": 0.0,
+        "holidaysTaken": 0,
+        "totalWorked": 0,
         "calculatedHolidays": 0.0,
         "currentAvailableHrs": 17.52,
         "days": 2.5
@@ -11112,8 +11169,8 @@ table.batch-table input:focus{border-color:var(--ac)}
       "f29": {
         "opening": 4.92,
         "weeks": [],
-        "holidaysTaken": 0.0,
-        "totalWorked": 0.0,
+        "holidaysTaken": 0,
+        "totalWorked": 0,
         "calculatedHolidays": 0.0,
         "currentAvailableHrs": 4.92,
         "days": 0.7
@@ -11201,21 +11258,29 @@ table.batch-table input:focus{border-color:var(--ac)}
       "f31": {
         "opening": 124.88,
         "weeks": [],
-        "holidaysTaken": 0.0,
-        "totalWorked": 0.0,
+        "holidaysTaken": 0,
+        "totalWorked": 0,
         "calculatedHolidays": 0.0,
         "currentAvailableHrs": 124.88,
         "days": 17.84
       },
       "f32": {
-        "opening": 0,
+        "opening": 0.0,
         "weeks": [],
-        "holidaysTaken": 0
+        "holidaysTaken": 0,
+        "totalWorked": 0,
+        "calculatedHolidays": 0.0,
+        "currentAvailableHrs": 0.0,
+        "days": 0.0
       },
       "f33": {
-        "opening": 0,
+        "opening": 0.0,
         "weeks": [],
-        "holidaysTaken": 0
+        "holidaysTaken": 0,
+        "totalWorked": 0,
+        "calculatedHolidays": 0.0,
+        "currentAvailableHrs": 0.0,
+        "days": 0.0
       }
     },
     "2025": {
@@ -11760,7 +11825,7 @@ table.batch-table input:focus{border-color:var(--ac)}
         "holidaysTaken": 140.0
       },
       "s26": {
-        "opening": 0,
+        "opening": 0.0,
         "weeks": [
           {
             "label": "Week 36 08/09/2025 - 14/09/2025",
@@ -11855,12 +11920,12 @@ table.batch-table input:focus{border-color:var(--ac)}
         "holidaysTaken": 0
       },
       "s14": {
-        "opening": 0,
+        "opening": 0.0,
         "weeks": [],
         "totalWorked": 0,
-        "days": 0,
-        "currentAvailableHrs": 0,
-        "calculatedHolidays": 0,
+        "days": 0.0,
+        "currentAvailableHrs": 0.0,
+        "calculatedHolidays": 0.0,
         "holidaysTaken": 0
       },
       "s13": {
@@ -12134,7 +12199,7 @@ table.batch-table input:focus{border-color:var(--ac)}
         "holidaysTaken": 133.0
       },
       "s28": {
-        "opening": 16,
+        "opening": 16.0,
         "weeks": [
           {
             "label": "Week 1 06/01/2025 - 12/01/2025",
@@ -12397,7 +12462,7 @@ table.batch-table input:focus{border-color:var(--ac)}
             "date": "2025-12-29"
           }
         ],
-        "totalWorked": 1210,
+        "totalWorked": 1210.0,
         "days": -3.89,
         "currentAvailableHrs": -27.2,
         "calculatedHolidays": 96.8,
@@ -14071,7 +14136,7 @@ table.batch-table input:focus{border-color:var(--ac)}
         "days": 7.46,
         "currentAvailableHrs": 52.2,
         "calculatedHolidays": 22.36,
-        "holidaysTaken": 0.0
+        "holidaysTaken": 0
       },
       "s15": {
         "opening": 40.9,
@@ -17014,12 +17079,12 @@ table.batch-table input:focus{border-color:var(--ac)}
         "holidaysTaken": 154.5
       },
       "s31": {
-        "opening": 0,
+        "opening": 0.0,
         "weeks": [],
         "totalWorked": 0,
-        "days": 0,
-        "currentAvailableHrs": 0,
-        "calculatedHolidays": 0,
+        "days": 0.0,
+        "currentAvailableHrs": 0.0,
+        "calculatedHolidays": 0.0,
         "holidaysTaken": 0
       },
       "s3": {
@@ -17616,19 +17681,19 @@ table.batch-table input:focus{border-color:var(--ac)}
             "date": "29/12/2025"
           }
         ],
-        "totalWorked": 294,
+        "totalWorked": 294.0,
         "days": 3.7,
         "currentAvailableHrs": 25.88,
         "calculatedHolidays": 23.52,
         "holidaysTaken": 0
       },
       "s30": {
-        "opening": 0,
+        "opening": 0.0,
         "weeks": [],
         "totalWorked": 0,
-        "days": 0,
-        "currentAvailableHrs": 0,
-        "calculatedHolidays": 0,
+        "days": 0.0,
+        "currentAvailableHrs": 0.0,
+        "calculatedHolidays": 0.0,
         "holidaysTaken": 0
       },
       "s27": {
@@ -17895,7 +17960,7 @@ table.batch-table input:focus{border-color:var(--ac)}
             "date": "29/12/2025"
           }
         ],
-        "totalWorked": 1781,
+        "totalWorked": 1781.0,
         "days": 9.49,
         "currentAvailableHrs": 66.4,
         "calculatedHolidays": 142.48,
@@ -17903,8 +17968,12 @@ table.batch-table input:focus{border-color:var(--ac)}
       },
       "s32": {
         "weeks": [],
-        "opening": 0,
-        "holidaysTaken": 0
+        "opening": 0.0,
+        "holidaysTaken": 0,
+        "totalWorked": 0,
+        "calculatedHolidays": 0.0,
+        "currentAvailableHrs": 0.0,
+        "days": 0.0
       },
       "f1": {
         "opening": 75.24,
@@ -18177,15 +18246,19 @@ table.batch-table input:focus{border-color:var(--ac)}
         "days": 2.02
       },
       "f2": {
-        "opening": 0,
+        "opening": 0.0,
         "weeks": [],
-        "holidaysTaken": 0
+        "holidaysTaken": 0,
+        "totalWorked": 0,
+        "calculatedHolidays": 0.0,
+        "currentAvailableHrs": 0.0,
+        "days": 0.0
       },
       "f3": {
         "opening": 44.04,
         "weeks": [],
-        "holidaysTaken": 0.0,
-        "totalWorked": 0.0,
+        "holidaysTaken": 0,
+        "totalWorked": 0,
         "calculatedHolidays": 0.0,
         "currentAvailableHrs": 44.04,
         "days": 6.29
@@ -18646,15 +18719,19 @@ table.batch-table input:focus{border-color:var(--ac)}
         "days": 5.54
       },
       "f6": {
-        "opening": 0,
+        "opening": 0.0,
         "weeks": [],
-        "holidaysTaken": 0
+        "holidaysTaken": 0,
+        "totalWorked": 0,
+        "calculatedHolidays": 0.0,
+        "currentAvailableHrs": 0.0,
+        "days": 0.0
       },
       "f7": {
         "opening": 34.48,
         "weeks": [],
-        "holidaysTaken": 0.0,
-        "totalWorked": 0.0,
+        "holidaysTaken": 0,
+        "totalWorked": 0,
         "calculatedHolidays": 0.0,
         "currentAvailableHrs": 34.48,
         "days": 4.93
@@ -18662,8 +18739,8 @@ table.batch-table input:focus{border-color:var(--ac)}
       "f8": {
         "opening": 50.94,
         "weeks": [],
-        "holidaysTaken": 0.0,
-        "totalWorked": 0.0,
+        "holidaysTaken": 0,
+        "totalWorked": 0,
         "calculatedHolidays": 0.0,
         "currentAvailableHrs": 50.94,
         "days": 7.28
@@ -18671,8 +18748,8 @@ table.batch-table input:focus{border-color:var(--ac)}
       "f9": {
         "opening": 21.08,
         "weeks": [],
-        "holidaysTaken": 0.0,
-        "totalWorked": 0.0,
+        "holidaysTaken": 0,
+        "totalWorked": 0,
         "calculatedHolidays": 0.0,
         "currentAvailableHrs": 21.08,
         "days": 3.01
@@ -18680,22 +18757,26 @@ table.batch-table input:focus{border-color:var(--ac)}
       "f10": {
         "opening": 47.8,
         "weeks": [],
-        "holidaysTaken": 0.0,
-        "totalWorked": 0.0,
+        "holidaysTaken": 0,
+        "totalWorked": 0,
         "calculatedHolidays": 0.0,
         "currentAvailableHrs": 47.8,
         "days": 6.83
       },
       "f11": {
-        "opening": 0,
+        "opening": 0.0,
         "weeks": [],
-        "holidaysTaken": 0
+        "holidaysTaken": 0,
+        "totalWorked": 0,
+        "calculatedHolidays": 0.0,
+        "currentAvailableHrs": 0.0,
+        "days": 0.0
       },
       "f12": {
         "opening": 125.4,
         "weeks": [],
-        "holidaysTaken": 0.0,
-        "totalWorked": 0.0,
+        "holidaysTaken": 0,
+        "totalWorked": 0,
         "calculatedHolidays": 0.0,
         "currentAvailableHrs": 125.4,
         "days": 17.91
@@ -18703,8 +18784,8 @@ table.batch-table input:focus{border-color:var(--ac)}
       "f13": {
         "opening": 26.12,
         "weeks": [],
-        "holidaysTaken": 0.0,
-        "totalWorked": 0.0,
+        "holidaysTaken": 0,
+        "totalWorked": 0,
         "calculatedHolidays": 0.0,
         "currentAvailableHrs": 26.12,
         "days": 3.73
@@ -18712,8 +18793,8 @@ table.batch-table input:focus{border-color:var(--ac)}
       "f14": {
         "opening": 8.52,
         "weeks": [],
-        "holidaysTaken": 0.0,
-        "totalWorked": 0.0,
+        "holidaysTaken": 0,
+        "totalWorked": 0,
         "calculatedHolidays": 0.0,
         "currentAvailableHrs": 8.52,
         "days": 1.22
@@ -18721,22 +18802,26 @@ table.batch-table input:focus{border-color:var(--ac)}
       "f15": {
         "opening": 46.86,
         "weeks": [],
-        "holidaysTaken": 0.0,
-        "totalWorked": 0.0,
+        "holidaysTaken": 0,
+        "totalWorked": 0,
         "calculatedHolidays": 0.0,
         "currentAvailableHrs": 46.86,
         "days": 6.69
       },
       "f16": {
-        "opening": 0,
+        "opening": 0.0,
         "weeks": [],
-        "holidaysTaken": 0
+        "holidaysTaken": 0,
+        "totalWorked": 0,
+        "calculatedHolidays": 0.0,
+        "currentAvailableHrs": 0.0,
+        "days": 0.0
       },
       "f17": {
         "opening": 0.44,
         "weeks": [],
-        "holidaysTaken": 0.0,
-        "totalWorked": 0.0,
+        "holidaysTaken": 0,
+        "totalWorked": 0,
         "calculatedHolidays": 0.0,
         "currentAvailableHrs": 0.44,
         "days": 0.06
@@ -18744,8 +18829,8 @@ table.batch-table input:focus{border-color:var(--ac)}
       "f18": {
         "opening": 56.27,
         "weeks": [],
-        "holidaysTaken": 0.0,
-        "totalWorked": 0.0,
+        "holidaysTaken": 0,
+        "totalWorked": 0,
         "calculatedHolidays": 0.0,
         "currentAvailableHrs": 56.27,
         "days": 8.04
@@ -18753,8 +18838,8 @@ table.batch-table input:focus{border-color:var(--ac)}
       "f19": {
         "opening": 22.04,
         "weeks": [],
-        "holidaysTaken": 0.0,
-        "totalWorked": 0.0,
+        "holidaysTaken": 0,
+        "totalWorked": 0,
         "calculatedHolidays": 0.0,
         "currentAvailableHrs": 22.04,
         "days": 3.15
@@ -18762,8 +18847,8 @@ table.batch-table input:focus{border-color:var(--ac)}
       "f20": {
         "opening": 37.32,
         "weeks": [],
-        "holidaysTaken": 0.0,
-        "totalWorked": 0.0,
+        "holidaysTaken": 0,
+        "totalWorked": 0,
         "calculatedHolidays": 0.0,
         "currentAvailableHrs": 37.32,
         "days": 5.33
@@ -18771,8 +18856,8 @@ table.batch-table input:focus{border-color:var(--ac)}
       "f21": {
         "opening": 5.28,
         "weeks": [],
-        "holidaysTaken": 0.0,
-        "totalWorked": 0.0,
+        "holidaysTaken": 0,
+        "totalWorked": 0,
         "calculatedHolidays": 0.0,
         "currentAvailableHrs": 5.28,
         "days": 0.75
@@ -18780,8 +18865,8 @@ table.batch-table input:focus{border-color:var(--ac)}
       "f22": {
         "opening": 117.72,
         "weeks": [],
-        "holidaysTaken": 0.0,
-        "totalWorked": 0.0,
+        "holidaysTaken": 0,
+        "totalWorked": 0,
         "calculatedHolidays": 0.0,
         "currentAvailableHrs": 117.72,
         "days": 16.82
@@ -18789,8 +18874,8 @@ table.batch-table input:focus{border-color:var(--ac)}
       "f23": {
         "opening": 88.68,
         "weeks": [],
-        "holidaysTaken": 0.0,
-        "totalWorked": 0.0,
+        "holidaysTaken": 0,
+        "totalWorked": 0,
         "calculatedHolidays": 0.0,
         "currentAvailableHrs": 88.68,
         "days": 12.67
@@ -18798,8 +18883,8 @@ table.batch-table input:focus{border-color:var(--ac)}
       "f24": {
         "opening": 37.86,
         "weeks": [],
-        "holidaysTaken": 0.0,
-        "totalWorked": 0.0,
+        "holidaysTaken": 0,
+        "totalWorked": 0,
         "calculatedHolidays": 0.0,
         "currentAvailableHrs": 37.86,
         "days": 5.41
@@ -18807,8 +18892,8 @@ table.batch-table input:focus{border-color:var(--ac)}
       "f25": {
         "opening": 57.28,
         "weeks": [],
-        "holidaysTaken": 0.0,
-        "totalWorked": 0.0,
+        "holidaysTaken": 0,
+        "totalWorked": 0,
         "calculatedHolidays": 0.0,
         "currentAvailableHrs": 57.28,
         "days": 8.18
@@ -18816,8 +18901,8 @@ table.batch-table input:focus{border-color:var(--ac)}
       "f26": {
         "opening": 130.56,
         "weeks": [],
-        "holidaysTaken": 0.0,
-        "totalWorked": 0.0,
+        "holidaysTaken": 0,
+        "totalWorked": 0,
         "calculatedHolidays": 0.0,
         "currentAvailableHrs": 130.56,
         "days": 18.65
@@ -19005,8 +19090,8 @@ table.batch-table input:focus{border-color:var(--ac)}
       "f28": {
         "opening": 17.52,
         "weeks": [],
-        "holidaysTaken": 0.0,
-        "totalWorked": 0.0,
+        "holidaysTaken": 0,
+        "totalWorked": 0,
         "calculatedHolidays": 0.0,
         "currentAvailableHrs": 17.52,
         "days": 2.5
@@ -19014,8 +19099,8 @@ table.batch-table input:focus{border-color:var(--ac)}
       "f29": {
         "opening": 4.92,
         "weeks": [],
-        "holidaysTaken": 0.0,
-        "totalWorked": 0.0,
+        "holidaysTaken": 0,
+        "totalWorked": 0,
         "calculatedHolidays": 0.0,
         "currentAvailableHrs": 4.92,
         "days": 0.7
@@ -19023,8 +19108,8 @@ table.batch-table input:focus{border-color:var(--ac)}
       "f30": {
         "opening": 48.52,
         "weeks": [],
-        "holidaysTaken": 0.0,
-        "totalWorked": 0.0,
+        "holidaysTaken": 0,
+        "totalWorked": 0,
         "calculatedHolidays": 0.0,
         "currentAvailableHrs": 48.52,
         "days": 6.93
@@ -19032,21 +19117,29 @@ table.batch-table input:focus{border-color:var(--ac)}
       "f31": {
         "opening": 124.88,
         "weeks": [],
-        "holidaysTaken": 0.0,
-        "totalWorked": 0.0,
+        "holidaysTaken": 0,
+        "totalWorked": 0,
         "calculatedHolidays": 0.0,
         "currentAvailableHrs": 124.88,
         "days": 17.84
       },
       "f32": {
-        "opening": 0,
+        "opening": 0.0,
         "weeks": [],
-        "holidaysTaken": 0
+        "holidaysTaken": 0,
+        "totalWorked": 0,
+        "calculatedHolidays": 0.0,
+        "currentAvailableHrs": 0.0,
+        "days": 0.0
       },
       "f33": {
-        "opening": 0,
+        "opening": 0.0,
         "weeks": [],
-        "holidaysTaken": 0
+        "holidaysTaken": 0,
+        "totalWorked": 0,
+        "calculatedHolidays": 0.0,
+        "currentAvailableHrs": 0.0,
+        "days": 0.0
       }
     },
     "2026": {
@@ -19252,12 +19345,22 @@ table.batch-table input:focus{border-color:var(--ac)}
             "label": "Week 40 05/10/2026 - 11/10/2026",
             "hours": 29.5,
             "date": "2026-10-05"
+          },
+          {
+            "label": "Week 41 12/10/2026 - 18/10/2026",
+            "hours": 30.0,
+            "date": "2026-10-12"
+          },
+          {
+            "label": "Week 42 19/10/2026 - 25/10/2026",
+            "hours": 30.0,
+            "date": "2026-10-19"
           }
         ],
-        "totalWorked": 1070.5,
-        "days": -3.59,
-        "currentAvailableHrs": -25.12,
-        "calculatedHolidays": 85.64,
+        "totalWorked": 1130.5,
+        "days": -2.9,
+        "currentAvailableHrs": -20.32,
+        "calculatedHolidays": 90.44,
         "holidaysTaken": 154.0
       },
       "s7": {
@@ -19462,6 +19565,16 @@ table.batch-table input:focus{border-color:var(--ac)}
             "label": "Week 40 05/10/2026 - 11/10/2026",
             "hours": 0.0,
             "date": "2026-10-05"
+          },
+          {
+            "label": "Week 41 12/10/2026 - 18/10/2026",
+            "hours": 0.0,
+            "date": "2026-10-12"
+          },
+          {
+            "label": "Week 42 19/10/2026 - 25/10/2026",
+            "hours": 0.0,
+            "date": "2026-10-19"
           }
         ],
         "totalWorked": 1037.0,
@@ -19672,12 +19785,22 @@ table.batch-table input:focus{border-color:var(--ac)}
             "label": "Week 40 05/10/2026 - 11/10/2026",
             "hours": 29.0,
             "date": "2026-10-05"
+          },
+          {
+            "label": "Week 41 12/10/2026 - 18/10/2026",
+            "hours": 29.0,
+            "date": "2026-10-12"
+          },
+          {
+            "label": "Week 42 19/10/2026 - 25/10/2026",
+            "hours": 29.0,
+            "date": "2026-10-19"
           }
         ],
-        "totalWorked": 1105.0,
-        "days": 6.83,
-        "currentAvailableHrs": 47.8,
-        "calculatedHolidays": 88.4,
+        "totalWorked": 1163.0,
+        "days": 7.49,
+        "currentAvailableHrs": 52.44,
+        "calculatedHolidays": 93.04,
         "holidaysTaken": 84.0
       },
       "s14": {
@@ -19832,12 +19955,22 @@ table.batch-table input:focus{border-color:var(--ac)}
             "label": "Week 40 05/10/2026 - 11/10/2026",
             "hours": 18.5,
             "date": "2026-10-05"
+          },
+          {
+            "label": "Week 41 12/10/2026 - 18/10/2026",
+            "hours": 29.0,
+            "date": "2026-10-12"
+          },
+          {
+            "label": "Week 42 19/10/2026 - 25/10/2026",
+            "hours": 29.5,
+            "date": "2026-10-19"
           }
         ],
-        "totalWorked": 579.0,
-        "days": 0.62,
-        "currentAvailableHrs": 4.32,
-        "calculatedHolidays": 46.32,
+        "totalWorked": 637.5,
+        "days": 1.29,
+        "currentAvailableHrs": 9.0,
+        "calculatedHolidays": 51.0,
         "holidaysTaken": 42.0
       },
       "s13": {
@@ -20042,12 +20175,22 @@ table.batch-table input:focus{border-color:var(--ac)}
             "label": "Week 40 05/10/2026 - 11/10/2026",
             "hours": 40.0,
             "date": "2026-10-05"
+          },
+          {
+            "label": "Week 41 12/10/2026 - 18/10/2026",
+            "hours": 40.0,
+            "date": "2026-10-12"
+          },
+          {
+            "label": "Week 42 19/10/2026 - 25/10/2026",
+            "hours": 40.0,
+            "date": "2026-10-19"
           }
         ],
-        "totalWorked": 1538.0,
-        "days": 13.53,
-        "currentAvailableHrs": 108.24,
-        "calculatedHolidays": 123.04,
+        "totalWorked": 1618.0,
+        "days": 14.33,
+        "currentAvailableHrs": 114.64,
+        "calculatedHolidays": 129.44,
         "holidaysTaken": 74.5
       },
       "s28": {
@@ -20252,6 +20395,16 @@ table.batch-table input:focus{border-color:var(--ac)}
             "label": "Week 40 05/10/2026 - 11/10/2026",
             "hours": 0.0,
             "date": "2026-10-05"
+          },
+          {
+            "label": "Week 41 12/10/2026 - 18/10/2026",
+            "hours": 0.0,
+            "date": "2026-10-12"
+          },
+          {
+            "label": "Week 42 19/10/2026 - 25/10/2026",
+            "hours": 0.0,
+            "date": "2026-10-19"
           }
         ],
         "totalWorked": 968.5,
@@ -20444,15 +20597,40 @@ table.batch-table input:focus{border-color:var(--ac)}
             "date": "2026-09-07"
           },
           {
+            "label": "Week 37 14/09/2026 - 20/09/2026",
+            "hours": 40.0,
+            "date": "2026-09-14"
+          },
+          {
+            "label": "Week 38 21/09/2026 - 27/09/2026",
+            "hours": 40.0,
+            "date": "2026-09-21"
+          },
+          {
             "label": "Week 39 28/09/2026 - 04/10/2026",
             "hours": 40,
             "date": "2026-09-28"
+          },
+          {
+            "label": "Week 40 05/10/2026 - 11/10/2026",
+            "hours": 40.0,
+            "date": "2026-10-05"
+          },
+          {
+            "label": "Week 41 12/10/2026 - 18/10/2026",
+            "hours": 40.0,
+            "date": "2026-10-12"
+          },
+          {
+            "label": "Week 42 19/10/2026 - 25/10/2026",
+            "hours": 40.0,
+            "date": "2026-10-19"
           }
         ],
-        "totalWorked": 1181.0,
-        "days": -1.01,
-        "currentAvailableHrs": -8.12,
-        "calculatedHolidays": 94.48,
+        "totalWorked": 1381.0,
+        "days": 0.98,
+        "currentAvailableHrs": 7.88,
+        "calculatedHolidays": 110.48,
         "holidaysTaken": 247.0
       },
       "s23": {
@@ -20657,13 +20835,23 @@ table.batch-table input:focus{border-color:var(--ac)}
             "label": "Week 40 05/10/2026 - 11/10/2026",
             "hours": 28.5,
             "date": "2026-10-05"
+          },
+          {
+            "label": "Week 41 12/10/2026 - 18/10/2026",
+            "hours": 27.5,
+            "date": "2026-10-12"
+          },
+          {
+            "label": "Week 42 19/10/2026 - 25/10/2026",
+            "hours": 24.5,
+            "date": "2026-10-19"
           }
         ],
-        "totalWorked": 1156.0,
-        "days": 25.75,
-        "currentAvailableHrs": 180.24,
-        "calculatedHolidays": 92.48,
-        "holidaysTaken": 0.0
+        "totalWorked": 1208.0,
+        "days": 26.34,
+        "currentAvailableHrs": 184.4,
+        "calculatedHolidays": 96.64,
+        "holidaysTaken": 0
       },
       "s8": {
         "opening": 9.16,
@@ -20867,12 +21055,22 @@ table.batch-table input:focus{border-color:var(--ac)}
             "label": "Week 40 05/10/2026 - 11/10/2026",
             "hours": 40.0,
             "date": "2026-10-05"
+          },
+          {
+            "label": "Week 41 12/10/2026 - 18/10/2026",
+            "hours": 40.0,
+            "date": "2026-10-12"
+          },
+          {
+            "label": "Week 42 19/10/2026 - 25/10/2026",
+            "hours": 40.0,
+            "date": "2026-10-19"
           }
         ],
-        "totalWorked": 1584.0,
-        "days": 14.98,
-        "currentAvailableHrs": 119.88,
-        "calculatedHolidays": 126.72,
+        "totalWorked": 1664.0,
+        "days": 15.79,
+        "currentAvailableHrs": 126.28,
+        "calculatedHolidays": 133.12,
         "holidaysTaken": 16.0
       },
       "s29": {
@@ -21077,12 +21275,22 @@ table.batch-table input:focus{border-color:var(--ac)}
             "label": "Week 40 05/10/2026 - 11/10/2026",
             "hours": 30.0,
             "date": "2026-10-05"
+          },
+          {
+            "label": "Week 41 12/10/2026 - 18/10/2026",
+            "hours": 35.0,
+            "date": "2026-10-12"
+          },
+          {
+            "label": "Week 42 19/10/2026 - 25/10/2026",
+            "hours": 30.0,
+            "date": "2026-10-19"
           }
         ],
-        "totalWorked": 422.0,
-        "days": 2.57,
-        "currentAvailableHrs": 18.0,
-        "calculatedHolidays": 33.76,
+        "totalWorked": 487.0,
+        "days": 3.31,
+        "currentAvailableHrs": 23.2,
+        "calculatedHolidays": 38.96,
         "holidaysTaken": 21.0
       },
       "s22": {
@@ -21287,12 +21495,22 @@ table.batch-table input:focus{border-color:var(--ac)}
             "label": "Week 40 05/10/2026 - 11/10/2026",
             "hours": 35.0,
             "date": "2026-10-05"
+          },
+          {
+            "label": "Week 41 12/10/2026 - 18/10/2026",
+            "hours": 35.0,
+            "date": "2026-10-12"
+          },
+          {
+            "label": "Week 42 19/10/2026 - 25/10/2026",
+            "hours": 35.0,
+            "date": "2026-10-19"
           }
         ],
-        "totalWorked": 1078.5,
-        "days": 7.59,
-        "currentAvailableHrs": 53.12,
-        "calculatedHolidays": 86.28,
+        "totalWorked": 1148.5,
+        "days": 8.39,
+        "currentAvailableHrs": 58.72,
+        "calculatedHolidays": 91.88,
         "holidaysTaken": 84.0
       },
       "s6": {
@@ -21497,12 +21715,22 @@ table.batch-table input:focus{border-color:var(--ac)}
             "label": "Week 40 05/10/2026 - 11/10/2026",
             "hours": 20.0,
             "date": "2026-10-05"
+          },
+          {
+            "label": "Week 41 12/10/2026 - 18/10/2026",
+            "hours": 18.0,
+            "date": "2026-10-12"
+          },
+          {
+            "label": "Week 42 19/10/2026 - 25/10/2026",
+            "hours": 12.5,
+            "date": "2026-10-19"
           }
         ],
-        "totalWorked": 513.0,
-        "days": 4.66,
-        "currentAvailableHrs": 32.6,
-        "calculatedHolidays": 41.04,
+        "totalWorked": 543.5,
+        "days": 5.01,
+        "currentAvailableHrs": 35.04,
+        "calculatedHolidays": 43.48,
         "holidaysTaken": 28.0
       },
       "s25": {
@@ -21862,12 +22090,22 @@ table.batch-table input:focus{border-color:var(--ac)}
             "label": "Week 40 05/10/2026 - 11/10/2026",
             "hours": 13.5,
             "date": "2026-10-05"
+          },
+          {
+            "label": "Week 41 12/10/2026 - 18/10/2026",
+            "hours": 13.5,
+            "date": "2026-10-12"
+          },
+          {
+            "label": "Week 42 19/10/2026 - 25/10/2026",
+            "hours": 13.5,
+            "date": "2026-10-19"
           }
         ],
-        "totalWorked": 665.1,
-        "days": 5.58,
-        "currentAvailableHrs": 39.07,
-        "calculatedHolidays": 53.21,
+        "totalWorked": 692.1,
+        "days": 5.89,
+        "currentAvailableHrs": 41.23,
+        "calculatedHolidays": 55.37,
         "holidaysTaken": 56.0
       },
       "s24": {
@@ -22072,13 +22310,23 @@ table.batch-table input:focus{border-color:var(--ac)}
             "label": "Week 40 05/10/2026 - 11/10/2026",
             "hours": 13.5,
             "date": "2026-10-05"
+          },
+          {
+            "label": "Week 41 12/10/2026 - 18/10/2026",
+            "hours": 13.5,
+            "date": "2026-10-12"
+          },
+          {
+            "label": "Week 42 19/10/2026 - 25/10/2026",
+            "hours": 13.5,
+            "date": "2026-10-19"
           }
         ],
-        "totalWorked": 896.0,
-        "days": 12.04,
-        "currentAvailableHrs": 84.28,
-        "calculatedHolidays": 71.68,
-        "holidaysTaken": 0.0
+        "totalWorked": 923.0,
+        "days": 12.35,
+        "currentAvailableHrs": 86.44,
+        "calculatedHolidays": 73.84,
+        "holidaysTaken": 0
       },
       "s16": {
         "opening": 47.52,
@@ -22282,6 +22530,16 @@ table.batch-table input:focus{border-color:var(--ac)}
             "label": "Week 40 05/10/2026 - 11/10/2026",
             "hours": 0.0,
             "date": "2026-10-05"
+          },
+          {
+            "label": "Week 41 12/10/2026 - 18/10/2026",
+            "hours": 0.0,
+            "date": "2026-10-12"
+          },
+          {
+            "label": "Week 42 19/10/2026 - 25/10/2026",
+            "hours": 0.0,
+            "date": "2026-10-19"
           }
         ],
         "totalWorked": 767.5,
@@ -22492,13 +22750,23 @@ table.batch-table input:focus{border-color:var(--ac)}
             "label": "Week 40 05/10/2026 - 11/10/2026",
             "hours": 45.0,
             "date": "2026-10-05"
+          },
+          {
+            "label": "Week 41 12/10/2026 - 18/10/2026",
+            "hours": 44.0,
+            "date": "2026-10-12"
+          },
+          {
+            "label": "Week 42 19/10/2026 - 25/10/2026",
+            "hours": 44.0,
+            "date": "2026-10-19"
           }
         ],
-        "totalWorked": 1785.5,
-        "days": 35.71,
-        "currentAvailableHrs": 249.94,
-        "calculatedHolidays": 142.84,
-        "holidaysTaken": 0.0
+        "totalWorked": 1873.5,
+        "days": 36.71,
+        "currentAvailableHrs": 256.98,
+        "calculatedHolidays": 149.88,
+        "holidaysTaken": 0
       },
       "s10": {
         "opening": 21.56,
@@ -22874,15 +23142,40 @@ table.batch-table input:focus{border-color:var(--ac)}
             "date": "2026-09-07"
           },
           {
+            "label": "Week 37 14/09/2026 - 20/09/2026",
+            "hours": 40.0,
+            "date": "2026-09-14"
+          },
+          {
+            "label": "Week 38 21/09/2026 - 27/09/2026",
+            "hours": 40.0,
+            "date": "2026-09-21"
+          },
+          {
             "label": "Week 39 28/09/2026 - 04/10/2026",
             "hours": 40,
             "date": "2026-09-28"
+          },
+          {
+            "label": "Week 40 05/10/2026 - 11/10/2026",
+            "hours": 40.0,
+            "date": "2026-10-05"
+          },
+          {
+            "label": "Week 41 12/10/2026 - 18/10/2026",
+            "hours": 40.0,
+            "date": "2026-10-12"
+          },
+          {
+            "label": "Week 42 19/10/2026 - 25/10/2026",
+            "hours": 40.0,
+            "date": "2026-10-19"
           }
         ],
-        "totalWorked": 1451.0,
-        "days": 37.85,
-        "currentAvailableHrs": 302.8,
-        "calculatedHolidays": 116.08,
+        "totalWorked": 1651.0,
+        "days": 39.85,
+        "currentAvailableHrs": 318.8,
+        "calculatedHolidays": 132.08,
         "holidaysTaken": 21.0
       },
       "s17": {
@@ -23087,12 +23380,22 @@ table.batch-table input:focus{border-color:var(--ac)}
             "label": "Week 40 05/10/2026 - 11/10/2026",
             "hours": 37.5,
             "date": "2026-10-05"
+          },
+          {
+            "label": "Week 41 12/10/2026 - 18/10/2026",
+            "hours": 37.5,
+            "date": "2026-10-12"
+          },
+          {
+            "label": "Week 42 19/10/2026 - 25/10/2026",
+            "hours": 37.5,
+            "date": "2026-10-19"
           }
         ],
-        "totalWorked": 1364.0,
-        "days": 19.05,
-        "currentAvailableHrs": 133.36,
-        "calculatedHolidays": 109.12,
+        "totalWorked": 1439.0,
+        "days": 19.91,
+        "currentAvailableHrs": 139.36,
+        "calculatedHolidays": 115.12,
         "holidaysTaken": 70.0
       },
       "s21": {
@@ -23297,12 +23600,22 @@ table.batch-table input:focus{border-color:var(--ac)}
             "label": "Week 40 05/10/2026 - 11/10/2026",
             "hours": 35.0,
             "date": "2026-10-05"
+          },
+          {
+            "label": "Week 41 12/10/2026 - 18/10/2026",
+            "hours": 35.0,
+            "date": "2026-10-12"
+          },
+          {
+            "label": "Week 42 19/10/2026 - 25/10/2026",
+            "hours": 28.5,
+            "date": "2026-10-19"
           }
         ],
-        "totalWorked": 1193.5,
-        "days": -7.63,
-        "currentAvailableHrs": -53.42,
-        "calculatedHolidays": 95.48,
+        "totalWorked": 1257.0,
+        "days": -6.91,
+        "currentAvailableHrs": -48.34,
+        "calculatedHolidays": 100.56,
         "holidaysTaken": 112.0
       },
       "s4": {
@@ -23507,6 +23820,16 @@ table.batch-table input:focus{border-color:var(--ac)}
             "label": "Week 40 05/10/2026 - 11/10/2026",
             "hours": 0.0,
             "date": "2026-10-05"
+          },
+          {
+            "label": "Week 41 12/10/2026 - 18/10/2026",
+            "hours": 0.0,
+            "date": "2026-10-12"
+          },
+          {
+            "label": "Week 42 19/10/2026 - 25/10/2026",
+            "hours": 0.0,
+            "date": "2026-10-19"
           }
         ],
         "totalWorked": 1316.0,
@@ -23717,12 +24040,22 @@ table.batch-table input:focus{border-color:var(--ac)}
             "label": "Week 40 05/10/2026 - 11/10/2026",
             "hours": 41.0,
             "date": "2026-10-05"
+          },
+          {
+            "label": "Week 41 12/10/2026 - 18/10/2026",
+            "hours": 41.0,
+            "date": "2026-10-12"
+          },
+          {
+            "label": "Week 42 19/10/2026 - 25/10/2026",
+            "hours": 40.5,
+            "date": "2026-10-19"
           }
         ],
-        "totalWorked": 1391.0,
-        "days": 9.38,
-        "currentAvailableHrs": 65.64,
-        "calculatedHolidays": 111.28,
+        "totalWorked": 1472.5,
+        "days": 10.31,
+        "currentAvailableHrs": 72.16,
+        "calculatedHolidays": 117.8,
         "holidaysTaken": 63.0
       },
       "s12": {
@@ -23927,12 +24260,22 @@ table.batch-table input:focus{border-color:var(--ac)}
             "label": "Week 40 05/10/2026 - 11/10/2026",
             "hours": 35.5,
             "date": "2026-10-05"
+          },
+          {
+            "label": "Week 41 12/10/2026 - 18/10/2026",
+            "hours": 35.5,
+            "date": "2026-10-12"
+          },
+          {
+            "label": "Week 42 19/10/2026 - 25/10/2026",
+            "hours": 35.0,
+            "date": "2026-10-19"
           }
         ],
-        "totalWorked": 1215.0,
-        "days": 5.97,
-        "currentAvailableHrs": 41.8,
-        "calculatedHolidays": 97.2,
+        "totalWorked": 1285.5,
+        "days": 6.78,
+        "currentAvailableHrs": 47.44,
+        "calculatedHolidays": 102.84,
         "holidaysTaken": 70.0
       },
       "s31": {
@@ -23997,13 +24340,23 @@ table.batch-table input:focus{border-color:var(--ac)}
             "label": "Week 40 05/10/2026 - 11/10/2026",
             "hours": 24.0,
             "date": "2026-10-05"
+          },
+          {
+            "label": "Week 41 12/10/2026 - 18/10/2026",
+            "hours": 18.5,
+            "date": "2026-10-12"
+          },
+          {
+            "label": "Week 42 19/10/2026 - 25/10/2026",
+            "hours": 35.5,
+            "date": "2026-10-19"
           }
         ],
-        "totalWorked": 327.0,
-        "days": 3.74,
-        "currentAvailableHrs": 26.16,
-        "calculatedHolidays": 26.16,
-        "holidaysTaken": 0.0
+        "totalWorked": 381.0,
+        "days": 4.35,
+        "currentAvailableHrs": 30.48,
+        "calculatedHolidays": 30.48,
+        "holidaysTaken": 0
       },
       "s3": {
         "opening": 112.18,
@@ -24207,6 +24560,16 @@ table.batch-table input:focus{border-color:var(--ac)}
             "label": "Week 40 05/10/2026 - 11/10/2026",
             "hours": 37.0,
             "date": "2026-10-05"
+          },
+          {
+            "label": "Week 41 12/10/2026 - 18/10/2026",
+            "hours": 0.0,
+            "date": "2026-10-12"
+          },
+          {
+            "label": "Week 42 19/10/2026 - 25/10/2026",
+            "hours": 0.0,
+            "date": "2026-10-19"
           }
         ],
         "totalWorked": 1355.0,
@@ -24417,12 +24780,22 @@ table.batch-table input:focus{border-color:var(--ac)}
             "label": "Week 40 05/10/2026 - 11/10/2026",
             "hours": 22.5,
             "date": "2026-10-05"
+          },
+          {
+            "label": "Week 41 12/10/2026 - 18/10/2026",
+            "hours": 22.5,
+            "date": "2026-10-12"
+          },
+          {
+            "label": "Week 42 19/10/2026 - 25/10/2026",
+            "hours": 22.5,
+            "date": "2026-10-19"
           }
         ],
-        "totalWorked": 935.5,
-        "days": -2.58,
-        "currentAvailableHrs": -18.08,
-        "calculatedHolidays": 74.84,
+        "totalWorked": 980.5,
+        "days": -2.07,
+        "currentAvailableHrs": -14.48,
+        "calculatedHolidays": 78.44,
         "holidaysTaken": 89.0
       },
       "s9": {
@@ -24627,13 +25000,23 @@ table.batch-table input:focus{border-color:var(--ac)}
             "label": "Week 40 05/10/2026 - 11/10/2026",
             "hours": 22.0,
             "date": "2026-10-05"
+          },
+          {
+            "label": "Week 41 12/10/2026 - 18/10/2026",
+            "hours": 28.5,
+            "date": "2026-10-12"
+          },
+          {
+            "label": "Week 42 19/10/2026 - 25/10/2026",
+            "hours": 29.5,
+            "date": "2026-10-19"
           }
         ],
-        "totalWorked": 992.5,
-        "days": 15.04,
-        "currentAvailableHrs": 105.28,
-        "calculatedHolidays": 79.4,
-        "holidaysTaken": 0.0
+        "totalWorked": 1050.5,
+        "days": 15.7,
+        "currentAvailableHrs": 109.92,
+        "calculatedHolidays": 84.04,
+        "holidaysTaken": 0
       },
       "s30": {
         "opening": 0.0,
@@ -24737,13 +25120,23 @@ table.batch-table input:focus{border-color:var(--ac)}
             "label": "Week 40 05/10/2026 - 11/10/2026",
             "hours": 20.5,
             "date": "2026-10-05"
+          },
+          {
+            "label": "Week 41 12/10/2026 - 18/10/2026",
+            "hours": 20.0,
+            "date": "2026-10-12"
+          },
+          {
+            "label": "Week 42 19/10/2026 - 25/10/2026",
+            "hours": 20.0,
+            "date": "2026-10-19"
           }
         ],
-        "totalWorked": 308.0,
-        "days": 3.52,
-        "currentAvailableHrs": 24.64,
-        "calculatedHolidays": 24.64,
-        "holidaysTaken": 0.0
+        "totalWorked": 348.0,
+        "days": 3.98,
+        "currentAvailableHrs": 27.84,
+        "calculatedHolidays": 27.84,
+        "holidaysTaken": 0
       },
       "s27": {
         "opening": 66.4,
@@ -24947,12 +25340,22 @@ table.batch-table input:focus{border-color:var(--ac)}
             "label": "Week 40 05/10/2026 - 11/10/2026",
             "hours": 38.0,
             "date": "2026-10-05"
+          },
+          {
+            "label": "Week 41 12/10/2026 - 18/10/2026",
+            "hours": 38.0,
+            "date": "2026-10-12"
+          },
+          {
+            "label": "Week 42 19/10/2026 - 25/10/2026",
+            "hours": 38.0,
+            "date": "2026-10-19"
           }
         ],
-        "totalWorked": 1109.0,
-        "days": -7.84,
-        "currentAvailableHrs": -54.88,
-        "calculatedHolidays": 88.72,
+        "totalWorked": 1185.0,
+        "days": -6.97,
+        "currentAvailableHrs": -48.8,
+        "calculatedHolidays": 94.8,
         "holidaysTaken": 210.0
       },
       "s32": {
@@ -24986,14 +25389,24 @@ table.batch-table input:focus{border-color:var(--ac)}
             "label": "Week 40 05/10/2026 - 11/10/2026",
             "hours": 14.0,
             "date": "2026-10-05"
+          },
+          {
+            "label": "Week 41 12/10/2026 - 18/10/2026",
+            "hours": 18.0,
+            "date": "2026-10-12"
+          },
+          {
+            "label": "Week 42 19/10/2026 - 25/10/2026",
+            "hours": 20.5,
+            "date": "2026-10-19"
           }
         ],
         "opening": 0.0,
-        "holidaysTaken": 0.0,
-        "totalWorked": 132.5,
-        "calculatedHolidays": 10.6,
-        "currentAvailableHrs": 10.6,
-        "days": 1.51
+        "holidaysTaken": 0,
+        "totalWorked": 171.0,
+        "calculatedHolidays": 13.68,
+        "currentAvailableHrs": 13.68,
+        "days": 1.95
       },
       "s33": {
         "weeks": [
@@ -25011,14 +25424,24 @@ table.batch-table input:focus{border-color:var(--ac)}
             "label": "Week 40 05/10/2026 - 11/10/2026",
             "hours": 5.5,
             "date": "2026-10-05"
+          },
+          {
+            "label": "Week 41 12/10/2026 - 18/10/2026",
+            "hours": 13.0,
+            "date": "2026-10-12"
+          },
+          {
+            "label": "Week 42 19/10/2026 - 25/10/2026",
+            "hours": 19.0,
+            "date": "2026-10-19"
           }
         ],
         "opening": 0.0,
-        "holidaysTaken": 0.0,
-        "totalWorked": 31.5,
-        "calculatedHolidays": 2.52,
-        "currentAvailableHrs": 2.52,
-        "days": 0.36
+        "holidaysTaken": 0,
+        "totalWorked": 63.5,
+        "calculatedHolidays": 5.08,
+        "currentAvailableHrs": 5.08,
+        "days": 0.73
       },
       "f1": {
         "opening": 14.16,
@@ -25071,15 +25494,19 @@ table.batch-table input:focus{border-color:var(--ac)}
         "days": -2.49
       },
       "f2": {
-        "opening": 0,
+        "opening": 0.0,
         "weeks": [],
-        "holidaysTaken": 0
+        "holidaysTaken": 0,
+        "totalWorked": 0,
+        "calculatedHolidays": 0.0,
+        "currentAvailableHrs": 0.0,
+        "days": 0.0
       },
       "f3": {
         "opening": 44.04,
         "weeks": [],
-        "holidaysTaken": 0.0,
-        "totalWorked": 0.0,
+        "holidaysTaken": 0,
+        "totalWorked": 0,
         "calculatedHolidays": 0.0,
         "currentAvailableHrs": 44.04,
         "days": 6.29
@@ -25087,8 +25514,8 @@ table.batch-table input:focus{border-color:var(--ac)}
       "f4": {
         "opening": 82.84,
         "weeks": [],
-        "holidaysTaken": 0.0,
-        "totalWorked": 0.0,
+        "holidaysTaken": 0,
+        "totalWorked": 0,
         "calculatedHolidays": 0.0,
         "currentAvailableHrs": 82.84,
         "days": 11.83
@@ -25134,15 +25561,19 @@ table.batch-table input:focus{border-color:var(--ac)}
         "days": 0.82
       },
       "f6": {
-        "opening": 0,
+        "opening": 0.0,
         "weeks": [],
-        "holidaysTaken": 0
+        "holidaysTaken": 0,
+        "totalWorked": 0,
+        "calculatedHolidays": 0.0,
+        "currentAvailableHrs": 0.0,
+        "days": 0.0
       },
       "f7": {
         "opening": 34.48,
         "weeks": [],
-        "holidaysTaken": 0.0,
-        "totalWorked": 0.0,
+        "holidaysTaken": 0,
+        "totalWorked": 0,
         "calculatedHolidays": 0.0,
         "currentAvailableHrs": 34.48,
         "days": 4.93
@@ -25150,8 +25581,8 @@ table.batch-table input:focus{border-color:var(--ac)}
       "f8": {
         "opening": 50.94,
         "weeks": [],
-        "holidaysTaken": 0.0,
-        "totalWorked": 0.0,
+        "holidaysTaken": 0,
+        "totalWorked": 0,
         "calculatedHolidays": 0.0,
         "currentAvailableHrs": 50.94,
         "days": 7.28
@@ -25159,8 +25590,8 @@ table.batch-table input:focus{border-color:var(--ac)}
       "f9": {
         "opening": 21.08,
         "weeks": [],
-        "holidaysTaken": 0.0,
-        "totalWorked": 0.0,
+        "holidaysTaken": 0,
+        "totalWorked": 0,
         "calculatedHolidays": 0.0,
         "currentAvailableHrs": 21.08,
         "days": 3.01
@@ -25168,22 +25599,26 @@ table.batch-table input:focus{border-color:var(--ac)}
       "f10": {
         "opening": 47.8,
         "weeks": [],
-        "holidaysTaken": 0.0,
-        "totalWorked": 0.0,
+        "holidaysTaken": 0,
+        "totalWorked": 0,
         "calculatedHolidays": 0.0,
         "currentAvailableHrs": 47.8,
         "days": 6.83
       },
       "f11": {
-        "opening": 0,
+        "opening": 0.0,
         "weeks": [],
-        "holidaysTaken": 0
+        "holidaysTaken": 0,
+        "totalWorked": 0,
+        "calculatedHolidays": 0.0,
+        "currentAvailableHrs": 0.0,
+        "days": 0.0
       },
       "f12": {
         "opening": 125.4,
         "weeks": [],
-        "holidaysTaken": 0.0,
-        "totalWorked": 0.0,
+        "holidaysTaken": 0,
+        "totalWorked": 0,
         "calculatedHolidays": 0.0,
         "currentAvailableHrs": 125.4,
         "days": 17.91
@@ -25191,8 +25626,8 @@ table.batch-table input:focus{border-color:var(--ac)}
       "f13": {
         "opening": 26.12,
         "weeks": [],
-        "holidaysTaken": 0.0,
-        "totalWorked": 0.0,
+        "holidaysTaken": 0,
+        "totalWorked": 0,
         "calculatedHolidays": 0.0,
         "currentAvailableHrs": 26.12,
         "days": 3.73
@@ -25200,8 +25635,8 @@ table.batch-table input:focus{border-color:var(--ac)}
       "f14": {
         "opening": 8.52,
         "weeks": [],
-        "holidaysTaken": 0.0,
-        "totalWorked": 0.0,
+        "holidaysTaken": 0,
+        "totalWorked": 0,
         "calculatedHolidays": 0.0,
         "currentAvailableHrs": 8.52,
         "days": 1.22
@@ -25209,22 +25644,26 @@ table.batch-table input:focus{border-color:var(--ac)}
       "f15": {
         "opening": 46.86,
         "weeks": [],
-        "holidaysTaken": 0.0,
-        "totalWorked": 0.0,
+        "holidaysTaken": 0,
+        "totalWorked": 0,
         "calculatedHolidays": 0.0,
         "currentAvailableHrs": 46.86,
         "days": 6.69
       },
       "f16": {
-        "opening": 0,
+        "opening": 0.0,
         "weeks": [],
-        "holidaysTaken": 0
+        "holidaysTaken": 0,
+        "totalWorked": 0,
+        "calculatedHolidays": 0.0,
+        "currentAvailableHrs": 0.0,
+        "days": 0.0
       },
       "f17": {
         "opening": 0.44,
         "weeks": [],
-        "holidaysTaken": 0.0,
-        "totalWorked": 0.0,
+        "holidaysTaken": 0,
+        "totalWorked": 0,
         "calculatedHolidays": 0.0,
         "currentAvailableHrs": 0.44,
         "days": 0.06
@@ -25232,8 +25671,8 @@ table.batch-table input:focus{border-color:var(--ac)}
       "f18": {
         "opening": 56.27,
         "weeks": [],
-        "holidaysTaken": 0.0,
-        "totalWorked": 0.0,
+        "holidaysTaken": 0,
+        "totalWorked": 0,
         "calculatedHolidays": 0.0,
         "currentAvailableHrs": 56.27,
         "days": 8.04
@@ -25241,8 +25680,8 @@ table.batch-table input:focus{border-color:var(--ac)}
       "f19": {
         "opening": 22.04,
         "weeks": [],
-        "holidaysTaken": 0.0,
-        "totalWorked": 0.0,
+        "holidaysTaken": 0,
+        "totalWorked": 0,
         "calculatedHolidays": 0.0,
         "currentAvailableHrs": 22.04,
         "days": 3.15
@@ -25250,8 +25689,8 @@ table.batch-table input:focus{border-color:var(--ac)}
       "f20": {
         "opening": 37.32,
         "weeks": [],
-        "holidaysTaken": 0.0,
-        "totalWorked": 0.0,
+        "holidaysTaken": 0,
+        "totalWorked": 0,
         "calculatedHolidays": 0.0,
         "currentAvailableHrs": 37.32,
         "days": 5.33
@@ -25259,8 +25698,8 @@ table.batch-table input:focus{border-color:var(--ac)}
       "f21": {
         "opening": 5.28,
         "weeks": [],
-        "holidaysTaken": 0.0,
-        "totalWorked": 0.0,
+        "holidaysTaken": 0,
+        "totalWorked": 0,
         "calculatedHolidays": 0.0,
         "currentAvailableHrs": 5.28,
         "days": 0.75
@@ -25268,8 +25707,8 @@ table.batch-table input:focus{border-color:var(--ac)}
       "f22": {
         "opening": 117.72,
         "weeks": [],
-        "holidaysTaken": 0.0,
-        "totalWorked": 0.0,
+        "holidaysTaken": 0,
+        "totalWorked": 0,
         "calculatedHolidays": 0.0,
         "currentAvailableHrs": 117.72,
         "days": 16.82
@@ -25277,8 +25716,8 @@ table.batch-table input:focus{border-color:var(--ac)}
       "f23": {
         "opening": 88.68,
         "weeks": [],
-        "holidaysTaken": 0.0,
-        "totalWorked": 0.0,
+        "holidaysTaken": 0,
+        "totalWorked": 0,
         "calculatedHolidays": 0.0,
         "currentAvailableHrs": 88.68,
         "days": 12.67
@@ -25286,8 +25725,8 @@ table.batch-table input:focus{border-color:var(--ac)}
       "f24": {
         "opening": 37.86,
         "weeks": [],
-        "holidaysTaken": 0.0,
-        "totalWorked": 0.0,
+        "holidaysTaken": 0,
+        "totalWorked": 0,
         "calculatedHolidays": 0.0,
         "currentAvailableHrs": 37.86,
         "days": 5.41
@@ -25295,8 +25734,8 @@ table.batch-table input:focus{border-color:var(--ac)}
       "f25": {
         "opening": 57.28,
         "weeks": [],
-        "holidaysTaken": 0.0,
-        "totalWorked": 0.0,
+        "holidaysTaken": 0,
+        "totalWorked": 0,
         "calculatedHolidays": 0.0,
         "currentAvailableHrs": 57.28,
         "days": 8.18
@@ -25304,8 +25743,8 @@ table.batch-table input:focus{border-color:var(--ac)}
       "f26": {
         "opening": 130.56,
         "weeks": [],
-        "holidaysTaken": 0.0,
-        "totalWorked": 0.0,
+        "holidaysTaken": 0,
+        "totalWorked": 0,
         "calculatedHolidays": 0.0,
         "currentAvailableHrs": 130.56,
         "days": 18.65
@@ -25313,8 +25752,8 @@ table.batch-table input:focus{border-color:var(--ac)}
       "f27": {
         "opening": 19.24,
         "weeks": [],
-        "holidaysTaken": 0.0,
-        "totalWorked": 0.0,
+        "holidaysTaken": 0,
+        "totalWorked": 0,
         "calculatedHolidays": 0.0,
         "currentAvailableHrs": 19.24,
         "days": 2.75
@@ -25322,8 +25761,8 @@ table.batch-table input:focus{border-color:var(--ac)}
       "f28": {
         "opening": 17.52,
         "weeks": [],
-        "holidaysTaken": 0.0,
-        "totalWorked": 0.0,
+        "holidaysTaken": 0,
+        "totalWorked": 0,
         "calculatedHolidays": 0.0,
         "currentAvailableHrs": 17.52,
         "days": 2.5
@@ -25331,8 +25770,8 @@ table.batch-table input:focus{border-color:var(--ac)}
       "f29": {
         "opening": 4.92,
         "weeks": [],
-        "holidaysTaken": 0.0,
-        "totalWorked": 0.0,
+        "holidaysTaken": 0,
+        "totalWorked": 0,
         "calculatedHolidays": 0.0,
         "currentAvailableHrs": 4.92,
         "days": 0.7
@@ -25340,8 +25779,8 @@ table.batch-table input:focus{border-color:var(--ac)}
       "f30": {
         "opening": 48.52,
         "weeks": [],
-        "holidaysTaken": 0.0,
-        "totalWorked": 0.0,
+        "holidaysTaken": 0,
+        "totalWorked": 0,
         "calculatedHolidays": 0.0,
         "currentAvailableHrs": 48.52,
         "days": 6.93
@@ -25349,21 +25788,29 @@ table.batch-table input:focus{border-color:var(--ac)}
       "f31": {
         "opening": 124.88,
         "weeks": [],
-        "holidaysTaken": 0.0,
-        "totalWorked": 0.0,
+        "holidaysTaken": 0,
+        "totalWorked": 0,
         "calculatedHolidays": 0.0,
         "currentAvailableHrs": 124.88,
         "days": 17.84
       },
       "f32": {
-        "opening": 0,
+        "opening": 0.0,
         "weeks": [],
-        "holidaysTaken": 0
+        "holidaysTaken": 0,
+        "totalWorked": 0,
+        "calculatedHolidays": 0.0,
+        "currentAvailableHrs": 0.0,
+        "days": 0.0
       },
       "f33": {
-        "opening": 0,
+        "opening": 0.0,
         "weeks": [],
-        "holidaysTaken": 0
+        "holidaysTaken": 0,
+        "totalWorked": 0,
+        "calculatedHolidays": 0.0,
+        "currentAvailableHrs": 0.0,
+        "days": 0.0
       }
     }
   },
@@ -26247,7 +26694,915 @@ table.batch-table input:focus{border-color:var(--ac)}
       "leftDate": "07/08/2022",
       "leftWeek": "Week 32 (2022)"
     }
-  ]
+  ],
+  "baseBankHolidays": {
+    "s1": [
+      {
+        "id": "bank_s1_2024-01-01",
+        "year": "2024",
+        "date": "2024-01-01",
+        "name": "New Year's Day",
+        "recordedHours": null,
+        "sourceWeek": "",
+        "sourceHeader": "",
+        "status": "not_recorded"
+      },
+      {
+        "id": "bank_s1_2024-02-05",
+        "year": "2024",
+        "date": "2024-02-05",
+        "name": "St Brigid's Day",
+        "recordedHours": null,
+        "sourceWeek": "",
+        "sourceHeader": "",
+        "status": "not_recorded"
+      },
+      {
+        "id": "bank_s1_2024-03-17",
+        "year": "2024",
+        "date": "2024-03-17",
+        "name": "St Patrick's Day",
+        "recordedHours": null,
+        "sourceWeek": "",
+        "sourceHeader": "",
+        "status": "not_recorded"
+      },
+      {
+        "id": "bank_s1_2024-04-01",
+        "year": "2024",
+        "date": "2024-04-01",
+        "name": "Easter Monday",
+        "recordedHours": null,
+        "sourceWeek": "",
+        "sourceHeader": "",
+        "status": "not_recorded"
+      },
+      {
+        "id": "bank_s1_2024-05-06",
+        "year": "2024",
+        "date": "2024-05-06",
+        "name": "May Day",
+        "recordedHours": null,
+        "sourceWeek": "",
+        "sourceHeader": "",
+        "status": "not_recorded"
+      },
+      {
+        "id": "bank_s1_2024-06-03",
+        "year": "2024",
+        "date": "2024-06-03",
+        "name": "June Bank Holiday",
+        "recordedHours": null,
+        "sourceWeek": "",
+        "sourceHeader": "",
+        "status": "not_recorded"
+      },
+      {
+        "id": "bank_s1_2024-08-05",
+        "year": "2024",
+        "date": "2024-08-05",
+        "name": "August Bank Holiday",
+        "recordedHours": null,
+        "sourceWeek": "",
+        "sourceHeader": "",
+        "status": "not_recorded"
+      },
+      {
+        "id": "bank_s1_2024-10-28",
+        "year": "2024",
+        "date": "2024-10-28",
+        "name": "October Bank Holiday",
+        "recordedHours": null,
+        "sourceWeek": "",
+        "sourceHeader": "",
+        "status": "not_recorded"
+      },
+      {
+        "id": "bank_s1_2024-12-25",
+        "year": "2024",
+        "date": "2024-12-25",
+        "name": "Christmas Day",
+        "recordedHours": null,
+        "sourceWeek": "",
+        "sourceHeader": "",
+        "status": "not_recorded"
+      },
+      {
+        "id": "bank_s1_2024-12-26",
+        "year": "2024",
+        "date": "2024-12-26",
+        "name": "St Stephen's Day",
+        "recordedHours": null,
+        "sourceWeek": "",
+        "sourceHeader": "",
+        "status": "not_recorded"
+      },
+      {
+        "id": "bank_s1_2025-01-01",
+        "year": "2025",
+        "date": "2025-01-01",
+        "name": "New Year's Day",
+        "recordedHours": null,
+        "sourceWeek": "",
+        "sourceHeader": "",
+        "status": "not_recorded"
+      },
+      {
+        "id": "bank_s1_2025-02-03",
+        "year": "2025",
+        "date": "2025-02-03",
+        "name": "St Brigid's Day",
+        "recordedHours": null,
+        "sourceWeek": "",
+        "sourceHeader": "",
+        "status": "not_recorded"
+      },
+      {
+        "id": "bank_s1_2025-03-17",
+        "year": "2025",
+        "date": "2025-03-17",
+        "name": "St Patrick's Day",
+        "recordedHours": null,
+        "sourceWeek": "",
+        "sourceHeader": "",
+        "status": "not_recorded"
+      },
+      {
+        "id": "bank_s1_2025-04-21",
+        "year": "2025",
+        "date": "2025-04-21",
+        "name": "Easter Monday",
+        "recordedHours": null,
+        "sourceWeek": "",
+        "sourceHeader": "",
+        "status": "not_recorded"
+      },
+      {
+        "id": "bank_s1_2025-05-05",
+        "year": "2025",
+        "date": "2025-05-05",
+        "name": "May Day",
+        "recordedHours": null,
+        "sourceWeek": "",
+        "sourceHeader": "",
+        "status": "not_recorded"
+      },
+      {
+        "id": "bank_s1_2025-06-02",
+        "year": "2025",
+        "date": "2025-06-02",
+        "name": "June Bank Holiday",
+        "recordedHours": null,
+        "sourceWeek": "",
+        "sourceHeader": "",
+        "status": "not_recorded"
+      },
+      {
+        "id": "bank_s1_2025-08-04",
+        "year": "2025",
+        "date": "2025-08-04",
+        "name": "August Bank Holiday",
+        "recordedHours": null,
+        "sourceWeek": "",
+        "sourceHeader": "",
+        "status": "not_recorded"
+      },
+      {
+        "id": "bank_s1_2025-10-27",
+        "year": "2025",
+        "date": "2025-10-27",
+        "name": "October Bank Holiday",
+        "recordedHours": null,
+        "sourceWeek": "",
+        "sourceHeader": "",
+        "status": "not_recorded"
+      },
+      {
+        "id": "bank_s1_2025-12-25",
+        "year": "2025",
+        "date": "2025-12-25",
+        "name": "Christmas Day",
+        "recordedHours": null,
+        "sourceWeek": "",
+        "sourceHeader": "",
+        "status": "not_recorded"
+      },
+      {
+        "id": "bank_s1_2025-12-26",
+        "year": "2025",
+        "date": "2025-12-26",
+        "name": "St Stephen's Day",
+        "recordedHours": 7.0,
+        "sourceWeek": "2025-12-22",
+        "sourceHeader": "Bank Holiday Workind Hrs (26/12/2025)",
+        "status": "recorded"
+      },
+      {
+        "id": "bank_s1_2026-01-01",
+        "year": "2026",
+        "date": "2026-01-01",
+        "name": "New Year's Day",
+        "recordedHours": 5.5,
+        "sourceWeek": "2025-12-29",
+        "sourceHeader": "Bank Holiday Workind Hrs (01/01/2025)",
+        "status": "recorded"
+      },
+      {
+        "id": "bank_s1_2026-02-02",
+        "year": "2026",
+        "date": "2026-02-02",
+        "name": "St Brigid's Day",
+        "recordedHours": null,
+        "sourceWeek": "",
+        "sourceHeader": "",
+        "status": "not_recorded"
+      },
+      {
+        "id": "bank_s1_2026-03-17",
+        "year": "2026",
+        "date": "2026-03-17",
+        "name": "St Patrick's Day",
+        "recordedHours": null,
+        "sourceWeek": "",
+        "sourceHeader": "",
+        "status": "not_recorded"
+      },
+      {
+        "id": "bank_s1_2026-04-06",
+        "year": "2026",
+        "date": "2026-04-06",
+        "name": "Easter Monday",
+        "recordedHours": null,
+        "sourceWeek": "",
+        "sourceHeader": "",
+        "status": "not_recorded"
+      },
+      {
+        "id": "bank_s1_2026-05-04",
+        "year": "2026",
+        "date": "2026-05-04",
+        "name": "May Day",
+        "recordedHours": 6.0,
+        "sourceWeek": "2026-05-04",
+        "sourceHeader": "Bank Holiday Workind Hrs (04/05/2026)",
+        "status": "recorded"
+      },
+      {
+        "id": "bank_s1_2026-06-01",
+        "year": "2026",
+        "date": "2026-06-01",
+        "name": "June Bank Holiday",
+        "recordedHours": null,
+        "sourceWeek": "",
+        "sourceHeader": "",
+        "status": "not_recorded"
+      },
+      {
+        "id": "bank_s1_2026-08-03",
+        "year": "2026",
+        "date": "2026-08-03",
+        "name": "August Bank Holiday",
+        "recordedHours": null,
+        "sourceWeek": "",
+        "sourceHeader": "",
+        "status": "not_recorded"
+      },
+      {
+        "id": "bank_s1_2026-10-26",
+        "year": "2026",
+        "date": "2026-10-26",
+        "name": "October Bank Holiday",
+        "recordedHours": null,
+        "sourceWeek": "",
+        "sourceHeader": "",
+        "status": "not_recorded"
+      },
+      {
+        "id": "bank_s1_2026-12-25",
+        "year": "2026",
+        "date": "2026-12-25",
+        "name": "Christmas Day",
+        "recordedHours": null,
+        "sourceWeek": "",
+        "sourceHeader": "",
+        "status": "not_recorded"
+      },
+      {
+        "id": "bank_s1_2026-12-26",
+        "year": "2026",
+        "date": "2026-12-26",
+        "name": "St Stephen's Day",
+        "recordedHours": null,
+        "sourceWeek": "",
+        "sourceHeader": "",
+        "status": "not_recorded"
+      }
+    ],
+    "s2": [
+      {
+        "id": "bank_s2_2024-01-01",
+        "year": "2024",
+        "date": "2024-01-01",
+        "name": "New Year's Day",
+        "recordedHours": null,
+        "sourceWeek": "",
+        "sourceHeader": "",
+        "status": "not_recorded"
+      },
+      {
+        "id": "bank_s2_2024-02-05",
+        "year": "2024",
+        "date": "2024-02-05",
+        "name": "St Brigid's Day",
+        "recordedHours": null,
+        "sourceWeek": "",
+        "sourceHeader": "",
+        "status": "not_recorded"
+      },
+      {
+        "id": "bank_s2_2024-03-17",
+        "year": "2024",
+        "date": "2024-03-17",
+        "name": "St Patrick's Day",
+        "recordedHours": null,
+        "sourceWeek": "",
+        "sourceHeader": "",
+        "status": "not_recorded"
+      },
+      {
+        "id": "bank_s2_2024-04-01",
+        "year": "2024",
+        "date": "2024-04-01",
+        "name": "Easter Monday",
+        "recordedHours": null,
+        "sourceWeek": "",
+        "sourceHeader": "",
+        "status": "not_recorded"
+      },
+      {
+        "id": "bank_s2_2024-05-06",
+        "year": "2024",
+        "date": "2024-05-06",
+        "name": "May Day",
+        "recordedHours": null,
+        "sourceWeek": "",
+        "sourceHeader": "",
+        "status": "not_recorded"
+      },
+      {
+        "id": "bank_s2_2024-06-03",
+        "year": "2024",
+        "date": "2024-06-03",
+        "name": "June Bank Holiday",
+        "recordedHours": null,
+        "sourceWeek": "",
+        "sourceHeader": "",
+        "status": "not_recorded"
+      },
+      {
+        "id": "bank_s2_2024-08-05",
+        "year": "2024",
+        "date": "2024-08-05",
+        "name": "August Bank Holiday",
+        "recordedHours": null,
+        "sourceWeek": "",
+        "sourceHeader": "",
+        "status": "not_recorded"
+      },
+      {
+        "id": "bank_s2_2024-10-28",
+        "year": "2024",
+        "date": "2024-10-28",
+        "name": "October Bank Holiday",
+        "recordedHours": null,
+        "sourceWeek": "",
+        "sourceHeader": "",
+        "status": "not_recorded"
+      },
+      {
+        "id": "bank_s2_2024-12-25",
+        "year": "2024",
+        "date": "2024-12-25",
+        "name": "Christmas Day",
+        "recordedHours": null,
+        "sourceWeek": "",
+        "sourceHeader": "",
+        "status": "not_recorded"
+      },
+      {
+        "id": "bank_s2_2024-12-26",
+        "year": "2024",
+        "date": "2024-12-26",
+        "name": "St Stephen's Day",
+        "recordedHours": null,
+        "sourceWeek": "",
+        "sourceHeader": "",
+        "status": "not_recorded"
+      },
+      {
+        "id": "bank_s2_2025-01-01",
+        "year": "2025",
+        "date": "2025-01-01",
+        "name": "New Year's Day",
+        "recordedHours": null,
+        "sourceWeek": "",
+        "sourceHeader": "",
+        "status": "not_recorded"
+      },
+      {
+        "id": "bank_s2_2025-02-03",
+        "year": "2025",
+        "date": "2025-02-03",
+        "name": "St Brigid's Day",
+        "recordedHours": null,
+        "sourceWeek": "",
+        "sourceHeader": "",
+        "status": "not_recorded"
+      },
+      {
+        "id": "bank_s2_2025-03-17",
+        "year": "2025",
+        "date": "2025-03-17",
+        "name": "St Patrick's Day",
+        "recordedHours": null,
+        "sourceWeek": "",
+        "sourceHeader": "",
+        "status": "not_recorded"
+      },
+      {
+        "id": "bank_s2_2025-04-21",
+        "year": "2025",
+        "date": "2025-04-21",
+        "name": "Easter Monday",
+        "recordedHours": null,
+        "sourceWeek": "",
+        "sourceHeader": "",
+        "status": "not_recorded"
+      },
+      {
+        "id": "bank_s2_2025-05-05",
+        "year": "2025",
+        "date": "2025-05-05",
+        "name": "May Day",
+        "recordedHours": null,
+        "sourceWeek": "",
+        "sourceHeader": "",
+        "status": "not_recorded"
+      },
+      {
+        "id": "bank_s2_2025-06-02",
+        "year": "2025",
+        "date": "2025-06-02",
+        "name": "June Bank Holiday",
+        "recordedHours": null,
+        "sourceWeek": "",
+        "sourceHeader": "",
+        "status": "not_recorded"
+      },
+      {
+        "id": "bank_s2_2025-08-04",
+        "year": "2025",
+        "date": "2025-08-04",
+        "name": "August Bank Holiday",
+        "recordedHours": null,
+        "sourceWeek": "",
+        "sourceHeader": "",
+        "status": "not_recorded"
+      },
+      {
+        "id": "bank_s2_2025-10-27",
+        "year": "2025",
+        "date": "2025-10-27",
+        "name": "October Bank Holiday",
+        "recordedHours": null,
+        "sourceWeek": "",
+        "sourceHeader": "",
+        "status": "not_recorded"
+      },
+      {
+        "id": "bank_s2_2025-12-25",
+        "year": "2025",
+        "date": "2025-12-25",
+        "name": "Christmas Day",
+        "recordedHours": null,
+        "sourceWeek": "",
+        "sourceHeader": "",
+        "status": "not_recorded"
+      },
+      {
+        "id": "bank_s2_2025-12-26",
+        "year": "2025",
+        "date": "2025-12-26",
+        "name": "St Stephen's Day",
+        "recordedHours": 9.0,
+        "sourceWeek": "2025-12-22",
+        "sourceHeader": "Bank Holiday Workind Hrs (26/12/2025)",
+        "status": "recorded"
+      },
+      {
+        "id": "bank_s2_2026-01-01",
+        "year": "2026",
+        "date": "2026-01-01",
+        "name": "New Year's Day",
+        "recordedHours": null,
+        "sourceWeek": "",
+        "sourceHeader": "",
+        "status": "not_recorded"
+      },
+      {
+        "id": "bank_s2_2026-02-02",
+        "year": "2026",
+        "date": "2026-02-02",
+        "name": "St Brigid's Day",
+        "recordedHours": null,
+        "sourceWeek": "",
+        "sourceHeader": "",
+        "status": "not_recorded"
+      },
+      {
+        "id": "bank_s2_2026-03-17",
+        "year": "2026",
+        "date": "2026-03-17",
+        "name": "St Patrick's Day",
+        "recordedHours": null,
+        "sourceWeek": "",
+        "sourceHeader": "",
+        "status": "not_recorded"
+      },
+      {
+        "id": "bank_s2_2026-04-06",
+        "year": "2026",
+        "date": "2026-04-06",
+        "name": "Easter Monday",
+        "recordedHours": null,
+        "sourceWeek": "",
+        "sourceHeader": "",
+        "status": "not_recorded"
+      },
+      {
+        "id": "bank_s2_2026-05-04",
+        "year": "2026",
+        "date": "2026-05-04",
+        "name": "May Day",
+        "recordedHours": 9.0,
+        "sourceWeek": "2026-05-04",
+        "sourceHeader": "Bank Holiday Workind Hrs (04/05/2026)",
+        "status": "recorded"
+      },
+      {
+        "id": "bank_s2_2026-06-01",
+        "year": "2026",
+        "date": "2026-06-01",
+        "name": "June Bank Holiday",
+        "recordedHours": null,
+        "sourceWeek": "",
+        "sourceHeader": "",
+        "status": "not_recorded"
+      },
+      {
+        "id": "bank_s2_2026-08-03",
+        "year": "2026",
+        "date": "2026-08-03",
+        "name": "August Bank Holiday",
+        "recordedHours": null,
+        "sourceWeek": "",
+        "sourceHeader": "",
+        "status": "not_recorded"
+      },
+      {
+        "id": "bank_s2_2026-10-26",
+        "year": "2026",
+        "date": "2026-10-26",
+        "name": "October Bank Holiday",
+        "recordedHours": null,
+        "sourceWeek": "",
+        "sourceHeader": "",
+        "status": "not_recorded"
+      },
+      {
+        "id": "bank_s2_2026-12-25",
+        "year": "2026",
+        "date": "2026-12-25",
+        "name": "Christmas Day",
+        "recordedHours": null,
+        "sourceWeek": "",
+        "sourceHeader": "",
+        "status": "not_recorded"
+      },
+      {
+        "id": "bank_s2_2026-12-26",
+        "year": "2026",
+        "date": "2026-12-26",
+        "name": "St Stephen's Day",
+        "recordedHours": null,
+        "sourceWeek": "",
+        "sourceHeader": "",
+        "status": "not_recorded"
+      }
+    ],
+    "s8": [
+      {
+        "id": "bank_s8_2024-01-01",
+        "year": "2024",
+        "date": "2024-01-01",
+        "name": "New Year's Day",
+        "recordedHours": null,
+        "sourceWeek": "",
+        "sourceHeader": "",
+        "status": "not_recorded"
+      },
+      {
+        "id": "bank_s8_2024-02-05",
+        "year": "2024",
+        "date": "2024-02-05",
+        "name": "St Brigid's Day",
+        "recordedHours": null,
+        "sourceWeek": "",
+        "sourceHeader": "",
+        "status": "not_recorded"
+      },
+      {
+        "id": "bank_s8_2024-03-17",
+        "year": "2024",
+        "date": "2024-03-17",
+        "name": "St Patrick's Day",
+        "recordedHours": null,
+        "sourceWeek": "",
+        "sourceHeader": "",
+        "status": "not_recorded"
+      },
+      {
+        "id": "bank_s8_2024-04-01",
+        "year": "2024",
+        "date": "2024-04-01",
+        "name": "Easter Monday",
+        "recordedHours": null,
+        "sourceWeek": "",
+        "sourceHeader": "",
+        "status": "not_recorded"
+      },
+      {
+        "id": "bank_s8_2024-05-06",
+        "year": "2024",
+        "date": "2024-05-06",
+        "name": "May Day",
+        "recordedHours": 6.0,
+        "sourceWeek": "2024-05-06",
+        "sourceHeader": "Bank Holiday Workind Hrs (06/05/2024)",
+        "status": "recorded"
+      },
+      {
+        "id": "bank_s8_2024-06-03",
+        "year": "2024",
+        "date": "2024-06-03",
+        "name": "June Bank Holiday",
+        "recordedHours": null,
+        "sourceWeek": "",
+        "sourceHeader": "",
+        "status": "not_recorded"
+      },
+      {
+        "id": "bank_s8_2024-08-05",
+        "year": "2024",
+        "date": "2024-08-05",
+        "name": "August Bank Holiday",
+        "recordedHours": null,
+        "sourceWeek": "",
+        "sourceHeader": "",
+        "status": "not_recorded"
+      },
+      {
+        "id": "bank_s8_2024-10-28",
+        "year": "2024",
+        "date": "2024-10-28",
+        "name": "October Bank Holiday",
+        "recordedHours": null,
+        "sourceWeek": "",
+        "sourceHeader": "",
+        "status": "not_recorded"
+      },
+      {
+        "id": "bank_s8_2024-12-25",
+        "year": "2024",
+        "date": "2024-12-25",
+        "name": "Christmas Day",
+        "recordedHours": null,
+        "sourceWeek": "",
+        "sourceHeader": "",
+        "status": "not_recorded"
+      },
+      {
+        "id": "bank_s8_2024-12-26",
+        "year": "2024",
+        "date": "2024-12-26",
+        "name": "St Stephen's Day",
+        "recordedHours": null,
+        "sourceWeek": "",
+        "sourceHeader": "",
+        "status": "not_recorded"
+      },
+      {
+        "id": "bank_s8_2025-01-01",
+        "year": "2025",
+        "date": "2025-01-01",
+        "name": "New Year's Day",
+        "recordedHours": null,
+        "sourceWeek": "",
+        "sourceHeader": "",
+        "status": "not_recorded"
+      },
+      {
+        "id": "bank_s8_2025-02-03",
+        "year": "2025",
+        "date": "2025-02-03",
+        "name": "St Brigid's Day",
+        "recordedHours": null,
+        "sourceWeek": "",
+        "sourceHeader": "",
+        "status": "not_recorded"
+      },
+      {
+        "id": "bank_s8_2025-03-17",
+        "year": "2025",
+        "date": "2025-03-17",
+        "name": "St Patrick's Day",
+        "recordedHours": null,
+        "sourceWeek": "",
+        "sourceHeader": "",
+        "status": "not_recorded"
+      },
+      {
+        "id": "bank_s8_2025-04-21",
+        "year": "2025",
+        "date": "2025-04-21",
+        "name": "Easter Monday",
+        "recordedHours": null,
+        "sourceWeek": "",
+        "sourceHeader": "",
+        "status": "not_recorded"
+      },
+      {
+        "id": "bank_s8_2025-05-05",
+        "year": "2025",
+        "date": "2025-05-05",
+        "name": "May Day",
+        "recordedHours": null,
+        "sourceWeek": "",
+        "sourceHeader": "",
+        "status": "not_recorded"
+      },
+      {
+        "id": "bank_s8_2025-06-02",
+        "year": "2025",
+        "date": "2025-06-02",
+        "name": "June Bank Holiday",
+        "recordedHours": null,
+        "sourceWeek": "",
+        "sourceHeader": "",
+        "status": "not_recorded"
+      },
+      {
+        "id": "bank_s8_2025-08-04",
+        "year": "2025",
+        "date": "2025-08-04",
+        "name": "August Bank Holiday",
+        "recordedHours": null,
+        "sourceWeek": "",
+        "sourceHeader": "",
+        "status": "not_recorded"
+      },
+      {
+        "id": "bank_s8_2025-10-27",
+        "year": "2025",
+        "date": "2025-10-27",
+        "name": "October Bank Holiday",
+        "recordedHours": null,
+        "sourceWeek": "",
+        "sourceHeader": "",
+        "status": "not_recorded"
+      },
+      {
+        "id": "bank_s8_2025-12-25",
+        "year": "2025",
+        "date": "2025-12-25",
+        "name": "Christmas Day",
+        "recordedHours": null,
+        "sourceWeek": "",
+        "sourceHeader": "",
+        "status": "not_recorded"
+      },
+      {
+        "id": "bank_s8_2025-12-26",
+        "year": "2025",
+        "date": "2025-12-26",
+        "name": "St Stephen's Day",
+        "recordedHours": 7.0,
+        "sourceWeek": "2025-12-22",
+        "sourceHeader": "Bank Holiday Workind Hrs (26/12/2025)",
+        "status": "recorded"
+      },
+      {
+        "id": "bank_s8_2026-01-01",
+        "year": "2026",
+        "date": "2026-01-01",
+        "name": "New Year's Day",
+        "recordedHours": null,
+        "sourceWeek": "",
+        "sourceHeader": "",
+        "status": "not_recorded"
+      },
+      {
+        "id": "bank_s8_2026-02-02",
+        "year": "2026",
+        "date": "2026-02-02",
+        "name": "St Brigid's Day",
+        "recordedHours": null,
+        "sourceWeek": "",
+        "sourceHeader": "",
+        "status": "not_recorded"
+      },
+      {
+        "id": "bank_s8_2026-03-17",
+        "year": "2026",
+        "date": "2026-03-17",
+        "name": "St Patrick's Day",
+        "recordedHours": null,
+        "sourceWeek": "",
+        "sourceHeader": "",
+        "status": "not_recorded"
+      },
+      {
+        "id": "bank_s8_2026-04-06",
+        "year": "2026",
+        "date": "2026-04-06",
+        "name": "Easter Monday",
+        "recordedHours": null,
+        "sourceWeek": "",
+        "sourceHeader": "",
+        "status": "not_recorded"
+      },
+      {
+        "id": "bank_s8_2026-05-04",
+        "year": "2026",
+        "date": "2026-05-04",
+        "name": "May Day",
+        "recordedHours": 7.0,
+        "sourceWeek": "2026-05-04",
+        "sourceHeader": "Bank Holiday Workind Hrs (04/05/2026)",
+        "status": "recorded"
+      },
+      {
+        "id": "bank_s8_2026-06-01",
+        "year": "2026",
+        "date": "2026-06-01",
+        "name": "June Bank Holiday",
+        "recordedHours": null,
+        "sourceWeek": "",
+        "sourceHeader": "",
+        "status": "not_recorded"
+      },
+      {
+        "id": "bank_s8_2026-08-03",
+        "year": "2026",
+        "date": "2026-08-03",
+        "name": "August Bank Holiday",
+        "recordedHours": null,
+        "sourceWeek": "",
+        "sourceHeader": "",
+        "status": "not_recorded"
+      },
+      {
+        "id": "bank_s8_2026-10-26",
+        "year": "2026",
+        "date": "2026-10-26",
+        "name": "October Bank Holiday",
+        "recordedHours": null,
+        "sourceWeek": "",
+        "sourceHeader": "",
+        "status": "not_recorded"
+      },
+      {
+        "id": "bank_s8_2026-12-25",
+        "year": "2026",
+        "date": "2026-12-25",
+        "name": "Christmas Day",
+        "recordedHours": null,
+        "sourceWeek": "",
+        "sourceHeader": "",
+        "status": "not_recorded"
+      },
+      {
+        "id": "bank_s8_2026-12-26",
+        "year": "2026",
+        "date": "2026-12-26",
+        "name": "St Stephen's Day",
+        "recordedHours": null,
+        "sourceWeek": "",
+        "sourceHeader": "",
+        "status": "not_recorded"
+      }
+    ]
+  }
 }
 </script>
 <script>
@@ -26930,6 +28285,80 @@ function renderHdrStats(){
     }
   });
   el.innerHTML='<span>Active staff: <strong>'+count+'</strong></span><span>Total balance: <strong>'+fmt1(tot)+' hrs</strong></span>';
+}
+
+// Bank holidays are shown independently from annual leave.  The source
+// workbook records working hours on only some public-holiday dates, so a blank
+// amount intentionally means "not recorded", not zero holiday entitlement.
+let bankHolidayYearFilter = 'ALL';
+function bankHolidayRows(){
+  const rows=[];
+  Object.keys(BASE.baseBankHolidays || {}).forEach(function(sid){
+    const staff=BASE.staff.find(function(person){ return person.id===sid; });
+    if(!staff) return;
+    (BASE.baseBankHolidays[sid] || []).forEach(function(entry){
+      rows.push({
+        staffId:sid,
+        staff:staff.name,
+        shop:staff.shop || staff.location || '',
+        year:String(entry.year || String(entry.date || '').slice(0,4)),
+        date:entry.date,
+        name:entry.name || 'Public holiday',
+        recordedHours:entry.recordedHours,
+        status:entry.status || (entry.recordedHours === null || entry.recordedHours === undefined ? 'not_recorded' : 'recorded')
+      });
+    });
+  });
+  return rows.sort(function(a,b){ return a.date.localeCompare(b.date) || a.staff.localeCompare(b.staff); });
+}
+function bankHolidayEscape(value){
+  return String(value === null || value === undefined ? '' : value)
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
+function filteredBankHolidayRows(){
+  return bankHolidayRows().filter(function(row){ return bankHolidayYearFilter==='ALL' || row.year===bankHolidayYearFilter; });
+}
+function renderBankHolidayRegister(){
+  const rows=filteredBankHolidayRows();
+  const recorded=rows.filter(function(row){ return row.recordedHours !== null && row.recordedHours !== undefined; });
+  const total=recorded.reduce(function(sum,row){ return sum + Number(row.recordedHours || 0); },0);
+  const stats=document.getElementById('bankHolidayStats');
+  if(stats) stats.textContent=rows.length+' public-holiday records; '+recorded.length+' with source hours ('+fmt1(total)+' hrs)';
+  const body=document.getElementById('bankHolidayTbody');
+  if(!body) return;
+  if(!rows.length){
+    body.innerHTML='<tr><td colspan="6" style="padding:20px;text-align:center;color:var(--tx3)">No bank-holiday records for this year.</td></tr>';
+    return;
+  }
+  body.innerHTML=rows.map(function(row){
+    const hasHours=row.recordedHours !== null && row.recordedHours !== undefined;
+    const status=hasHours ? '<span style="color:var(--gr);font-weight:800">Source hours recorded</span>' : '<span style="color:var(--tx3);font-weight:700">Payment not recorded</span>';
+    return '<tr><td><strong>'+bankHolidayEscape(row.staff)+'</strong></td><td>'+bankHolidayEscape(row.shop)+'</td><td>'+bankHolidayEscape(formatLocalDate(parseLocalDate(row.date)))+'</td><td>'+bankHolidayEscape(row.name)+'</td><td class="num">'+(hasHours ? fmt1(row.recordedHours)+' hrs' : '&mdash;')+'</td><td>'+status+'</td></tr>';
+  }).join('');
+}
+function csvCell(value){
+  return '"'+String(value === null || value === undefined ? '' : value).replace(/"/g,'""')+'"';
+}
+function downloadBankHolidayCsv(){
+  const rows=filteredBankHolidayRows();
+  const csv=['Staff,Store,Date,Public Holiday,Recorded Hours,Status'].concat(rows.map(function(row){
+    return [row.staff,row.shop,row.date,row.name,row.recordedHours === null || row.recordedHours === undefined ? '' : row.recordedHours,row.recordedHours === null || row.recordedHours === undefined ? 'Payment not recorded' : 'Source hours recorded'].map(csvCell).join(',');
+  })).join('\r\n');
+  const blob=new Blob([csv],{type:'text/csv;charset=utf-8'});
+  const link=document.createElement('a');
+  link.href=URL.createObjectURL(blob);
+  link.download='idfl-bank-holidays-'+(bankHolidayYearFilter==='ALL' ? '2024-2026' : bankHolidayYearFilter)+'.csv';
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  setTimeout(function(){ URL.revokeObjectURL(link.href); },0);
+}
+function openBankHolidayRegister(){
+  if(isPortalMode) return;
+  const filter=document.getElementById('bankHolidayYearFilter');
+  if(filter) filter.value=bankHolidayYearFilter;
+  renderBankHolidayRegister();
+  document.getElementById('bankHolidaysModal').classList.remove('hidden');
 }
 
 // â”€â”€â”€ Parse Departure Timestamp for Sorting (Newest to Oldest) â”€â”€â”€
@@ -28162,6 +29591,15 @@ async function autoPushToGitHub(silent){
   return false;
 }
 
+document.getElementById('bankHolidaysBtn').addEventListener('click', openBankHolidayRegister);
+document.getElementById('bankHolidaysClose').addEventListener('click', function(){ document.getElementById('bankHolidaysModal').classList.add('hidden'); });
+document.getElementById('bankHolidaysCloseBtn').addEventListener('click', function(){ document.getElementById('bankHolidaysModal').classList.add('hidden'); });
+document.getElementById('bankHolidayYearFilter').addEventListener('change', function(event){
+  bankHolidayYearFilter=event.target.value;
+  renderBankHolidayRegister();
+});
+document.getElementById('bankHolidayCsvBtn').addEventListener('click', downloadBankHolidayCsv);
+
 document.getElementById('syncModalBtn').addEventListener('click', function(){
   if(isPortalMode) return;
   const savedTok = getActiveGitHubToken();
@@ -28864,6 +30302,7 @@ function checkUrlParams(){
       document.getElementById('portalBadge').style.display = 'inline-block';
       document.getElementById('cloudBadge').style.display = 'none';
       document.getElementById('hdrSearchWrap').style.display = 'none';
+      document.getElementById('bankHolidaysBtn').style.display = 'none';
       document.getElementById('addNewStaffModalBtn').style.display = 'none';
       document.getElementById('pdfExportModalBtn').style.display = 'none';
       document.getElementById('batchWeekBtn').style.display = 'none';
