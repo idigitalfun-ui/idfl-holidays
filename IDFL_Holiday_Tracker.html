@@ -339,10 +339,10 @@ table.batch-table input:focus{border-color:var(--ac)}
       <button class="modal-close" id="bankHolidayTotalsClose">&times;</button>
     </div>
     <div class="modal-body">
-      <p style="font-size:.78rem;color:var(--tx2);margin-bottom:14px;line-height:1.45">A quick count of the recorded Irish public-holiday dates for each selected staff member. These are dates only and do not add hours or change annual holiday balances.</p>
+      <p style="font-size:.78rem;color:var(--tx2);margin-bottom:14px;line-height:1.45">Add a person's recorded bank-holiday dates to their bank-holiday total for all three years. The setting is saved to the shared record. It affects this date count only: it never adds paid hours or changes annual holiday balances.</p>
       <div style="overflow:auto;border:1px solid var(--bd);border-radius:10px">
-        <table class="weeks" style="min-width:560px">
-          <thead><tr><th>Staff</th><th>Store</th><th class="num">2024</th><th class="num">2025</th><th class="num">2026</th><th class="num">Total</th></tr></thead>
+        <table class="weeks" style="min-width:780px">
+          <thead><tr><th>Staff</th><th>Store</th><th class="num">2024</th><th class="num">2025</th><th class="num">2026</th><th class="num">Included Total</th><th>Status</th></tr></thead>
           <tbody id="bankHolidayTotalsTbody"></tbody>
         </table>
       </div>
@@ -27300,6 +27300,7 @@ table.batch-table input:focus{border-color:var(--ac)}
 const SICK_ALLOWANCE_ANNUAL = 35.0; // Everyone has 35 hrs sick pay allowance per year
 const LS_KEY = 'idfl_tracker_db';
 const GH_REPO = 'idigitalfun-ui/idfl-holidays';
+const SHARED_RECORD_URL = 'https://raw.githubusercontent.com/' + GH_REPO + '/main/holiday_data.json';
 const SYNC_STATE_KEY = 'idfl_tracker_sync_state';
 const MAX_TRACKED_HOURS = 80;
 
@@ -28044,15 +28045,42 @@ function openBankHolidayRegister(){
   renderBankHolidayRegister();
   document.getElementById('bankHolidaysModal').classList.remove('hidden');
 }
+const BANK_HOLIDAY_SUMMARY_YEARS = ['2024','2025','2026'];
+function getBankHolidayInclusions(sid){
+  const saved = ((BASE.baseBankHolidayInclusions || {})[sid] || {});
+  const local = ((ov._bankHolidayInclusions || {})[sid] || {});
+  return BANK_HOLIDAY_SUMMARY_YEARS.reduce(function(result, year){
+    result[year] = local[year] !== undefined ? Boolean(local[year]) : Boolean(saved[year]);
+    return result;
+  }, {});
+}
+function includeBankHolidaysInTotal(sid){
+  const staff = BASE.staff.find(function(person){ return person.id===sid; });
+  if(!staff) return;
+  if(!ov._bankHolidayInclusions) ov._bankHolidayInclusions = {};
+  ov._bankHolidayInclusions[sid] = BANK_HOLIDAY_SUMMARY_YEARS.reduce(function(result, year){
+    result[year] = true;
+    return result;
+  }, {});
+  if(!saveOv(ov)) return;
+  triggerAutoSync();
+  renderBankHolidayTotals();
+  toast('Bank holidays added to '+staff.name+'\'s total for 2024, 2025 and 2026.');
+}
 function bankHolidaySummaryRows(){
   return Object.keys(BASE.baseBankHolidays || {}).map(function(sid){
     const staff=BASE.staff.find(function(person){ return person.id===sid; });
     if(!staff) return null;
     const rows=profileBankHolidayRows(sid);
-    const counts=['2024','2025','2026'].map(function(year){
+    const counts=BANK_HOLIDAY_SUMMARY_YEARS.map(function(year){
       return rows.filter(function(row){ return row.year===year; }).length;
     });
-    return {staff:staff.name,shop:staff.shop || staff.location || '',counts:counts,total:rows.length};
+    const inclusions=getBankHolidayInclusions(sid);
+    const includedTotal=counts.reduce(function(total, count, index){
+      return total + (inclusions[BANK_HOLIDAY_SUMMARY_YEARS[index]] ? count : 0);
+    }, 0);
+    const allYearsIncluded=BANK_HOLIDAY_SUMMARY_YEARS.every(function(year){ return inclusions[year]; });
+    return {id:sid,staff:staff.name,shop:staff.shop || staff.location || '',counts:counts,includedTotal:includedTotal,allYearsIncluded:allYearsIncluded};
   }).filter(Boolean).sort(function(left,right){ return left.staff.localeCompare(right.staff); });
 }
 function renderBankHolidayTotals(){
@@ -28060,14 +28088,22 @@ function renderBankHolidayTotals(){
   if(!body) return;
   const rows=bankHolidaySummaryRows();
   if(!rows.length){
-    body.innerHTML='<tr><td colspan="6" style="padding:20px;text-align:center;color:var(--tx3)">No bank-holiday dates are recorded yet.</td></tr>';
+    body.innerHTML='<tr><td colspan="7" style="padding:20px;text-align:center;color:var(--tx3)">No bank-holiday dates are recorded yet.</td></tr>';
     return;
   }
   body.innerHTML=rows.map(function(row){
     return '<tr><td><strong>'+bankHolidayEscape(row.staff)+'</strong></td><td>'+bankHolidayEscape(row.shop)+'</td>'
       +row.counts.map(function(count){ return '<td class="num">'+count+'</td>'; }).join('')
-      +'<td class="num"><strong>'+row.total+'</strong></td></tr>';
+      +'<td class="num"><strong>'+row.includedTotal+'</strong></td>'
+      +'<td><div style="display:flex;gap:7px;align-items:center;flex-wrap:wrap">'
+      +(row.allYearsIncluded
+        ? '<button class="btn btn-gr" disabled title="Bank holidays are included in this date total">&#10004; Bank Holidays Added</button><span style="font-size:.7rem;color:var(--gr);font-weight:700">Including bank holidays</span>'
+        : '<button class="btn btn-rd" data-add-bank-holidays="'+row.id+'" title="Add all recorded bank holidays for 2024, 2025 and 2026">&#43; Add Bank Holidays</button><span style="font-size:.7rem;color:var(--rd);font-weight:700">Not included</span>')
+      +'</div></td></tr>';
   }).join('');
+  body.querySelectorAll('[data-add-bank-holidays]').forEach(function(button){
+    button.addEventListener('click',function(){ includeBankHolidaysInTotal(button.dataset.addBankHolidays); });
+  });
 }
 function openBankHolidayTotals(){
   if(isPortalMode) return;
@@ -29240,6 +29276,11 @@ document.getElementById('batchSaveAllBtn').addEventListener('click', function(){
 // â”€â”€â”€ ðŸŒŸ SYNC & GITHUB CLOUD ACTIONS (WITH AUTOMATIC PUSH) â”€â”€â”€
 function buildCurrentDatabaseState(){
   const exportData = JSON.parse(JSON.stringify(BASE));
+  const bankHolidayInclusions = JSON.parse(JSON.stringify(exportData.baseBankHolidayInclusions || {}));
+  Object.keys(ov._bankHolidayInclusions || {}).forEach(function(sid){
+    bankHolidayInclusions[sid] = Object.assign({}, bankHolidayInclusions[sid] || {}, ov._bankHolidayInclusions[sid]);
+  });
+  exportData.baseBankHolidayInclusions = bankHolidayInclusions;
   years.forEach(function(y){
     if(ov[y]){
       if(!exportData.years[y]) exportData.years[y] = {};
@@ -30134,12 +30175,29 @@ function pruneCommittedLocalOverlay(shared, localOverlay){
     });
     if(!Object.keys(draft._starts).length) delete draft._starts;
   }
+  if(draft._bankHolidayInclusions){
+    Object.keys(draft._bankHolidayInclusions).forEach(function(sid){
+      const local = draft._bankHolidayInclusions[sid] || {};
+      const sharedInclusions = ((shared.baseBankHolidayInclusions || {})[sid] || {});
+      Object.keys(local).forEach(function(year){
+        if(Boolean(local[year]) === Boolean(sharedInclusions[year])) delete local[year];
+      });
+      if(!Object.keys(local).length) delete draft._bankHolidayInclusions[sid];
+    });
+    if(!Object.keys(draft._bankHolidayInclusions).length) delete draft._bankHolidayInclusions;
+  }
   return draft;
 }
 
 async function loadSharedCompanyRecord(){
   try {
-    const response = await fetch('./holiday_data.json', { cache: 'no-store' });
+    let response;
+    try {
+      response = await fetch(SHARED_RECORD_URL, { cache: 'no-store' });
+    } catch(error) {
+      response = null;
+    }
+    if(!response || !response.ok) response = await fetch('./holiday_data.json', { cache: 'no-store' });
     if(!response.ok) throw new Error('Shared record was not available');
     const shared = await response.json();
     if(!shared || !Array.isArray(shared.staff) || !shared.years) throw new Error('Shared record is invalid');
