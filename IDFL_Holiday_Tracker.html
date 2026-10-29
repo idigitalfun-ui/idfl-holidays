@@ -275,6 +275,7 @@ table.batch-table input:focus{border-color:var(--ac)}
   <div class="hdr-stats" id="hdrStats"></div>
   <div style="margin-left:auto;display:flex;gap:8px;align-items:center">
     <button class="btn btn-ghost" id="bankHolidaysBtn" title="View bank-holiday records for selected staff">Bank Holidays</button>
+    <button class="btn btn-ghost" id="bankHolidayTotalsBtn" title="See how many bank holidays are recorded for each staff member">Bank Holiday Totals</button>
     <button class="btn btn-ac" id="addNewStaffModalBtn" title="Add a new employee to the company">&#43; Add New Staff</button>
     <button class="btn btn-pk" id="pdfExportModalBtn" title="Export reports as PDF">&#128196; Export PDF</button>
     <button class="btn btn-gr" id="batchWeekBtn">&#128197; Add New Week (All Staff)</button>
@@ -326,6 +327,28 @@ table.batch-table input:focus{border-color:var(--ac)}
     </div>
     <div class="modal-footer">
       <button class="btn btn-ghost" id="bankHolidaysCloseBtn">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- BANK HOLIDAY TOTALS -->
+<div class="modal-bg hidden" id="bankHolidayTotalsModal">
+  <div class="modal">
+    <div class="modal-hd">
+      <h2>Bank Holiday Totals</h2>
+      <button class="modal-close" id="bankHolidayTotalsClose">&times;</button>
+    </div>
+    <div class="modal-body">
+      <p style="font-size:.78rem;color:var(--tx2);margin-bottom:14px;line-height:1.45">A quick count of the recorded Irish public-holiday dates for each selected staff member. These are dates only and do not add hours or change annual holiday balances.</p>
+      <div style="overflow:auto;border:1px solid var(--bd);border-radius:10px">
+        <table class="weeks" style="min-width:560px">
+          <thead><tr><th>Staff</th><th>Store</th><th class="num">2024</th><th class="num">2025</th><th class="num">2026</th><th class="num">Total</th></tr></thead>
+          <tbody id="bankHolidayTotalsTbody"></tbody>
+        </table>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" id="bankHolidayTotalsCloseBtn">Close</button>
     </div>
   </div>
 </div>
@@ -28021,6 +28044,36 @@ function openBankHolidayRegister(){
   renderBankHolidayRegister();
   document.getElementById('bankHolidaysModal').classList.remove('hidden');
 }
+function bankHolidaySummaryRows(){
+  return Object.keys(BASE.baseBankHolidays || {}).map(function(sid){
+    const staff=BASE.staff.find(function(person){ return person.id===sid; });
+    if(!staff) return null;
+    const rows=profileBankHolidayRows(sid);
+    const counts=['2024','2025','2026'].map(function(year){
+      return rows.filter(function(row){ return row.year===year; }).length;
+    });
+    return {staff:staff.name,shop:staff.shop || staff.location || '',counts:counts,total:rows.length};
+  }).filter(Boolean).sort(function(left,right){ return left.staff.localeCompare(right.staff); });
+}
+function renderBankHolidayTotals(){
+  const body=document.getElementById('bankHolidayTotalsTbody');
+  if(!body) return;
+  const rows=bankHolidaySummaryRows();
+  if(!rows.length){
+    body.innerHTML='<tr><td colspan="6" style="padding:20px;text-align:center;color:var(--tx3)">No bank-holiday dates are recorded yet.</td></tr>';
+    return;
+  }
+  body.innerHTML=rows.map(function(row){
+    return '<tr><td><strong>'+bankHolidayEscape(row.staff)+'</strong></td><td>'+bankHolidayEscape(row.shop)+'</td>'
+      +row.counts.map(function(count){ return '<td class="num">'+count+'</td>'; }).join('')
+      +'<td class="num"><strong>'+row.total+'</strong></td></tr>';
+  }).join('');
+}
+function openBankHolidayTotals(){
+  if(isPortalMode) return;
+  renderBankHolidayTotals();
+  document.getElementById('bankHolidayTotalsModal').classList.remove('hidden');
+}
 
 // The three requested profiles have a personal, read-only view of their
 // bank-holiday dates. The switch only changes visibility; it never adds
@@ -28329,7 +28382,7 @@ function renderMain(){
     +'</div>'
     +'</div>'
     +'<div class="profile-actions" style="display:flex;gap:8px;flex-wrap:wrap">'
-    +(hasProfileBankHolidays ? '<button class="btn btn-gr" id="staffBankHolidaysBtn" title="Show this staff member\'s bank-holiday dates">&#127974; '+(profileBankHolidaysVisible?'Hide':'View')+' Bank Holidays</button>' : '')
+    +(hasProfileBankHolidays ? '<button class="btn btn-gr" id="staffBankHolidaysBtn" title="Show this staff member\'s bank-holiday dates">&#127974; '+(profileBankHolidaysVisible?'Hide':'View')+' Bank Holidays ('+profileBankHolidayRows(staff.id).length+')</button>' : '')
     +'<button class="btn btn-pk" id="staffPdfBtn" title="Export Official PDF Statement">&#128196; PDF Statement</button>'
     +(!isPortalMode ? '<button class="btn btn-pu" id="shareBtn">&#128279; Share / Link</button>' : '')
     +(!isPortalMode && !isInactive ? '<button class="btn btn-rd" id="deactivateStaffBtn" title="Move to Former Staff">&#128683; Set as Former Staff</button>' : '')
@@ -29315,6 +29368,9 @@ document.getElementById('bankHolidayYearFilter').addEventListener('change', func
   renderBankHolidayRegister();
 });
 document.getElementById('bankHolidayCsvBtn').addEventListener('click', downloadBankHolidayCsv);
+document.getElementById('bankHolidayTotalsBtn').addEventListener('click', openBankHolidayTotals);
+document.getElementById('bankHolidayTotalsClose').addEventListener('click', function(){ document.getElementById('bankHolidayTotalsModal').classList.add('hidden'); });
+document.getElementById('bankHolidayTotalsCloseBtn').addEventListener('click', function(){ document.getElementById('bankHolidayTotalsModal').classList.add('hidden'); });
 
 document.getElementById('syncModalBtn').addEventListener('click', function(){
   if(isPortalMode) return;
@@ -30152,6 +30208,7 @@ function checkUrlParams(){
       document.getElementById('cloudBadge').style.display = 'none';
       document.getElementById('hdrSearchWrap').style.display = 'none';
       document.getElementById('bankHolidaysBtn').style.display = 'none';
+      document.getElementById('bankHolidayTotalsBtn').style.display = 'none';
       document.getElementById('addNewStaffModalBtn').style.display = 'none';
       document.getElementById('pdfExportModalBtn').style.display = 'none';
       document.getElementById('batchWeekBtn').style.display = 'none';
