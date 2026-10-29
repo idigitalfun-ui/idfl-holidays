@@ -1757,6 +1757,20 @@
         "date": "2026-10-05",
         "hours": 35.0,
         "note": "Please pay 35 hours holiday pay"
+      },
+      {
+        "id": "source_h_2026_s4_2026-10-12_35_0",
+        "year": "2026",
+        "date": "2026-10-12",
+        "hours": 35.0,
+        "note": "Please pay 35 hours holiday pay"
+      },
+      {
+        "id": "source_h_2026_s4_2026-10-19_35_0",
+        "year": "2026",
+        "date": "2026-10-19",
+        "hours": 35.0,
+        "note": "Please pay 35 hours holiday pay"
       }
     ],
     "s11": [
@@ -2121,6 +2135,20 @@
         "date": "24/08/2026",
         "hours": 7,
         "note": "Please pay 7 hours holiday pay"
+      },
+      {
+        "id": "source_h_2026_s3_2026-10-12_35_0",
+        "year": "2026",
+        "date": "2026-10-12",
+        "hours": 35.0,
+        "note": "Please pay 35 hours holiday pay"
+      },
+      {
+        "id": "source_h_2026_s3_2026-10-19_35_0",
+        "year": "2026",
+        "date": "2026-10-19",
+        "hours": 35.0,
+        "note": "Please pay 35 hours holiday pay"
       }
     ],
     "s18": [
@@ -23191,10 +23219,10 @@
           }
         ],
         "totalWorked": 1316.0,
-        "days": 20.1,
-        "currentAvailableHrs": 140.72,
+        "days": 10.1,
+        "currentAvailableHrs": 70.72,
         "calculatedHolidays": 105.28,
-        "holidaysTaken": 91.0
+        "holidaysTaken": 161.0
       },
       "s11": {
         "opening": 17.36,
@@ -23931,10 +23959,10 @@
           }
         ],
         "totalWorked": 1355.0,
-        "days": 26.51,
-        "currentAvailableHrs": 185.58,
+        "days": 16.51,
+        "currentAvailableHrs": 115.58,
         "calculatedHolidays": 108.4,
-        "holidaysTaken": 35.0
+        "holidaysTaken": 105.0
       },
       "s18": {
         "opening": -3.92,
@@ -25175,7 +25203,7 @@
   "staff": [
     {
       "id": "s1",
-      "name": "Osama Saleem",
+      "name": "Osama Saleem Sabri",
       "shop": "Mullingar",
       "startStatus": "confirmed",
       "startDate": "01/08/2022",
