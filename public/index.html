@@ -302,7 +302,7 @@ table.batch-table input:focus{border-color:var(--ac)}
       <button class="modal-close" id="bankHolidaysClose">&times;</button>
     </div>
     <div class="modal-body">
-      <p style="font-size:.78rem;color:var(--tx2);margin-bottom:14px;line-height:1.45">This register is separate from annual holiday leave. It lists the ten Irish public-holiday dates for Rana Abdullah, Osama Saleem, and Ibrar Tufail. Source working hours are shown only where they were recorded in the weekly-hours workbook; a blank amount is not treated as paid holiday leave.</p>
+      <p style="font-size:.78rem;color:var(--tx2);margin-bottom:14px;line-height:1.45">This date-only register is separate from annual holiday leave. It lists the ten Irish public-holiday dates for Rana Abdullah, Osama Saleem, and Ibrar Tufail, without entering payment or working hours.</p>
       <div style="display:flex;gap:10px;align-items:end;flex-wrap:wrap;margin-bottom:14px">
         <div style="min-width:150px;flex:0 1 170px">
           <label for="bankHolidayYearFilter">Year</label>
@@ -317,12 +317,12 @@ table.batch-table input:focus{border-color:var(--ac)}
         <button class="btn btn-ac" id="bankHolidayCsvBtn" style="margin-bottom:0">Download CSV</button>
       </div>
       <div style="max-height:54vh;overflow:auto;border:1px solid var(--bd);border-radius:10px">
-        <table class="weeks" style="min-width:720px">
-          <thead><tr><th>Staff</th><th>Store</th><th>Date</th><th>Public Holiday</th><th class="num">Recorded Hours</th><th>Status</th></tr></thead>
+        <table class="weeks" style="min-width:600px">
+          <thead><tr><th>Staff</th><th>Store</th><th>Date</th><th>Public Holiday</th></tr></thead>
           <tbody id="bankHolidayTbody"></tbody>
         </table>
       </div>
-      <p style="font-size:.72rem;color:var(--tx3);margin:10px 0 0;line-height:1.4">Recorded hours are bank-holiday working hours from the source workbook. They do not reduce the employee's annual holiday balance.</p>
+      <p style="font-size:.72rem;color:var(--tx3);margin:10px 0 0;line-height:1.4">These dates do not change an employee's annual holiday balance.</p>
     </div>
     <div class="modal-footer">
       <button class="btn btn-ghost" id="bankHolidaysCloseBtn">Close</button>
@@ -26701,301 +26701,181 @@ table.batch-table input:focus{border-color:var(--ac)}
         "id": "bank_s1_2024-01-01",
         "year": "2024",
         "date": "2024-01-01",
-        "name": "New Year's Day",
-        "recordedHours": null,
-        "sourceWeek": "",
-        "sourceHeader": "",
-        "status": "not_recorded"
+        "name": "New Year's Day"
       },
       {
         "id": "bank_s1_2024-02-05",
         "year": "2024",
         "date": "2024-02-05",
-        "name": "St Brigid's Day",
-        "recordedHours": null,
-        "sourceWeek": "",
-        "sourceHeader": "",
-        "status": "not_recorded"
+        "name": "St Brigid's Day"
       },
       {
         "id": "bank_s1_2024-03-17",
         "year": "2024",
         "date": "2024-03-17",
-        "name": "St Patrick's Day",
-        "recordedHours": null,
-        "sourceWeek": "",
-        "sourceHeader": "",
-        "status": "not_recorded"
+        "name": "St Patrick's Day"
       },
       {
         "id": "bank_s1_2024-04-01",
         "year": "2024",
         "date": "2024-04-01",
-        "name": "Easter Monday",
-        "recordedHours": null,
-        "sourceWeek": "",
-        "sourceHeader": "",
-        "status": "not_recorded"
+        "name": "Easter Monday"
       },
       {
         "id": "bank_s1_2024-05-06",
         "year": "2024",
         "date": "2024-05-06",
-        "name": "May Day",
-        "recordedHours": null,
-        "sourceWeek": "",
-        "sourceHeader": "",
-        "status": "not_recorded"
+        "name": "May Day"
       },
       {
         "id": "bank_s1_2024-06-03",
         "year": "2024",
         "date": "2024-06-03",
-        "name": "June Bank Holiday",
-        "recordedHours": null,
-        "sourceWeek": "",
-        "sourceHeader": "",
-        "status": "not_recorded"
+        "name": "June Bank Holiday"
       },
       {
         "id": "bank_s1_2024-08-05",
         "year": "2024",
         "date": "2024-08-05",
-        "name": "August Bank Holiday",
-        "recordedHours": null,
-        "sourceWeek": "",
-        "sourceHeader": "",
-        "status": "not_recorded"
+        "name": "August Bank Holiday"
       },
       {
         "id": "bank_s1_2024-10-28",
         "year": "2024",
         "date": "2024-10-28",
-        "name": "October Bank Holiday",
-        "recordedHours": null,
-        "sourceWeek": "",
-        "sourceHeader": "",
-        "status": "not_recorded"
+        "name": "October Bank Holiday"
       },
       {
         "id": "bank_s1_2024-12-25",
         "year": "2024",
         "date": "2024-12-25",
-        "name": "Christmas Day",
-        "recordedHours": null,
-        "sourceWeek": "",
-        "sourceHeader": "",
-        "status": "not_recorded"
+        "name": "Christmas Day"
       },
       {
         "id": "bank_s1_2024-12-26",
         "year": "2024",
         "date": "2024-12-26",
-        "name": "St Stephen's Day",
-        "recordedHours": null,
-        "sourceWeek": "",
-        "sourceHeader": "",
-        "status": "not_recorded"
+        "name": "St Stephen's Day"
       },
       {
         "id": "bank_s1_2025-01-01",
         "year": "2025",
         "date": "2025-01-01",
-        "name": "New Year's Day",
-        "recordedHours": null,
-        "sourceWeek": "",
-        "sourceHeader": "",
-        "status": "not_recorded"
+        "name": "New Year's Day"
       },
       {
         "id": "bank_s1_2025-02-03",
         "year": "2025",
         "date": "2025-02-03",
-        "name": "St Brigid's Day",
-        "recordedHours": null,
-        "sourceWeek": "",
-        "sourceHeader": "",
-        "status": "not_recorded"
+        "name": "St Brigid's Day"
       },
       {
         "id": "bank_s1_2025-03-17",
         "year": "2025",
         "date": "2025-03-17",
-        "name": "St Patrick's Day",
-        "recordedHours": null,
-        "sourceWeek": "",
-        "sourceHeader": "",
-        "status": "not_recorded"
+        "name": "St Patrick's Day"
       },
       {
         "id": "bank_s1_2025-04-21",
         "year": "2025",
         "date": "2025-04-21",
-        "name": "Easter Monday",
-        "recordedHours": null,
-        "sourceWeek": "",
-        "sourceHeader": "",
-        "status": "not_recorded"
+        "name": "Easter Monday"
       },
       {
         "id": "bank_s1_2025-05-05",
         "year": "2025",
         "date": "2025-05-05",
-        "name": "May Day",
-        "recordedHours": null,
-        "sourceWeek": "",
-        "sourceHeader": "",
-        "status": "not_recorded"
+        "name": "May Day"
       },
       {
         "id": "bank_s1_2025-06-02",
         "year": "2025",
         "date": "2025-06-02",
-        "name": "June Bank Holiday",
-        "recordedHours": null,
-        "sourceWeek": "",
-        "sourceHeader": "",
-        "status": "not_recorded"
+        "name": "June Bank Holiday"
       },
       {
         "id": "bank_s1_2025-08-04",
         "year": "2025",
         "date": "2025-08-04",
-        "name": "August Bank Holiday",
-        "recordedHours": null,
-        "sourceWeek": "",
-        "sourceHeader": "",
-        "status": "not_recorded"
+        "name": "August Bank Holiday"
       },
       {
         "id": "bank_s1_2025-10-27",
         "year": "2025",
         "date": "2025-10-27",
-        "name": "October Bank Holiday",
-        "recordedHours": null,
-        "sourceWeek": "",
-        "sourceHeader": "",
-        "status": "not_recorded"
+        "name": "October Bank Holiday"
       },
       {
         "id": "bank_s1_2025-12-25",
         "year": "2025",
         "date": "2025-12-25",
-        "name": "Christmas Day",
-        "recordedHours": null,
-        "sourceWeek": "",
-        "sourceHeader": "",
-        "status": "not_recorded"
+        "name": "Christmas Day"
       },
       {
         "id": "bank_s1_2025-12-26",
         "year": "2025",
         "date": "2025-12-26",
-        "name": "St Stephen's Day",
-        "recordedHours": 7.0,
-        "sourceWeek": "2025-12-22",
-        "sourceHeader": "Bank Holiday Workind Hrs (26/12/2025)",
-        "status": "recorded"
+        "name": "St Stephen's Day"
       },
       {
         "id": "bank_s1_2026-01-01",
         "year": "2026",
         "date": "2026-01-01",
-        "name": "New Year's Day",
-        "recordedHours": 5.5,
-        "sourceWeek": "2025-12-29",
-        "sourceHeader": "Bank Holiday Workind Hrs (01/01/2025)",
-        "status": "recorded"
+        "name": "New Year's Day"
       },
       {
         "id": "bank_s1_2026-02-02",
         "year": "2026",
         "date": "2026-02-02",
-        "name": "St Brigid's Day",
-        "recordedHours": null,
-        "sourceWeek": "",
-        "sourceHeader": "",
-        "status": "not_recorded"
+        "name": "St Brigid's Day"
       },
       {
         "id": "bank_s1_2026-03-17",
         "year": "2026",
         "date": "2026-03-17",
-        "name": "St Patrick's Day",
-        "recordedHours": null,
-        "sourceWeek": "",
-        "sourceHeader": "",
-        "status": "not_recorded"
+        "name": "St Patrick's Day"
       },
       {
         "id": "bank_s1_2026-04-06",
         "year": "2026",
         "date": "2026-04-06",
-        "name": "Easter Monday",
-        "recordedHours": null,
-        "sourceWeek": "",
-        "sourceHeader": "",
-        "status": "not_recorded"
+        "name": "Easter Monday"
       },
       {
         "id": "bank_s1_2026-05-04",
         "year": "2026",
         "date": "2026-05-04",
-        "name": "May Day",
-        "recordedHours": 6.0,
-        "sourceWeek": "2026-05-04",
-        "sourceHeader": "Bank Holiday Workind Hrs (04/05/2026)",
-        "status": "recorded"
+        "name": "May Day"
       },
       {
         "id": "bank_s1_2026-06-01",
         "year": "2026",
         "date": "2026-06-01",
-        "name": "June Bank Holiday",
-        "recordedHours": null,
-        "sourceWeek": "",
-        "sourceHeader": "",
-        "status": "not_recorded"
+        "name": "June Bank Holiday"
       },
       {
         "id": "bank_s1_2026-08-03",
         "year": "2026",
         "date": "2026-08-03",
-        "name": "August Bank Holiday",
-        "recordedHours": null,
-        "sourceWeek": "",
-        "sourceHeader": "",
-        "status": "not_recorded"
+        "name": "August Bank Holiday"
       },
       {
         "id": "bank_s1_2026-10-26",
         "year": "2026",
         "date": "2026-10-26",
-        "name": "October Bank Holiday",
-        "recordedHours": null,
-        "sourceWeek": "",
-        "sourceHeader": "",
-        "status": "not_recorded"
+        "name": "October Bank Holiday"
       },
       {
         "id": "bank_s1_2026-12-25",
         "year": "2026",
         "date": "2026-12-25",
-        "name": "Christmas Day",
-        "recordedHours": null,
-        "sourceWeek": "",
-        "sourceHeader": "",
-        "status": "not_recorded"
+        "name": "Christmas Day"
       },
       {
         "id": "bank_s1_2026-12-26",
         "year": "2026",
         "date": "2026-12-26",
-        "name": "St Stephen's Day",
-        "recordedHours": null,
-        "sourceWeek": "",
-        "sourceHeader": "",
-        "status": "not_recorded"
+        "name": "St Stephen's Day"
       }
     ],
     "s2": [
@@ -27003,301 +26883,181 @@ table.batch-table input:focus{border-color:var(--ac)}
         "id": "bank_s2_2024-01-01",
         "year": "2024",
         "date": "2024-01-01",
-        "name": "New Year's Day",
-        "recordedHours": null,
-        "sourceWeek": "",
-        "sourceHeader": "",
-        "status": "not_recorded"
+        "name": "New Year's Day"
       },
       {
         "id": "bank_s2_2024-02-05",
         "year": "2024",
         "date": "2024-02-05",
-        "name": "St Brigid's Day",
-        "recordedHours": null,
-        "sourceWeek": "",
-        "sourceHeader": "",
-        "status": "not_recorded"
+        "name": "St Brigid's Day"
       },
       {
         "id": "bank_s2_2024-03-17",
         "year": "2024",
         "date": "2024-03-17",
-        "name": "St Patrick's Day",
-        "recordedHours": null,
-        "sourceWeek": "",
-        "sourceHeader": "",
-        "status": "not_recorded"
+        "name": "St Patrick's Day"
       },
       {
         "id": "bank_s2_2024-04-01",
         "year": "2024",
         "date": "2024-04-01",
-        "name": "Easter Monday",
-        "recordedHours": null,
-        "sourceWeek": "",
-        "sourceHeader": "",
-        "status": "not_recorded"
+        "name": "Easter Monday"
       },
       {
         "id": "bank_s2_2024-05-06",
         "year": "2024",
         "date": "2024-05-06",
-        "name": "May Day",
-        "recordedHours": null,
-        "sourceWeek": "",
-        "sourceHeader": "",
-        "status": "not_recorded"
+        "name": "May Day"
       },
       {
         "id": "bank_s2_2024-06-03",
         "year": "2024",
         "date": "2024-06-03",
-        "name": "June Bank Holiday",
-        "recordedHours": null,
-        "sourceWeek": "",
-        "sourceHeader": "",
-        "status": "not_recorded"
+        "name": "June Bank Holiday"
       },
       {
         "id": "bank_s2_2024-08-05",
         "year": "2024",
         "date": "2024-08-05",
-        "name": "August Bank Holiday",
-        "recordedHours": null,
-        "sourceWeek": "",
-        "sourceHeader": "",
-        "status": "not_recorded"
+        "name": "August Bank Holiday"
       },
       {
         "id": "bank_s2_2024-10-28",
         "year": "2024",
         "date": "2024-10-28",
-        "name": "October Bank Holiday",
-        "recordedHours": null,
-        "sourceWeek": "",
-        "sourceHeader": "",
-        "status": "not_recorded"
+        "name": "October Bank Holiday"
       },
       {
         "id": "bank_s2_2024-12-25",
         "year": "2024",
         "date": "2024-12-25",
-        "name": "Christmas Day",
-        "recordedHours": null,
-        "sourceWeek": "",
-        "sourceHeader": "",
-        "status": "not_recorded"
+        "name": "Christmas Day"
       },
       {
         "id": "bank_s2_2024-12-26",
         "year": "2024",
         "date": "2024-12-26",
-        "name": "St Stephen's Day",
-        "recordedHours": null,
-        "sourceWeek": "",
-        "sourceHeader": "",
-        "status": "not_recorded"
+        "name": "St Stephen's Day"
       },
       {
         "id": "bank_s2_2025-01-01",
         "year": "2025",
         "date": "2025-01-01",
-        "name": "New Year's Day",
-        "recordedHours": null,
-        "sourceWeek": "",
-        "sourceHeader": "",
-        "status": "not_recorded"
+        "name": "New Year's Day"
       },
       {
         "id": "bank_s2_2025-02-03",
         "year": "2025",
         "date": "2025-02-03",
-        "name": "St Brigid's Day",
-        "recordedHours": null,
-        "sourceWeek": "",
-        "sourceHeader": "",
-        "status": "not_recorded"
+        "name": "St Brigid's Day"
       },
       {
         "id": "bank_s2_2025-03-17",
         "year": "2025",
         "date": "2025-03-17",
-        "name": "St Patrick's Day",
-        "recordedHours": null,
-        "sourceWeek": "",
-        "sourceHeader": "",
-        "status": "not_recorded"
+        "name": "St Patrick's Day"
       },
       {
         "id": "bank_s2_2025-04-21",
         "year": "2025",
         "date": "2025-04-21",
-        "name": "Easter Monday",
-        "recordedHours": null,
-        "sourceWeek": "",
-        "sourceHeader": "",
-        "status": "not_recorded"
+        "name": "Easter Monday"
       },
       {
         "id": "bank_s2_2025-05-05",
         "year": "2025",
         "date": "2025-05-05",
-        "name": "May Day",
-        "recordedHours": null,
-        "sourceWeek": "",
-        "sourceHeader": "",
-        "status": "not_recorded"
+        "name": "May Day"
       },
       {
         "id": "bank_s2_2025-06-02",
         "year": "2025",
         "date": "2025-06-02",
-        "name": "June Bank Holiday",
-        "recordedHours": null,
-        "sourceWeek": "",
-        "sourceHeader": "",
-        "status": "not_recorded"
+        "name": "June Bank Holiday"
       },
       {
         "id": "bank_s2_2025-08-04",
         "year": "2025",
         "date": "2025-08-04",
-        "name": "August Bank Holiday",
-        "recordedHours": null,
-        "sourceWeek": "",
-        "sourceHeader": "",
-        "status": "not_recorded"
+        "name": "August Bank Holiday"
       },
       {
         "id": "bank_s2_2025-10-27",
         "year": "2025",
         "date": "2025-10-27",
-        "name": "October Bank Holiday",
-        "recordedHours": null,
-        "sourceWeek": "",
-        "sourceHeader": "",
-        "status": "not_recorded"
+        "name": "October Bank Holiday"
       },
       {
         "id": "bank_s2_2025-12-25",
         "year": "2025",
         "date": "2025-12-25",
-        "name": "Christmas Day",
-        "recordedHours": null,
-        "sourceWeek": "",
-        "sourceHeader": "",
-        "status": "not_recorded"
+        "name": "Christmas Day"
       },
       {
         "id": "bank_s2_2025-12-26",
         "year": "2025",
         "date": "2025-12-26",
-        "name": "St Stephen's Day",
-        "recordedHours": 9.0,
-        "sourceWeek": "2025-12-22",
-        "sourceHeader": "Bank Holiday Workind Hrs (26/12/2025)",
-        "status": "recorded"
+        "name": "St Stephen's Day"
       },
       {
         "id": "bank_s2_2026-01-01",
         "year": "2026",
         "date": "2026-01-01",
-        "name": "New Year's Day",
-        "recordedHours": null,
-        "sourceWeek": "",
-        "sourceHeader": "",
-        "status": "not_recorded"
+        "name": "New Year's Day"
       },
       {
         "id": "bank_s2_2026-02-02",
         "year": "2026",
         "date": "2026-02-02",
-        "name": "St Brigid's Day",
-        "recordedHours": null,
-        "sourceWeek": "",
-        "sourceHeader": "",
-        "status": "not_recorded"
+        "name": "St Brigid's Day"
       },
       {
         "id": "bank_s2_2026-03-17",
         "year": "2026",
         "date": "2026-03-17",
-        "name": "St Patrick's Day",
-        "recordedHours": null,
-        "sourceWeek": "",
-        "sourceHeader": "",
-        "status": "not_recorded"
+        "name": "St Patrick's Day"
       },
       {
         "id": "bank_s2_2026-04-06",
         "year": "2026",
         "date": "2026-04-06",
-        "name": "Easter Monday",
-        "recordedHours": null,
-        "sourceWeek": "",
-        "sourceHeader": "",
-        "status": "not_recorded"
+        "name": "Easter Monday"
       },
       {
         "id": "bank_s2_2026-05-04",
         "year": "2026",
         "date": "2026-05-04",
-        "name": "May Day",
-        "recordedHours": 9.0,
-        "sourceWeek": "2026-05-04",
-        "sourceHeader": "Bank Holiday Workind Hrs (04/05/2026)",
-        "status": "recorded"
+        "name": "May Day"
       },
       {
         "id": "bank_s2_2026-06-01",
         "year": "2026",
         "date": "2026-06-01",
-        "name": "June Bank Holiday",
-        "recordedHours": null,
-        "sourceWeek": "",
-        "sourceHeader": "",
-        "status": "not_recorded"
+        "name": "June Bank Holiday"
       },
       {
         "id": "bank_s2_2026-08-03",
         "year": "2026",
         "date": "2026-08-03",
-        "name": "August Bank Holiday",
-        "recordedHours": null,
-        "sourceWeek": "",
-        "sourceHeader": "",
-        "status": "not_recorded"
+        "name": "August Bank Holiday"
       },
       {
         "id": "bank_s2_2026-10-26",
         "year": "2026",
         "date": "2026-10-26",
-        "name": "October Bank Holiday",
-        "recordedHours": null,
-        "sourceWeek": "",
-        "sourceHeader": "",
-        "status": "not_recorded"
+        "name": "October Bank Holiday"
       },
       {
         "id": "bank_s2_2026-12-25",
         "year": "2026",
         "date": "2026-12-25",
-        "name": "Christmas Day",
-        "recordedHours": null,
-        "sourceWeek": "",
-        "sourceHeader": "",
-        "status": "not_recorded"
+        "name": "Christmas Day"
       },
       {
         "id": "bank_s2_2026-12-26",
         "year": "2026",
         "date": "2026-12-26",
-        "name": "St Stephen's Day",
-        "recordedHours": null,
-        "sourceWeek": "",
-        "sourceHeader": "",
-        "status": "not_recorded"
+        "name": "St Stephen's Day"
       }
     ],
     "s8": [
@@ -27305,301 +27065,181 @@ table.batch-table input:focus{border-color:var(--ac)}
         "id": "bank_s8_2024-01-01",
         "year": "2024",
         "date": "2024-01-01",
-        "name": "New Year's Day",
-        "recordedHours": null,
-        "sourceWeek": "",
-        "sourceHeader": "",
-        "status": "not_recorded"
+        "name": "New Year's Day"
       },
       {
         "id": "bank_s8_2024-02-05",
         "year": "2024",
         "date": "2024-02-05",
-        "name": "St Brigid's Day",
-        "recordedHours": null,
-        "sourceWeek": "",
-        "sourceHeader": "",
-        "status": "not_recorded"
+        "name": "St Brigid's Day"
       },
       {
         "id": "bank_s8_2024-03-17",
         "year": "2024",
         "date": "2024-03-17",
-        "name": "St Patrick's Day",
-        "recordedHours": null,
-        "sourceWeek": "",
-        "sourceHeader": "",
-        "status": "not_recorded"
+        "name": "St Patrick's Day"
       },
       {
         "id": "bank_s8_2024-04-01",
         "year": "2024",
         "date": "2024-04-01",
-        "name": "Easter Monday",
-        "recordedHours": null,
-        "sourceWeek": "",
-        "sourceHeader": "",
-        "status": "not_recorded"
+        "name": "Easter Monday"
       },
       {
         "id": "bank_s8_2024-05-06",
         "year": "2024",
         "date": "2024-05-06",
-        "name": "May Day",
-        "recordedHours": 6.0,
-        "sourceWeek": "2024-05-06",
-        "sourceHeader": "Bank Holiday Workind Hrs (06/05/2024)",
-        "status": "recorded"
+        "name": "May Day"
       },
       {
         "id": "bank_s8_2024-06-03",
         "year": "2024",
         "date": "2024-06-03",
-        "name": "June Bank Holiday",
-        "recordedHours": null,
-        "sourceWeek": "",
-        "sourceHeader": "",
-        "status": "not_recorded"
+        "name": "June Bank Holiday"
       },
       {
         "id": "bank_s8_2024-08-05",
         "year": "2024",
         "date": "2024-08-05",
-        "name": "August Bank Holiday",
-        "recordedHours": null,
-        "sourceWeek": "",
-        "sourceHeader": "",
-        "status": "not_recorded"
+        "name": "August Bank Holiday"
       },
       {
         "id": "bank_s8_2024-10-28",
         "year": "2024",
         "date": "2024-10-28",
-        "name": "October Bank Holiday",
-        "recordedHours": null,
-        "sourceWeek": "",
-        "sourceHeader": "",
-        "status": "not_recorded"
+        "name": "October Bank Holiday"
       },
       {
         "id": "bank_s8_2024-12-25",
         "year": "2024",
         "date": "2024-12-25",
-        "name": "Christmas Day",
-        "recordedHours": null,
-        "sourceWeek": "",
-        "sourceHeader": "",
-        "status": "not_recorded"
+        "name": "Christmas Day"
       },
       {
         "id": "bank_s8_2024-12-26",
         "year": "2024",
         "date": "2024-12-26",
-        "name": "St Stephen's Day",
-        "recordedHours": null,
-        "sourceWeek": "",
-        "sourceHeader": "",
-        "status": "not_recorded"
+        "name": "St Stephen's Day"
       },
       {
         "id": "bank_s8_2025-01-01",
         "year": "2025",
         "date": "2025-01-01",
-        "name": "New Year's Day",
-        "recordedHours": null,
-        "sourceWeek": "",
-        "sourceHeader": "",
-        "status": "not_recorded"
+        "name": "New Year's Day"
       },
       {
         "id": "bank_s8_2025-02-03",
         "year": "2025",
         "date": "2025-02-03",
-        "name": "St Brigid's Day",
-        "recordedHours": null,
-        "sourceWeek": "",
-        "sourceHeader": "",
-        "status": "not_recorded"
+        "name": "St Brigid's Day"
       },
       {
         "id": "bank_s8_2025-03-17",
         "year": "2025",
         "date": "2025-03-17",
-        "name": "St Patrick's Day",
-        "recordedHours": null,
-        "sourceWeek": "",
-        "sourceHeader": "",
-        "status": "not_recorded"
+        "name": "St Patrick's Day"
       },
       {
         "id": "bank_s8_2025-04-21",
         "year": "2025",
         "date": "2025-04-21",
-        "name": "Easter Monday",
-        "recordedHours": null,
-        "sourceWeek": "",
-        "sourceHeader": "",
-        "status": "not_recorded"
+        "name": "Easter Monday"
       },
       {
         "id": "bank_s8_2025-05-05",
         "year": "2025",
         "date": "2025-05-05",
-        "name": "May Day",
-        "recordedHours": null,
-        "sourceWeek": "",
-        "sourceHeader": "",
-        "status": "not_recorded"
+        "name": "May Day"
       },
       {
         "id": "bank_s8_2025-06-02",
         "year": "2025",
         "date": "2025-06-02",
-        "name": "June Bank Holiday",
-        "recordedHours": null,
-        "sourceWeek": "",
-        "sourceHeader": "",
-        "status": "not_recorded"
+        "name": "June Bank Holiday"
       },
       {
         "id": "bank_s8_2025-08-04",
         "year": "2025",
         "date": "2025-08-04",
-        "name": "August Bank Holiday",
-        "recordedHours": null,
-        "sourceWeek": "",
-        "sourceHeader": "",
-        "status": "not_recorded"
+        "name": "August Bank Holiday"
       },
       {
         "id": "bank_s8_2025-10-27",
         "year": "2025",
         "date": "2025-10-27",
-        "name": "October Bank Holiday",
-        "recordedHours": null,
-        "sourceWeek": "",
-        "sourceHeader": "",
-        "status": "not_recorded"
+        "name": "October Bank Holiday"
       },
       {
         "id": "bank_s8_2025-12-25",
         "year": "2025",
         "date": "2025-12-25",
-        "name": "Christmas Day",
-        "recordedHours": null,
-        "sourceWeek": "",
-        "sourceHeader": "",
-        "status": "not_recorded"
+        "name": "Christmas Day"
       },
       {
         "id": "bank_s8_2025-12-26",
         "year": "2025",
         "date": "2025-12-26",
-        "name": "St Stephen's Day",
-        "recordedHours": 7.0,
-        "sourceWeek": "2025-12-22",
-        "sourceHeader": "Bank Holiday Workind Hrs (26/12/2025)",
-        "status": "recorded"
+        "name": "St Stephen's Day"
       },
       {
         "id": "bank_s8_2026-01-01",
         "year": "2026",
         "date": "2026-01-01",
-        "name": "New Year's Day",
-        "recordedHours": null,
-        "sourceWeek": "",
-        "sourceHeader": "",
-        "status": "not_recorded"
+        "name": "New Year's Day"
       },
       {
         "id": "bank_s8_2026-02-02",
         "year": "2026",
         "date": "2026-02-02",
-        "name": "St Brigid's Day",
-        "recordedHours": null,
-        "sourceWeek": "",
-        "sourceHeader": "",
-        "status": "not_recorded"
+        "name": "St Brigid's Day"
       },
       {
         "id": "bank_s8_2026-03-17",
         "year": "2026",
         "date": "2026-03-17",
-        "name": "St Patrick's Day",
-        "recordedHours": null,
-        "sourceWeek": "",
-        "sourceHeader": "",
-        "status": "not_recorded"
+        "name": "St Patrick's Day"
       },
       {
         "id": "bank_s8_2026-04-06",
         "year": "2026",
         "date": "2026-04-06",
-        "name": "Easter Monday",
-        "recordedHours": null,
-        "sourceWeek": "",
-        "sourceHeader": "",
-        "status": "not_recorded"
+        "name": "Easter Monday"
       },
       {
         "id": "bank_s8_2026-05-04",
         "year": "2026",
         "date": "2026-05-04",
-        "name": "May Day",
-        "recordedHours": 7.0,
-        "sourceWeek": "2026-05-04",
-        "sourceHeader": "Bank Holiday Workind Hrs (04/05/2026)",
-        "status": "recorded"
+        "name": "May Day"
       },
       {
         "id": "bank_s8_2026-06-01",
         "year": "2026",
         "date": "2026-06-01",
-        "name": "June Bank Holiday",
-        "recordedHours": null,
-        "sourceWeek": "",
-        "sourceHeader": "",
-        "status": "not_recorded"
+        "name": "June Bank Holiday"
       },
       {
         "id": "bank_s8_2026-08-03",
         "year": "2026",
         "date": "2026-08-03",
-        "name": "August Bank Holiday",
-        "recordedHours": null,
-        "sourceWeek": "",
-        "sourceHeader": "",
-        "status": "not_recorded"
+        "name": "August Bank Holiday"
       },
       {
         "id": "bank_s8_2026-10-26",
         "year": "2026",
         "date": "2026-10-26",
-        "name": "October Bank Holiday",
-        "recordedHours": null,
-        "sourceWeek": "",
-        "sourceHeader": "",
-        "status": "not_recorded"
+        "name": "October Bank Holiday"
       },
       {
         "id": "bank_s8_2026-12-25",
         "year": "2026",
         "date": "2026-12-25",
-        "name": "Christmas Day",
-        "recordedHours": null,
-        "sourceWeek": "",
-        "sourceHeader": "",
-        "status": "not_recorded"
+        "name": "Christmas Day"
       },
       {
         "id": "bank_s8_2026-12-26",
         "year": "2026",
         "date": "2026-12-26",
-        "name": "St Stephen's Day",
-        "recordedHours": null,
-        "sourceWeek": "",
-        "sourceHeader": "",
-        "status": "not_recorded"
+        "name": "St Stephen's Day"
       }
     ]
   }
@@ -28287,9 +27927,8 @@ function renderHdrStats(){
   el.innerHTML='<span>Active staff: <strong>'+count+'</strong></span><span>Total balance: <strong>'+fmt1(tot)+' hrs</strong></span>';
 }
 
-// Bank holidays are shown independently from annual leave.  The source
-// workbook records working hours on only some public-holiday dates, so a blank
-// amount intentionally means "not recorded", not zero holiday entitlement.
+// Bank holidays are shown independently from annual leave.  This is a
+// date-only register, intentionally without payment or working-hour values.
 let bankHolidayYearFilter = 'ALL';
 function bankHolidayRows(){
   const rows=[];
@@ -28303,9 +27942,7 @@ function bankHolidayRows(){
         shop:staff.shop || staff.location || '',
         year:String(entry.year || String(entry.date || '').slice(0,4)),
         date:entry.date,
-        name:entry.name || 'Public holiday',
-        recordedHours:entry.recordedHours,
-        status:entry.status || (entry.recordedHours === null || entry.recordedHours === undefined ? 'not_recorded' : 'recorded')
+        name:entry.name || 'Public holiday'
       });
     });
   });
@@ -28320,20 +27957,16 @@ function filteredBankHolidayRows(){
 }
 function renderBankHolidayRegister(){
   const rows=filteredBankHolidayRows();
-  const recorded=rows.filter(function(row){ return row.recordedHours !== null && row.recordedHours !== undefined; });
-  const total=recorded.reduce(function(sum,row){ return sum + Number(row.recordedHours || 0); },0);
   const stats=document.getElementById('bankHolidayStats');
-  if(stats) stats.textContent=rows.length+' public-holiday records; '+recorded.length+' with source hours ('+fmt1(total)+' hrs)';
+  if(stats) stats.textContent=rows.length+' public-holiday dates';
   const body=document.getElementById('bankHolidayTbody');
   if(!body) return;
   if(!rows.length){
-    body.innerHTML='<tr><td colspan="6" style="padding:20px;text-align:center;color:var(--tx3)">No bank-holiday records for this year.</td></tr>';
+    body.innerHTML='<tr><td colspan="4" style="padding:20px;text-align:center;color:var(--tx3)">No bank-holiday records for this year.</td></tr>';
     return;
   }
   body.innerHTML=rows.map(function(row){
-    const hasHours=row.recordedHours !== null && row.recordedHours !== undefined;
-    const status=hasHours ? '<span style="color:var(--gr);font-weight:800">Source hours recorded</span>' : '<span style="color:var(--tx3);font-weight:700">Payment not recorded</span>';
-    return '<tr><td><strong>'+bankHolidayEscape(row.staff)+'</strong></td><td>'+bankHolidayEscape(row.shop)+'</td><td>'+bankHolidayEscape(formatLocalDate(parseLocalDate(row.date)))+'</td><td>'+bankHolidayEscape(row.name)+'</td><td class="num">'+(hasHours ? fmt1(row.recordedHours)+' hrs' : '&mdash;')+'</td><td>'+status+'</td></tr>';
+    return '<tr><td><strong>'+bankHolidayEscape(row.staff)+'</strong></td><td>'+bankHolidayEscape(row.shop)+'</td><td>'+bankHolidayEscape(formatLocalDate(parseLocalDate(row.date)))+'</td><td>'+bankHolidayEscape(row.name)+'</td></tr>';
   }).join('');
 }
 function csvCell(value){
@@ -28341,8 +27974,8 @@ function csvCell(value){
 }
 function downloadBankHolidayCsv(){
   const rows=filteredBankHolidayRows();
-  const csv=['Staff,Store,Date,Public Holiday,Recorded Hours,Status'].concat(rows.map(function(row){
-    return [row.staff,row.shop,row.date,row.name,row.recordedHours === null || row.recordedHours === undefined ? '' : row.recordedHours,row.recordedHours === null || row.recordedHours === undefined ? 'Payment not recorded' : 'Source hours recorded'].map(csvCell).join(',');
+  const csv=['Staff,Store,Date,Public Holiday'].concat(rows.map(function(row){
+    return [row.staff,row.shop,row.date,row.name].map(csvCell).join(',');
   })).join('\r\n');
   const blob=new Blob([csv],{type:'text/csv;charset=utf-8'});
   const link=document.createElement('a');
