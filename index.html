@@ -28056,6 +28056,65 @@ function getBankHolidayInclusions(sid){
     return result;
   }, {});
 }
+let bankHolidaySyncQueue=Promise.resolve();
+function queueBankHolidayInclusionSync(sid, year, included){
+  bankHolidaySyncQueue=bankHolidaySyncQueue.then(function(){
+    return syncBankHolidayInclusion(sid,year,included);
+  }).catch(function(){
+    return false;
+  });
+}
+async function syncBankHolidayInclusion(sid, year, included){
+  const token=getActiveGitHubToken();
+  if(!token || !sharedDataLoaded){
+    triggerAutoSync();
+    return false;
+  }
+  try{
+    setCloudStatus('saving','Saving the '+year+' bank-holiday selection to the shared record.');
+    for(let attempt=0;attempt<2;attempt++){
+      const getRes=await fetch('https://api.github.com/repos/'+GH_REPO+'/contents/holiday_data.json',{
+        headers:{'Authorization':'token '+token,'Accept':'application/vnd.github.v3+json'}
+      });
+      if(!getRes.ok) throw new Error('Could not read the shared record');
+      const fileData=await getRes.json();
+      const remoteData=JSON.parse(base64ToUtf8(fileData.content || ''));
+      if(!remoteData.baseBankHolidayInclusions) remoteData.baseBankHolidayInclusions={};
+      if(!remoteData.baseBankHolidayInclusions[sid]) remoteData.baseBankHolidayInclusions[sid]={};
+      remoteData.baseBankHolidayInclusions[sid][year]=Boolean(included);
+      const putRes=await fetch('https://api.github.com/repos/'+GH_REPO+'/contents/holiday_data.json',{
+        method:'PUT',
+        headers:{'Authorization':'token '+token,'Accept':'application/vnd.github.v3+json','Content-Type':'application/json'},
+        body:JSON.stringify({
+          message:'Save bank holiday inclusion [skip ci]',
+          content:utf8ToBase64(JSON.stringify(remoteData,null,2)),
+          sha:fileData.sha,
+          branch:'main'
+        })
+      });
+      if(putRes.ok){
+        BASE.baseBankHolidayInclusions=remoteData.baseBankHolidayInclusions;
+        sharedDataFingerprint=dataFingerprint(remoteData);
+        ov=pruneCommittedLocalOverlay(remoteData,ov);
+        try{
+          if(Object.keys(ov).length) localStorage.setItem(LS_KEY,JSON.stringify(ov));
+          else localStorage.removeItem(LS_KEY);
+        }catch(error){}
+        syncBlockedByConflict=Object.keys(ov).length>0;
+        if(syncBlockedByConflict){
+          setCloudStatus('conflict','Bank-holiday selection saved. Other older local changes remain protected until reviewed.');
+        }else{
+          setCloudStatus('synced','Bank-holiday selection saved to the shared company record.');
+        }
+        return true;
+      }
+      if(attempt===1) throw new Error('The shared record changed while saving');
+    }
+  }catch(error){
+    setCloudStatus('error','The bank-holiday selection is saved on this device but could not reach the shared record yet.');
+  }
+  return false;
+}
 function toggleBankHolidayInclusion(sid, year){
   if(BANK_HOLIDAY_SUMMARY_YEARS.indexOf(year)===-1) return;
   const staff = BASE.staff.find(function(person){ return person.id===sid; });
@@ -28067,9 +28126,9 @@ function toggleBankHolidayInclusion(sid, year){
   if(!ov._bankHolidayInclusions) ov._bankHolidayInclusions = {};
   ov._bankHolidayInclusions[sid]=nextInclusions;
   if(!saveOv(ov)) return;
-  triggerAutoSync();
   renderAll();
   renderBankHolidayTotals();
+  queueBankHolidayInclusionSync(sid,year,nextInclusions[year]);
   toast('Bank holidays for '+year+' '+(isCurrentlyIncluded ? 'removed from ' : 'added to ')+staff.name+'\'s total.');
 }
 function bankHolidaySummaryRows(){
