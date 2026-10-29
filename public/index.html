@@ -28022,6 +28022,49 @@ function openBankHolidayRegister(){
   document.getElementById('bankHolidaysModal').classList.remove('hidden');
 }
 
+// The three requested profiles have a personal, read-only view of their
+// bank-holiday dates. The switch only changes visibility; it never adds
+// hours, payment, or annual-leave deductions.
+const PROFILE_BANK_HOLIDAY_STAFF_IDS = new Set(['s1','s2','s8']);
+let profileBankHolidayVisibility = {};
+let profileBankHolidayYearFilter = 'ALL';
+function profileBankHolidayRows(sid){
+  return bankHolidayRows().filter(function(row){ return row.staffId === sid; });
+}
+function renderProfileBankHolidayPanel(sid){
+  const panel = document.getElementById('staffBankHolidaysPanel');
+  if(!panel || !PROFILE_BANK_HOLIDAY_STAFF_IDS.has(sid)) return;
+  if(!profileBankHolidayVisibility[sid]){
+    panel.innerHTML='';
+    return;
+  }
+  const allRows = profileBankHolidayRows(sid);
+  const rows = allRows.filter(function(row){ return profileBankHolidayYearFilter === 'ALL' || row.year === profileBankHolidayYearFilter; });
+  const filters = [['ALL','All dates'],['2024','2024'],['2025','2025'],['2026','2026']];
+  panel.innerHTML = '<div class="card" style="margin:0 0 16px;border-color:#86efac;background:linear-gradient(135deg,#f0fdf4,#fff)">'
+    +'<div class="card-hd" style="align-items:center;gap:10px;flex-wrap:wrap"><h3>&#127974; Bank Holidays</h3><span class="card-sub">'+rows.length+' date'+(rows.length===1?'':'s')+' shown &bull; no hours added</span>'
+    +'<button class="btn btn-ghost" id="hideStaffBankHolidaysBtn" style="margin-left:auto">Hide Bank Holidays</button></div>'
+    +'<div style="display:flex;gap:7px;flex-wrap:wrap;padding:0 14px 12px">'+filters.map(function(filter){
+      const selected = profileBankHolidayYearFilter === filter[0];
+      return '<button class="btn '+(selected?'btn-gr':'btn-ghost')+'" data-profile-bank-year="'+filter[0]+'" style="padding:5px 10px;font-size:.72rem">'+filter[1]+'</button>';
+    }).join('')+'</div>'
+    +'<div style="max-height:270px;overflow:auto;border-top:1px solid var(--bd)"><table class="weeks" style="min-width:390px"><thead><tr><th>Date</th><th>Bank Holiday</th></tr></thead><tbody>'
+    +(rows.length ? rows.map(function(row){ return '<tr><td>'+bankHolidayEscape(formatLocalDate(parseLocalDate(row.date)))+'</td><td><strong>'+bankHolidayEscape(row.name)+'</strong></td></tr>'; }).join('') : '<tr><td colspan="2" style="padding:18px;text-align:center;color:var(--tx3)">No dates for this year.</td></tr>')
+    +'</tbody></table></div>'
+    +'<div style="padding:10px 14px;font-size:.72rem;color:var(--tx3)">These are date-only records and do not change annual holiday balances.</div>'
+    +'</div>';
+  document.getElementById('hideStaffBankHolidaysBtn').addEventListener('click',function(){
+    profileBankHolidayVisibility[sid]=false;
+    renderMain();
+  });
+  panel.querySelectorAll('[data-profile-bank-year]').forEach(function(button){
+    button.addEventListener('click',function(){
+      profileBankHolidayYearFilter=button.dataset.profileBankYear;
+      renderProfileBankHolidayPanel(sid);
+    });
+  });
+}
+
 // â”€â”€â”€ Parse Departure Timestamp for Sorting (Newest to Oldest) â”€â”€â”€
 function parseDepartureTimestamp(s){
   if(s.leftDate){
@@ -28230,6 +28273,8 @@ function renderMain(){
   else if(balance< (dailyHrs * 2)) balColor='var(--am)';
   
   const isInactive = staff.status === 'inactive';
+  const hasProfileBankHolidays = PROFILE_BANK_HOLIDAY_STAFF_IDS.has(staff.id) && profileBankHolidayRows(staff.id).length > 0;
+  const profileBankHolidaysVisible = !!profileBankHolidayVisibility[staff.id];
   const finalPayNeedsReview = staff.finalHolidayPayStatus === 'review';
   const holidayPayNeedsReview = staff.holidayPayStatus === 'review';
   const payReviewText = finalPayNeedsReview ? 'Final holiday pay' : 'Holiday pay';
@@ -28284,12 +28329,14 @@ function renderMain(){
     +'</div>'
     +'</div>'
     +'<div class="profile-actions" style="display:flex;gap:8px;flex-wrap:wrap">'
+    +(hasProfileBankHolidays ? '<button class="btn btn-gr" id="staffBankHolidaysBtn" title="Show this staff member\'s bank-holiday dates">&#127974; '+(profileBankHolidaysVisible?'Hide':'View')+' Bank Holidays</button>' : '')
     +'<button class="btn btn-pk" id="staffPdfBtn" title="Export Official PDF Statement">&#128196; PDF Statement</button>'
     +(!isPortalMode ? '<button class="btn btn-pu" id="shareBtn">&#128279; Share / Link</button>' : '')
     +(!isPortalMode && !isInactive ? '<button class="btn btn-rd" id="deactivateStaffBtn" title="Move to Former Staff">&#128683; Set as Former Staff</button>' : '')
     +(isPortalMode ? '<button class="btn btn-ghost" id="bookmarkBtn">&#128241; Save to Phone</button>' : '')
     +'</div>'
     +'</div>'
+    +(hasProfileBankHolidays ? '<div id="staffBankHolidaysPanel"></div>' : '')
     
     // ðŸŒŸ HERO STATS: CENTERED BIG AVAILABLE HOLIDAYS (WITH EXACT WEEKS + DAYS + HOURS) ðŸŒŸ
     +'<div class="hero-center-wrap">'
@@ -28409,6 +28456,14 @@ function renderMain(){
     : '')
     
     +'</div>';
+
+  if(hasProfileBankHolidays){
+    document.getElementById('staffBankHolidaysBtn').addEventListener('click',function(){
+      profileBankHolidayVisibility[staff.id] = !profileBankHolidaysVisible;
+      renderMain();
+    });
+    renderProfileBankHolidayPanel(staff.id);
+  }
 
   // Weeks Table with Full Label & Hours Editing
   const tbody=document.getElementById('weeksTbody');
@@ -29903,6 +29958,129 @@ function normaliseCurrentPeriodLabels(database){
   return changed;
 }
 
+// Browser copies are kept so an offline edit is never silently lost.  A
+// deployment can, however, leave an old *identical* copy behind.  Remove only
+// overlay values which the current shared record already contains; anything
+// different stays on the device and continues to trigger the safe review
+// state below.
+function sameStoredValue(left, right){
+  return JSON.stringify(left) === JSON.stringify(right);
+}
+function weekIdentity(week){
+  const period = periodFromWeekRecord(week || {});
+  return period ? period.startDate : String((week || {}).date || (week || {}).label || '');
+}
+function sameTrackedWeeks(left, right){
+  const localWeeks = Array.isArray(left) ? left : [];
+  const sharedWeeks = Array.isArray(right) ? right : [];
+  if(localWeeks.length !== sharedWeeks.length) return false;
+  const sharedByPeriod = {};
+  sharedWeeks.forEach(function(week){
+    const key = weekIdentity(week);
+    if(!key || sharedByPeriod[key]) return;
+    sharedByPeriod[key] = week;
+  });
+  if(Object.keys(sharedByPeriod).length !== sharedWeeks.length) return false;
+  return localWeeks.every(function(week){
+    const key = weekIdentity(week);
+    const sharedWeek = sharedByPeriod[key];
+    return !!sharedWeek && Number(sharedWeek.hours || 0) === Number(week.hours || 0);
+  });
+}
+function sameLogEntry(left, right){
+  if(!left || !right) return false;
+  if(left.id && right.id && left.id === right.id) return true;
+  return String(left.date || '') === String(right.date || '') &&
+    Number(left.hours || 0) === Number(right.hours || 0) &&
+    String(left.note || '') === String(right.note || '');
+}
+function pruneCommittedLogAdds(draft, key, shared, sharedKey){
+  if(!draft[key]) return;
+  Object.keys(draft[key]).forEach(function(sid){
+    const sharedItems = ((shared[sharedKey] || {})[sid] || []);
+    const pending = (draft[key][sid] || []).filter(function(item){
+      return !sharedItems.some(function(sharedItem){ return sameLogEntry(item, sharedItem); });
+    });
+    if(pending.length) draft[key][sid] = pending;
+    else delete draft[key][sid];
+  });
+  if(!Object.keys(draft[key]).length) delete draft[key];
+}
+function pruneCommittedLogDeletes(draft, key, shared, sharedKey){
+  if(!draft[key]) return;
+  Object.keys(draft[key]).forEach(function(sid){
+    const sharedIds = new Set((((shared[sharedKey] || {})[sid] || []).map(function(item){ return item.id; })));
+    const pending = (draft[key][sid] || []).filter(function(id){ return sharedIds.has(id); });
+    if(pending.length) draft[key][sid] = pending;
+    else delete draft[key][sid];
+  });
+  if(!Object.keys(draft[key]).length) delete draft[key];
+}
+function pruneCommittedLogEdits(draft, key, shared, sharedKey){
+  if(!draft[key]) return;
+  Object.keys(draft[key]).forEach(function(id){
+    const change = draft[key][id] || {};
+    let sharedItem = null;
+    Object.keys(shared[sharedKey] || {}).some(function(sid){
+      sharedItem = ((shared[sharedKey] || {})[sid] || []).find(function(item){ return item.id === id; }) || null;
+      return !!sharedItem;
+    });
+    const alreadyApplied = !sharedItem || ['date','hours','note'].every(function(field){
+      return change[field] === undefined || sameStoredValue(change[field], sharedItem[field]);
+    });
+    if(alreadyApplied) delete draft[key][id];
+  });
+  if(!Object.keys(draft[key]).length) delete draft[key];
+}
+function pruneCommittedLocalOverlay(shared, localOverlay){
+  const draft = JSON.parse(JSON.stringify(localOverlay || {}));
+  const sharedStaff = shared.staff || [];
+  const findSharedStaff = function(id){ return sharedStaff.find(function(person){ return person.id === id; }); };
+
+  Object.keys(draft).filter(function(key){ return /^20\d{2}$/.test(key); }).forEach(function(year){
+    Object.keys(draft[year] || {}).forEach(function(sid){
+      const localRecord = draft[year][sid] || {};
+      const sharedRecord = (((shared.years || {})[year] || {})[sid] || {});
+      if(Array.isArray(localRecord.weeks) && sameTrackedWeeks(localRecord.weeks, sharedRecord.weeks)) delete localRecord.weeks;
+      if(localRecord.opening !== undefined && sameStoredValue(localRecord.opening, sharedRecord.opening)) delete localRecord.opening;
+      if(!Object.keys(localRecord).length) delete draft[year][sid];
+    });
+    if(!Object.keys(draft[year] || {}).length) delete draft[year];
+  });
+
+  pruneCommittedLogAdds(draft, '_holLog', shared, 'baseHolLogs');
+  pruneCommittedLogAdds(draft, '_sickLog', shared, 'baseSickLogs');
+  pruneCommittedLogDeletes(draft, '_delHol', shared, 'baseHolLogs');
+  pruneCommittedLogDeletes(draft, '_delSick', shared, 'baseSickLogs');
+  pruneCommittedLogEdits(draft, '_editHol', shared, 'baseHolLogs');
+  pruneCommittedLogEdits(draft, '_editSick', shared, 'baseSickLogs');
+
+  if(Array.isArray(draft._newStaff)){
+    draft._newStaff = draft._newStaff.filter(function(person){ return !findSharedStaff(person.id); });
+    if(!draft._newStaff.length) delete draft._newStaff;
+  }
+  if(draft._staffUpdates){
+    Object.keys(draft._staffUpdates).forEach(function(sid){
+      const sharedPerson = findSharedStaff(sid);
+      const changes = draft._staffUpdates[sid] || {};
+      if(!sharedPerson) return;
+      Object.keys(changes).forEach(function(field){
+        if(sameStoredValue(changes[field], sharedPerson[field])) delete changes[field];
+      });
+      if(!Object.keys(changes).length) delete draft._staffUpdates[sid];
+    });
+    if(!Object.keys(draft._staffUpdates).length) delete draft._staffUpdates;
+  }
+  if(draft._starts){
+    Object.keys(draft._starts).forEach(function(sid){
+      const sharedPerson = findSharedStaff(sid);
+      if(sharedPerson && sameStoredValue(draft._starts[sid], sharedPerson.startDate || '')) delete draft._starts[sid];
+    });
+    if(!Object.keys(draft._starts).length) delete draft._starts;
+  }
+  return draft;
+}
+
 async function loadSharedCompanyRecord(){
   try {
     const response = await fetch('./holiday_data.json', { cache: 'no-store' });
@@ -29911,6 +30089,16 @@ async function loadSharedCompanyRecord(){
     if(!shared || !Array.isArray(shared.staff) || !shared.years) throw new Error('Shared record is invalid');
 
     const remoteFingerprint = dataFingerprint(shared);
+    const prunedOverlay = pruneCommittedLocalOverlay(shared, ov);
+    if(!sameStoredValue(prunedOverlay, ov)){
+      ov = prunedOverlay;
+      try {
+        if(Object.keys(ov).length) localStorage.setItem(LS_KEY, JSON.stringify(ov));
+        else localStorage.removeItem(LS_KEY);
+      } catch(error) {
+        console.warn('Could not clear already-committed local tracker data', error);
+      }
+    }
     const hasPendingLocalChanges = Object.keys(ov).length > 0;
     if(hasPendingLocalChanges){
       Object.keys(BASE).forEach(function(key){ delete BASE[key]; });
@@ -29919,7 +30107,7 @@ async function loadSharedCompanyRecord(){
       sharedDataFingerprint = remoteFingerprint;
       sharedDataLoaded = true;
       syncBlockedByConflict = true;
-      setCloudStatus('conflict', 'This device has unsent changes from an older record. They are kept locally, but cloud saving is paused so newer shared data cannot be overwritten.');
+      setCloudStatus('conflict', 'This device has unsent changes that differ from the current shared record. They are kept locally, and cloud saving is paused so nothing is overwritten.');
       renderAll();
       return;
     }
