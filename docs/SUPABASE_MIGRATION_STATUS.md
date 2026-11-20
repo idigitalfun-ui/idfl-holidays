@@ -1,24 +1,30 @@
-# IDFL Holidays — Supabase + historical archive (staging)
+# IDFL Holidays: Supabase migration release notes
 
-Do not merge this branch directly into production. The existing GitHub main branch still has a legacy application and publicly committed staff data. A full private-data removal/review and safe manager migration must precede release.
+## Database
+Project: `hzyhtikotffweewneynu` (Cloudflare Worker uses only publishable key).
+- 65 staff records retained in Supabase.
+- Payroll: 2,850 unambiguously matched 2024–2026 weekly working-hour entries matched `WEEKLY HRS 111.xlsx` with zero differences.
+- Holiday taken and stored year-end openings remain the source of the 2026 balance calculation. The 28 Excel-only year opening adjustments were reversed; before-and-after backups remain in the private schema.
+- Preserved Rana Abdullah, Osama Saleem Sabri and Ibrar Tufail bank-holiday treatment and Rana's 40 + 40 working hours in the two corrected weeks.
+- 14 pre-2024 historical source snapshots are **unverified read-only historical context**, never included in calculations.
 
-## Verified on 20 November 2026
-- Supabase: hzyhtikotffweewneynu — 65 staff records.
-- 14 unambiguous 2023 historical source snapshots imported as `payload.pre2024` (18 September 2023 balances and September–December 2023 weekly worked hours). Source: uploaded Staff Holidays Sheet 2024.xlsx. Historical, unverified; **not automatically added to 2024 entitlement**.
-- 28 adjustments to 2025/2026 openings are tagged `pending_source_verification` in `private.staff_balance_reviews`. Before-change records are backed up in `private.staff_reconciliation_backups` under batch `2026-11-20-excel-year-opening`. These corrections must be validated against payroll/leave evidence.
-- Rana Abdullah, Ibrar Tufail, and Osama Saleem Sabri were excluded from pre-2024 additions and starting-balance corrections.
-- Rana's 27 July and 3 August 2026 weeks remain 40 worked / 0 holiday each; previously recorded five holiday weeks retained.
-- Staff portal server functions installed in Supabase: `portal_set_email`, `portal_manager_get_email`, `portal_my_record`.
-- No staff email has yet been authorised; `private.staff_portal_access` is empty.
+## App
+- `public/index.html`: manager-only Supabase tracker, version-checked updates, and backup handling for old browser edits.
+- `public/staff.html`: email-verified, read-only individual staff view. Manager must assign each employee email in Share/Link. An unassigned employee cannot see a record.
+- `public/supabase-config.js`: public URL and publishable key only.
+- Staff data removed from current GitHub branch files; review and clean public Git history separately.
 
-## This branch
-- `public/staff.html` — authenticated, read-only employee portal with Before 2024 archives.
-- `public/supabase-config.js` — public project connection key only; no service key.
+## Release / review
+- Cloudflare Worker `idfl-holidays` undeployed version `77277700-35fc-4346-a5d9-417b810e4106` uploaded for review.
+- Security is enforced by Supabase RLS, manager-only writes, and verified-email employee RPCs.
+- Browser sign-in and cross-device flows require user acceptance testing. No email has yet been authorised for a staff portal.
+- The payroll workbook does not by itself prove the historic opening entitlement. Do not call the resulting remaining balance an independently audited legal entitlement.
+- Do not disclose service-role keys or upload personal data to public assets.
 
-## Release blockers
-1. Replace legacy manager index with the reviewed Supabase manager app from the local staging package, preserving the full interface.
-2. Remove personal/employee data from public web assets, repo and deployment. Review access exposures and historical Git commits.
-3. Configure Supabase Authentication URL allowlist for staging staff.html and verify real email OTP login.
-4. Authorise one test employee email via manager-only RPC. Confirm separate employees cannot access one another or public staff_records directly.
-5. Reconcile disputed year openings before declaring any figure verified, and test manager/employee calculations for the same staff.
-6. Only deploy first to a separate staging Worker. Keep production Worker untouched until sign-off.
+## Testing
+- Manager login -> verify staff lists and 2026 computed balances.
+- Change a staff status -> reload on another device; ensure it persists.
+- Assign one test staff email -> verify that staff user sees only their record, not other staff or manager controls.
+- Download browser backup on any device with old local changes before switching.
+- Compare sample payroll weeks (including Rana) and bank-holiday credits before launch.
+- Re-check deployment routing and rollback settings when promoting the Worker version.
