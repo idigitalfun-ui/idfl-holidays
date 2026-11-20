@@ -1,58 +1,55 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>IDFL — My Holidays</title>
-<style>body{font:15px system-ui;background:#f4f7fc;color:#15233b;margin:0;padding:18px}main{max-width:800px;margin:auto}.panel{background:white;border:1px solid #d8e1ed;border-radius:14px;padding:20px;margin:14px 0}h1{font-size:24px}input,select,button{font:inherit;padding:11px;border-radius:8px;border:1px solid #a9b8cb}input{width:100%;box-sizing:border-box}button{background:#1d4ed8;color:white;cursor:pointer}.muted{color:#56657b;font-size:13px}table{border-collapse:collapse;width:100%}td,th{padding:9px;border-bottom:1px solid #e1e6ed;text-align:left}.num{text-align:right}#dashboard{display:none}</style>
-</head><body><main><section class="panel"><h1>IDFL — My Holidays</h1><p class="muted">Private, read-only employee view. Only your manager can change records.</p></section>
-<section class="panel" id="signin"><h2>Sign in</h2><p class="muted">Use the email address authorised by your manager. We will email you a secure sign-in link.</p><form id="form"><input type="email" id="email" required autocomplete="email" placeholder="Your email"><button type="submit">Email sign-in link</button></form><p id="message" role="status"></p></section>
-<div id="dashboard"><section class="panel"><button style="float:right" id="signout">Sign out</button><h2 id="staffname"></h2><p class="muted" id="shop"></p><label>Period <select id="period"><option value="2026">2026</option><option value="2025">2025</option><option value="2024">2024</option><option value="pre2024">Before 2024</option></select></label><p id="warning" class="muted"></p></section>
-<section class="panel"><table><tbody id="facts"></tbody></table></section>
-<section class="panel"><h2 id="entriesTitle">Recorded holidays</h2><table><thead><tr><th>Date / period</th><th class="num">Hours</th><th>Notes</th></tr></thead><tbody id="entries"></tbody></table></section></div>
-</main><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.86.0/dist/umd/supabase.min.js"></script><script src="./supabase-config.js"></script>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="referrer" content="no-referrer"><meta http-equiv="Cache-Control" content="no-store"><title>IDFL — My Holidays</title>
+<style>
+:root{font-family:system-ui,-apple-system,Segoe UI,sans-serif;color:#17243a;background:#f3f6fa}*{box-sizing:border-box}body{margin:0;padding:22px 12px}main{max-width:830px;margin:auto}.card{background:#fff;border:1px solid #d5e0ec;border-radius:14px;padding:22px;margin-bottom:14px;box-shadow:0 2px 5px #15243d0a}h1{font-size:25px;margin:0 0 10px}h2{font-size:19px;margin:0 0 14px}.muted{font-size:13px;color:#52657d;line-height:1.6}select{padding:11px;border:1px solid #9eb0c7;border-radius:9px;background:#fff;font:inherit}table{border-collapse:collapse;width:100%;font-size:14px}th,td{text-align:left;padding:10px 7px;border-bottom:1px solid #e4eaf1;vertical-align:top}th{color:#536276;font-size:12px}td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}.large{font-size:34px;font-weight:800;color:#137c40}#content{display:none}.warn{color:#986700}.flex{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}@media(max-width:520px){.card{padding:15px}table{font-size:12px}th,td{padding:8px 4px}}
+</style></head><body><main>
+<section class="card"><h1>IDFL — My Holidays</h1><p class="muted">Private read-only holiday summary. No account or password required. Anyone holding this link can view this employee's holiday information.</p><p id="notice" role="status">Checking your private link...</p></section>
+<div id="content">
+<section class="card"><div class="flex"><div><h2 id="staffname"></h2><p class="muted" id="shop"></p></div><label for="year">Select year <select id="year"><option>2026</option><option>2025</option><option>2024</option><option value="before">Before 2024</option></select></label></div><p class="muted warn">Figures are based on recorded inputs and may be subject to payroll verification. Ask your manager if anything looks incorrect.</p></section>
+<section class="card"><div id="balance"></div><table><tbody id="facts"></tbody></table></section>
+<section class="card"><h2 id="entryTitle">Holiday entries</h2><table><thead><tr><th>Date / period</th><th class="num">Hours</th><th>Notes</th></tr></thead><tbody id="entries"></tbody></table></section>
+</div></main>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.86.0/dist/umd/supabase.min.js"></script>
+<script src="./supabase-config.js"></script>
 <script>
-(() => {
- const cfg=window.IDFL_SUPABASE_CONFIG;
- const api=window.supabase.createClient(cfg.url,cfg.publishableKey);
- const el=id=>document.getElementById(id), put=(id,value)=>el(id).textContent=String(value??''), fmt=n=>Number(n||0).toFixed(2);
- let record=null;
- const cell=(row,txt,tag)=>{let d=document.createElement(tag||'td');d.textContent=String(txt??'');row.appendChild(d);return d};
- function addFact(k,v){const tr=document.createElement('tr');cell(tr,k);cell(tr,v);el('facts').appendChild(tr)}
- function addEntry(a,b,c){let tr=document.createElement('tr');cell(tr,a);cell(tr,b);cell(tr,c);el('entries').appendChild(tr)}
- function render(){
-  const p=record.profile||{},year=el('period').value;
-  put('staffname',p.name||'Employee');put('shop',p.shop||'');el('facts').replaceChildren();el('entries').replaceChildren();
-  if(year==='pre2024'){
-   put('entriesTitle','2023 working records');
-   const h=record.pre2024;
-   put('warning','Older figures are historical source evidence, not confirmed annual leave entitlement or automatic 2024 carry-over.');
-   if(!h){addFact('Historical record','No verified historical record available.');return;}
-   addFact('Source',h.source);addFact('As of',h.asOfDate);addFact('Reported available hours',h.availableAtDateHours==null?'Not recorded':fmt(h.availableAtDateHours)+' hours');
-   for(const w of h.workedWeeks2023||[])addEntry(w.weekStart,fmt(w.workedHours),'Recorded worked hours');
-   return;
+(async()=>{
+ const $=x=>document.getElementById(x),set=(x,v)=>$(x).textContent=String(v??''),num=n=>Number(n??0).toFixed(2);
+ const t=new URLSearchParams(location.hash.replace(/^#/,'')),token=t.get('token');
+ if(!token||!/^[a-f0-9]{64}$/.test(token)){set('notice','Missing or invalid employee link. Ask your manager to generate a new private link.');return;}
+ try{
+  const c=window.IDFL_SUPABASE_CONFIG;
+  if(!c||!c.url||!c.publishableKey)throw Error('Connection configuration unavailable');
+  const api=window.supabase.createClient(c.url,c.publishableKey,{auth:{persistSession:false,autoRefreshToken:false,detectSessionInUrl:false}});
+  const {data,error}=await api.rpc('staff_share_read',{p_token:token});
+  if(error)throw error;
+  if(!data){set('notice','This link has expired or was revoked. Request a new link from your manager.');return;}
+  $('notice').style.display='none';$('content').style.display='block';
+  set('staffname',data.profile?.name||'Employee');set('shop',data.profile?.shop||'');
+  const add=(key,val)=>{const r=document.createElement('tr'),a=document.createElement('td'),b=document.createElement('td');a.textContent=key;b.textContent=val;r.append(a,b);$('facts').appendChild(r)};
+  const entry=(date,hours,note)=>{const r=document.createElement('tr');for(const [i,v] of [date,hours,note].entries()){const c=document.createElement('td');c.textContent=String(v??'');if(i===1)c.className='num';r.append(c)}$('entries').appendChild(r)};
+  function render(){
+   const y=$('year').value;$('facts').replaceChildren();$('entries').replaceChildren();$('balance').replaceChildren();
+   if(y==='before'){
+    set('entryTitle','2023 weekly records');const h=data.pre2024;
+    if(!h){add('Historical information','No earlier data available for this employee');return;}
+    add('Historical source',h.source||'2024 holiday workbook');add('Source date',h.asOfDate||'Not specified');
+    add('Reported available hours',h.availableAtDateHours==null?'Not recorded':num(h.availableAtDateHours)+' hours');
+    for(const w of h.workedWeeks2023||[])entry(w.weekStart,num(w.workedHours),'Worked hours in historic record');
+    if(!(h.workedWeeks2023||[]).length)entry('No recorded weeks','','');
+    return;
+   }
+   const r=(data.years||{})[y]||{},hol=(data.holLogs||[]).filter(h=>String(h.year)===y);
+   const hours=(r.weeks||[]).reduce((acc,w)=>acc+Number(w.hours||0),0);
+   const leave=hol.reduce((acc,h)=>acc+Number(h.hours||0),0);
+   const headline=document.createElement('div');headline.className='large';
+   if(r.currentAvailableHrs!==undefined&&r.currentAvailableHrs!==null){headline.textContent=num(r.currentAvailableHrs)+' hrs';$('balance').append(headline);} 
+   add('Recorded opening',num(r.opening)+' hours');add('Recorded worked hours',num(hours)+' hours');add('Holiday hours taken (entries)',num(leave)+' hours');
+   add('Bank holidays included',((data.bankHolidayInclusions||{})[y])?'Yes':'Not selected');
+   set('entryTitle','Holiday entries — '+y);
+   for(const h of hol)entry(h.date,num(h.hours),h.note||'Holiday pay');
+   if(!hol.length)entry('No holiday entries recorded','','');
   }
-  put('entriesTitle','Holidays recorded in '+year);
-  const y=(record.years||{})[year]||{},weeks=y.weeks||[],holiday=(record.holLogs||[]).filter(x=>String(x.year)===year);
-  const worked=weeks.reduce((s,x)=>s+Number(x.hours||0),0),taken=holiday.reduce((s,x)=>s+Number(x.hours||0),0);
-  put('warning','Figures reflect recorded inputs, not a final payroll or statutory entitlement verification. If your balance differs, ask your manager to review.');
-  addFact('Recorded opening',fmt(y.opening)+' hours');addFact('Recorded worked hours',fmt(worked)+' hours');addFact('8% accrual (illustrative)',fmt(worked*.08)+' hours');addFact('Recorded holidays taken',fmt(taken)+' hours');
-  addFact('Bank holiday inclusion setting',(record.bankHolidayInclusions||{})[year]?'Included':'Not included');
-  const normDate=v=>{const x=String(v||'');const d=x.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);return d?d[3]+'-'+d[2]+'-'+d[1]:x.slice(0,10)};
-  const holidayDays=new Set(holiday.map(h=>normDate(h.date)));
-  const credits=record.bankHolidayInclusions?.[year] ? (record.bankHolidays||[]).filter(h=>String(h.year||String(h.date||'').slice(0,4))===year&&!holidayDays.has(normDate(h.date))).length : 0;
-  addFact('Bank holiday credit (existing scheme)',fmt(credits)+' hours');
-  addFact('Remaining balance (recorded inputs)',fmt(Number(y.opening||0)+worked*.08-taken+credits)+' hours');
-  for(const a of holiday)addEntry(a.date,fmt(a.hours),a.note||'');
-  if(!holiday.length)addEntry('No holiday entries recorded','','');
- }
- async function load(){
-  let {data:{session},error:sessionError}=await api.auth.getSession();if(sessionError)throw sessionError;
-  if(!session){el('signin').style.display='block';el('dashboard').style.display='none';return;}
-  const {data,error}=await api.rpc('portal_my_record');if(error)throw error;
-  if(!data){put('message','Your email has not yet been assigned to an employee by your manager.');el('signin').style.display='block';el('dashboard').style.display='none';return;}
-  record=data;el('signin').style.display='none';el('dashboard').style.display='block';render();
- }
- el('period').addEventListener('change',render);
- el('form').addEventListener('submit',async e=>{e.preventDefault();put('message','Sending sign-in link...');const {error}=await api.auth.signInWithOtp({email:el('email').value.trim(),options:{emailRedirectTo:new URL('staff.html',location.href).href}});put('message',error?error.message:'Check your inbox for the secure sign-in link.');});
- el('signout').addEventListener('click',async()=>{await api.auth.signOut();record=null;await load()});
- api.auth.onAuthStateChange(()=>{setTimeout(()=>load().catch(e=>put('message',e.message)),0)});
- load().catch(e=>put('message',e.message));
+  $('year').addEventListener('change',render);render();
+ }catch(e){set('notice','Unable to load this holiday record. '+e.message);}
 })();
 </script></body></html>

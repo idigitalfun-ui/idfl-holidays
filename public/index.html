@@ -639,34 +639,29 @@ table.batch-table input:focus{border-color:var(--ac)}
 <!-- Share Portal Link Modal -->
 <div class="modal-bg hidden" id="shareModal">
   <div class="modal">
-    <div class="modal-hd"><h2>&#128279; Share Staff Portal Window</h2><button class="modal-close" id="shareClose">&times;</button></div>
+    <div class="modal-hd"><h2>🔗 Employee holiday link</h2><button class="modal-close" id="shareClose">&times;</button></div>
     <div class="modal-body">
-      <p style="font-size:.78rem;color:var(--tx2);margin-bottom:12px">Authorise the employee's email below first. This link requires an email-verified Supabase login and displays ONLY their own holiday data:</p>
-      
-      <label>Staff member's email address (required before sharing)</label>
-      <div class="share-link-box"><input type="email" id="shareStaffEmail" placeholder="employee@example.com" autocomplete="off" style="flex:1;padding:10px"><button class="btn btn-gr" id="shareAuthorizeEmailBtn" type="button">Authorise Email</button></div>
-      <p id="shareEmailStatus" style="font-size:12px;color:var(--tx2);margin:5px 0 13px">Only this verified email can view the selected employee's records. Change or clear this email to revoke access.</p>
-      <label>Secure Staff Portal Link</label>
+      <p style="font-size:.8rem;margin-bottom:14px">Staff can view their own recorded holidays directly, without a password or sign-in. Anyone with this private link can view that employee's holiday summary. Share it only with the employee.</p>
+      <div style="display:flex;gap:8px;margin-bottom:12px;align-items:center;flex-wrap:wrap">
+        <button class="btn btn-gr" id="shareGenerateBtn" type="button">Generate permanent link</button>
+        <button class="btn btn-rd" id="shareRevokeBtn" type="button">Revoke existing link</button>
+      </div>
+      <p id="shareEmailStatus" style="font-size:12px;color:var(--tx2);margin-bottom:10px"></p>
+      <label>Private employee link (copy after generating)</label>
       <div class="share-link-box">
-        <input type="text" class="share-link-input" id="shareLinkInput" readonly>
-        <button class="btn btn-ac" id="shareCopyLinkBtn">&#128203; Copy Link</button>
+        <input type="text" class="share-link-input" id="shareLinkInput" readonly placeholder="Click Generate permanent link">
+        <button class="btn btn-ac" id="shareCopyLinkBtn" type="button">Copy Link</button>
       </div>
-      
-      <div style="display:flex;gap:8px;margin-bottom:16px">
-        <button class="btn btn-pu" id="shareOpenWindowBtn" style="flex:1">&#128065; Preview Staff Window</button>
-        <button class="btn btn-gr" id="shareWhatsAppBtn" style="flex:1">&#128241; WhatsApp Share</button>
+      <p style="font-size:12px;color:var(--tx2);margin:8px 0 13px">Generating a new link immediately disables the earlier one. Links never expire automatically. You can revoke one at any time.</p>
+      <div style="display:flex;gap:8px;margin-bottom:15px">
+        <button class="btn btn-pu" id="shareOpenWindowBtn" style="flex:1" type="button">Preview employee view</button>
+        <button class="btn btn-gr" id="shareWhatsAppBtn" style="flex:1" type="button">WhatsApp Share</button>
       </div>
-
-      <label>Text Summary Preview</label>
       <div class="share-output" id="shareOutput"></div>
     </div>
-    <div class="modal-footer">
-      <button class="btn btn-ghost" id="shareCloseBtn">Close</button>
-      <button class="btn btn-ghost" id="shareCopyTextBtn">&#128203; Copy Text Summary</button>
-    </div>
+    <div class="modal-footer"><button class="btn btn-ghost" id="shareCloseBtn">Close</button><button class="btn btn-ghost" id="shareCopyTextBtn">Copy Text Summary</button></div>
   </div>
 </div>
-
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.86.0/dist/umd/supabase.min.js"></script>
 <script src="./supabase-config.js"></script>
 <script id="holiday-data" type="application/json">{"staff": [], "years": {"2024": {}, "2025": {}, "2026": {}}, "baseHolLogs": {}, "baseSickLogs": {}, "baseBankHolidays": {}, "baseBankHolidayInclusions": {}}</script>
@@ -2939,82 +2934,49 @@ document.getElementById('restoreFileInput').addEventListener('change', function(
 
 // â”€â”€â”€ Share Modal with Personal Link & WhatsApp Share â”€â”€â”€
 function openShareModal(sid){
-  const staff=BASE.staff.find(function(s){return s.id===sid;});
-  if(!staff) return;
-  const allStats = getFullConnectedStats(sid);
-  const shopName = staff.shop || staff.location || 'IDFL';
-  const dailyHrs = getStaffDailyHours(sid);
-  const weeklyHrs = dailyHrs * 5;
-  
-  const origin = window.location.origin + window.location.pathname;
-  const directLink = new URL('staff.html', window.location.href).href;
-  
-  document.getElementById('shareLinkInput').value = directLink;
-  document.getElementById('shareEmailStatus').textContent = 'Loading authorised email...';
-  const emailInput = document.getElementById('shareStaffEmail');
-  emailInput.value='';
-  sb.rpc('portal_manager_get_email',{p_staff_id:sid}).then(({data,error})=>{
-    if(error) throw error;
-    emailInput.value=data||'';
-    document.getElementById('shareEmailStatus').textContent=data?'Currently authorised: '+data:'No staff email authorised yet. Add it before sharing.';
-  }).catch(err=>document.getElementById('shareEmailStatus').textContent='Unable to load authorisation: '+err.message);
-  document.getElementById('shareAuthorizeEmailBtn').onclick=async function(){
-    const address=emailInput.value.trim().toLowerCase();
-    if(address && !/^\S+@\S+\.\S+$/.test(address)){document.getElementById('shareEmailStatus').textContent='Please enter a valid email address, or leave blank to revoke access.';return;}
-    const {error}=await sb.rpc('portal_set_email',{p_staff_id:sid,p_email:address});
-    document.getElementById('shareEmailStatus').textContent=error?'Unable to authorise: '+error.message:(address?'Access authorised for '+address+'. You can now share the secure portal URL.':'Employee access revoked.');
-  };
-
-  
-  let txt = 'IDFL HOLIDAY & SICK LEAVE SUMMARY\n';
-  txt += '==================================================\n';
-  txt += 'Staff Member:   ' + staff.name + '\n';
-  txt += 'Shop:           ' + shopName + '\n';
-  txt += 'Standard Shift: ' + weeklyHrs + ' hrs/week (' + dailyHrs + ' hrs/day)\n';
-  txt += 'Portal Link:    ' + directLink + '\n';
-  txt += '==================================================\n\n';
-  
-  ['2024', '2025', '2026'].forEach(function(y){
-    const st = allStats[y];
-    txt += '--- YEAR ' + y + ' ---\n';
-    txt += '  Opening Carry-over: ' + fmt1(st.opening) + ' hrs\n';
-    txt += '  Worked Hours:       ' + fmt1(st.totalWorked) + ' hrs (' + st.weeks.length + ' periods)\n';
-    txt += '  Accrued (8%):       +' + fmt1(st.earned) + ' hrs\n';
-    txt += '  Holidays Taken:     -' + fmt1(st.holTaken) + ' hrs (' + st.holLogs.length + ' dates)\n';
-    txt += '  Bank Holiday Credit: +' + fmt1(st.bankHolidayCredit) + ' hrs (' + st.bankHolidayDatesCredited + ' eligible dates' + (st.bankHolidayDatesExcluded ? ', ' + st.bankHolidayDatesExcluded + ' taken' : '') + ')\n';
-    txt += '  Balance Available:  ' + fmt1(st.balance) + ' hrs (' + st.breakdown.weeksText + ' / ' + fmt1(st.days) + ' days)\n';
-    txt += '  Sick Days Used:     ' + fmt1(st.sickUsed) + ' hrs (Remaining: ' + fmt1(st.sickRemaining) + ' hrs of 35h)\n';
-    if(st.holLogs.length > 0){
-      txt += '  Holidays Log:\n';
-      st.holLogs.forEach(function(h){ txt += '    * ' + (h.date||'').padEnd(12) + (fmt1(h.hours)+'h').padEnd(8) + ' ' + (h.note||'Holiday') + '\n'; });
-    }
-    if(st.sickLogs.length > 0){
-      txt += '  Sick Days Log:\n';
-      st.sickLogs.forEach(function(k){ txt += '    * ' + (k.date||'').padEnd(12) + (fmt1(k.hours)+'h').padEnd(8) + ' ' + (k.note||'Sick') + '\n'; });
-    }
-    txt += '\n';
-  });
-  
-  txt += '==================================================\n';
-  txt += 'CURRENT 2026 BALANCE: ' + fmt1(allStats['2026'].balance) + ' HRS (' + allStats['2026'].breakdown.weeksText + ')\n';
-  txt += 'CURRENT SICK REMAINING: ' + fmt1(allStats['2026'].sickRemaining) + ' HRS (of 35h allowance)\n';
-  
-  document.getElementById('shareOutput').textContent=txt;
-  
-  document.getElementById('shareWhatsAppBtn').onclick = function(){
-    const waText = encodeURIComponent('IDFL staff holiday portal (requires your authorised email sign-in): '+directLink);
-    window.open('https://api.whatsapp.com/send?text=' + waText, '_blank');
-  };
-  
-  document.getElementById('shareOpenWindowBtn').onclick = function(){
-    window.open(directLink, '_blank');
-  };
-  
-  document.getElementById('shareModal').classList.remove('hidden');
+ const staff=BASE.staff.find(s=>s.id===sid);
+ if(!staff)return;
+ const linkField=document.getElementById('shareLinkInput');
+ const status=document.getElementById('shareEmailStatus');
+ linkField.value='';
+ document.getElementById('shareOutput').textContent='Selected employee: '+staff.name+'. No access link will work until you generate one. The employee view is read-only.';
+ status.textContent='Checking existing link status...';
+ const shareUrl=token=>new URL('staff.html',location.href).href+'#token='+encodeURIComponent(token);
+ sb.rpc('staff_share_status',{p_staff_id:sid}).then(({data,error})=>{
+   if(error)throw error;
+   status.textContent=data&&data.active?'An active link exists '+(data.expires_at?'until '+new Date(data.expires_at).toLocaleString():'without an expiry date')+'. Generate a new link to replace it.':'No active link for this employee.';
+ }).catch(err=>status.textContent='Unable to check link: '+err.message);
+ document.getElementById('shareGenerateBtn').onclick=async()=>{
+   const btn=document.getElementById('shareGenerateBtn');btn.disabled=true;status.textContent='Creating private link...';
+   try{
+    const {data,error}=await sb.rpc('staff_share_issue',{p_staff_id:sid});
+    if(error)throw error;
+    if(!/^[0-9a-f]{64}$/.test(data||''))throw Error('Unexpected response from secure link service');
+    linkField.value=shareUrl(data);
+    status.textContent='New link created. Earlier link revoked. Copy and send this link privately; it will not be recoverable after you close this dialog.';
+   }catch(err){status.textContent='Unable to generate link: '+err.message;}
+   finally{btn.disabled=false;}
+ };
+ document.getElementById('shareRevokeBtn').onclick=async()=>{
+   if(!confirm('Revoke the employee link now? Any previously shared link will stop working.'))return;
+   const {error}=await sb.rpc('staff_share_revoke',{p_staff_id:sid});
+   if(error){status.textContent='Unable to revoke: '+error.message;return;}
+   linkField.value='';status.textContent='Link revoked. Staff access is now disabled.';
+ };
+ document.getElementById('shareWhatsAppBtn').onclick=()=>{
+   if(!linkField.value){toast('Generate a private link first','var(--rd)');return;}
+   window.open('https://api.whatsapp.com/send?text='+encodeURIComponent('Your IDFL holiday summary (private link, no login): '+linkField.value),'_blank','noopener');
+ };
+ document.getElementById('shareOpenWindowBtn').onclick=()=>{
+   if(!linkField.value){toast('Generate a private link first','var(--rd)');return;}
+   window.open(linkField.value,'_blank','noopener,noreferrer');
+ };
+ document.getElementById('shareModal').classList.remove('hidden');
 }
 
 document.getElementById('shareCopyLinkBtn').addEventListener('click',function(){
   const link = document.getElementById('shareLinkInput').value;
+  if(!link){toast('Generate a private link first','var(--rd)');return;}
   if(navigator.clipboard){navigator.clipboard.writeText(link).then(function(){toast('Copied portal link to clipboard!');});}
   else{fallbackCopy(link);}
 });
