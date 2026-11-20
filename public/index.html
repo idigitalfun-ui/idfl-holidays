@@ -3733,7 +3733,21 @@ async function startSupabaseApplication(){
   const cfg=assertSupabaseConfigured();sb=window.supabase.createClient(cfg.url,cfg.publishableKey);
   const {data:{session},error}=await sb.auth.getSession();if(error)throw error;
   if(localStorage.getItem(LS_KEY)&&localStorage.getItem(LS_KEY)!=='{}'){
-   showManagerLogin('This browser may contain unsent older edits. Export a backup in the old app before migrating. No local data has been deleted.');return;
+   showManagerLogin('This browser contains earlier local changes. Download and preserve them before switching to the shared Supabase record.');
+   if(!document.getElementById('idflLegacyExport')){
+    const btn=document.createElement('button');btn.id='idflLegacyExport';btn.type='button';btn.className='btn btn-am';
+    btn.style='display:block;width:100%;margin-top:12px';btn.textContent='Download old browser backup and continue';
+    btn.onclick=()=>{
+      const raw=localStorage.getItem(LS_KEY);
+      if(!raw||raw==='{}'){location.reload();return;}
+      const a=document.createElement('a'),blob=new Blob([raw],{type:'application/json'});
+      const url=URL.createObjectURL(blob);a.href=url;a.download='idfl_unsent_browser_'+new Date().toISOString().slice(0,10)+'.json';
+      a.click();setTimeout(()=>URL.revokeObjectURL(url),15000);
+      if(confirm('Have you saved the downloaded JSON backup? This clears only the old browser draft, not Supabase.')){localStorage.removeItem(LS_KEY);location.reload();}
+    };
+    document.getElementById('idflLoginForm').appendChild(btn);
+   }
+   return;
   }
   if(session){try{await loadSupabaseCompanyRecord();document.getElementById(LOGIN_ID).style.display='none';}catch(err){showManagerLogin('Cannot load records: '+err.message);}}
   else showManagerLogin('Sign in to access company records.');
