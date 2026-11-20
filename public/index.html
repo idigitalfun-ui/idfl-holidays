@@ -643,16 +643,16 @@ table.batch-table input:focus{border-color:var(--ac)}
     <div class="modal-body">
       <p style="font-size:.8rem;margin-bottom:14px">Staff can view their own recorded holidays directly, without a password or sign-in. Anyone with this private link can view that employee's holiday summary. Share it only with the employee.</p>
       <div style="display:flex;gap:8px;margin-bottom:12px;align-items:center;flex-wrap:wrap">
-        <button class="btn btn-gr" id="shareGenerateBtn" type="button">Generate new 30-day link</button>
+        <button class="btn btn-gr" id="shareGenerateBtn" type="button">Generate permanent link</button>
         <button class="btn btn-rd" id="shareRevokeBtn" type="button">Revoke existing link</button>
       </div>
       <p id="shareEmailStatus" style="font-size:12px;color:var(--tx2);margin-bottom:10px"></p>
       <label>Private employee link (copy after generating)</label>
       <div class="share-link-box">
-        <input type="text" class="share-link-input" id="shareLinkInput" readonly placeholder="Click Generate new 30-day link">
+        <input type="text" class="share-link-input" id="shareLinkInput" readonly placeholder="Click Generate permanent link">
         <button class="btn btn-ac" id="shareCopyLinkBtn" type="button">Copy Link</button>
       </div>
-      <p style="font-size:12px;color:var(--tx2);margin:8px 0 13px">Generating a new link immediately disables the earlier one. Links expire after 30 days. You can revoke one at any time.</p>
+      <p style="font-size:12px;color:var(--tx2);margin:8px 0 13px">Generating a new link immediately disables the earlier one. Links never expire automatically. You can revoke one at any time.</p>
       <div style="display:flex;gap:8px;margin-bottom:15px">
         <button class="btn btn-pu" id="shareOpenWindowBtn" style="flex:1" type="button">Preview employee view</button>
         <button class="btn btn-gr" id="shareWhatsAppBtn" style="flex:1" type="button">WhatsApp Share</button>
@@ -2944,12 +2944,12 @@ function openShareModal(sid){
  const shareUrl=token=>new URL('staff.html',location.href).href+'#token='+encodeURIComponent(token);
  sb.rpc('staff_share_status',{p_staff_id:sid}).then(({data,error})=>{
    if(error)throw error;
-   status.textContent=data&&data.active?'An active link already exists until '+new Date(data.expires_at).toLocaleString()+'. Generate a new link to replace it.':'No active link for this employee.';
+   status.textContent=data&&data.active?'An active link exists '+(data.expires_at?'until '+new Date(data.expires_at).toLocaleString():'without an expiry date')+'. Generate a new link to replace it.':'No active link for this employee.';
  }).catch(err=>status.textContent='Unable to check link: '+err.message);
  document.getElementById('shareGenerateBtn').onclick=async()=>{
    const btn=document.getElementById('shareGenerateBtn');btn.disabled=true;status.textContent='Creating private link...';
    try{
-    const {data,error}=await sb.rpc('staff_share_issue',{p_staff_id:sid,p_days:30});
+    const {data,error}=await sb.rpc('staff_share_issue',{p_staff_id:sid});
     if(error)throw error;
     if(!/^[0-9a-f]{64}$/.test(data||''))throw Error('Unexpected response from secure link service');
     linkField.value=shareUrl(data);
