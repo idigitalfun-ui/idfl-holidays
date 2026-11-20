@@ -34,7 +34,7 @@
   put('warning','Figures reflect recorded inputs, not a final payroll or statutory entitlement verification. If your balance differs, ask your manager to review.');
   addFact('Recorded opening',fmt(y.opening)+' hours');addFact('Recorded worked hours',fmt(worked)+' hours');addFact('8% accrual (illustrative)',fmt(worked*.08)+' hours');addFact('Recorded holidays taken',fmt(taken)+' hours');
   addFact('Bank holiday inclusion setting',(record.bankHolidayInclusions||{})[year]?'Included':'Not included');
-  const normDate=v=>{const x=String(v||'');const d=x.match(/^(\\d{2})\\/(\\d{2})\\/(\\d{4})$/);return d?d[3]+'-'+d[2]+'-'+d[1]:x.slice(0,10)};
+  const normDate=v=>{const x=String(v||'');const d=x.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);return d?d[3]+'-'+d[2]+'-'+d[1]:x.slice(0,10)};
   const holidayDays=new Set(holiday.map(h=>normDate(h.date)));
   const credits=record.bankHolidayInclusions?.[year] ? (record.bankHolidays||[]).filter(h=>String(h.year||String(h.date||'').slice(0,4))===year&&!holidayDays.has(normDate(h.date))).length : 0;
   addFact('Bank holiday credit (existing scheme)',fmt(credits)+' hours');
