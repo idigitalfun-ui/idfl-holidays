@@ -44,9 +44,8 @@
    // Calculate from the live payroll weeks and leave log, exactly as the manager view does.
    // The imported years.currentAvailableHrs cache can be stale and must not be displayed.
    const dateKey=value=>{
-    const v=String(value||'').trim();
-    const m=v.match(/^(\\d{2})\\/(\\d{2})\\/(\\d{4})$/);
-    return m?m[3]+'-'+m[2]+'-'+m[1]:v.slice(0,10);
+    const v=String(value||'').trim(),p=v.split('/');
+    return p.length===3&&p[2].length===4?p[2]+'-'+p[1]+'-'+p[0]:v.slice(0,10);
    };
    const leaveDates=new Set(hol.map(h=>dateKey(h.date)));
    const bankEnabled=!!((data.bankHolidayInclusions||{})[y]);
