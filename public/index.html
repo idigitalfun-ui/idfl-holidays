@@ -272,7 +272,7 @@ table.batch-table input:focus{border-color:var(--ac)}
   <div class="year-tabs" id="yearTabs"></div>
   <div class="hdr-search" id="hdrSearchWrap">
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-    <input type="text" id="searchBox" placeholder="Search staff&hellip;">
+    <input type="search" id="searchBox" name="idfl_staff_search_only" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Search staff by name or shop&hellip;">
   </div>
   <div class="hdr-stats" id="hdrStats"></div>
   <div style="margin-left:auto;display:flex;gap:8px;align-items:center">
@@ -1643,7 +1643,10 @@ function renderSidebar(){
   }
   el.style.display = 'flex';
   
-  const q=(document.getElementById('searchBox').value||'').toLowerCase();
+  const searchInput=document.getElementById('searchBox');
+  let q=(searchInput.value||'').trim().toLowerCase();
+  // Browsers sometimes autofill a manager email into the staff search box.
+  if(q.includes('@')){searchInput.value='';q='';}
   
   const activeStaffList = BASE.staff.filter(function(s){ return s.status !== 'inactive'; });
   const inactiveStaffList = BASE.staff.filter(function(s){ return s.status === 'inactive'; });
@@ -3658,6 +3661,8 @@ async function loadSupabaseCompanyRecord(){
  if(!data||!data.length)throw new Error('No staff data or manager access. Import the private records and grant manager access first.');
  const items={};data.forEach(row=>items[row.id]={payload:row.payload,revision:Number(row.revision)});
  const state=assembleDbState(items);
+ // Never let browser email autofill hide every employee from the sidebar.
+ const staffSearch=document.getElementById('searchBox');if(staffSearch)staffSearch.value='';
  loadedSnapshot=items;
  Object.keys(BASE).forEach(k=>delete BASE[k]);Object.assign(BASE,state);
  ov={};localStorage.removeItem(LS_KEY);
