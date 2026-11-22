@@ -41,10 +41,26 @@
    const r=(data.years||{})[y]||{},hol=(data.holLogs||[]).filter(h=>String(h.year)===y);
    const hours=(r.weeks||[]).reduce((acc,w)=>acc+Number(w.hours||0),0);
    const leave=hol.reduce((acc,h)=>acc+Number(h.hours||0),0);
+   // Calculate from the live payroll weeks and leave log, exactly as the manager view does.
+   // The imported years.currentAvailableHrs cache can be stale and must not be displayed.
+   const dateKey=value=>{
+    const v=String(value||'').trim(),p=v.split('/');
+    return p.length===3&&p[2].length===4?p[2]+'-'+p[1]+'-'+p[0]:v.slice(0,10);
+   };
+   const leaveDates=new Set(hol.map(h=>dateKey(h.date)));
+   const bankEnabled=!!((data.bankHolidayInclusions||{})[y]);
+   const bankCredit=bankEnabled?(data.bankHolidays||[]).filter(h=>
+     String(h.year||dateKey(h.date).slice(0,4))===y && !leaveDates.has(dateKey(h.date))
+   ).length:0;
+   const earned=Math.round(hours*8)/100;
+   const remaining=Math.round((Number(r.opening||0)+earned-leave+bankCredit)*100)/100;
    const headline=document.createElement('div');headline.className='large';
-   if(r.currentAvailableHrs!==undefined&&r.currentAvailableHrs!==null){headline.textContent=num(r.currentAvailableHrs)+' hrs';$('balance').append(headline);} 
-   add('Recorded opening',num(r.opening)+' hours');add('Recorded worked hours',num(hours)+' hours');add('Holiday hours taken (entries)',num(leave)+' hours');
-   add('Bank holidays included',((data.bankHolidayInclusions||{})[y])?'Yes':'Not selected');
+   headline.textContent=num(remaining)+' hrs';$('balance').append(headline);
+   add('Recorded opening',num(r.opening)+' hours');
+   add('Recorded worked hours',num(hours)+' hours');
+   add('Leave earned (8%)',num(earned)+' hours');
+   add('Holidays taken (entries)',num(leave)+' hours');
+   add('Eligible bank holiday credit',num(bankCredit)+' hours');
    set('entryTitle','Holiday entries — '+y);
    for(const h of hol)entry(h.date,num(h.hours),h.note||'Holiday pay');
    if(!hol.length)entry('No holiday entries recorded','','');
