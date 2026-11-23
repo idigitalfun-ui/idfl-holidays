@@ -33,7 +33,7 @@
     set('entryTitle','2023 weekly records');const h=data.pre2024;
     if(!h){add('Historical information','No earlier data available for this employee');return;}
     add('Historical source',h.source||'2024 holiday workbook');add('Source date',h.asOfDate||'Not specified');
-    add(h.sourceStatus==='RECONSTRUCTED_FROM_2023_WORKED_HOURS'?'Hours earned from 2023 payroll up to 18 Sept':'Reported available hours at source date',h.availableAtDateHours==null?'Not established':num(h.availableAtDateHours)+' hours');
+    add(String(h.sourceStatus||'').startsWith('RECONSTRUCTED')?'Payroll-derived historical hours (payout review may apply)':'Reported available hours at source date',h.availableAtDateHours==null?'Not established':num(h.availableAtDateHours)+' hours');
     for(const w of h.workedWeeks2023||[])entry(w.weekStart,num(w.workedHours),'Worked hours in 2023 source');
     const taken=(data.holLogs||[]).filter(x=>String(x.year)==='2023');
     for(const x of taken)entry(x.date,'-'+num(x.hours),x.note||'Holiday pay deducted after 2023 source date');
@@ -74,6 +74,13 @@
     return (memo[year]={hours,leave:charged,opening,earned,bankCredit,remaining});
    };
    const {hours,leave,opening,earned,bankCredit,remaining}=calc(y);
+   const profileStart=String((data.profile||{}).startDate||'');
+   const pr=profileStart.split('/');
+   const startIso=pr.length===3 ? pr[2]+'-'+pr[1].padStart(2,'0')+'-'+pr[0].padStart(2,'0') : profileStart.slice(0,10);
+   const beforeSource=startIso.length===10 && startIso<'2023-09-18';
+   const archiveStatus=String((data.pre2024||{}).sourceStatus||'');
+   const confirmedHistory=['MANAGER_CONFIRMED_SOURCE_2023','RECONSTRUCTED_FROM_2023_WORKED_HOURS'].includes(archiveStatus);
+
    const status=(data.pre2024||{}).sourceStatus||'';
    const earlyOpeningCertified=['MANAGER_CONFIRMED_SOURCE_2023','RECONSTRUCTED_FROM_2023_WORKED_HOURS'].includes(status);
    const pre2024Work=Number((data.pre2024||{}).workedHoursBeforeSnapshot||0);
@@ -85,7 +92,9 @@
    add('Leave earned (8%)',num(earned)+' hours');
    add('Holidays taken (entries)',num(leave)+' hours');
    add('Bank holiday credit (selected years)',num(bankCredit)+' hours');
-   if(status && !earlyOpeningCertified)add('Historical opening status','Not verified. Displayed balance is provisional; earlier payroll may change it.');
+   if(beforeSource&&!confirmedHistory)add('Historical entitlement warning','Opening before September 2023 is not verified. The displayed remaining balance is a provisional tracker estimate, NOT a certified entitlement.');
+   if(String(archiveStatus).includes('PAYOUT_REVIEW'))add('Historical final payout review','Payroll records a final holiday-payment request; payment status is not proven.');
+
 
    set('entryTitle','Holiday entries — '+y);
    for(const h of hol)entry(h.date,h.excludeFromLeaveBalance?'0.00 (not deducted)':num(h.hours),h.excludeFromLeaveBalance?'Historical payroll entry — excluded from leave balance':'Holiday pay');
