@@ -92,7 +92,18 @@
    add('Leave earned (8%)',num(earned)+' hours');
    add('Holidays taken (entries)',num(leave)+' hours');
    add(data.separateBankCredits?'Selected bank holiday dates (not added to balance)':'Bank holiday credit (selected years)',data.separateBankCredits?num(bankCredit)+' tracked dates, 0 added hours':num(bankCredit)+' hours');
-   if(beforeSource&&!confirmedHistory)add('Historical entitlement warning','Opening before September 2023 is not verified. The displayed remaining balance is a provisional tracker estimate, NOT a certified entitlement.');
+   if(beforeSource){
+     const person=String((data.profile||{}).name||'');
+     if(person==='Ibrar Tufail' && confirmedHistory){
+       add('Historical starting balance','Reconstructed from matched 2023 worked hours. No additional 2024 or 2025 opening is credited.');
+     } else if(person==='Osama Saleem Sabri'){
+       add('Historical starting balance','Older salaried payroll rows have no confirmed worked-hours total; the current recorded opening is provisional until the source can be matched.');
+     } else if(person==='Rana Abdullah'){
+       add('Historical starting balance','No confirmed September 2023 opening; earlier salaried payroll hours need verification. No replacement zero balance has been assumed.');
+     } else if(!confirmedHistory){
+       add('Historical starting balance','A pre-September 2023 opening is not yet matched to this profile. Earlier payroll and recorded balances require source verification.');
+     }
+   }
    if(String(archiveStatus).includes('PAYOUT_REVIEW'))add('Historical final payout review','Payroll records a final holiday-payment request; payment status is not proven.');
 
 
