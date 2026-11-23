@@ -61,7 +61,14 @@
     if(Number(h.workedHoursBeforeSnapshot||0)>0)add('2023 worked before 18 September',num(h.workedHoursBeforeSnapshot)+' hours'+(h.workedWeeksBeforeSnapshot?' across '+h.workedWeeksBeforeSnapshot+' source weeks':''));
     if(h.sourceBasis)add('Source explanation',h.sourceBasis);
     add(String(h.sourceStatus||'').startsWith('RECONSTRUCTED')?'Payroll-derived historical hours (payout review may apply)':'Reported available hours at source date',h.availableAtDateHours==null?'Not established':num(h.availableAtDateHours)+' hours');
-    for(const w of h.workedWeeks2023||[])entry(w.weekStart,num(w.workedHours),'Worked hours in 2023 source');
+    const salaryRows=h.salaryPayrollRows||[];
+    if(salaryRows.length){
+      add('Matched historical payroll rows',salaryRows.length+' dated entries');
+      add('Recorded rate/contract reference','40 shown in rate field; actual Total hrs not stated');
+      set('entryTitle','Original historical payroll weeks (not assumed worked hours)');
+      for(const row of salaryRows)entry(row.weekStart,'Not stated','Rate / contract: '+String(row.rateColumn||row.contractReferenceHours||'40')+' · payroll source row '+String(row.sourceRow||''));
+    }
+    for(const w of h.workedWeeks2023||[])entry(w.weekStart,w.workedHours==null?'Not stated':num(w.workedHours),'Worked hours in 2023 source');
     const taken=(data.holLogs||[]).filter(x=>String(x.year)==='2023');
     for(const x of taken)entry(x.date,'-'+num(x.hours),x.note||'Holiday pay deducted after 2023 source date');
     const worked=(h.workedWeeks2023||[]).reduce((sum,w)=>sum+Number(w.workedHours||0),0);

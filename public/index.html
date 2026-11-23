@@ -1859,6 +1859,22 @@ function renderHistoricalArchive(){
  const sourceNote=document.createElement('p');sourceNote.style='color:var(--tx3);font-size:.85rem;margin-bottom:10px';
  sourceNote.textContent=historical.sourceBasis||historical.note||'The available source does not quantify all earlier worked hours. Undocumented salary-rate rows are not treated as worked hours.';
  card.appendChild(sourceNote);
+ const salaryRows=historical.salaryPayrollRows||[];
+ if(salaryRows.length){
+   const heading=document.createElement('h3');heading.textContent='Dated salary payroll records ('+salaryRows.length+' source rows)';heading.style.marginTop='18px';card.appendChild(heading);
+   const context=document.createElement('p');context.style='font-size:.84rem;color:var(--tx3);margin:8px 0';
+   context.textContent='40 appears in the source rate/contract column; the Total hrs worked field is blank. These are visible source references, NOT 40 confirmed worked hours or 0 worked hours.';
+   card.appendChild(context);
+   const table=document.createElement('table');table.style='width:100%;border-collapse:collapse;font-size:.8rem';
+   const header=document.createElement('tr');
+   for(const title of ['Week starting','Rate / contract reference','Actual worked hours','Source row']){const th=document.createElement('th');th.textContent=title;th.style='padding:7px;border-bottom:1px solid var(--bd);text-align:left';header.appendChild(th)}
+   table.appendChild(header);
+   for(const source of salaryRows){const tr=document.createElement('tr');
+     for(const value of [source.weekStart,source.rateColumn||source.contractReferenceHours,'Not stated',source.sourceRow]){const td=document.createElement('td');td.textContent=String(value??'');td.style='padding:7px;border-bottom:1px solid var(--bd)';tr.appendChild(td)}
+     table.appendChild(tr);
+   }
+   const area=document.createElement('div');area.style='overflow-x:auto';area.appendChild(table);card.appendChild(area);
+ }
  const rows=historical.workedWeeks2023||[];
  const h=document.createElement('h3');h.textContent='Recorded working weeks in 2023';card.appendChild(h);
  if(!rows.length){const x=document.createElement('p');x.textContent='No 2023 working weeks in the available source.';card.appendChild(x);}else{
