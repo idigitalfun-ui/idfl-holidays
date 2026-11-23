@@ -1859,6 +1859,15 @@ function renderMain(){
   const verifiedHistoricalOpening=sourceStatus==='MANAGER_CONFIRMED_SOURCE_2023'||sourceStatus==='RECONSTRUCTED_FROM_2023_WORKED_HOURS';
   const joinedDate=staff.startDate ? parseLocalDate(staff.startDate) : null;
   const requiresHistoricalVerification=Boolean(joinedDate && joinedDate < new Date(2023,8,18) && !verifiedHistoricalOpening);
+  // These three salaried profiles need a source-specific explanation instead of
+  // incorrectly implying that an imported annual opening is an original 2023 snapshot.
+  const specialHistoryNote=staff.id==='s1'
+    ? 'Osama: 2023 opening not yet reconstructed. Earlier salary-paid payroll rows have no confirmed worked-hours value. The saved annual carry-forward is retained, but the total is provisional until earlier work and holiday-pay records are confirmed.'
+    : staff.id==='s2'
+    ? 'Rana Abdullah: September 2023 opening is not recorded. Earlier payroll has rate-only entries without reliably stated worked hours. The current tracker balance is provisional; no new hours have been assumed.'
+    : staff.id==='s8'
+    ? 'Ibrar: historical 2023 accrual reconstructed from matched payroll (1,200 worked hours before 18 September and 600 afterwards). No extra 2024 or 2025 opening credit is added.'
+    : '';
 
   
   const balance = curStats.balance;
@@ -1960,7 +1969,7 @@ function renderMain(){
     +'<div class="hero-sub-big" style="color:'+balColor+'">'+fmt1(balDays)+' working days</div>'
     +(balance > 0 ? '<div class="hero-weeks-badge">&#128197; Equivalent to: <strong>'+breakdown.weeksText+'</strong></div>' : '')
     +'<div class="hero-desc">Calculated at '+weeklyHrs+' hrs / full week ('+dailyHrs+' hrs / working day). Recorded tracker balance; earlier carry-over and public-holiday entitlements require verification.</div>'
-    +(requiresHistoricalVerification?'<div class="hero-desc" style="color:#b45309;font-weight:800;margin-top:8px">&#9888; Historical opening balance NOT VERIFIED. The displayed hours are provisional, not a confirmed amount owed. The original 2023 source cell was absent; earlier payroll evidence must be reconciled first.</div>':'')
+    +(specialHistoryNote?'<div class="hero-desc" style="color:'+(verifiedHistoricalOpening?'#15803d':'#b45309')+';font-weight:700;margin-top:8px">'+specialHistoryNote+'</div>':(requiresHistoricalVerification?'<div class="hero-desc" style="color:#b45309;font-weight:800;margin-top:8px">&#9888; Earlier holiday opening not yet verified. Historical payroll evidence or final payments remain to be reconciled; the tracker balance is provisional.</div>':''))
     +'<div class="hero-breakdown-grid'+(hasProfileBankHolidays ? ' with-bank-holidays' : '')+'">'
     +'<div class="hero-b-col"><span>'+(((BASE.basePre2024||{})[staff.id]||{}).sourceStatus ? (activeYear==='2024' ? '2023 opening + earned in 2023' : 'Previous-year closing carried forward') : 'Recorded opening (source not yet matched)')+'</span><strong>'+fmt1(curStats.opening)+' hrs</strong></div>'
     +'<div class="hero-b-col"><span>Earned (8% of '+fmt1(curStats.totalWorked)+'h)</span><strong style="color:var(--gr)">+'+fmt1(curStats.earned)+' hrs</strong></div>'
