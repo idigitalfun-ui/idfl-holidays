@@ -1178,7 +1178,7 @@ function computeYearStats(sid, year, inheritedOpening){
   }
   
   const holLogs = getStaffHolidayLogs(sid, year);
-  const holTaken = holLogs.reduce(function(s,e){ return s + (e.hours||0); }, 0);
+  const holTaken = holLogs.reduce(function(sum,e){ return sum + (e.excludeFromLeaveBalance ? 0 : (Number(e.hours)||0)); }, 0);
   
   const sickLogs = getStaffSickLogs(sid, year);
   const sickUsed = sickLogs.reduce(function(s,e){ return s + (e.hours||0); }, 0);
@@ -1187,8 +1187,15 @@ function computeYearStats(sid, year, inheritedOpening){
   const sickAllowance = SICK_ALLOWANCE_ANNUAL;
   const sickRemaining = Math.max(0, Math.round((sickAllowance - sickUsed) * 100) / 100);
   const bankHolidayCredit=getBankHolidayYearCredit(sid,year);
-  
-  const balance = Math.round((opening + earned - holTaken + bankHolidayCredit.creditHours) * 100) / 100;
+  // These three legacy bank-holiday credits were not inherited into the next year's saved opening.
+  // Include each selected, eligible date only once from 2024 up to the viewed year.
+  const isLegacyBankProfile=['s1','s2','s8'].includes(sid);
+  const creditedYears=isLegacyBankProfile ? ['2024','2025','2026'].filter(y=>y<=String(year)) : [String(year)];
+  const credits=creditedYears.map(y=>getBankHolidayYearCredit(sid,y));
+  const totalBankCredit=credits.reduce((sum,c)=>sum+c.creditHours,0);
+  const totalBankDays=credits.reduce((sum,c)=>sum+c.creditedDates,0);
+  const excludedBankDays=credits.reduce((sum,c)=>sum+c.excluded,0);
+  const balance = Math.round((opening + earned - holTaken + totalBankCredit) * 100) / 100;
   const days = balance / dailyHours;
   const breakdown = formatHumanBalanceBreakdown(balance, sid);
   
@@ -1197,9 +1204,9 @@ function computeYearStats(sid, year, inheritedOpening){
     totalWorked: totalWorked,
     earned: earned,
     holTaken: holTaken,
-    bankHolidayCredit: bankHolidayCredit.creditHours,
-    bankHolidayDatesCredited: bankHolidayCredit.creditedDates,
-    bankHolidayDatesExcluded: bankHolidayCredit.excluded,
+    bankHolidayCredit: totalBankCredit,
+    bankHolidayDatesCredited: totalBankDays,
+    bankHolidayDatesExcluded: excludedBankDays,
     balance: balance,
     days: days,
     breakdown: breakdown,
@@ -1916,7 +1923,7 @@ function renderMain(){
     // Center Big Card
     +'<div class="hero-card hero-primary-center">'
     +'<div class="hero-title">&#127958; AVAILABLE HOLIDAY BALANCE ('+activeYear+')</div>'
-    +'<div class="hero-val-big" style="color:'+balColor+'">'+fmt1(balance)+' hrs</div>'
+    +'<div class="hero-val-big" style="color:'+balColor+'">'+fmt1(balance)+' hrs'+(curStats.bankHolidayCredit > 0 ? '<span title="Includes +'+fmt1(curStats.bankHolidayCredit)+' hours in selected bank-holiday credits" aria-label="Bank-holiday credit included" style="color:#15803d;font-size:.36em;vertical-align:super;margin-left:7px">&#9679;</span>' : '')+'</div>'
     +'<div class="hero-sub-big" style="color:'+balColor+'">'+fmt1(balDays)+' working days</div>'
     +(balance > 0 ? '<div class="hero-weeks-badge">&#128197; Equivalent to: <strong>'+breakdown.weeksText+'</strong></div>' : '')
     +'<div class="hero-desc">Calculated at '+weeklyHrs+' hrs / full week ('+dailyHrs+' hrs / working day)</div>'
@@ -1924,8 +1931,8 @@ function renderMain(){
     +'<div class="hero-b-col"><span>Opening Carry-over</span><strong>'+fmt1(curStats.opening)+' hrs</strong></div>'
     +'<div class="hero-b-col"><span>Earned (8% of '+fmt1(curStats.totalWorked)+'h)</span><strong style="color:var(--gr)">+'+fmt1(curStats.earned)+' hrs</strong></div>'
     +'<div class="hero-b-col"><span>Holidays taken ('+activeYear+')</span><strong style="color:var(--am)">-'+fmt1(curStats.holTaken)+' hrs</strong></div>'
-    +(hasProfileBankHolidays ? '<div class="hero-b-col"><span>Bank Holidays ('+activeYear+')</span><strong style="color:'+(bankHolidayDatesIncluded ? 'var(--gr)' : 'var(--rd)')+'">'+bankHolidayDatesIncluded+' day'+(bankHolidayDatesIncluded===1?'':'s')+'</strong><small style="font-size:.68rem;font-weight:700;color:'+(bankHolidayDatesIncluded ? 'var(--gr)' : 'var(--rd)')+'">+'+fmt1(bankHolidayCreditHours)+' hrs &bull; '+bankHolidayDatesIncluded+' of '+bankHolidayDatesEligible+' eligible from 2024'+(bankHolidayDatesExcluded ? ' ('+bankHolidayDatesExcluded+' taken)' : '')+'</small>'
-      +'<div style="display:flex;justify-content:center;gap:4px;flex-wrap:wrap;margin-top:5px">'+bankHolidayToggleButtons+'</div>'
+    +(hasProfileBankHolidays ? '<div class="hero-b-col"><span>Bank Holidays (2024–'+activeYear+'; carried forward)</span><strong style="color:'+(bankHolidayDatesIncluded ? 'var(--gr)' : 'var(--rd)')+'">'+bankHolidayDatesIncluded+' day'+(bankHolidayDatesIncluded===1?'':'s')+'</strong><small style="font-size:.68rem;font-weight:700;color:'+(bankHolidayDatesIncluded ? 'var(--gr)' : 'var(--rd)')+'">+'+fmt1(bankHolidayCreditHours)+' hrs &bull; '+bankHolidayDatesIncluded+' of '+bankHolidayDatesEligible+' eligible from 2024'+(bankHolidayDatesExcluded ? ' ('+bankHolidayDatesExcluded+' taken)' : '')+'</small>'
+      +'<div style="font-size:.64rem;color:var(--tx2);margin-top:3px">Green dot beside balance = these credits included</div>'+'<div style="display:flex;justify-content:center;gap:4px;flex-wrap:wrap;margin-top:5px">'+bankHolidayToggleButtons+'</div>'
       +'</div>' : '')
     +'</div>'
     +'</div>'
@@ -2087,7 +2094,7 @@ function renderMain(){
         holListEl.appendChild(editDiv);
       } else {
         const d=document.createElement('div');d.className='log-item';
-        d.innerHTML='<span class="log-date">'+(e.date||'')+'</span><span class="log-note" title="'+(e.note||'')+'">'+(e.note||'Holiday')+'</span><span class="log-hrs hol">-'+fmt1(e.hours)+' hrs</span>'
+        d.innerHTML='<span class="log-date">'+(e.date||'')+'</span><span class="log-note" title="'+(e.note||'')+'">'+(e.note||'Holiday')+(e.excludeFromLeaveBalance?' <strong style="color:var(--gr)">(historical entry — not deducted)</strong>':'')+'</span><span class="log-hrs hol">'+(e.excludeFromLeaveBalance?'0.0':('-'+fmt1(e.hours)))+' hrs</span>'
           +(!isPortalMode?'<div class="log-actions"><button class="log-btn" title="Edit Holiday" onclick="startEditHol(\''+e.id+'\')">&#9998;</button><button class="log-btn del" title="Delete" onclick="delHol(\''+e.id+'\')">&#128465;</button></div>':'');
         holListEl.appendChild(d);
       }
@@ -3108,7 +3115,7 @@ function generateSingleStaffPdfHtml(sid, yearChoice){
     html += '<tbody>';
     if(st.holLogs.length){
       st.holLogs.forEach(function(h){
-        html += '<tr style="border-bottom:1px solid #fef3c7"><td style="padding:3px 8px;font-weight:700">' + (h.date||'') + '</td><td style="padding:3px 8px;color:#475569">' + (h.note||'Holiday') + '</td><td style="padding:3px 8px;text-align:right;font-weight:800;color:#b45309">-' + fmt1(h.hours) + 'h</td></tr>';
+        html += '<tr style="border-bottom:1px solid #fef3c7"><td style="padding:3px 8px;font-weight:700">' + (h.date||'') + '</td><td style="padding:3px 8px;color:#475569">' + (h.note||'Holiday') + (h.excludeFromLeaveBalance?' [record only, not deducted]':'')+'</td><td style="padding:3px 8px;text-align:right;font-weight:800;color:#b45309">' + (h.excludeFromLeaveBalance?'0.0':('-'+fmt1(h.hours))) + 'h</td></tr>';
       });
     } else {
       html += '<tr><td colspan="3" style="padding:10px;text-align:center;color:#94a3b8">0 holidays taken in ' + y + '</td></tr>';
