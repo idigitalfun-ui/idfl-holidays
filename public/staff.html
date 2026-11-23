@@ -38,29 +38,34 @@
     if(!(h.workedWeeks2023||[]).length)entry('No recorded weeks','','');
     return;
    }
-   const r=(data.years||{})[y]||{},hol=(data.holLogs||[]).filter(h=>String(h.year)===y);
-   const hours=(r.weeks||[]).reduce((acc,w)=>acc+Number(w.hours||0),0);
-   const leave=hol.reduce((acc,h)=>acc+(h.excludeFromLeaveBalance?0:Number(h.hours||0)),0);
-   // Calculate from the live payroll weeks and leave log, exactly as the manager view does.
-   // The imported years.currentAvailableHrs cache can be stale and must not be displayed.
+   const hol=(data.holLogs||[]).filter(h=>String(h.year)===y);
    const dateKey=value=>{
     const v=String(value||'').trim(),p=v.split('/');
     return p.length===3&&p[2].length===4?p[2]+'-'+p[1]+'-'+p[0]:v.slice(0,10);
    };
-   const leaveDates=new Set(hol.map(h=>dateKey(h.date)));
-   const bankYears=data.carryLegacyBankCredits?['2024','2025','2026'].filter(n=>n<=y):[y];
-   const bankCredit=bankYears.reduce((sum,year)=>{
-      if(!((data.bankHolidayInclusions||{})[year]))return sum;
-      const used=new Set((data.holLogs||[]).filter(h=>String(h.year)===year).map(h=>dateKey(h.date)));
-      return sum+(data.bankHolidays||[]).filter(h=>
-       String(h.year||dateKey(h.date).slice(0,4))===year && !used.has(dateKey(h.date))
-      ).length;
-   },0);
-   const earned=Math.round(hours*8)/100;
-   const remaining=Math.round((Number(r.opening||0)+earned-leave+bankCredit)*100)/100;
+   const sourceBased=Boolean(data.pre2024?.sourceStatus && ['MANAGER_CONFIRMED_SOURCE_2023','2023_WORK_WEEKS_OPENING_NOT_RECORDED','STARTING_BALANCE_NOT_RECORDED'].includes(data.pre2024.sourceStatus));
+   const memo={};
+   const calc=year=>{
+    if(memo[year])return memo[year];
+    const rec=(data.years||{})[year]||{};
+    const hours=(rec.weeks||[]).reduce((sum,w)=>sum+Number(w.hours||0),0);
+    const charged=(data.holLogs||[]).filter(h=>String(h.year)===year).reduce((sum,h)=>sum+(h.excludeFromLeaveBalance?0:Number(h.hours||0)),0);
+    const bankYears=data.carryLegacyBankCredits?['2024','2025','2026'].filter(n=>n<=year):[year];
+    const bankCredit=bankYears.reduce((sum,bankYear)=>{
+     if(!((data.bankHolidayInclusions||{})[bankYear]))return sum;
+     const used=new Set((data.holLogs||[]).filter(h=>String(h.year)===bankYear).map(h=>dateKey(h.date)));
+     return sum+(data.bankHolidays||[]).filter(h=>String(h.year||dateKey(h.date).slice(0,4))===bankYear&&!used.has(dateKey(h.date))).length;
+    },0);
+    // Source-based annual openings are inherited, not added repeatedly.
+    const opening=sourceBased&&year!=='2024'?calc(String(Number(year)-1)).remaining:Number(rec.opening||0);
+    const earned=Math.round(hours*8)/100;
+    const remaining=Math.round((opening+earned-charged+bankCredit)*100)/100;
+    return (memo[year]={hours,leave:charged,opening,earned,bankCredit,remaining});
+   };
+   const {hours,leave,opening,earned,bankCredit,remaining}=calc(y);
    const headline=document.createElement('div');headline.className='large';
    headline.textContent=num(remaining)+' hrs'+(bankCredit?' ●':'');if(bankCredit)headline.title='Green dot indicates '+num(bankCredit)+' bank-holiday credit hours included';$('balance').append(headline);
-   add('Recorded opening',num(r.opening)+' hours');
+   add(data.pre2024 ? (y==='2024'?'2023 starting balance + 2023 earned hours':'Carried closing balance from previous year') : 'Opening balance (2023 source unverified)',num(opening)+' hours');
    add('Recorded worked hours',num(hours)+' hours');
    add('Leave earned (8%)',num(earned)+' hours');
    add('Holidays taken (entries)',num(leave)+' hours');

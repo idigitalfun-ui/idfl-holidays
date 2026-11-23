@@ -1167,8 +1167,14 @@ function computeYearStats(sid, year, inheritedOpening){
   const earned = Math.round(totalWorked * 0.08 * 100) / 100;
   
   let opening = 0;
+  const archive=((BASE.basePre2024||{})[sid]||{});
+  const sourceBased2023=Boolean(archive.sourceStatus && ['MANAGER_CONFIRMED_SOURCE_2023','2023_WORK_WEEKS_OPENING_NOT_RECORDED','STARTING_BALANCE_NOT_RECORDED'].includes(archive.sourceStatus));
   const ovEntry = ((ov[year]||{})[sid])||{};
-  if(ovEntry.opening !== undefined) {
+  // For reconciled profiles only the September 2023 source is the original opening.
+  // The next year always inherits the computed prior-year closing, never a second annual opening.
+  if(sourceBased2023 && String(year)!=='2024' && inheritedOpening !== undefined) {
+    opening = inheritedOpening;
+  } else if(ovEntry.opening !== undefined) {
     opening = ovEntry.opening;
   } else if (((BASE.years[year]||{})[sid]||{}).opening !== undefined) {
     // Use recorded year-end carry-over instead of recalculating from a disputed spreadsheet.
@@ -1181,7 +1187,7 @@ function computeYearStats(sid, year, inheritedOpening){
   const holTaken = holLogs.reduce(function(sum,e){ return sum + (e.excludeFromLeaveBalance ? 0 : (Number(e.hours)||0)); }, 0);
   
   const sickLogs = getStaffSickLogs(sid, year);
-  const sickUsed = sickLogs.reduce(function(s,e){ return s + (e.hours||0); }, 0);
+  const sickUsed = sickLogs.reduce(function(sum,e){ return sum + (e.excludeFromSickAllowance ? 0 : (Number(e.hours)||0)); }, 0);
   
   const dailyHours = getStaffDailyHours(sid);
   const sickAllowance = SICK_ALLOWANCE_ANNUAL;
@@ -1189,7 +1195,7 @@ function computeYearStats(sid, year, inheritedOpening){
   const bankHolidayCredit=getBankHolidayYearCredit(sid,year);
   // These three legacy bank-holiday credits were not inherited into the next year's saved opening.
   // Include each selected, eligible date only once from 2024 up to the viewed year.
-  const isLegacyBankProfile=['s1','s2','s8'].includes(sid);
+  const isLegacyBankProfile=['s1','s2','s8'].includes(sid) && !sourceBased2023;
   const creditedYears=isLegacyBankProfile ? ['2024','2025','2026'].filter(y=>y<=String(year)) : [String(year)];
   const credits=creditedYears.map(y=>getBankHolidayYearCredit(sid,y));
   const totalBankCredit=credits.reduce((sum,c)=>sum+c.creditHours,0);
@@ -1928,7 +1934,7 @@ function renderMain(){
     +(balance > 0 ? '<div class="hero-weeks-badge">&#128197; Equivalent to: <strong>'+breakdown.weeksText+'</strong></div>' : '')
     +'<div class="hero-desc">Calculated at '+weeklyHrs+' hrs / full week ('+dailyHrs+' hrs / working day). Recorded tracker balance; earlier carry-over and public-holiday entitlements require verification.</div>'
     +'<div class="hero-breakdown-grid'+(hasProfileBankHolidays ? ' with-bank-holidays' : '')+'">'
-    +'<div class="hero-b-col"><span>Opening Carry-over</span><strong>'+fmt1(curStats.opening)+' hrs</strong></div>'
+    +'<div class="hero-b-col"><span>'+(((BASE.basePre2024||{})[staff.id]||{}).sourceStatus ? (activeYear==='2024' ? '2023 opening + earned in 2023' : 'Previous-year closing carried forward') : 'Recorded opening (source not yet matched)')+'</span><strong>'+fmt1(curStats.opening)+' hrs</strong></div>'
     +'<div class="hero-b-col"><span>Earned (8% of '+fmt1(curStats.totalWorked)+'h)</span><strong style="color:var(--gr)">+'+fmt1(curStats.earned)+' hrs</strong></div>'
     +'<div class="hero-b-col"><span>Holidays taken ('+activeYear+')</span><strong style="color:var(--am)">-'+fmt1(curStats.holTaken)+' hrs</strong></div>'
     +(hasProfileBankHolidays ? '<div class="hero-b-col"><span>Bank Holidays (2024–'+activeYear+'; carried forward)</span><strong style="color:'+(bankHolidayDatesIncluded ? 'var(--gr)' : 'var(--rd)')+'">'+bankHolidayDatesIncluded+' day'+(bankHolidayDatesIncluded===1?'':'s')+'</strong><small style="font-size:.68rem;font-weight:700;color:'+(bankHolidayDatesIncluded ? 'var(--gr)' : 'var(--rd)')+'">+'+fmt1(bankHolidayCreditHours)+' hrs &bull; '+bankHolidayDatesIncluded+' of '+bankHolidayDatesEligible+' eligible from 2024'+(bankHolidayDatesExcluded ? ' ('+bankHolidayDatesExcluded+' taken)' : '')+'</small>'
@@ -2115,7 +2121,7 @@ function renderMain(){
         sickListEl.appendChild(editDiv);
       } else {
         const d=document.createElement('div');d.className='log-item';
-        d.innerHTML='<span class="log-date">'+(e.date||'')+'</span><span class="log-note" title="'+(e.note||'')+'">'+(e.note||'Sick')+'</span><span class="log-hrs sick">'+fmt1(e.hours)+' hrs</span>'
+        d.innerHTML='<span class="log-date">'+(e.date||'')+'</span><span class="log-note" title="'+(e.note||'')+'">'+(e.note||'Sick')+(e.excludeFromSickAllowance?' (historical payroll request, not charged)':'')+'</span><span class="log-hrs sick">'+(e.excludeFromSickAllowance?'0.0':fmt1(e.hours))+' hrs</span>'
           +(!isPortalMode?'<div class="log-actions"><button class="log-btn" title="Edit Sick Day" onclick="startEditSick(\''+e.id+'\')">&#9998;</button><button class="log-btn del" title="Delete" onclick="delSick(\''+e.id+'\')">&#128465;</button></div>':'');
         sickListEl.appendChild(d);
       }
