@@ -2401,6 +2401,8 @@ function openReactivateModal(sid){
     const newStart = document.getElementById('reactivateStartDate').value;
     const carryBal = document.getElementById('reactivateCarryBal').checked;
     
+    if(!window.confirm('Reactivate '+staff.name+'? This will move the employee out of Past Staff. Cancel to keep their historical status.')) return;
+    explicitReactivationApprovals.add(sid);
     const changes = { status: 'active', shop: newShop, location: newShop, leftDate: '', leftWeek: '' };
     if(newStart) changes.startDate = newStart;
     updateStaffRecord(staff, changes);
@@ -3654,6 +3656,8 @@ function splitDbState(data){
   items[id]={profile:st,years,pre2024:(data.basePre2024||{})[id],holLogs:(data.baseHolLogs||{})[id]||[],sickLogs:(data.baseSickLogs||{})[id]||[],bankHolidays:(data.baseBankHolidays||{})[id]||[],bankHolidayInclusions:(data.baseBankHolidayInclusions||{})[id]||{}};
  });return items;
 }
+// Past Staff status may only be cleared by using the explicit Reactivate confirmation.
+const explicitReactivationApprovals = new Set();
 function assembleDbState(items){
  const data={staff:[],years:{'2024':{},'2025':{},'2026':{}},baseHolLogs:{},baseSickLogs:{},baseBankHolidays:{},baseBankHolidayInclusions:{},basePre2024:{}};
  Object.keys(items).sort().forEach(id=>{const rec=items[id].payload||items[id];data.staff.push(rec.profile);
@@ -3691,10 +3695,18 @@ async function saveToSupabase(){
  try{
   const desired=splitDbState(buildCurrentDatabaseState());const changed=[];
   Object.keys(desired).forEach(id=>{const old=loadedSnapshot[id];if(!old||JSON.stringify(old.payload)!==JSON.stringify(desired[id]))changed.push({id,expected_revision:old?old.revision:0,payload:desired[id]});});
+  // Never allow a stale tab or imported browser state to silently reactivate Past Staff.
+  for(const item of changed){
+    const previous=loadedSnapshot[item.id]?.payload?.profile;
+    const next=item.payload?.profile;
+    if(previous?.status==='inactive' && next?.status!=='inactive' && !explicitReactivationApprovals.has(item.id)){
+      throw new Error('Past Staff status for '+(previous.name||item.id)+' cannot be changed by a stale browser. Use the Reactivate button with confirmation.');
+    }
+  }
   if(!changed.length){setCloudStatus('synced','No unsaved changes.');return true;}
   setCloudStatus('saving','Saving '+changed.length+' staff records...');
   const {error}=await sb.rpc('save_staff_changes',{changes:changed});if(error)throw error;
-  changed.forEach(item=>{loadedSnapshot[item.id]={payload:item.payload,revision:item.expected_revision+1};});
+  changed.forEach(item=>{loadedSnapshot[item.id]={payload:item.payload,revision:item.expected_revision+1};explicitReactivationApprovals.delete(item.id);});
   Object.keys(BASE).forEach(k=>delete BASE[k]);Object.assign(BASE,assembleDbState(loadedSnapshot));
   if(JSON.stringify(ov)===ovAtStart){ov={};localStorage.removeItem(LS_KEY);}else saveAgain=true;
   setCloudStatus('synced','Saved to Supabase at '+new Date().toLocaleTimeString());renderAll();return true;
