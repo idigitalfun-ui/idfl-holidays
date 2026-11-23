@@ -1807,7 +1807,7 @@ function renderHistoricalArchive(){
  const historical=(BASE.basePre2024||{})[activeSid];
  if(!activeSid||!historical){const p=document.createElement('p');p.textContent='No verified historical record available for this employee. Historical files may not include their name.';card.appendChild(p);el.appendChild(card);return;}
  const info=document.createElement('p');info.style='font-size:.85rem';info.textContent='Source: '+historical.source+' · Snapshot date: '+historical.asOfDate+' · Source status: '+(historical.sourceStatus||'not verified');card.appendChild(info);
- const balance=document.createElement('p');balance.style='font-size:1rem;font-weight:700';balance.textContent=(historical.sourceStatus==='RECONSTRUCTED_FROM_2023_WORKED_HOURS'?'Reconstructed worked-hours balance at ':'Reported available hours at ')+historical.asOfDate+': '+(historical.availableAtDateHours==null?'Not established':Number(historical.availableAtDateHours).toFixed(2)+' hours');card.appendChild(balance);
+ const balance=document.createElement('p');balance.style='font-size:1rem;font-weight:700';balance.textContent=(String(historical.sourceStatus||'').startsWith('RECONSTRUCTED')?'Payroll-derived hours at (payout may be unverified) ':'Reported available hours at ')+historical.asOfDate+': '+(historical.availableAtDateHours==null?'Not established':Number(historical.availableAtDateHours).toFixed(2)+' hours');card.appendChild(balance);
  const rows=historical.workedWeeks2023||[];
  const h=document.createElement('h3');h.textContent='Recorded working weeks in 2023';card.appendChild(h);
  if(!rows.length){const x=document.createElement('p');x.textContent='No 2023 working weeks in the available source.';card.appendChild(x);}else{
@@ -1830,7 +1830,7 @@ function renderHistoricalArchive(){
  const matched=['MANAGER_CONFIRMED_SOURCE_2023','RECONSTRUCTED_FROM_2023_WORKED_HOURS'].includes(historical.sourceStatus) && historical.availableAtDateHours!=null;
  summary.textContent=matched
   ? '2024 opening: '+Number(historical.availableAtDateHours).toFixed(2)+' h (September 2023 source) + '+earned2023.toFixed(2)+' h (2023 earned) − '+deducted2023.toFixed(2)+' h (2023 holiday pay) = '+(Number(historical.availableAtDateHours)+earned2023-deducted2023).toFixed(2)+' h'
-  : 'No confirmed 2023 starting balance. Later-year totals require independent source review.';
+  : (historical.payoutReviewRequired ? '2023 work is evidenced, but final holiday payout is unverified; the computed source total is not a confirmed unpaid balance.' : 'No confirmed 2023 starting balance. Later-year totals require independent source review.');
  card.appendChild(summary);
  el.appendChild(card);
 }
