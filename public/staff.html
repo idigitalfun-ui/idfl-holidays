@@ -45,7 +45,7 @@
     add('2023 holiday pay deducted after source date',num(leave)+' hours');
     if(['MANAGER_CONFIRMED_SOURCE_2023','RECONSTRUCTED_FROM_2023_WORKED_HOURS'].includes(h.sourceStatus) && h.availableAtDateHours!=null){
       add('Calculated opening for 2024',num(Number(h.availableAtDateHours)+earned-leave)+' hours');
-    } else add('Starting balance verification','Not confirmed in 2023 source');
+    } else add('Starting balance verification',h.payoutReviewRequired?'Payroll worked hours reconstructed, but final holiday payment is not confirmed. Do not treat source-derived hours as a certified unpaid balance.':'Not confirmed in 2023 source');
     if(!(h.workedWeeks2023||[]).length && !taken.length)entry('No recorded weeks or holiday pay','','');
     return;
    }
