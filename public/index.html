@@ -1378,11 +1378,42 @@ function delSickEntry(sid,id){
 }
 
 // â”€â”€â”€ Header & Year Tabs â”€â”€â”€
+// Show years belonging to the selected employee, not a shared 2024-2026 list.
+// Historical information is displayed only where the record contains an older
+// opening, worked weeks, dated leave, or one of the three specially audited profiles.
+const HISTORICAL_REVIEW_STAFF_IDS=new Set(['s1','s2','s8']);
+function staffYearTabs(sid){
+  if(!sid)return {years:years.slice(),historical:false};
+  const person=BASE.staff.find(function(s){return s.id===sid;});
+  if(!person)return {years:years.slice(),historical:false};
+  const joined=parseLocalDate(person.startDate);
+  const firstYear=joined && !isNaN(joined.getTime())?joined.getFullYear():2024;
+  const displayed=years.filter(function(year){return Number(year)>=Math.max(2024,firstYear);});
+  const historical=(BASE.basePre2024||{})[sid];
+  const earlierEvidence=!!(historical && (
+    historical.availableAtDateHours!==null && historical.availableAtDateHours!==undefined ||
+    (historical.workedWeeks2023||[]).length ||
+    Number(historical.workedHoursBeforeSnapshot||0)>0
+  )) || getStaffHolidayLogs(sid,'2023').length>0 ||
+    HISTORICAL_REVIEW_STAFF_IDS.has(sid);
+  return {
+    years:displayed.length?displayed:years.filter(function(y){return Number(y)>=Math.max(2024,firstYear);}),
+    historical:firstYear<=2023 && earlierEvidence
+  };
+}
 function renderYearTabs(){
   const el=document.getElementById('yearTabs');
-  el.innerHTML='<button class="year-tab'+(showPre2024Archive?' active':'')+'" id="pre2024Tab" type="button">Before 2024</button>'+years.map(function(y){return '<button class="year-tab'+(!showPre2024Archive&&y===activeYear?' active':'')+'" data-y="'+y+'">'+y+'</button>';}).join('');
-  document.getElementById('pre2024Tab').addEventListener('click',function(){showPre2024Archive=true;renderAll();});
-  el.querySelectorAll('.year-tab').forEach(function(b){b.addEventListener('click',function(){activeYear=b.dataset.y;showPre2024Archive=false;editingWeekIdx=null;editingHolId=null;editingSickId=null;renderAll();});});
+  const available=staffYearTabs(activeSid);
+  if(showPre2024Archive&&!available.historical)showPre2024Archive=false;
+  if(!showPre2024Archive && available.years.length && !available.years.includes(activeYear)){
+    activeYear=available.years[available.years.length-1];
+    editingWeekIdx=null;editingHolId=null;editingSickId=null;
+  }
+  const historicTab=available.historical?'<button class="year-tab'+(showPre2024Archive?' active':'')+'" id="pre2024Tab" type="button">'+(HISTORICAL_REVIEW_STAFF_IDS.has(activeSid)?'2023 & earlier':'2023')+'</button>':'';
+  el.innerHTML=historicTab+available.years.map(function(y){return '<button class="year-tab'+(!showPre2024Archive&&y===activeYear?' active':'')+'" data-y="'+y+'">'+y+'</button>';}).join('');
+  const historicButton=document.getElementById('pre2024Tab');
+  if(historicButton)historicButton.addEventListener('click',function(){showPre2024Archive=true;renderAll();});
+  el.querySelectorAll('[data-y]').forEach(function(b){b.addEventListener('click',function(){activeYear=b.dataset.y;showPre2024Archive=false;editingWeekIdx=null;editingHolId=null;editingSickId=null;renderAll();});});
 }
 
 function renderHdrStats(){
@@ -1809,9 +1840,25 @@ function renderHistoricalArchive(){
  const title=document.createElement('h2');title.textContent='Before 2024 — historical records';card.appendChild(title);
  const intro=document.createElement('p');intro.style='color:var(--tx3);font-size:.85rem';intro.textContent='For confirmed 2023 source matches: the September opening plus 8% of recorded 2023 work, minus dated holiday pay after the source date, is the 2024 starting amount. Missing source figures remain unverified.';card.appendChild(intro);
  const historical=(BASE.basePre2024||{})[activeSid];
- if(!activeSid||!historical){const p=document.createElement('p');p.textContent='No verified historical record available for this employee. Historical files may not include their name.';card.appendChild(p);el.appendChild(card);return;}
+ if(!activeSid||!historical){
+  const p=document.createElement('p');
+  p.textContent=HISTORICAL_REVIEW_STAFF_IDS.has(activeSid)
+   ? 'Earlier payroll history has been requested for this employee, but the available source does not establish a complete 2023 worked-hours or opening-balance record. No missing hours are treated as zero.'
+   : 'No earlier source record is linked to this employee.';
+  card.appendChild(p);el.appendChild(card);return;
+ }
  const info=document.createElement('p');info.style='font-size:.85rem';info.textContent='Source: '+historical.source+' · Snapshot date: '+historical.asOfDate+' · Source status: '+(historical.sourceStatus||'not verified');card.appendChild(info);
  const balance=document.createElement('p');balance.style='font-size:1rem;font-weight:700';balance.textContent=(String(historical.sourceStatus||'').startsWith('RECONSTRUCTED')?'Payroll-derived hours at (payout may be unverified) ':'Reported available hours at ')+historical.asOfDate+': '+(historical.availableAtDateHours==null?'Not established':Number(historical.availableAtDateHours).toFixed(2)+' hours');card.appendChild(balance);
+ const beforeSnapshotHours=Number(historical.workedHoursBeforeSnapshot||0);
+ if(beforeSnapshotHours){
+  const before=document.createElement('p');
+  before.style='margin:12px 0;font-size:.88rem;font-weight:650';
+  before.textContent='2023 recorded worked hours before 18 September: '+beforeSnapshotHours.toFixed(2)+' h'+(historical.workedWeeksBeforeSnapshot?' ('+historical.workedWeeksBeforeSnapshot+' source weeks)':'');
+  card.appendChild(before);
+ }
+ const sourceNote=document.createElement('p');sourceNote.style='color:var(--tx3);font-size:.85rem;margin-bottom:10px';
+ sourceNote.textContent=historical.sourceBasis||historical.note||'The available source does not quantify all earlier worked hours. Undocumented salary-rate rows are not treated as worked hours.';
+ card.appendChild(sourceNote);
  const rows=historical.workedWeeks2023||[];
  const h=document.createElement('h3');h.textContent='Recorded working weeks in 2023';card.appendChild(h);
  if(!rows.length){const x=document.createElement('p');x.textContent='No 2023 working weeks in the available source.';card.appendChild(x);}else{
