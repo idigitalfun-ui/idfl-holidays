@@ -34,7 +34,7 @@
   const joinedISO=dateParts.length===3 && dateParts[2].length===4
      ? dateParts[2]+'-'+dateParts[1].padStart(2,'0')+'-'+dateParts[0].padStart(2,'0')
      : dateRaw.slice(0,10);
-  const joinYear=/^\\d{4}-/.test(joinedISO)?Number(joinedISO.slice(0,4)):2024;
+  const joinYear=/^\d{4}-/.test(joinedISO)?Number(joinedISO.slice(0,4)):2024;
   const firstVisibleYear=Math.max(2024,joinYear);
   const hist=data.pre2024||null;
   const has2023Evidence=!!(hist && (
@@ -45,7 +45,7 @@
   const historicalTab=joinYear<=2023 && (historicThree||has2023Evidence);
   const select=$('year');select.replaceChildren();
   if(historicalTab){const option=document.createElement('option');option.value='before';option.textContent=historicThree?'2023 & earlier':'2023';select.append(option)}
-  for(const year of Object.keys(data.years||{}).filter(y=>/^\\d{4}$/.test(y) && Number(y)>=firstVisibleYear).sort()){
+  for(const year of Object.keys(data.years||{}).filter(y=>/^\d{4}$/.test(y) && Number(y)>=firstVisibleYear).sort()){
     const option=document.createElement('option');option.value=year;option.textContent=year;select.append(option);
   }
   if(Array.from(select.options).some(o=>o.value==='2026'))select.value='2026';
