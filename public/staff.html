@@ -25,14 +25,41 @@
   if(!data){set('notice','This link has expired or was revoked. Request a new link from your manager.');return;}
   $('notice').style.display='none';$('content').style.display='block';
   set('staffname',data.profile?.name||'Employee');set('shop',data.profile?.shop||'');
+  // The selector is scoped to this employee: a 2025 joiner never sees 2024
+  // or the 2023 archive, and a 2026 joiner sees 2026 only.
+  const name=String(data.profile?.name||'');
+  const historicThree=['Osama Saleem Sabri','Rana Abdullah','Ibrar Tufail'].includes(name);
+  const dateRaw=String(data.profile?.startDate||'');
+  const dateParts=dateRaw.split('/');
+  const joinedISO=dateParts.length===3 && dateParts[2].length===4
+     ? dateParts[2]+'-'+dateParts[1].padStart(2,'0')+'-'+dateParts[0].padStart(2,'0')
+     : dateRaw.slice(0,10);
+  const joinYear=/^\\d{4}-/.test(joinedISO)?Number(joinedISO.slice(0,4)):2024;
+  const firstVisibleYear=Math.max(2024,joinYear);
+  const hist=data.pre2024||null;
+  const has2023Evidence=!!(hist && (
+    hist.availableAtDateHours!==null && hist.availableAtDateHours!==undefined ||
+    (hist.workedWeeks2023||[]).length ||
+    Number(hist.workedHoursBeforeSnapshot||0)>0
+  )) || (data.holLogs||[]).some(x=>String(x.year)==='2023');
+  const historicalTab=joinYear<=2023 && (historicThree||has2023Evidence);
+  const select=$('year');select.replaceChildren();
+  if(historicalTab){const option=document.createElement('option');option.value='before';option.textContent=historicThree?'2023 & earlier':'2023';select.append(option)}
+  for(const year of Object.keys(data.years||{}).filter(y=>/^\\d{4}$/.test(y) && Number(y)>=firstVisibleYear).sort()){
+    const option=document.createElement('option');option.value=year;option.textContent=year;select.append(option);
+  }
+  if(Array.from(select.options).some(o=>o.value==='2026'))select.value='2026';
+  else select.selectedIndex=select.options.length-1;
   const add=(key,val)=>{const r=document.createElement('tr'),a=document.createElement('td'),b=document.createElement('td');a.textContent=key;b.textContent=val;r.append(a,b);$('facts').appendChild(r)};
   const entry=(date,hours,note)=>{const r=document.createElement('tr');for(const [i,v] of [date,hours,note].entries()){const c=document.createElement('td');c.textContent=String(v??'');if(i===1)c.className='num';r.append(c)}$('entries').appendChild(r)};
   function render(){
    const y=$('year').value;$('facts').replaceChildren();$('entries').replaceChildren();$('balance').replaceChildren();
    if(y==='before'){
     set('entryTitle','2023 weekly records');const h=data.pre2024;
-    if(!h){add('Historical information','No earlier data available for this employee');return;}
+    if(!h){add('Historical information','Earlier employment/payroll records have not been verified for this employee. Unknown worked hours are not assumed to be zero.');return;}
     add('Historical source',h.source||'2024 holiday workbook');add('Source date',h.asOfDate||'Not specified');
+    if(Number(h.workedHoursBeforeSnapshot||0)>0)add('2023 worked before 18 September',num(h.workedHoursBeforeSnapshot)+' hours'+(h.workedWeeksBeforeSnapshot?' across '+h.workedWeeksBeforeSnapshot+' source weeks':''));
+    if(h.sourceBasis)add('Source explanation',h.sourceBasis);
     add(String(h.sourceStatus||'').startsWith('RECONSTRUCTED')?'Payroll-derived historical hours (payout review may apply)':'Reported available hours at source date',h.availableAtDateHours==null?'Not established':num(h.availableAtDateHours)+' hours');
     for(const w of h.workedWeeks2023||[])entry(w.weekStart,num(w.workedHours),'Worked hours in 2023 source');
     const taken=(data.holLogs||[]).filter(x=>String(x.year)==='2023');
@@ -107,9 +134,21 @@
    if(String(archiveStatus).includes('PAYOUT_REVIEW'))add('Historical final payout review','Payroll records a final holiday-payment request; payment status is not proven.');
 
 
-   set('entryTitle','Holiday entries — '+y);
-   for(const h of hol)entry(h.date,h.excludeFromLeaveBalance?'0.00 (not deducted)':num(h.hours),h.excludeFromLeaveBalance?'Historical payroll entry — excluded from leave balance':'Holiday pay');
-   if(!hol.length)entry('No holiday entries recorded','','');
+   const sick=(data.sickLogs||[]).filter(x=>String(x.year)===y);
+   const usedSick=sick.reduce((sum,x)=>sum+(x.excludeFromSickAllowance?0:Number(x.hours||0)),0);
+   add('Recorded sick-pay hours used',num(usedSick)+' hours');
+   add('Company sick allowance remaining',num(Math.max(0,35-usedSick))+' hours (tracker allowance)');
+   set('entryTitle','Worked weeks, holiday pay, sick pay & bank holidays — '+y);
+   const weeks=(data.years?.[y]?.weeks||[]).slice().sort((a,b)=>dateKey(a.date).localeCompare(dateKey(b.date)));
+   for(const w of weeks)entry(w.date,num(w.hours), 'Worked hours · '+(w.label||'Payroll week'));
+   for(const h of hol)entry(h.date,h.excludeFromLeaveBalance?'0.00 (not deducted)':num(h.hours),h.excludeFromLeaveBalance?'Holiday pay recorded; not charged':'Holiday pay taken');
+   for(const h of sick)entry(h.date,h.excludeFromSickAllowance?'0.00 (not charged)':num(h.hours),h.excludeFromSickAllowance?'Sick-pay note; not charged':'Sick pay used');
+   const takenDates=new Set(hol.map(h=>dateKey(h.date)));
+   for(const b of (data.bankHolidays||[]).filter(b=>String(b.year||dateKey(b.date).slice(0,4))===y)){
+      const included=Boolean((data.bankHolidayInclusions||{})[y])&&!takenDates.has(dateKey(b.date));
+      entry(b.date, data.separateBankCredits?'0.00 (separate)':(included?'1.00':'0.00'), 'Bank holiday · '+(included?'selected':'not selected / already recorded as leave')+(data.separateBankCredits?' · excluded from holiday-hours total':''));
+   }
+   if(!weeks.length&&!hol.length&&!sick.length)entry('No dated payroll entries recorded','','');
   }
   $('year').addEventListener('change',render);render();
  }catch(e){set('notice','Unable to load this holiday record. '+e.message);}
