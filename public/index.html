@@ -1926,7 +1926,7 @@ function renderMain(){
     +'<div class="hero-val-big" style="color:'+balColor+'">'+fmt1(balance)+' hrs'+(curStats.bankHolidayCredit > 0 ? '<span title="Includes +'+fmt1(curStats.bankHolidayCredit)+' hours in selected bank-holiday credits" aria-label="Bank-holiday credit included" style="color:#15803d;font-size:.36em;vertical-align:super;margin-left:7px">&#9679;</span>' : '')+'</div>'
     +'<div class="hero-sub-big" style="color:'+balColor+'">'+fmt1(balDays)+' working days</div>'
     +(balance > 0 ? '<div class="hero-weeks-badge">&#128197; Equivalent to: <strong>'+breakdown.weeksText+'</strong></div>' : '')
-    +'<div class="hero-desc">Calculated at '+weeklyHrs+' hrs / full week ('+dailyHrs+' hrs / working day)</div>'
+    +'<div class="hero-desc">Calculated at '+weeklyHrs+' hrs / full week ('+dailyHrs+' hrs / working day). Recorded tracker balance; earlier carry-over and public-holiday entitlements require verification.</div>'
     +'<div class="hero-breakdown-grid'+(hasProfileBankHolidays ? ' with-bank-holidays' : '')+'">'
     +'<div class="hero-b-col"><span>Opening Carry-over</span><strong>'+fmt1(curStats.opening)+' hrs</strong></div>'
     +'<div class="hero-b-col"><span>Earned (8% of '+fmt1(curStats.totalWorked)+'h)</span><strong style="color:var(--gr)">+'+fmt1(curStats.earned)+' hrs</strong></div>'
