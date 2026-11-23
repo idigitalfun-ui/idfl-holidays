@@ -34,8 +34,19 @@
     if(!h){add('Historical information','No earlier data available for this employee');return;}
     add('Historical source',h.source||'2024 holiday workbook');add('Source date',h.asOfDate||'Not specified');
     add('Reported available hours',h.availableAtDateHours==null?'Not recorded':num(h.availableAtDateHours)+' hours');
-    for(const w of h.workedWeeks2023||[])entry(w.weekStart,num(w.workedHours),'Worked hours in historic record');
-    if(!(h.workedWeeks2023||[]).length)entry('No recorded weeks','','');
+    for(const w of h.workedWeeks2023||[])entry(w.weekStart,num(w.workedHours),'Worked hours in 2023 source');
+    const taken=(data.holLogs||[]).filter(x=>String(x.year)==='2023');
+    for(const x of taken)entry(x.date,'-'+num(x.hours),x.note||'Holiday pay deducted after 2023 source date');
+    const worked=(h.workedWeeks2023||[]).reduce((sum,w)=>sum+Number(w.workedHours||0),0);
+    const earned=Math.round(worked*8)/100;
+    const leave=taken.reduce((sum,x)=>sum+Number(x.hours||0),0);
+    add('2023 worked hours (from September source)',num(worked)+' hours');
+    add('2023 holiday entitlement earned at 8%',num(earned)+' hours');
+    add('2023 holiday pay deducted after source date',num(leave)+' hours');
+    if(h.sourceStatus==='MANAGER_CONFIRMED_SOURCE_2023' && h.availableAtDateHours!=null){
+      add('Calculated opening for 2024',num(Number(h.availableAtDateHours)+earned-leave)+' hours');
+    } else add('Starting balance verification','Not confirmed in 2023 source');
+    if(!(h.workedWeeks2023||[]).length && !taken.length)entry('No recorded weeks or holiday pay','','');
     return;
    }
    const hol=(data.holLogs||[]).filter(h=>String(h.year)===y);

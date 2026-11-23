@@ -1798,15 +1798,15 @@ document.getElementById('sbTabInactive').addEventListener('click', function(){
 
 // â”€â”€â”€ Main View â”€â”€â”€
 
-// Read-only historical archive. These numbers never enter 2024+ balance calculations.
+// Historical source: verified 2023 starting figures, worked hours and pay deductions feed 2024 carry-forward only for source-matched staff.
 function renderHistoricalArchive(){
  const el=document.getElementById('main');el.replaceChildren();
  const card=document.createElement('section');card.className='card';card.style='padding:24px;max-width:940px;margin:32px auto';
  const title=document.createElement('h2');title.textContent='Before 2024 — historical records';card.appendChild(title);
- const intro=document.createElement('p');intro.style='color:var(--tx3);font-size:.85rem';intro.textContent='Historical source figures only. Not a verified entitlement or automatic opening balance for 2024.';card.appendChild(intro);
+ const intro=document.createElement('p');intro.style='color:var(--tx3);font-size:.85rem';intro.textContent='For confirmed 2023 source matches: the September opening plus 8% of recorded 2023 work, minus dated holiday pay after the source date, is the 2024 starting amount. Missing source figures remain unverified.';card.appendChild(intro);
  const historical=(BASE.basePre2024||{})[activeSid];
  if(!activeSid||!historical){const p=document.createElement('p');p.textContent='No verified historical record available for this employee. Historical files may not include their name.';card.appendChild(p);el.appendChild(card);return;}
- const info=document.createElement('p');info.style='font-size:.85rem';info.textContent='Source: '+historical.source+' · Snapshot date: '+historical.asOfDate+' · Status: historical / unverified';card.appendChild(info);
+ const info=document.createElement('p');info.style='font-size:.85rem';info.textContent='Source: '+historical.source+' · Snapshot date: '+historical.asOfDate+' · Source status: '+(historical.sourceStatus||'not verified');card.appendChild(info);
  const balance=document.createElement('p');balance.style='font-size:1rem;font-weight:700';balance.textContent='Reported available hours at '+historical.asOfDate+': '+(historical.availableAtDateHours===null?'Not recorded':Number(historical.availableAtDateHours).toFixed(2)+' hours');card.appendChild(balance);
  const rows=historical.workedWeeks2023||[];
  const h=document.createElement('h3');h.textContent='Recorded working weeks in 2023';card.appendChild(h);
@@ -1815,6 +1815,23 @@ function renderHistoricalArchive(){
   const thead=document.createElement('thead');const header=document.createElement('tr');for(const name of ['Week starting','Worked hours']){const th=document.createElement('th');th.textContent=name;th.style='text-align:left;padding:8px;border-bottom:1px solid var(--bd)';header.appendChild(th)}thead.appendChild(header);table.appendChild(thead);
   const tbody=document.createElement('tbody');for(const entry of rows){const tr=document.createElement('tr');for(const v of [entry.weekStart,Number(entry.workedHours).toFixed(2)]){const td=document.createElement('td');td.textContent=v;td.style='padding:7px;border-bottom:1px solid var(--bd)';tr.appendChild(td)}tbody.appendChild(tr)}table.appendChild(tbody);card.appendChild(table);
  }
+ const historicalPay=getStaffHolidayLogs(activeSid,'2023');
+ const earned2023=Math.round(rows.reduce(function(sum,w){return sum+(Number(w.workedHours)||0);},0)*8)/100;
+ const deducted2023=historicalPay.reduce(function(sum,h){return sum+(Number(h.hours)||0);},0);
+ const payTitle=document.createElement('h3');payTitle.textContent='Holiday pay deducted after 18 September 2023';payTitle.style.marginTop='18px';card.appendChild(payTitle);
+ if(!historicalPay.length){const empty=document.createElement('p');empty.textContent='No 2023 post-opening holiday-pay entry linked to this employee.';card.appendChild(empty);}
+ else{
+  const table=document.createElement('table');table.style='width:100%;border-collapse:collapse;font-size:.8rem';
+  const head=document.createElement('tr');for(const label of ['Week','Holiday pay hours','Source note']){const th=document.createElement('th');th.textContent=label;th.style='text-align:left;padding:8px;border-bottom:1px solid var(--bd)';head.appendChild(th);}table.appendChild(head);
+  for(const e of historicalPay){const row=document.createElement('tr');for(const v of [e.date,Number(e.hours).toFixed(2),e.note||'Payroll holiday pay']){const cell=document.createElement('td');cell.textContent=String(v);cell.style='padding:7px;border-bottom:1px solid var(--bd)';row.appendChild(cell);}table.appendChild(row);}
+  card.appendChild(table);
+ }
+ const summary=document.createElement('p');summary.style='margin-top:14px;font-weight:700';
+ const matched=historical.sourceStatus==='MANAGER_CONFIRMED_SOURCE_2023' && historical.availableAtDateHours!=null;
+ summary.textContent=matched
+  ? '2024 opening: '+Number(historical.availableAtDateHours).toFixed(2)+' h (September 2023 source) + '+earned2023.toFixed(2)+' h (2023 earned) − '+deducted2023.toFixed(2)+' h (2023 holiday pay) = '+(Number(historical.availableAtDateHours)+earned2023-deducted2023).toFixed(2)+' h'
+  : 'No confirmed 2023 starting balance. Later-year totals require independent source review.';
+ card.appendChild(summary);
  el.appendChild(card);
 }
 
