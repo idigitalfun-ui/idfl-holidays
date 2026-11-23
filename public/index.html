@@ -1168,7 +1168,7 @@ function computeYearStats(sid, year, inheritedOpening){
   
   let opening = 0;
   const archive=((BASE.basePre2024||{})[sid]||{});
-  const sourceBased2023=Boolean(archive.sourceStatus && ['MANAGER_CONFIRMED_SOURCE_2023','2023_WORK_WEEKS_OPENING_NOT_RECORDED','STARTING_BALANCE_NOT_RECORDED'].includes(archive.sourceStatus));
+  const sourceBased2023=Boolean(archive.sourceStatus && ['MANAGER_CONFIRMED_SOURCE_2023','RECONSTRUCTED_FROM_2023_WORKED_HOURS','2023_WORK_WEEKS_OPENING_NOT_RECORDED','STARTING_BALANCE_NOT_RECORDED'].includes(archive.sourceStatus));
   const ovEntry = ((ov[year]||{})[sid])||{};
   // For reconciled profiles only the September 2023 source is the original opening.
   // The next year always inherits the computed prior-year closing, never a second annual opening.
@@ -1807,7 +1807,7 @@ function renderHistoricalArchive(){
  const historical=(BASE.basePre2024||{})[activeSid];
  if(!activeSid||!historical){const p=document.createElement('p');p.textContent='No verified historical record available for this employee. Historical files may not include their name.';card.appendChild(p);el.appendChild(card);return;}
  const info=document.createElement('p');info.style='font-size:.85rem';info.textContent='Source: '+historical.source+' · Snapshot date: '+historical.asOfDate+' · Source status: '+(historical.sourceStatus||'not verified');card.appendChild(info);
- const balance=document.createElement('p');balance.style='font-size:1rem;font-weight:700';balance.textContent='Reported available hours at '+historical.asOfDate+': '+(historical.availableAtDateHours===null?'Not recorded':Number(historical.availableAtDateHours).toFixed(2)+' hours');card.appendChild(balance);
+ const balance=document.createElement('p');balance.style='font-size:1rem;font-weight:700';balance.textContent=(historical.sourceStatus==='RECONSTRUCTED_FROM_2023_WORKED_HOURS'?'Reconstructed worked-hours balance at ':'Reported available hours at ')+historical.asOfDate+': '+(historical.availableAtDateHours==null?'Not established':Number(historical.availableAtDateHours).toFixed(2)+' hours');card.appendChild(balance);
  const rows=historical.workedWeeks2023||[];
  const h=document.createElement('h3');h.textContent='Recorded working weeks in 2023';card.appendChild(h);
  if(!rows.length){const x=document.createElement('p');x.textContent='No 2023 working weeks in the available source.';card.appendChild(x);}else{
@@ -1827,7 +1827,7 @@ function renderHistoricalArchive(){
   card.appendChild(table);
  }
  const summary=document.createElement('p');summary.style='margin-top:14px;font-weight:700';
- const matched=historical.sourceStatus==='MANAGER_CONFIRMED_SOURCE_2023' && historical.availableAtDateHours!=null;
+ const matched=['MANAGER_CONFIRMED_SOURCE_2023','RECONSTRUCTED_FROM_2023_WORKED_HOURS'].includes(historical.sourceStatus) && historical.availableAtDateHours!=null;
  summary.textContent=matched
   ? '2024 opening: '+Number(historical.availableAtDateHours).toFixed(2)+' h (September 2023 source) + '+earned2023.toFixed(2)+' h (2023 earned) − '+deducted2023.toFixed(2)+' h (2023 holiday pay) = '+(Number(historical.availableAtDateHours)+earned2023-deducted2023).toFixed(2)+' h'
   : 'No confirmed 2023 starting balance. Later-year totals require independent source review.';
@@ -1850,6 +1850,12 @@ function renderMain(){
   const dailyHrs = curStats.dailyHours;
   const weeklyHrs = dailyHrs * 5;
   const sickAllowance = curStats.sickAllowance;
+  const historicalOpening=(BASE.basePre2024||{})[staff.id]||{};
+  const sourceStatus=historicalOpening.sourceStatus||'';
+  const verifiedHistoricalOpening=sourceStatus==='MANAGER_CONFIRMED_SOURCE_2023'||sourceStatus==='RECONSTRUCTED_FROM_2023_WORKED_HOURS';
+  const joinedDate=staff.startDate ? parseLocalDate(staff.startDate) : null;
+  const requiresHistoricalVerification=Boolean(joinedDate && joinedDate < new Date(2023,8,18) && !verifiedHistoricalOpening);
+
   
   const balance = curStats.balance;
   const balDays = curStats.days;
@@ -1950,6 +1956,7 @@ function renderMain(){
     +'<div class="hero-sub-big" style="color:'+balColor+'">'+fmt1(balDays)+' working days</div>'
     +(balance > 0 ? '<div class="hero-weeks-badge">&#128197; Equivalent to: <strong>'+breakdown.weeksText+'</strong></div>' : '')
     +'<div class="hero-desc">Calculated at '+weeklyHrs+' hrs / full week ('+dailyHrs+' hrs / working day). Recorded tracker balance; earlier carry-over and public-holiday entitlements require verification.</div>'
+    +(requiresHistoricalVerification?'<div class="hero-desc" style="color:#b45309;font-weight:800;margin-top:8px">&#9888; Historical opening balance NOT VERIFIED. The displayed hours are provisional, not a confirmed amount owed. The original 2023 source cell was absent; earlier payroll evidence must be reconciled first.</div>':'')
     +'<div class="hero-breakdown-grid'+(hasProfileBankHolidays ? ' with-bank-holidays' : '')+'">'
     +'<div class="hero-b-col"><span>'+(((BASE.basePre2024||{})[staff.id]||{}).sourceStatus ? (activeYear==='2024' ? '2023 opening + earned in 2023' : 'Previous-year closing carried forward') : 'Recorded opening (source not yet matched)')+'</span><strong>'+fmt1(curStats.opening)+' hrs</strong></div>'
     +'<div class="hero-b-col"><span>Earned (8% of '+fmt1(curStats.totalWorked)+'h)</span><strong style="color:var(--gr)">+'+fmt1(curStats.earned)+' hrs</strong></div>'

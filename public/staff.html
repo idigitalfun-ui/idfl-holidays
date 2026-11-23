@@ -33,7 +33,7 @@
     set('entryTitle','2023 weekly records');const h=data.pre2024;
     if(!h){add('Historical information','No earlier data available for this employee');return;}
     add('Historical source',h.source||'2024 holiday workbook');add('Source date',h.asOfDate||'Not specified');
-    add('Reported available hours',h.availableAtDateHours==null?'Not recorded':num(h.availableAtDateHours)+' hours');
+    add(String(h.sourceStatus||'').startsWith('RECONSTRUCTED')?'Payroll-derived historical hours (payout review may apply)':'Reported available hours at source date',h.availableAtDateHours==null?'Not established':num(h.availableAtDateHours)+' hours');
     for(const w of h.workedWeeks2023||[])entry(w.weekStart,num(w.workedHours),'Worked hours in 2023 source');
     const taken=(data.holLogs||[]).filter(x=>String(x.year)==='2023');
     for(const x of taken)entry(x.date,'-'+num(x.hours),x.note||'Holiday pay deducted after 2023 source date');
@@ -43,7 +43,7 @@
     add('2023 worked hours (from September source)',num(worked)+' hours');
     add('2023 holiday entitlement earned at 8%',num(earned)+' hours');
     add('2023 holiday pay deducted after source date',num(leave)+' hours');
-    if(h.sourceStatus==='MANAGER_CONFIRMED_SOURCE_2023' && h.availableAtDateHours!=null){
+    if(['MANAGER_CONFIRMED_SOURCE_2023','RECONSTRUCTED_FROM_2023_WORKED_HOURS'].includes(h.sourceStatus) && h.availableAtDateHours!=null){
       add('Calculated opening for 2024',num(Number(h.availableAtDateHours)+earned-leave)+' hours');
     } else add('Starting balance verification','Not confirmed in 2023 source');
     if(!(h.workedWeeks2023||[]).length && !taken.length)entry('No recorded weeks or holiday pay','','');
@@ -54,14 +54,14 @@
     const v=String(value||'').trim(),p=v.split('/');
     return p.length===3&&p[2].length===4?p[2]+'-'+p[1]+'-'+p[0]:v.slice(0,10);
    };
-   const sourceBased=Boolean(data.pre2024?.sourceStatus && ['MANAGER_CONFIRMED_SOURCE_2023','2023_WORK_WEEKS_OPENING_NOT_RECORDED','STARTING_BALANCE_NOT_RECORDED'].includes(data.pre2024.sourceStatus));
+   const sourceBased=Boolean(data.pre2024?.sourceStatus && ['MANAGER_CONFIRMED_SOURCE_2023','RECONSTRUCTED_FROM_2023_WORKED_HOURS','2023_WORK_WEEKS_OPENING_NOT_RECORDED','STARTING_BALANCE_NOT_RECORDED'].includes(data.pre2024.sourceStatus));
    const memo={};
    const calc=year=>{
     if(memo[year])return memo[year];
     const rec=(data.years||{})[year]||{};
     const hours=(rec.weeks||[]).reduce((sum,w)=>sum+Number(w.hours||0),0);
     const charged=(data.holLogs||[]).filter(h=>String(h.year)===year).reduce((sum,h)=>sum+(h.excludeFromLeaveBalance?0:Number(h.hours||0)),0);
-    const bankYears=data.carryLegacyBankCredits?['2024','2025','2026'].filter(n=>n<=year):[year];
+    const bankYears=(data.carryLegacyBankCredits&&!sourceBased)?['2024','2025','2026'].filter(n=>n<=year):[year];
     const bankCredit=bankYears.reduce((sum,bankYear)=>{
      if(!((data.bankHolidayInclusions||{})[bankYear]))return sum;
      const used=new Set((data.holLogs||[]).filter(h=>String(h.year)===bankYear).map(h=>dateKey(h.date)));
@@ -74,6 +74,17 @@
     return (memo[year]={hours,leave:charged,opening,earned,bankCredit,remaining});
    };
    const {hours,leave,opening,earned,bankCredit,remaining}=calc(y);
+   const profileStart=String((data.profile||{}).startDate||'');
+   const pr=profileStart.split('/');
+   const startIso=pr.length===3 ? pr[2]+'-'+pr[1].padStart(2,'0')+'-'+pr[0].padStart(2,'0') : profileStart.slice(0,10);
+   const beforeSource=startIso.length===10 && startIso<'2023-09-18';
+   const archiveStatus=String((data.pre2024||{}).sourceStatus||'');
+   const confirmedHistory=['MANAGER_CONFIRMED_SOURCE_2023','RECONSTRUCTED_FROM_2023_WORKED_HOURS'].includes(archiveStatus);
+
+   const status=(data.pre2024||{}).sourceStatus||'';
+   const earlyOpeningCertified=['MANAGER_CONFIRMED_SOURCE_2023','RECONSTRUCTED_FROM_2023_WORKED_HOURS'].includes(status);
+   const pre2024Work=Number((data.pre2024||{}).workedHoursBeforeSnapshot||0);
+
    const headline=document.createElement('div');headline.className='large';
    headline.textContent=num(remaining)+' hrs'+(bankCredit?' ●':'');if(bankCredit)headline.title='Green dot indicates '+num(bankCredit)+' bank-holiday credit hours included';$('balance').append(headline);
    add(data.pre2024 ? (y==='2024'?'2023 starting balance + 2023 earned hours':'Carried closing balance from previous year') : 'Opening balance (2023 source unverified)',num(opening)+' hours');
@@ -81,6 +92,10 @@
    add('Leave earned (8%)',num(earned)+' hours');
    add('Holidays taken (entries)',num(leave)+' hours');
    add('Bank holiday credit (selected years)',num(bankCredit)+' hours');
+   if(beforeSource&&!confirmedHistory)add('Historical entitlement warning','Opening before September 2023 is not verified. The displayed remaining balance is a provisional tracker estimate, NOT a certified entitlement.');
+   if(String(archiveStatus).includes('PAYOUT_REVIEW'))add('Historical final payout review','Payroll records a final holiday-payment request; payment status is not proven.');
+
+
    set('entryTitle','Holiday entries — '+y);
    for(const h of hol)entry(h.date,h.excludeFromLeaveBalance?'0.00 (not deducted)':num(h.hours),h.excludeFromLeaveBalance?'Historical payroll entry — excluded from leave balance':'Holiday pay');
    if(!hol.length)entry('No holiday entries recorded','','');
