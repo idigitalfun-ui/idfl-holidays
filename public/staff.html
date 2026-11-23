@@ -60,7 +60,7 @@
    const remaining=Math.round((Number(r.opening||0)+earned-leave+bankCredit)*100)/100;
    const headline=document.createElement('div');headline.className='large';
    headline.textContent=num(remaining)+' hrs'+(bankCredit?' ●':'');if(bankCredit)headline.title='Green dot indicates '+num(bankCredit)+' bank-holiday credit hours included';$('balance').append(headline);
-   add('Recorded opening',num(r.opening)+' hours');
+   add(data.pre2024 ? (y==='2024'?'2023 starting balance + 2023 earned hours':'Carried closing balance from previous year') : 'Opening balance (2023 source unverified)',num(r.opening)+' hours');
    add('Recorded worked hours',num(hours)+' hours');
    add('Leave earned (8%)',num(earned)+' hours');
    add('Holidays taken (entries)',num(leave)+' hours');
