@@ -3693,6 +3693,13 @@ async function loadSupabaseCompanyRecord(){
   const bar=document.querySelector('header');if(bar)bar.appendChild(b);
  }
 }
+// Stable JSON comparison prevents writing unrelated staff just because Postgres
+// returns JSONB keys in a different order from browser-generated objects.
+function canonicalStaffPayload(value){
+ const normalise=v=>Array.isArray(v)?v.map(normalise):(v&&typeof v==='object'
+   ? Object.keys(v).sort().reduce((o,k)=>{if(v[k]!==undefined)o[k]=normalise(v[k]);return o;},{}) :v);
+ return JSON.stringify(normalise(value));
+}
 async function saveToSupabase(){
  if(syncBlockedByConflict){setCloudStatus('conflict','A remote conflict occurred. Back up local edits before reloading.');return false;}
  if(!sb||!loadedSnapshot){setCloudStatus('error','Supabase not connected; changes remain in browser.');return false;}
@@ -3700,7 +3707,25 @@ async function saveToSupabase(){
  saveInFlight=true;const ovAtStart=JSON.stringify(ov);
  try{
   const desired=splitDbState(buildCurrentDatabaseState());const changed=[];
-  Object.keys(desired).forEach(id=>{const old=loadedSnapshot[id];if(!old||JSON.stringify(old.payload)!==JSON.stringify(desired[id]))changed.push({id,expected_revision:old?old.revision:0,payload:desired[id]});});
+  // Recalculate derived fields only on profiles the manager has actually edited.
+  // Never use stale cached earned/leave/currentAvailableHrs after editing a payroll week.
+  for(const id of Object.keys(desired)){
+    const old=loadedSnapshot[id];
+    if(!old || canonicalStaffPayload(old.payload)!==canonicalStaffPayload(desired[id])){
+      const stats=getFullConnectedStats(id);
+      for(const year of years){
+        const rec=desired[id].years[year],st=stats[year];
+        if(!rec||!st)continue;
+        rec.opening=st.opening;
+        rec.totalWorked=Math.round(st.totalWorked*100)/100;
+        rec.calculatedHolidays=Math.round(st.earned*100)/100;
+        rec.holidaysTaken=Math.round(st.holTaken*100)/100;
+        rec.currentAvailableHrs=Math.round(st.balance*100)/100;
+        rec.days=Math.round(st.days*1000)/1000;
+      }
+      changed.push({id,expected_revision:old?old.revision:0,payload:desired[id]});
+    }
+  }
   // Never allow a stale tab or imported browser state to silently reactivate Past Staff.
   for(const item of changed){
     const previous=loadedSnapshot[item.id]?.payload?.profile;
@@ -3712,10 +3737,27 @@ async function saveToSupabase(){
   if(!changed.length){setCloudStatus('synced','No unsaved changes.');return true;}
   setCloudStatus('saving','Saving '+changed.length+' staff records...');
   const {error}=await sb.rpc('save_staff_changes',{changes:changed});if(error)throw error;
-  changed.forEach(item=>{loadedSnapshot[item.id]={payload:item.payload,revision:item.expected_revision+1};explicitReactivationApprovals.delete(item.id);});
+  // RPC success alone is not proof of persistence. Read back each changed row.
+  const {data:confirmed,error:readError}=await sb.from('staff_records')
+     .select('id,payload,revision').in('id',changed.map(item=>item.id));
+  if(readError)throw new Error('Save ran but verification failed: '+readError.message);
+  if(!confirmed || confirmed.length!==changed.length)throw new Error('Save verification returned fewer staff records than expected.');
+  const byId=new Map(confirmed.map(row=>[row.id,row]));
+  for(const item of changed){
+    const actual=byId.get(item.id);
+    if(!actual || Number(actual.revision)!==item.expected_revision+1 ||
+       canonicalStaffPayload(actual.payload)!==canonicalStaffPayload(item.payload)){
+       throw new Error('Saved record could not be confirmed for '+item.id+'. Please reload and review before further edits.');
+    }
+  }
+  changed.forEach(item=>{
+    const serverRow=byId.get(item.id);
+    loadedSnapshot[item.id]={payload:serverRow.payload,revision:Number(serverRow.revision)};
+    explicitReactivationApprovals.delete(item.id);
+  });
   Object.keys(BASE).forEach(k=>delete BASE[k]);Object.assign(BASE,assembleDbState(loadedSnapshot));
   if(JSON.stringify(ov)===ovAtStart){ov={};localStorage.removeItem(LS_KEY);}else saveAgain=true;
-  setCloudStatus('synced','Saved to Supabase at '+new Date().toLocaleTimeString());renderAll();return true;
+  setCloudStatus('synced','Verified saved to Supabase at '+new Date().toLocaleTimeString());renderAll();return true;
  }catch(err){console.error('Supabase save:',err);syncBlockedByConflict=true;setCloudStatus('conflict',err.message+' Local edits retained; export backup before reloading.');return false;}
  finally{saveInFlight=false;if(saveAgain&&!syncBlockedByConflict){saveAgain=false;triggerAutoSync();}}
 }
