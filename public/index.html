@@ -1172,7 +1172,9 @@ function computeYearStats(sid, year, inheritedOpening){
   const ovEntry = ((ov[year]||{})[sid])||{};
   // For reconciled profiles only the September 2023 source is the original opening.
   // The next year always inherits the computed prior-year closing, never a second annual opening.
-  if(sourceBased2023 && String(year)!=='2024' && inheritedOpening !== undefined) {
+  if(sid==='s8' && String(year)==='2026' && ((BASE.years[year]||{})[sid]||{}).opening !== undefined) {
+    opening=Number(BASE.years[year][sid].opening)||0;
+  } else if(sourceBased2023 && String(year)!=='2024' && inheritedOpening !== undefined) {
     opening = inheritedOpening;
   } else if(ovEntry.opening !== undefined) {
     opening = ovEntry.opening;
@@ -1201,7 +1203,8 @@ function computeYearStats(sid, year, inheritedOpening){
   const totalBankCredit=credits.reduce((sum,c)=>sum+c.creditHours,0);
   const totalBankDays=credits.reduce((sum,c)=>sum+c.creditedDates,0);
   const excludedBankDays=credits.reduce((sum,c)=>sum+c.excluded,0);
-  const balance = Math.round((opening + earned - holTaken + totalBankCredit) * 100) / 100;
+  const bankDatesSeparate = ['s1','s8'].includes(sid);
+  const balance = Math.round((opening + earned - holTaken + (bankDatesSeparate ? 0 : totalBankCredit)) * 100) / 100;
   const days = balance / dailyHours;
   const breakdown = formatHumanBalanceBreakdown(balance, sid);
   
@@ -1211,6 +1214,7 @@ function computeYearStats(sid, year, inheritedOpening){
     earned: earned,
     holTaken: holTaken,
     bankHolidayCredit: totalBankCredit,
+    bankDatesSeparate: bankDatesSeparate,
     bankHolidayDatesCredited: totalBankDays,
     bankHolidayDatesExcluded: excludedBankDays,
     balance: balance,
@@ -1952,7 +1956,7 @@ function renderMain(){
     // Center Big Card
     +'<div class="hero-card hero-primary-center">'
     +'<div class="hero-title">&#127958; AVAILABLE HOLIDAY BALANCE ('+activeYear+')</div>'
-    +'<div class="hero-val-big" style="color:'+balColor+'">'+fmt1(balance)+' hrs'+(curStats.bankHolidayCredit > 0 ? '<span title="Includes +'+fmt1(curStats.bankHolidayCredit)+' hours in selected bank-holiday credits" aria-label="Bank-holiday credit included" style="color:#15803d;font-size:.36em;vertical-align:super;margin-left:7px">&#9679;</span>' : '')+'</div>'
+    +'<div class="hero-val-big" style="color:'+balColor+'">'+fmt1(balance)+' hrs'+((curStats.bankHolidayCredit > 0 && !curStats.bankDatesSeparate) ? '<span title="Includes +'+fmt1(curStats.bankHolidayCredit)+' hours in selected bank-holiday credits" aria-label="Bank-holiday credit included" style="color:#15803d;font-size:.36em;vertical-align:super;margin-left:7px">&#9679;</span>' : '')+'</div>'
     +'<div class="hero-sub-big" style="color:'+balColor+'">'+fmt1(balDays)+' working days</div>'
     +(balance > 0 ? '<div class="hero-weeks-badge">&#128197; Equivalent to: <strong>'+breakdown.weeksText+'</strong></div>' : '')
     +'<div class="hero-desc">Calculated at '+weeklyHrs+' hrs / full week ('+dailyHrs+' hrs / working day). Recorded tracker balance; earlier carry-over and public-holiday entitlements require verification.</div>'
@@ -1961,8 +1965,8 @@ function renderMain(){
     +'<div class="hero-b-col"><span>'+(((BASE.basePre2024||{})[staff.id]||{}).sourceStatus ? (activeYear==='2024' ? '2023 opening + earned in 2023' : 'Previous-year closing carried forward') : 'Recorded opening (source not yet matched)')+'</span><strong>'+fmt1(curStats.opening)+' hrs</strong></div>'
     +'<div class="hero-b-col"><span>Earned (8% of '+fmt1(curStats.totalWorked)+'h)</span><strong style="color:var(--gr)">+'+fmt1(curStats.earned)+' hrs</strong></div>'
     +'<div class="hero-b-col"><span>Holidays taken ('+activeYear+')</span><strong style="color:var(--am)">-'+fmt1(curStats.holTaken)+' hrs</strong></div>'
-    +(hasProfileBankHolidays ? '<div class="hero-b-col"><span>Bank Holidays (2024–'+activeYear+'; carried forward)</span><strong style="color:'+(bankHolidayDatesIncluded ? 'var(--gr)' : 'var(--rd)')+'">'+bankHolidayDatesIncluded+' day'+(bankHolidayDatesIncluded===1?'':'s')+'</strong><small style="font-size:.68rem;font-weight:700;color:'+(bankHolidayDatesIncluded ? 'var(--gr)' : 'var(--rd)')+'">+'+fmt1(bankHolidayCreditHours)+' hrs &bull; '+bankHolidayDatesIncluded+' of '+bankHolidayDatesEligible+' eligible from 2024'+(bankHolidayDatesExcluded ? ' ('+bankHolidayDatesExcluded+' taken)' : '')+'</small>'
-      +'<div style="font-size:.64rem;color:var(--tx2);margin-top:3px">Green dot beside balance = these credits included</div>'+'<div style="display:flex;justify-content:center;gap:4px;flex-wrap:wrap;margin-top:5px">'+bankHolidayToggleButtons+'</div>'
+    +(hasProfileBankHolidays ? '<div class="hero-b-col"><span>Bank Holidays (2024–'+activeYear+'; '+(curStats.bankDatesSeparate?'separate':'carried forward')+')</span><strong style="color:'+(bankHolidayDatesIncluded ? 'var(--gr)' : 'var(--rd)')+'">'+bankHolidayDatesIncluded+' day'+(bankHolidayDatesIncluded===1?'':'s')+'</strong><small style="font-size:.68rem;font-weight:700;color:'+(bankHolidayDatesIncluded ? 'var(--gr)' : 'var(--rd)')+'">+'+(curStats.bankDatesSeparate?'Not added to balance':'+'+fmt1(bankHolidayCreditHours)+' hrs')+' &bull; '+bankHolidayDatesIncluded+' of '+bankHolidayDatesEligible+' eligible from 2024'+(bankHolidayDatesExcluded ? ' ('+bankHolidayDatesExcluded+' taken)' : '')+'</small>'
+      +'<div style="font-size:.64rem;color:var(--tx2);margin-top:3px">'+(curStats.bankDatesSeparate?'These bank-holiday dates are NOT included in the available hours.':'Green dot beside balance = these credits included')+'</div>'+'<div style="display:flex;justify-content:center;gap:4px;flex-wrap:wrap;margin-top:5px">'+bankHolidayToggleButtons+'</div>'
       +'</div>' : '')
     +'</div>'
     +'</div>'
